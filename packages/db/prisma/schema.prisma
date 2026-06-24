@@ -1,0 +1,505 @@
+// LabAnimal Database Schema
+// Designed for PostgreSQL (Neon cloud / Docker self-hosted)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// Multi-tenant: Labs & Users
+// ============================================================
+
+model Lab {
+  id          String   @id @default(cuid())
+  name        String
+  institution String?
+  address     String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  users       UserLab[]
+  rooms       Room[]
+  animals     Animal[]
+  protocols   Protocol[]
+  breeding    Breeding[]
+  rates       Rate[]
+  auditLog    AuditLog[]
+  workSessions WorkSession[]
+  trainings   Training[]
+  deathReports DeathReport[]
+  batchSessions BatchSession[]
+
+  @@map("labs")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  passwordHash String? @map("password_hash")
+  avatarUrl String?  @map("avatar_url")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  labs      UserLab[]
+  auditLog  AuditLog[]
+  healthRecords HealthRecord[] @relation("RecordedBy")
+  workSessions  WorkSession[]
+  trainings Training[]
+  signatures ElectronicSignature[]
+
+  @@map("users")
+}
+
+model UserLab {
+  userId String @map("user_id")
+  labId  String @map("lab_id")
+  role   String // pi, caretaker, researcher, admin, veterinarian
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lab  Lab  @relation(fields: [labId], references: [id], onDelete: Cascade)
+
+  @@id([userId, labId])
+  @@map("user_labs")
+}
+
+// ============================================================
+// Facility: Rooms → Racks → Cages
+// ============================================================
+
+model Room {
+  id             String  @id @default(cuid())
+  labId          String  @map("lab_id")
+  name           String
+  location       String?
+  building       String?
+  floor          Int?
+  capacity       Int?
+  temperatureMin Float? @map("temperature_min")
+  temperatureMax Float? @map("temperature_max")
+  humidityMin    Float? @map("humidity_min")
+  humidityMax    Float? @map("humidity_max")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  lab   Lab   @relation(fields: [labId], references: [id], onDelete: Cascade)
+  racks Rack[]
+
+  @@map("rooms")
+}
+
+model Rack {
+  id        String  @id @default(cuid())
+  roomId    String  @map("room_id")
+  name      String
+  layers    Int?
+  positionsPerLayer Int? @map("positions_per_layer")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  room  Room  @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  cages Cage[]
+
+  @@map("racks")
+}
+
+model Cage {
+  id                  String    @id @default(cuid())
+  rackId              String    @map("rack_id")
+  position            String
+  status              String    @default("empty") // empty, occupied, cleaning, maintenance
+  capacity            Int       @default(5)
+  isSingleHoused     Boolean   @default(false) @map("is_single_housed")
+  singleHousingReason String?   @map("single_housing_reason")
+  singleHousingUntil  DateTime? @map("single_housing_until")
+  lastCleaned         DateTime? @map("last_cleaned")
+  nextCleaning        DateTime? @map("next_cleaning")
+  createdAt           DateTime  @default(now()) @map("created_at")
+
+  rack       Rack        @relation(fields: [rackId], references: [id], onDelete: Cascade)
+  animals    Animal[]
+  enrichments Enrichment[]
+
+  @@map("cages")
+}
+
+// ============================================================
+// Animals (with Identity Link & Retire pattern)
+// ============================================================
+
+model Animal {
+  id              String    @id @default(cuid())
+  labId           String    @map("lab_id")
+  internalId      String    @map("internal_id")
+  species         String
+  strain          String?
+  genotype        String?
+  sex             String
+  dateOfBirth     DateTime? @map("date_of_birth")
+  arrivalDate     DateTime? @map("arrival_date")
+  source          String?
+  cageId          String?   @map("cage_id")
+  protocolId      String?   @map("protocol_id")
+  status          String    @default("active") // active, allocated, used, deceased, transferred, retired
+  quarantineStatus String   @default("none") // none, pending, quarantined, released
+  quarantineUntil DateTime? @map("quarantine_until")
+  notes           String?
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  lab            Lab            @relation(fields: [labId], references: [id], onDelete: Cascade)
+  cage           Cage?          @relation(fields: [cageId], references: [id])
+  protocol       Protocol?      @relation(fields: [protocolId], references: [id])
+  healthRecords  HealthRecord[]
+  identifiers    AnimalIdentifier[]
+  deathReports   DeathReport[]
+  medications    Medication[]
+  breedingSire   Breeding[]     @relation("Sire")
+  breedingDam    Breeding[]     @relation("Dam")
+  identityLinks  AnimalLink[]   @relation("Animal")
+  linkedFrom     AnimalLink[]   @relation("LinkedTo")
+
+  @@index([labId, species, status])
+  @@index([labId, internalId])
+  @@index([labId, quarantineStatus])
+  @@map("animals")
+}
+
+// Identity Link: when ear tags fall off, never merge records.
+// Retire old record + create new + link them.
+model AnimalLink {
+  id          String   @id @default(cuid())
+  animalId    String   @map("animal_id")
+  linkedToId  String   @map("linked_to_id")
+  reason      String   // e.g., "ear_tag_fell_off", "re_tagged"
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  animal   Animal @relation("Animal", fields: [animalId], references: [id])
+  linkedTo Animal @relation("LinkedTo", fields: [linkedToId], references: [id])
+
+  @@map("animal_links")
+}
+
+// ============================================================
+// IACUC Protocols
+// ============================================================
+
+model Protocol {
+  id              String    @id @default(cuid())
+  labId           String    @map("lab_id")
+  title           String
+  description     String?
+  piName          String    @map("pi_name")
+  iacucNumber     String?   @map("iacuc_number")
+  status          String    @default("draft") // draft, submitted, approved, rejected, expired
+  painCategory    String?   @map("pain_category") // B, C, D, E
+  startDate       DateTime? @map("start_date")
+  endDate         DateTime? @map("end_date")
+  animalLimit     Int?      @map("animal_limit")
+  threeRsReplacement String? @map("three_rs_replacement") // How alternatives to animal use were considered
+  threeRsReduction    String? @map("three_rs_reduction") // How animal numbers were minimized
+  threeRsRefinement   String? @map("three_rs_refinement") // How procedures were refined to reduce pain
+  hasStatisticalJustification Boolean? @map("has_statistical_justification")
+  involvesSurgery      Boolean? @map("involves_surgery")
+  survivalSurgery      Boolean? @map("survival_surgery")
+  usesAnalgesics       Boolean? @map("uses_analgesics")
+  hasHumaneEndpoints   Boolean? @map("has_humane_endpoints")
+  densityExemption Int?     @map("density_exemption") // IACUC-approved max animals per cage (overrides Guide baseline)
+  version         Int       @default(1) // Protocol version number
+  submittedAt     DateTime? @map("submitted_at")
+  approvedAt      DateTime? @map("approved_at")
+  approvedBy      String?   @map("approved_by") // User ID of approver
+  rejectedAt      DateTime? @map("rejected_at")
+  rejectedBy      String?   @map("rejected_by")
+  reviewComments  String?   @map("review_comments") // IACUC committee feedback
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  lab        Lab       @relation(fields: [labId], references: [id], onDelete: Cascade)
+  animals    Animal[]
+  signatures ElectronicSignature[]
+
+  @@map("protocols")
+}
+
+// ============================================================
+// Breeding
+// ============================================================
+
+model Breeding {
+  id          String    @id @default(cuid())
+  labId       String    @map("lab_id")
+  sireId      String    @map("sire_id")
+  damId       String    @map("dam_id")
+  pairDate    DateTime? @map("pair_date")
+  litterDate  DateTime? @map("litter_date")
+  litterSize  Int?
+  weanedCount Int?      @map("weaned_count")
+  weaningDate DateTime? @map("weaning_date")
+  notes       String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  lab  Lab   @relation(fields: [labId], references: [id], onDelete: Cascade)
+  sire Animal @relation("Sire", fields: [sireId], references: [id])
+  dam  Animal @relation("Dam", fields: [damId], references: [id])
+
+  @@index([labId])
+  @@map("breeding")
+}
+
+// ============================================================
+// Health Records
+// ============================================================
+
+model HealthRecord {
+  id              String    @id @default(cuid())
+  animalId        String    @map("animal_id")
+  recordType      String    @map("record_type") // check, abnormal, treatment, euthanasia
+  weight          Float?
+  bodyConditionScore Int?   @map("body_condition_score")
+  painScore       Float?   @map("pain_score") // MGS/RGS pain score (0-1 scale)
+  painScoreType   String?  @map("pain_score_type") // MGS (Mouse Grimace Scale) or RGS (Rat Grimace Scale)
+  description     String?
+  treatment       String?
+  euthanasiaMethodId String? @map("euthanasia_method_id")
+  recordedBy      String    @map("recorded_by")
+  recordedAt      DateTime  @default(now()) @map("recorded_at")
+
+  animal     Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
+  recorder   User   @relation("RecordedBy", fields: [recordedBy], references: [id])
+
+  @@index([animalId])
+  @@map("health_records")
+}
+
+// ============================================================
+// Billing
+// ============================================================
+
+model Rate {
+  id            String   @id @default(cuid())
+  labId         String   @map("lab_id")
+  species       String
+  dailyRate     Float    @map("daily_rate")
+  cageRate      Float?   @map("cage_rate")
+  effectiveDate DateTime? @map("effective_date")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  lab Lab @relation(fields: [labId], references: [id], onDelete: Cascade)
+
+  @@map("rates")
+}
+
+// ============================================================
+// Work Session (Batch Session)
+// ============================================================
+
+model WorkSession {
+  id          String    @id @default(cuid())
+  labId       String    @map("lab_id")
+  userId      String    @map("user_id")
+  startedAt   DateTime  @default(now()) @map("started_at")
+  endedAt     DateTime? @map("ended_at")
+  timeoutAt   DateTime  @map("timeout_at") // 8-hour auto-timeout
+
+  lab  Lab  @relation(fields: [labId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([labId])
+  @@map("work_sessions")
+}
+
+// ============================================================
+// Audit Log (Differential storage)
+// ============================================================
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  labId       String   @map("lab_id")
+  userId      String   @map("user_id")
+  action      String   // create, update, delete
+  entityType  String   @map("entity_type") // animal, cage, protocol, etc.
+  entityId    String   @map("entity_id")
+  diff        Json?    // { path, oldValue, newValue }[] — only what changed
+  hash        String   // SHA-256 of this entry
+  previousHash String @map("previous_hash") // chain link
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  lab  Lab  @relation(fields: [labId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([labId, entityType, entityId])
+  @@index([labId, createdAt])
+  @@map("audit_log")
+}
+
+// ============================================================
+// Animal Identifiers (Multi-ID: ear tag, microchip, toe clip)
+// ============================================================
+
+model AnimalIdentifier {
+  id          String   @id @default(cuid())
+  animalId    String   @map("animal_id")
+  type        String   // ear_tag, microchip, toe_clip, tail_tattoo, other
+  value       String
+  isPrimary   Boolean  @default(false) @map("is_primary")
+  notes       String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  animal Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
+
+  @@unique([animalId, type, value])
+  @@map("animal_identifiers")
+}
+
+// ============================================================
+// Death Reports
+// ============================================================
+
+model DeathReport {
+  id              String    @id @default(cuid())
+  animalId        String    @map("animal_id")
+  labId           String    @map("lab_id")
+  dateOfDeath     DateTime  @map("date_of_death")
+  cause           String    // euthanasia, natural, experimental_endpoint, found_dead
+  euthanasiaMethodId String? @map("euthanasia_method_id") // references AVMA method ID
+  performedBy     String?   @map("performed_by")
+  necropsyPerformed Boolean @default(false) @map("necropsy_performed")
+  necropsyFindings  String? @map("necropsy_findings")
+  notes           String?
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  animal Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
+  lab    Lab    @relation(fields: [labId], references: [id], onDelete: Cascade)
+
+  @@index([labId, dateOfDeath])
+  @@map("death_reports")
+}
+
+// ============================================================
+// Medications / Treatments
+// ============================================================
+
+model Medication {
+  id          String    @id @default(cuid())
+  animalId    String    @map("animal_id")
+  name        String
+  dosage      String
+  route       String    // oral, ip, iv, sc, im, topical, other
+  frequency   String
+  startDate   DateTime  @map("start_date")
+  endDate     DateTime? @map("end_date")
+  reason      String?
+  prescribedBy String?  @map("prescribed_by")
+  administeredBy String? @map("administered_by") // Who actually administered the medication
+  outcome     String?   // Treatment outcome (recovered, ongoing, deceased, etc.)
+  notes       String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  animal Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
+
+  @@index([animalId])
+  @@map("medications")
+}
+
+// ============================================================
+// Training & Qualifications (Personnel)
+// ============================================================
+
+model Training {
+  id              String    @id @default(cuid())
+  userId          String    @map("user_id")
+  labId           String    @map("lab_id")
+  type            String    // aalas_lat, aalas_latg, iacuc_orientation, species_specific, surgery, euthanasia, other
+  certificationNumber String? @map("certification_number")
+  issuedBy        String?   @map("issued_by")
+  issuedDate      DateTime? @map("issued_date")
+  expirationDate  DateTime? @map("expiration_date")
+  status          String    @default("active") // active, expired, pending_renewal
+  documentUrl     String?   @map("document_url")
+  notes           String?
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lab  Lab  @relation(fields: [labId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
+  @@index([labId, status])
+  @@map("trainings")
+}
+
+// ============================================================
+// Electronic Signatures (21 CFR Part 11)
+// ============================================================
+
+model ElectronicSignature {
+  id              String    @id @default(cuid())
+  userId          String    @map("user_id")
+  protocolId      String?   @map("protocol_id")
+  entityType      String    @map("entity_type") // protocol, health_record, euthanasia, audit_entry
+  entityId        String    @map("entity_id")
+  meaning         String    // approved, reviewed, witnessed, authored
+  printedName     String    @map("printed_name") // 21 CFR Part 11: printed name of signer
+  title           String?   // Signer's title/position (e.g., "Attending Veterinarian")
+  reasonForSigning String?  @map("reason_for_signing") // Why this document is being signed
+  signatureHash   String    @map("signature_hash") // SHA-256 of user + entity + timestamp
+  signedAt        DateTime  @default(now()) @map("signed_at")
+  ipAddress       String?   @map("ip_address")
+  notes           String?
+
+  user     User      @relation(fields: [userId], references: [id])
+  protocol Protocol? @relation(fields: [protocolId], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([userId])
+  @@map("electronic_signatures")
+}
+
+// ============================================================
+// Enrichment (Cage-level environmental enrichment)
+// ============================================================
+
+model Enrichment {
+  id          String    @id @default(cuid())
+  cageId      String    @map("cage_id")
+  type        String    // nesting_material, hut, tunnel, running_wheel, chew_block, foraging_device, other
+  description String?
+  addedDate   DateTime  @default(now()) @map("added_date")
+  removedDate DateTime? @map("removed_date")
+  addedBy     String?   @map("added_by")
+  notes       String?
+
+  cage Cage @relation(fields: [cageId], references: [id], onDelete: Cascade)
+
+  @@index([cageId])
+  @@map("enrichments")
+}
+
+// ============================================================
+// Batch Session (Material Batch Tracking)
+// ============================================================
+
+model BatchSession {
+  id              String    @id @default(cuid())
+  labId           String    @map("lab_id")
+  batchNumber     String    @map("batch_number") // Lot/batch identifier
+  materialType    String    @map("material_type") // feed, bedding, drug, reagent, other
+  supplier        String?
+  receivedDate    DateTime? @map("received_date")
+  expirationDate  DateTime? @map("expiration_date")
+  quantity        Float?
+  unit            String?   // kg, L, units, etc.
+  storageLocation String?   @map("storage_location")
+  notes           String?
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  lab Lab @relation(fields: [labId], references: [id], onDelete: Cascade)
+
+  @@index([labId, materialType])
+  @@index([labId, expirationDate])
+  @@map("batch_sessions")
+}

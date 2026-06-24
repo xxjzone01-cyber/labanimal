@@ -1,0 +1,14 @@
+{
+  "name": "@labanimal/docs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LabAnimal documentation site powered by VitePress",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "name": "@labanimal/compliance",
+  "version": "0.1.0",
+  "description": "LabAnimal compliance engine — cage density, AVMA euthanasia, IACUC protocol validation. Zero dependencies.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/labanimal/labanimal.git",
+    "directory": "packages/compliance"
+  },
+  "homepage": "https://labanimal.dev",
+  "keywords": [
+    "lab-animal",
+    "compliance",
+    "iacuc",
+    "avma",
+    "euthanasia",
+    "cage-density",
+    "3r",
+    "audit",
+    "laboratory-animal-science",
+    "aaalac"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/index.global.js",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "USAGE.md"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm,iife --dts --global-name LabAnimalCompliance",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:coverage:check": "vitest run --coverage --reporter=verbose",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "pnpm run lint && pnpm run test && pnpm run build"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0",
+    "@vitest/coverage-v8": "^2.0.0"
+  }
+}

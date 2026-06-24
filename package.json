@@ -1,0 +1,28 @@
+{
+  "name": "labanimal",
+  "private": true,
+  "description": "LabAnimal — open-source laboratory animal management system",
+  "license": "AGPL-3.0",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "test:coverage": "turbo test:coverage",
+    "db:migrate": "turbo db:migrate",
+    "db:seed": "turbo db:seed",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\"",
+    "docs:dev": "pnpm --filter @labanimal/docs dev",
+    "docs:build": "pnpm --filter @labanimal/docs build"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "prettier": "^3.4.0",
+    "turbo": "^2.3.0"
+  }
+}

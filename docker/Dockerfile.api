@@ -1,0 +1,37 @@
+FROM node:20-alpine AS base
+RUN corepack enable && corepack prepare pnpm@9.0.0 --activate
+
+FROM base AS deps
+WORKDIR /app
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY packages/compliance/package.json ./packages/compliance/
+COPY packages/db/package.json ./packages/db/
+COPY packages/api/package.json ./packages/api/
+RUN pnpm install --frozen-lockfile --filter @labanimal/api...
+
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/packages/compliance/node_modules ./packages/compliance/node_modules
+COPY --from=deps /app/packages/db/node_modules ./packages/db/node_modules
+COPY --from=deps /app/packages/api/node_modules ./packages/api/node_modules
+COPY . .
+RUN pnpm --filter @labanimal/compliance build
+RUN pnpm --filter @labanimal/db exec prisma generate
+RUN pnpm --filter @labanimal/api build
+
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/packages/api/dist ./packages/api/dist
+COPY --from=builder /app/packages/compliance/dist ./packages/compliance/dist
+COPY --from=builder /app/packages/db/prisma ./packages/db/prisma
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/packages/api/node_modules ./packages/api/node_modules
+COPY --from=builder /app/packages/api/package.json ./packages/api/
+COPY --from=builder /app/packages/compliance/package.json ./packages/compliance/
+COPY --from=builder /app/packages/db/package.json ./packages/db/
+COPY --from=builder /app/package.json ./
+
+EXPOSE 3001
+CMD ["node", "packages/api/dist/index.js"]

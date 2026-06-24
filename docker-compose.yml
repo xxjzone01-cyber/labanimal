@@ -1,0 +1,56 @@
+# LabAnimal local development environment
+# Usage: docker compose up -d
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: labanimal-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: labanimal
+      POSTGRES_PASSWORD: labanimal_dev
+      POSTGRES_DB: labanimal
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U labanimal"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: labanimal-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    container_name: labanimal-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: labanimal
+      MINIO_ROOT_PASSWORD: labanimal_dev
+    volumes:
+      - miniodata:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+  redisdata:
+  miniodata:

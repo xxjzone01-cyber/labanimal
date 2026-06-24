@@ -1,0 +1,13 @@
+# LabAnimal Code Owners
+
+# 合规引擎 — 任何修改都需要合规团队审核
+packages/compliance/ @labanimal/compliance-team
+
+# 数据库 schema — 需要后端 lead 审核
+packages/db/prisma/schema.prisma @labanimal/backend-leads
+
+# CI/CD 配置 — 需要 DevOps 审核
+.github/ @labimal/devops
+
+# 默认：项目维护者
+* @labanimal/maintainers

@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.next/
+out/
+
+# Turbo
+.turbo/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Docker volumes (local dev data)
+docker-data/
+
+# Wrangler
+.wrangler/
+
+# TypeScript
+*.tsbuildinfo
+
+# Claude Code
+.claude/
+
+# Playwright test results
+test-results/
