@@ -52,9 +52,10 @@
     "prepublishOnly": "pnpm run lint && pnpm run test && pnpm run build"
   },
   "devDependencies": {
+    "@types/node": "^26.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
     "tsup": "^8.0.0",
     "typescript": "^5.5.0",
-    "vitest": "^2.0.0",
-    "@vitest/coverage-v8": "^2.0.0"
+    "vitest": "^2.0.0"
   }
 }

@@ -22,6 +22,7 @@ import { electronicSignatures } from './routes/electronic-signatures.js';
 import { billing } from './routes/billing.js';
 import { batchSessions } from './routes/batch-sessions.js';
 import { labs } from './routes/labs.js';
+import { license } from './routes/license.js';
 
 const app = new Hono();
 
@@ -60,6 +61,7 @@ app.route('/api/rates', rates);
 app.route('/api/electronic-signatures', electronicSignatures);
 app.route('/api/billing', billing);
 app.route('/api/batch-sessions', batchSessions);
+app.route('/api/license', license);
 
 // 404 handler
 app.notFound((c) => {
