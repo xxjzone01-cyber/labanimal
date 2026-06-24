@@ -5,6 +5,7 @@
  * - AVMA euthanasia method validation (AVMA Guidelines 2020)
  * - IACUC protocol validation (USDA pain categories, 3Rs, protocol checks)
  * - Audit logging (diff generator, SHA-256 hash chain)
+ * - License JWT signing/verification + report signatures
  *
  * Zero dependencies. Apache-2.0 license.
  */
@@ -53,3 +54,22 @@ export {
   GENESIS_HASH,
 } from './audit/index.js';
 export type { DiffEntry } from './audit/index.js';
+
+// License module
+export {
+  generateKeyPair,
+  isValidPublicKey,
+  isValidPrivateKey,
+  signLicense,
+  verifyLicense,
+  signReport,
+  verifyReportSignature,
+  signReportUnverified,
+} from './license/index.js';
+export type {
+  LicensePayload,
+  LicenseVerification,
+  ReportSignatureData,
+  ReportSignatureVerification,
+  KeyPair,
+} from './license/index.js';
