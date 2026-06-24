@@ -118,15 +118,15 @@ async function main() {
   });
 
   const rackA1 = await prisma.rack.create({
-    data: { roomId: roomA.id, name: 'Rack A1', layers: 4, positionsPerLayer: 5 },
+    data: { labId: lab.id, roomId: roomA.id, name: 'Rack A1', layers: 4, positionsPerLayer: 5 },
   });
 
   const rackA2 = await prisma.rack.create({
-    data: { roomId: roomA.id, name: 'Rack A2', layers: 3, positionsPerLayer: 4 },
+    data: { labId: lab.id, roomId: roomA.id, name: 'Rack A2', layers: 3, positionsPerLayer: 4 },
   });
 
   const rackB1 = await prisma.rack.create({
-    data: { roomId: roomB.id, name: 'Rack B1', layers: 4, positionsPerLayer: 5 },
+    data: { labId: lab.id, roomId: roomB.id, name: 'Rack B1', layers: 4, positionsPerLayer: 5 },
   });
 
   // Create cages
@@ -134,6 +134,7 @@ async function main() {
   for (let pos = 1; pos <= 5; pos++) {
     const cage = await prisma.cage.create({
       data: {
+        labId: lab.id,
         rackId: rackA1.id,
         position: `A1-${pos}`,
         status: 'occupied',
@@ -146,6 +147,7 @@ async function main() {
   // Scenario cage: single housing
   const singleHousingCage = await prisma.cage.create({
     data: {
+      labId: lab.id,
       rackId: rackA2.id,
       position: 'A2-1',
       status: 'occupied',
@@ -159,6 +161,7 @@ async function main() {
   // Quarantine cages
   const quarantineCage = await prisma.cage.create({
     data: {
+      labId: lab.id,
       rackId: rackB1.id,
       position: 'B1-1',
       status: 'occupied',
@@ -244,6 +247,7 @@ async function main() {
   // Add enrichment to overcrowded cage
   await prisma.enrichment.create({
     data: {
+      labId: lab.id,
       cageId: cages[0].id,
       type: 'nesting_material',
       description: 'Nesting cotton squares',
@@ -252,6 +256,7 @@ async function main() {
 
   await prisma.enrichment.create({
     data: {
+      labId: lab.id,
       cageId: cages[0].id,
       type: 'hut',
       description: 'Plastic shelter hut',
@@ -325,6 +330,7 @@ async function main() {
 
   await prisma.animalLink.create({
     data: {
+      labId: lab.id,
       animalId: retiredMouse.id,
       linkedToId: newMouse.id,
       reason: 'ear_tag_fell_off',
@@ -334,6 +340,7 @@ async function main() {
   // Add identifier to new mouse
   await prisma.animalIdentifier.create({
     data: {
+      labId: lab.id,
       animalId: newMouse.id,
       type: 'ear_tag',
       value: '999',
@@ -343,6 +350,7 @@ async function main() {
 
   await prisma.animalIdentifier.create({
     data: {
+      labId: lab.id,
       animalId: newMouse.id,
       type: 'microchip',
       value: 'MC-2024-001',
@@ -374,6 +382,7 @@ async function main() {
   // Add health record for surgery
   await prisma.healthRecord.create({
     data: {
+      labId: lab.id,
       animalId: singleHousedMouse.id,
       recordType: 'treatment',
       weight: 22,
