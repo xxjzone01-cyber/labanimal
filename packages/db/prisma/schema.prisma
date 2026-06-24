@@ -95,6 +95,7 @@ model Room {
 model Rack {
   id        String  @id @default(cuid())
   roomId    String  @map("room_id")
+  labId     String  @map("lab_id")
   name      String
   layers    Int?
   positionsPerLayer Int? @map("positions_per_layer")
@@ -103,12 +104,14 @@ model Rack {
   room  Room  @relation(fields: [roomId], references: [id], onDelete: Cascade)
   cages Cage[]
 
+  @@index([labId])
   @@map("racks")
 }
 
 model Cage {
   id                  String    @id @default(cuid())
   rackId              String    @map("rack_id")
+  labId               String    @map("lab_id")
   position            String
   status              String    @default("empty") // empty, occupied, cleaning, maintenance
   capacity            Int       @default(5)
@@ -123,6 +126,7 @@ model Cage {
   animals    Animal[]
   enrichments Enrichment[]
 
+  @@index([labId])
   @@map("cages")
 }
 
@@ -174,12 +178,14 @@ model AnimalLink {
   id          String   @id @default(cuid())
   animalId    String   @map("animal_id")
   linkedToId  String   @map("linked_to_id")
+  labId       String   @map("lab_id")
   reason      String   // e.g., "ear_tag_fell_off", "re_tagged"
   createdAt   DateTime @default(now()) @map("created_at")
 
   animal   Animal @relation("Animal", fields: [animalId], references: [id])
   linkedTo Animal @relation("LinkedTo", fields: [linkedToId], references: [id])
 
+  @@index([labId])
   @@map("animal_links")
 }
 
@@ -257,6 +263,7 @@ model Breeding {
 model HealthRecord {
   id              String    @id @default(cuid())
   animalId        String    @map("animal_id")
+  labId           String    @map("lab_id")
   recordType      String    @map("record_type") // check, abnormal, treatment, euthanasia
   weight          Float?
   bodyConditionScore Int?   @map("body_condition_score")
@@ -272,6 +279,7 @@ model HealthRecord {
   recorder   User   @relation("RecordedBy", fields: [recordedBy], references: [id])
 
   @@index([animalId])
+  @@index([labId])
   @@map("health_records")
 }
 
@@ -344,6 +352,7 @@ model AuditLog {
 model AnimalIdentifier {
   id          String   @id @default(cuid())
   animalId    String   @map("animal_id")
+  labId       String   @map("lab_id")
   type        String   // ear_tag, microchip, toe_clip, tail_tattoo, other
   value       String
   isPrimary   Boolean  @default(false) @map("is_primary")
@@ -353,6 +362,7 @@ model AnimalIdentifier {
   animal Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
 
   @@unique([animalId, type, value])
+  @@index([labId])
   @@map("animal_identifiers")
 }
 
@@ -387,6 +397,7 @@ model DeathReport {
 model Medication {
   id          String    @id @default(cuid())
   animalId    String    @map("animal_id")
+  labId       String    @map("lab_id")
   name        String
   dosage      String
   route       String    // oral, ip, iv, sc, im, topical, other
@@ -403,6 +414,7 @@ model Medication {
   animal Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
 
   @@index([animalId])
+  @@index([labId])
   @@map("medications")
 }
 
@@ -439,6 +451,7 @@ model Training {
 model ElectronicSignature {
   id              String    @id @default(cuid())
   userId          String    @map("user_id")
+  labId           String    @map("lab_id")
   protocolId      String?   @map("protocol_id")
   entityType      String    @map("entity_type") // protocol, health_record, euthanasia, audit_entry
   entityId        String    @map("entity_id")
@@ -456,6 +469,7 @@ model ElectronicSignature {
 
   @@index([entityType, entityId])
   @@index([userId])
+  @@index([labId])
   @@map("electronic_signatures")
 }
 
@@ -466,6 +480,7 @@ model ElectronicSignature {
 model Enrichment {
   id          String    @id @default(cuid())
   cageId      String    @map("cage_id")
+  labId       String    @map("lab_id")
   type        String    // nesting_material, hut, tunnel, running_wheel, chew_block, foraging_device, other
   description String?
   addedDate   DateTime  @default(now()) @map("added_date")
@@ -476,6 +491,7 @@ model Enrichment {
   cage Cage @relation(fields: [cageId], references: [id], onDelete: Cascade)
 
   @@index([cageId])
+  @@index([labId])
   @@map("enrichments")
 }
 
