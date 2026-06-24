@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LabAnimal — 实验动物合规管理系统</title>
+  <meta name="description" content="LabAnimal 是开源的实验动物合规管理系统，支持 AVMA 安乐死标准、动态密度计算、21 CFR Part 11 电子签名、AAALAC 审计准备。">
+  <meta name="keywords" content="lab animal management, IACUC, AVMA, AAALAC, compliance, laboratory animal">
+  <link rel="canonical" href="https://labanimal.tech">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    .gradient-hero { background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #2563eb 100%); }
+    .card-hover { transition: transform 0.2s, box-shadow 0.2s; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </div>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium">功能</a>
+          <a href="#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium">定价</a>
+          <a href="https://labanimal.gitbook.io/docs" target="_blank" class="text-gray-600 hover:text-brand-600 text-sm font-medium">文档</a>
+          <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="text-gray-600 hover:text-brand-600 text-sm font-medium">GitHub</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">登录</a>
+        </div>
+        <button id="menuBtn" class="md:hidden p-2 text-gray-600" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-gray-100 px-4 pb-4">
+      <a href="#features" class="block py-2 text-gray-600">功能</a>
+      <a href="#pricing" class="block py-2 text-gray-600">定价</a>
+      <a href="https://labanimal.gitbook.io/docs" target="_blank" class="block py-2 text-gray-600">文档</a>
+      <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="block py-2 text-gray-600">GitHub</a>
+      <a href="https://labanimal.cloud/login" class="block mt-2 bg-brand-600 text-white text-center px-4 py-2 rounded-lg">登录</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="gradient-hero pt-32 pb-20 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-block bg-white/10 text-white/90 text-sm font-medium px-4 py-1 rounded-full mb-6">开源 + 合规 + 可扩展</div>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
+        实验动物管理<br>从此合规无忧
+      </h1>
+      <p class="text-lg sm:text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+        LabAnimal 是专为实验动物设施设计的合规管理系统，内置 AVMA 安乐死标准、动态笼位密度计算、21 CFR Part 11 电子签名、AAALAC 审计准备。开源核心，可自由部署。
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://labanimal.cloud/register" class="bg-white text-brand-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-50 transition shadow-lg">
+          免费开始
+        </a>
+        <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="border-2 border-white/40 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white/10 transition">
+          查看源码
+        </a>
+      </div>
+      <p class="text-blue-200 text-sm mt-4">Academic Free 永久免费 · 500 只动物 · 无需信用卡</p>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="bg-white py-12 border-b border-gray-100">
+    <div class="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+        <div class="text-3xl font-bold text-brand-600">19</div>
+        <div class="text-sm text-gray-500 mt-1">API 模块</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold text-brand-600">18</div>
+        <div class="text-sm text-gray-500 mt-1">数据库模型</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold text-brand-600">166</div>
+        <div class="text-sm text-gray-500 mt-1">合规测试</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold text-brand-600">0</div>
+        <div class="text-sm text-gray-500 mt-1">外部依赖</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-20 px-4 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4">为合规而生的核心功能</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto">每一个功能都直接对应 AAALAC 认证和 USDA 审查的具体要求，不是通用项目管理工具的改装版。</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <div class="bg-white rounded-xl p-6 card-hover border border-gray-100">
+          <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">动态笼位密度</h3>
+          <p class="text-gray-500 text-sm">基于 NRC Guide 2011 标准自动计算最大饲养密度，支持小鼠、大鼠、仓鼠、豚鼠、兔。超限自动锁定。</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-hover border border-gray-100">
+          <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">AVMA 安乐死验证</h3>
+          <p class="text-gray-500 text-sm">实时验证安乐死方法是否符合 AVMA Guidelines 2020，按物种、年龄、设备自动匹配合规方法。</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-hover border border-gray-100">
+          <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">21 CFR Part 11 电子签名</h3>
+          <p class="text-gray-500 text-sm">所见即所签的电子签名，SHA-256 哈希链审计追踪，满足 FDA 21 CFR Part 11 合规要求。</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-hover border border-gray-100">
+          <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">IACUC 协议管理</h3>
+          <p class="text-gray-500 text-sm">协议全生命周期管理，自动 3R 验证（Replace/Reduce/Refine），USDA 疼痛分类（D/E），审批工作流。</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-hover border border-gray-100">
+          <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">检疫阻断机制</h3>
+          <p class="text-gray-500 text-sm">新入动物自动进入检疫状态，未释放前禁止分配到实验笼位，防止交叉感染。</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-hover border border-gray-100">
+          <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">合规报告签名</h3>
+          <p class="text-gray-500 text-sm">报告 PDF 嵌入 RSA 签名二维码，扫码验证真伪。支持 labanimal.tech/verify 在线验证。</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="py-20 px-4 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4">简单透明的定价</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto">从学术实验室到大型设施，总有一个适合你的方案。所有付费套餐含 30 天退款保证。</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Academic Free -->
+        <div class="bg-white rounded-2xl border-2 border-gray-200 p-8 card-hover">
+          <div class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Academic Free</div>
+          <div class="flex items-baseline gap-1 mb-4">
+            <span class="text-4xl font-extrabold">$0</span>
+            <span class="text-gray-400">/月</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-6">适合学术实验室和小型设施</p>
+          <ul class="space-y-3 text-sm text-gray-600 mb-8">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>500 只动物</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>10 用户</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>3 份签名报告/月</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>全部合规功能</li>
+          </ul>
+          <a href="https://labanimal.cloud/register" class="block text-center bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition">免费开始</a>
+        </div>
+
+        <!-- Starter -->
+        <div class="bg-white rounded-2xl border-2 border-brand-500 p-8 card-hover relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-600 text-white text-xs font-semibold px-4 py-1 rounded-full">最受欢迎</div>
+          <div class="text-sm font-semibold text-brand-600 uppercase tracking-wide mb-2">Starter</div>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="text-4xl font-extrabold">$99</span>
+            <span class="text-gray-400">/月</span>
+          </div>
+          <p class="text-xs text-gray-400 mb-4">年付省 10%（$89/月）</p>
+          <p class="text-sm text-gray-500 mb-6">适合中小型设施</p>
+          <ul class="space-y-3 text-sm text-gray-600 mb-8">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>1,000 只动物</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>15 用户</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>无限签名报告</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>邮件支持</li>
+          </ul>
+          <a href="https://labanimal.cloud/register?plan=starter" class="block text-center bg-brand-600 text-white py-3 rounded-lg font-medium hover:bg-brand-700 transition">立即订阅</a>
+        </div>
+
+        <!-- Professional -->
+        <div class="bg-white rounded-2xl border-2 border-gray-200 p-8 card-hover">
+          <div class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Professional</div>
+          <div class="flex items-baseline gap-1 mb-4">
+            <span class="text-4xl font-extrabold">$299</span>
+            <span class="text-gray-400">/月</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-6">适合大型设施和多实验室</p>
+          <ul class="space-y-3 text-sm text-gray-600 mb-8">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>15,000 只动物</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>40 用户</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>API 访问</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>优先支持</li>
+          </ul>
+          <a href="https://labanimal.cloud/register?plan=professional" class="block text-center bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition">立即订阅</a>
+        </div>
+
+        <!-- Enterprise SaaS -->
+        <div class="bg-white rounded-2xl border-2 border-gray-200 p-8 card-hover">
+          <div class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Enterprise SaaS</div>
+          <div class="flex items-baseline gap-1 mb-4">
+            <span class="text-4xl font-extrabold">$499</span>
+            <span class="text-gray-400">/月</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-6">适合需要 AAALAC 认证支持的机构</p>
+          <ul class="space-y-3 text-sm text-gray-600 mb-8">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>无限动物 / 用户</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>AAALAC 审计包</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>SSO 单点登录</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>专属客户经理</li>
+          </ul>
+          <a href="https://labanimal.cloud/register?plan=enterprise" class="block text-center bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition">联系销售</a>
+        </div>
+
+        <!-- Enterprise Self-Hosted -->
+        <div class="bg-white rounded-2xl border-2 border-gray-200 p-8 card-hover">
+          <div class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Enterprise 私有部署</div>
+          <div class="flex items-baseline gap-1 mb-4">
+            <span class="text-4xl font-extrabold">$5,000</span>
+            <span class="text-gray-400">起</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-6">适合需要完全数据控制的机构</p>
+          <ul class="space-y-3 text-sm text-gray-600 mb-8">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>无限动物 / 用户</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>私有化部署</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>离线授权码</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>20 份签名报告/月</li>
+          </ul>
+          <a href="mailto:contact@labanimal.tech" class="block text-center bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition">联系我们</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="py-16 px-4 bg-gray-50">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-2xl font-bold mb-8">技术栈</h2>
+      <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
+        <span class="bg-white px-4 py-2 rounded-lg border border-gray-200">React 19</span>
+        <span class="bg-white px-4 py-2 rounded-lg border border-gray-200">Hono.js</span>
+        <span class="bg-white px-4 py-2 rounded-lg border border-gray-200">Prisma 6</span>
+        <span class="bg-white px-4 py-2 rounded-lg border border-gray-200">PostgreSQL</span>
+        <span class="bg-white px-4 py-2 rounded-lg border border-gray-200">Turborepo</span>
+        <span class="bg-white px-4 py-2 rounded-lg border border-gray-200">TypeScript</span>
+        <span class="bg-white px-4 py-2 rounded-lg border border-gray-200">Vite</span>
+        <span class="bg-white px-4 py-2 rounded-lg border border-gray-200">Tailwind CSS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="gradient-hero py-20 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">准备好开始了吗？</h2>
+      <p class="text-blue-100 text-lg mb-8">5 分钟部署，永久免费的 Academic Free 套餐，无需信用卡。</p>
+      <a href="https://labanimal.cloud/register" class="inline-block bg-white text-brand-700 px-10 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 transition shadow-lg">
+        免费注册
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <span class="text-lg font-bold text-white">LabAnimal</span>
+          </div>
+          <p class="text-sm">实验动物合规管理系统<br>开源核心，合规无忧</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">产品</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#features" class="hover:text-white transition">功能</a></li>
+            <li><a href="#pricing" class="hover:text-white transition">定价</a></li>
+            <li><a href="https://labanimal.gitbook.io/docs" target="_blank" class="hover:text-white transition">文档</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">合规</h4>
+          <ul class="space-y-2 text-sm">
+            <li>AVMA Guidelines 2020</li>
+            <li>NRC Guide 2011</li>
+            <li>21 CFR Part 11</li>
+            <li>AAALAC 认证准备</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">联系</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="mailto:contact@labanimal.tech" class="hover:text-white transition">contact@labanimal.tech</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition">提交 Issue</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm">&copy; 2026 LabAnimal. AGPL-3.0 License.</p>
+        <div class="flex gap-4 text-sm">
+          <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a>
+          <a href="https://labanimal.gitbook.io/docs" target="_blank" class="hover:text-white transition">文档</a>
+          <a href="https://labanimal.cloud/login" class="hover:text-white transition">登录</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
