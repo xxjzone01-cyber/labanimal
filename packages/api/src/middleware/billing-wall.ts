@@ -107,9 +107,16 @@ export async function billingWallMiddleware(c: Context, next: Next): Promise<voi
     return;
   }
 
-  // 当前套餐（默认免费版）
-  // TODO: 从数据库读取实际订阅套餐（Stripe/PayPal 集成后）
-  const plan = 'academic-free';
+  // 从数据库读取实际订阅套餐
+  const subscription = await prisma.subscription.findUnique({
+    where: { labId: user.labId },
+    select: { planId: true, status: true },
+  });
+
+  // 有效订阅状态：active, 或免费版无订阅记录
+  const plan = subscription?.status === 'active'
+    ? subscription.planId
+    : 'academic-free';
   const limits = PLAN_LIMITS[plan] || FREE_TIER_LIMITS;
 
   // 统计使用量

@@ -33,6 +33,7 @@ model Lab {
   trainings   Training[]
   deathReports DeathReport[]
   batchSessions BatchSession[]
+  subscription Subscription?
 
   @@map("labs")
 }
@@ -518,4 +519,27 @@ model BatchSession {
   @@index([labId, materialType])
   @@index([labId, expirationDate])
   @@map("batch_sessions")
+}
+
+// ============================================================
+// Subscription (PayPal / Stripe)
+// ============================================================
+
+model Subscription {
+  id                    String    @id @default(cuid())
+  labId                 String    @unique @map("lab_id")
+  provider              String    // paypal, stripe
+  planId                String    @map("plan_id") // academic-free, starter, professional, enterprise-saas
+  status                String    // active, cancelled, expired, suspended
+  paypalSubscriptionId  String?   @map("paypal_subscription_id")
+  stripeSubscriptionId  String?   @map("stripe_subscription_id")
+  currentPeriodStart    DateTime? @map("current_period_start")
+  currentPeriodEnd      DateTime? @map("current_period_end")
+  cancelAtPeriodEnd     Boolean   @default(false) @map("cancel_at_period_end")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
+
+  lab Lab @relation(fields: [labId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
 }
