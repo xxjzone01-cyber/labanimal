@@ -2,7 +2,15 @@ import { describe, it, expect, beforeAll } from 'vitest';
 import { generateKeyPair, isValidPublicKey, isValidPrivateKey } from '../src/license/keys.js';
 import { signLicense, verifyLicense } from '../src/license/signer.js';
 import { signReport, verifyReportSignature, signReportUnverified } from '../src/license/report-signature.js';
-import type { LicensePayload, KeyPair } from '../src/license/index.js';
+import {
+  initOfflineGrace,
+  updateOnlineStatus,
+  checkGraceStatus,
+  generateRenewalCode,
+  verifyRenewalCode,
+  OFFLINE_LIMITS,
+} from '../src/license/offline-grace.js';
+import type { LicensePayload, KeyPair, OfflineGraceState } from '../src/license/index.js';
 
 // ========== 测试密钥对 ==========
 
@@ -397,5 +405,210 @@ describe('端到端流程', () => {
     expect(result.valid).toBe(false);
     expect(result.error).toBe('unverified');
     expect(result.data!.status).toBe('unverified');
+  });
+});
+
+// ========== 离线宽限期 ==========
+
+describe('OFFLINE_LIMITS', () => {
+  it('离线限额定义正确', () => {
+    expect(OFFLINE_LIMITS.maxAnimals).toBe(500);
+    expect(OFFLINE_LIMITS.maxReportsPerMonth).toBe(1);
+  });
+});
+
+describe('initOfflineGrace', () => {
+  it('初始化宽限期状态', () => {
+    const state = initOfflineGrace('deploy-offline-001');
+    expect(state.deployId).toBe('deploy-offline-001');
+    expect(state.firstOfflineAt).toBeGreaterThan(0);
+    expect(state.lastOnlineAt).toBe(state.firstOfflineAt);
+    expect(state.graceExpiresAt).toBe(state.firstOfflineAt + 30 * 24 * 60 * 60 * 1000);
+    expect(state.readOnly).toBe(false);
+    expect(state.renewalExpiresAt).toBeUndefined();
+  });
+
+  it('每次初始化时间戳不同', async () => {
+    const state1 = initOfflineGrace('deploy-1');
+    // 等待 1ms 确保时间戳不同
+    await new Promise((r) => setTimeout(r, 1));
+    const state2 = initOfflineGrace('deploy-2');
+    expect(state2.firstOfflineAt).toBeGreaterThanOrEqual(state1.firstOfflineAt);
+  });
+});
+
+describe('updateOnlineStatus', () => {
+  it('在线验证成功后重置宽限期', () => {
+    const state = initOfflineGrace('deploy-001');
+    const oldGraceExpires = state.graceExpiresAt;
+
+    // 模拟一段时间后在线验证
+    const updated = updateOnlineStatus(state);
+    expect(updated.lastOnlineAt).toBeGreaterThanOrEqual(state.lastOnlineAt);
+    expect(updated.graceExpiresAt).toBeGreaterThanOrEqual(oldGraceExpires);
+    expect(updated.readOnly).toBe(false);
+    expect(updated.renewalExpiresAt).toBeUndefined();
+  });
+
+  it('清除续期码状态', () => {
+    const state: OfflineGraceState = {
+      deployId: 'deploy-001',
+      firstOfflineAt: Date.now() - 10 * 24 * 60 * 60 * 1000,
+      lastOnlineAt: Date.now() - 10 * 24 * 60 * 60 * 1000,
+      graceExpiresAt: Date.now() + 20 * 24 * 60 * 60 * 1000,
+      readOnly: false,
+      renewalExpiresAt: Date.now() + 5 * 24 * 60 * 60 * 1000,
+    };
+
+    const updated = updateOnlineStatus(state);
+    expect(updated.renewalExpiresAt).toBeUndefined();
+    expect(updated.readOnly).toBe(false);
+  });
+
+  it('保留 deployId', () => {
+    const state = initOfflineGrace('my-deploy-id');
+    const updated = updateOnlineStatus(state);
+    expect(updated.deployId).toBe('my-deploy-id');
+  });
+});
+
+describe('checkGraceStatus', () => {
+  it('宽限期内返回 inGracePeriod: true, readOnly: false', () => {
+    const state: OfflineGraceState = {
+      deployId: 'deploy-001',
+      firstOfflineAt: Date.now() - 5 * 24 * 60 * 60 * 1000, // 5 天前
+      lastOnlineAt: Date.now() - 5 * 24 * 60 * 60 * 1000,
+      graceExpiresAt: Date.now() + 25 * 24 * 60 * 60 * 1000, // 还有 25 天
+      readOnly: false,
+    };
+
+    const result = checkGraceStatus(state);
+    expect(result.inGracePeriod).toBe(true);
+    expect(result.readOnly).toBe(false);
+    expect(result.daysRemaining).toBeGreaterThan(0);
+  });
+
+  it('宽限期过期后进入只读模式', () => {
+    const state: OfflineGraceState = {
+      deployId: 'deploy-001',
+      firstOfflineAt: Date.now() - 35 * 24 * 60 * 60 * 1000, // 35 天前
+      lastOnlineAt: Date.now() - 35 * 24 * 60 * 60 * 1000,
+      graceExpiresAt: Date.now() - 5 * 24 * 60 * 60 * 1000, // 已过期 5 天
+      readOnly: false,
+    };
+
+    const result = checkGraceStatus(state);
+    expect(result.inGracePeriod).toBe(false);
+    expect(result.readOnly).toBe(true);
+    expect(result.daysRemaining).toBe(0);
+  });
+
+  it('续期码有效时返回续期码剩余天数', () => {
+    const state: OfflineGraceState = {
+      deployId: 'deploy-001',
+      firstOfflineAt: Date.now() - 35 * 24 * 60 * 60 * 1000,
+      lastOnlineAt: Date.now() - 35 * 24 * 60 * 60 * 1000,
+      graceExpiresAt: Date.now() - 5 * 24 * 60 * 60 * 1000, // 宽限期已过
+      readOnly: true,
+      renewalExpiresAt: Date.now() + 3 * 24 * 60 * 60 * 1000, // 续期码还有 3 天
+    };
+
+    const result = checkGraceStatus(state);
+    expect(result.inGracePeriod).toBe(true);
+    expect(result.readOnly).toBe(false);
+    expect(result.daysRemaining).toBe(3);
+  });
+
+  it('续期码过期后回到只读模式', () => {
+    const state: OfflineGraceState = {
+      deployId: 'deploy-001',
+      firstOfflineAt: Date.now() - 40 * 24 * 60 * 60 * 1000,
+      lastOnlineAt: Date.now() - 40 * 24 * 60 * 60 * 1000,
+      graceExpiresAt: Date.now() - 10 * 24 * 60 * 60 * 1000,
+      readOnly: true,
+      renewalExpiresAt: Date.now() - 1 * 24 * 60 * 60 * 1000, // 续期码已过期
+    };
+
+    const result = checkGraceStatus(state);
+    expect(result.inGracePeriod).toBe(false);
+    expect(result.readOnly).toBe(true);
+    expect(result.daysRemaining).toBe(0);
+  });
+
+  it('daysRemaining 向上取整', () => {
+    const state: OfflineGraceState = {
+      deployId: 'deploy-001',
+      firstOfflineAt: Date.now(),
+      lastOnlineAt: Date.now(),
+      graceExpiresAt: Date.now() + 1.5 * 24 * 60 * 60 * 1000, // 1.5 天
+      readOnly: false,
+    };
+
+    const result = checkGraceStatus(state);
+    expect(result.daysRemaining).toBe(2); // ceil(1.5) = 2
+  });
+});
+
+describe('generateRenewalCode / verifyRenewalCode', () => {
+  const secret = 'test-renewal-secret-key-12345';
+
+  it('生成并验证续期码', () => {
+    const code = generateRenewalCode('deploy-001', secret);
+    expect(typeof code).toBe('string');
+    expect(code.length).toBeGreaterThan(0);
+
+    const result = verifyRenewalCode(code, 'deploy-001', secret);
+    expect(result.valid).toBe(true);
+    expect(result.expiresAt).toBeGreaterThan(Date.now());
+    expect(result.error).toBeUndefined();
+  });
+
+  it('续期码有效期约 7 天', () => {
+    const before = Date.now() + 7 * 24 * 60 * 60 * 1000;
+    const code = generateRenewalCode('deploy-001', secret);
+    const after = Date.now() + 7 * 24 * 60 * 60 * 1000;
+
+    const result = verifyRenewalCode(code, 'deploy-001', secret);
+    expect(result.valid).toBe(true);
+    expect(result.expiresAt!).toBeGreaterThanOrEqual(before - 1000);
+    expect(result.expiresAt!).toBeLessThanOrEqual(after + 1000);
+  });
+
+  it('错误的 deployId 验证失败', () => {
+    const code = generateRenewalCode('deploy-001', secret);
+    const result = verifyRenewalCode(code, 'deploy-002', secret);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('deploy_id_mismatch');
+  });
+
+  it('错误的 secret 验证失败', () => {
+    const code = generateRenewalCode('deploy-001', secret);
+    const result = verifyRenewalCode(code, 'deploy-001', 'wrong-secret');
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('invalid_signature');
+  });
+
+  it('畸形续期码返回 malformed', () => {
+    const result = verifyRenewalCode('not-valid-base64!!!', 'deploy-001', secret);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('malformed');
+  });
+
+  it('篡改续期码内容验证失败', () => {
+    const code = generateRenewalCode('deploy-001', secret);
+    // 解码后篡改 expiresAt
+    const decoded = JSON.parse(Buffer.from(code, 'base64url').toString('utf8'));
+    decoded.expiresAt = Date.now() + 365 * 24 * 60 * 60 * 1000; // 改为 1 年后
+    const tampered = Buffer.from(JSON.stringify(decoded)).toString('base64url');
+
+    const result = verifyRenewalCode(tampered, 'deploy-001', secret);
+    expect(result.valid).toBe(false);
+    expect(result.error).toBe('invalid_signature');
+  });
+
+  it('不同 deployId 生成不同续期码', () => {
+    const code1 = generateRenewalCode('deploy-001', secret);
+    const code2 = generateRenewalCode('deploy-002', secret);
+    expect(code1).not.toBe(code2);
   });
 });

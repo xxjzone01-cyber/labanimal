@@ -18,3 +18,13 @@ export type { KeyPair } from './keys.js';
 export { signLicense, verifyLicense } from './signer.js';
 
 export { signReport, verifyReportSignature, signReportUnverified } from './report-signature.js';
+
+export {
+  initOfflineGrace,
+  updateOnlineStatus,
+  checkGraceStatus,
+  generateRenewalCode,
+  verifyRenewalCode,
+  OFFLINE_LIMITS,
+} from './offline-grace.js';
+export type { OfflineGraceState, RenewalCode } from './offline-grace.js';
