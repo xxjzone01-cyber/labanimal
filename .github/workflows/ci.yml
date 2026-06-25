@@ -75,6 +75,7 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @labanimal/compliance build
       - run: pnpm --filter @labanimal/db exec prisma migrate deploy
       - name: Start API server
         run: |
