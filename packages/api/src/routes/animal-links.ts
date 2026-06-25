@@ -27,10 +27,7 @@ animalLinks.get('/', async (c) => {
     animal: { labId },
   };
   if (animalId) {
-    where.OR = [
-      { animalId },
-      { linkedToId: animalId },
-    ];
+    where.OR = [{ animalId }, { linkedToId: animalId }];
   }
 
   const items = await prisma.animalLink.findMany({

@@ -156,10 +156,20 @@ cages.put('/:id', async (c) => {
       ...(body.status !== undefined && { status: body.status as string }),
       ...(body.capacity !== undefined && { capacity: body.capacity as number }),
       ...(body.isSingleHoused !== undefined && { isSingleHoused: body.isSingleHoused as boolean }),
-      ...(body.singleHousingReason !== undefined && { singleHousingReason: body.singleHousingReason as string }),
-      ...(body.singleHousingUntil !== undefined && { singleHousingUntil: body.singleHousingUntil ? new Date(body.singleHousingUntil as string) : null }),
-      ...(body.lastCleaned !== undefined && { lastCleaned: body.lastCleaned ? new Date(body.lastCleaned as string) : null }),
-      ...(body.nextCleaning !== undefined && { nextCleaning: body.nextCleaning ? new Date(body.nextCleaning as string) : null }),
+      ...(body.singleHousingReason !== undefined && {
+        singleHousingReason: body.singleHousingReason as string,
+      }),
+      ...(body.singleHousingUntil !== undefined && {
+        singleHousingUntil: body.singleHousingUntil
+          ? new Date(body.singleHousingUntil as string)
+          : null,
+      }),
+      ...(body.lastCleaned !== undefined && {
+        lastCleaned: body.lastCleaned ? new Date(body.lastCleaned as string) : null,
+      }),
+      ...(body.nextCleaning !== undefined && {
+        nextCleaning: body.nextCleaning ? new Date(body.nextCleaning as string) : null,
+      }),
     },
   });
 
@@ -198,12 +208,16 @@ cages.post('/:id/assign-animal', async (c) => {
 
   // Quarantine block: quarantined animals cannot be assigned to regular cages
   if (animal.quarantineStatus === 'quarantined' || animal.quarantineStatus === 'pending') {
-    return c.json({
-      error: 'Animal is under quarantine',
-      quarantineStatus: animal.quarantineStatus,
-      quarantineUntil: animal.quarantineUntil,
-      message: 'This animal must be released from quarantine by a veterinarian before it can be assigned to a cage.',
-    }, 403);
+    return c.json(
+      {
+        error: 'Animal is under quarantine',
+        quarantineStatus: animal.quarantineStatus,
+        quarantineUntil: animal.quarantineUntil,
+        message:
+          'This animal must be released from quarantine by a veterinarian before it can be assigned to a cage.',
+      },
+      403,
+    );
   }
 
   const membership = await prisma.userLab.findUnique({
@@ -214,9 +228,10 @@ cages.post('/:id/assign-animal', async (c) => {
   }
 
   // Density check using compliance engine (with protocol exemption if approved)
-  const protocolExemption = animal.protocol?.status === 'approved' && animal.protocol.densityExemption
-    ? animal.protocol.densityExemption
-    : null;
+  const protocolExemption =
+    animal.protocol?.status === 'approved' && animal.protocol.densityExemption
+      ? animal.protocol.densityExemption
+      : null;
 
   const densityResult = calculateMaxDensity({
     species: animal.species,
@@ -227,12 +242,15 @@ cages.post('/:id/assign-animal', async (c) => {
   });
 
   if (!densityResult.allowed) {
-    return c.json({
-      error: 'Density limit exceeded',
-      maxCount: densityResult.maxCount,
-      currentCount: cage.animals.length,
-      reason: densityResult.reason,
-    }, 400);
+    return c.json(
+      {
+        error: 'Density limit exceeded',
+        maxCount: densityResult.maxCount,
+        currentCount: cage.animals.length,
+        reason: densityResult.reason,
+      },
+      400,
+    );
   }
 
   // Assign animal to cage

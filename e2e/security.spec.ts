@@ -17,7 +17,7 @@ async function apiWith(
   tok: string,
   method: string,
   path: string,
-  body?: Record<string, unknown>
+  body?: Record<string, unknown>,
 ): Promise<{ status: number; data: any }> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -154,11 +154,7 @@ test('TS1.7 无 token 不能访问任何受保护端点', async () => {
 // ─── TS2: 输入验证 ──────────────────────────────────────────
 
 test('TS2.1 SQL 注入尝试不应崩溃服务', async () => {
-  const payloads = [
-    "'; DROP TABLE animals; --",
-    "1' OR '1'='1",
-    "admin'--",
-  ];
+  const payloads = ["'; DROP TABLE animals; --", "1' OR '1'='1", "admin'--"];
 
   for (const payload of payloads) {
     const res = await apiWith(adminToken, 'GET', `/animals?labId=${encodeURIComponent(payload)}`);

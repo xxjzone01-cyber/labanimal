@@ -17,10 +17,42 @@ interface BillingData {
 }
 
 const PLANS = [
-  { id: 'academic-free', name: 'Academic Free', price: '$0/月', animals: '500', users: '10', reports: '3份/月', api: false },
-  { id: 'starter', name: 'Starter', price: '$99/月', animals: '1,000', users: '15', reports: '无限', api: false },
-  { id: 'professional', name: 'Professional', price: '$299/月', animals: '15,000', users: '40', reports: '无限', api: true },
-  { id: 'enterprise-saas', name: 'Enterprise SaaS', price: '$499/月', animals: '无限', users: '无限', reports: '无限', api: true },
+  {
+    id: 'academic-free',
+    name: 'Academic Free',
+    price: '$0/月',
+    animals: '500',
+    users: '10',
+    reports: '3份/月',
+    api: false,
+  },
+  {
+    id: 'starter',
+    name: 'Starter',
+    price: '$99/月',
+    animals: '1,000',
+    users: '15',
+    reports: '无限',
+    api: false,
+  },
+  {
+    id: 'professional',
+    name: 'Professional',
+    price: '$299/月',
+    animals: '15,000',
+    users: '40',
+    reports: '无限',
+    api: true,
+  },
+  {
+    id: 'enterprise-saas',
+    name: 'Enterprise SaaS',
+    price: '$499/月',
+    animals: '无限',
+    users: '无限',
+    reports: '无限',
+    api: true,
+  },
 ];
 
 export function SubscriptionsPage() {
@@ -30,8 +62,12 @@ export function SubscriptionsPage() {
   const labId = api.getLabId();
 
   useEffect(() => {
-    if (!labId) { setLoading(false); return; }
-    api.getBillingUsage(labId)
+    if (!labId) {
+      setLoading(false);
+      return;
+    }
+    api
+      .getBillingUsage(labId)
       .then(setBilling)
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -87,21 +123,25 @@ export function SubscriptionsPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-lg font-semibold">当前套餐: {PLANS.find(p => p.id === currentPlan)?.name || currentPlan}</h2>
+              <h2 className="text-lg font-semibold">
+                当前套餐: {PLANS.find((p) => p.id === currentPlan)?.name || currentPlan}
+              </h2>
               <p className="text-sm text-gray-500">
-                状态: {billing.subscription.status === 'active' ? '生效中' : billing.subscription.status}
+                状态:{' '}
+                {billing.subscription.status === 'active' ? '生效中' : billing.subscription.status}
                 {billing.subscription.cancelAtPeriodEnd && ' (将在计费周期结束时取消)'}
               </p>
             </div>
-            {billing.subscription.provider !== 'free' && billing.subscription.status === 'active' && (
-              <button
-                onClick={handleCancel}
-                disabled={actionLoading === 'cancel'}
-                className="px-4 py-2 text-sm text-red-600 border border-red-300 rounded-lg hover:bg-red-50 disabled:opacity-50"
-              >
-                {actionLoading === 'cancel' ? '处理中...' : '取消订阅'}
-              </button>
-            )}
+            {billing.subscription.provider !== 'free' &&
+              billing.subscription.status === 'active' && (
+                <button
+                  onClick={handleCancel}
+                  disabled={actionLoading === 'cancel'}
+                  className="px-4 py-2 text-sm text-red-600 border border-red-300 rounded-lg hover:bg-red-50 disabled:opacity-50"
+                >
+                  {actionLoading === 'cancel' ? '处理中...' : '取消订阅'}
+                </button>
+              )}
           </div>
 
           {/* 使用量 */}
@@ -130,7 +170,8 @@ export function SubscriptionsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {PLANS.map((plan) => {
           const isCurrent = plan.id === currentPlan;
-          const isDowngrade = PLANS.findIndex(p => p.id === currentPlan) > PLANS.findIndex(p => p.id === plan.id);
+          const isDowngrade =
+            PLANS.findIndex((p) => p.id === currentPlan) > PLANS.findIndex((p) => p.id === plan.id);
           return (
             <div
               key={plan.id}
@@ -183,7 +224,8 @@ function UsageCard({ label, current, max }: { label: string; current: number; ma
       <div className="text-xl font-bold">
         {current}
         <span className="text-sm font-normal text-gray-400">
-          {' / '}{unlimited ? '∞' : max}
+          {' / '}
+          {unlimited ? '∞' : max}
         </span>
       </div>
       {!unlimited && (

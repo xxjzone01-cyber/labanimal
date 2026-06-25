@@ -69,8 +69,18 @@ medications.post('/', async (c) => {
     notes?: string;
   }>();
 
-  if (!body.animalId || !body.name || !body.dosage || !body.route || !body.frequency || !body.startDate) {
-    return c.json({ error: 'animalId, name, dosage, route, frequency, and startDate are required' }, 400);
+  if (
+    !body.animalId ||
+    !body.name ||
+    !body.dosage ||
+    !body.route ||
+    !body.frequency ||
+    !body.startDate
+  ) {
+    return c.json(
+      { error: 'animalId, name, dosage, route, frequency, and startDate are required' },
+      400,
+    );
   }
 
   // Verify animal exists and user has access
@@ -167,7 +177,9 @@ medications.put('/:id', async (c) => {
       ...(body.route !== undefined && { route: body.route as string }),
       ...(body.frequency !== undefined && { frequency: body.frequency as string }),
       ...(body.startDate !== undefined && { startDate: new Date(body.startDate as string) }),
-      ...(body.endDate !== undefined && { endDate: body.endDate ? new Date(body.endDate as string) : null }),
+      ...(body.endDate !== undefined && {
+        endDate: body.endDate ? new Date(body.endDate as string) : null,
+      }),
       ...(body.reason !== undefined && { reason: body.reason as string }),
       ...(body.prescribedBy !== undefined && { prescribedBy: body.prescribedBy as string }),
       ...(body.administeredBy !== undefined && { administeredBy: body.administeredBy as string }),

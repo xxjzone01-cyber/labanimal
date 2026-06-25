@@ -54,7 +54,8 @@ export function RenewPage() {
 
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
           <p className="text-sm text-gray-600 mb-4">
-            输入您的部署 ID (deploy_id) 生成 7 天续期码。将此码输入到您的离线 LabAnimal 实例中以解除只读模式。
+            输入您的部署 ID (deploy_id) 生成 7 天续期码。将此码输入到您的离线 LabAnimal
+            实例中以解除只读模式。
           </p>
 
           <form onSubmit={handleSubmit}>
@@ -116,10 +117,15 @@ export function RenewPage() {
             </div>
 
             <div className="text-sm text-gray-600 space-y-1">
-              <p><strong>使用方法：</strong></p>
+              <p>
+                <strong>使用方法：</strong>
+              </p>
               <ol className="list-decimal ml-5 space-y-1">
                 <li>复制上方续期码</li>
-                <li>在离线环境的 LabAnimal 中打开 <code className="bg-gray-100 px-1 rounded">/renew</code> 页面</li>
+                <li>
+                  在离线环境的 LabAnimal 中打开{' '}
+                  <code className="bg-gray-100 px-1 rounded">/renew</code> 页面
+                </li>
                 <li>粘贴续期码并提交</li>
                 <li>系统将解除只读模式，恢复 7 天正常使用</li>
               </ol>

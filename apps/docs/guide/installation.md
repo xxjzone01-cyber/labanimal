@@ -3,10 +3,10 @@
 ## System Requirements
 
 | Requirement | Version |
-|-------------|---------|
-| Node.js | >= 20 |
-| pnpm | >= 9 |
-| PostgreSQL | >= 14 |
+| ----------- | ------- |
+| Node.js     | >= 20   |
+| pnpm        | >= 9    |
+| PostgreSQL  | >= 14   |
 
 ## Clone the Repository
 

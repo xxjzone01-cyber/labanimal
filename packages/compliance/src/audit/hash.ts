@@ -64,7 +64,7 @@ export async function verifyAuditEntry(
     diffJson: string;
     previousHash: string;
   },
-  expectedHash: string
+  expectedHash: string,
 ): Promise<boolean> {
   const computed = await hashAuditEntry(entry);
   return computed === expectedHash;

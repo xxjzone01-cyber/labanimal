@@ -185,11 +185,17 @@ breedings.put('/:id', async (c) => {
   const breeding = await prisma.breeding.update({
     where: { id },
     data: {
-      ...(body.pairDate !== undefined && { pairDate: body.pairDate ? new Date(body.pairDate as string) : null }),
-      ...(body.litterDate !== undefined && { litterDate: body.litterDate ? new Date(body.litterDate as string) : null }),
+      ...(body.pairDate !== undefined && {
+        pairDate: body.pairDate ? new Date(body.pairDate as string) : null,
+      }),
+      ...(body.litterDate !== undefined && {
+        litterDate: body.litterDate ? new Date(body.litterDate as string) : null,
+      }),
       ...(body.litterSize !== undefined && { litterSize: body.litterSize as number }),
       ...(body.weanedCount !== undefined && { weanedCount: body.weanedCount as number }),
-      ...(body.weaningDate !== undefined && { weaningDate: body.weaningDate ? new Date(body.weaningDate as string) : null }),
+      ...(body.weaningDate !== undefined && {
+        weaningDate: body.weaningDate ? new Date(body.weaningDate as string) : null,
+      }),
       ...(body.notes !== undefined && { notes: body.notes as string }),
     },
     include: {
@@ -225,7 +231,10 @@ breedings.post('/:id/wean', async (c) => {
 
   // Validate: must have a litter first
   if (!breeding.litterDate || !breeding.litterSize) {
-    return c.json({ error: 'Cannot wean: no litter recorded yet. Record litter date and size first.' }, 400);
+    return c.json(
+      { error: 'Cannot wean: no litter recorded yet. Record litter date and size first.' },
+      400,
+    );
   }
 
   // Validate: not already weaned
@@ -235,9 +244,12 @@ breedings.post('/:id/wean', async (c) => {
 
   // Validate weaned count
   if (body.weanedCount < 0 || body.weanedCount > breeding.litterSize) {
-    return c.json({
-      error: `weanedCount must be between 0 and litterSize (${breeding.litterSize})`,
-    }, 400);
+    return c.json(
+      {
+        error: `weanedCount must be between 0 and litterSize (${breeding.litterSize})`,
+      },
+      400,
+    );
   }
 
   // Default weaning date to now if not provided
@@ -249,10 +261,14 @@ breedings.post('/:id/wean', async (c) => {
   }
 
   // Typical weaning age for mice is 21 days
-  const daysSinceLitter = Math.floor((weaningDate.getTime() - breeding.litterDate.getTime()) / (1000 * 60 * 60 * 24));
+  const daysSinceLitter = Math.floor(
+    (weaningDate.getTime() - breeding.litterDate.getTime()) / (1000 * 60 * 60 * 24),
+  );
   const warnings: string[] = [];
   if (daysSinceLitter < 14) {
-    warnings.push(`Only ${daysSinceLitter} days since litter. Typical minimum weaning age is 14 days (mice).`);
+    warnings.push(
+      `Only ${daysSinceLitter} days since litter. Typical minimum weaning age is 14 days (mice).`,
+    );
   }
 
   const updated = await prisma.breeding.update({

@@ -9,6 +9,7 @@ assignees: ''
 ## Compliance Issue Type
 
 <!-- Check all that apply -->
+
 - [ ] AVMA Euthanasia Method Validation
 - [ ] IACUC Protocol Validation (3R)
 - [ ] Cage Density Calculation

@@ -30,7 +30,7 @@ async function sha256(data: string): Promise<string> {
   const encoder = new TextEncoder();
   const hashBuffer = await crypto.subtle.digest('SHA-256', encoder.encode(data));
   return Array.from(new Uint8Array(hashBuffer))
-    .map(b => b.toString(16).padStart(2, '0'))
+    .map((b) => b.toString(16).padStart(2, '0'))
     .join('');
 }
 
@@ -40,7 +40,7 @@ async function sha256(data: string): Promise<string> {
 export async function generateBillingPDF(
   report: BillingReport,
   labName: string,
-  signReport: (data: { reportHash?: string; reportData?: string }) => Promise<SignatureData>
+  signReport: (data: { reportHash?: string; reportData?: string }) => Promise<SignatureData>,
 ): Promise<void> {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -54,7 +54,11 @@ export async function generateBillingPDF(
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
   doc.text(`Lab: ${labName}`, 14, 38);
-  doc.text(`Period: ${report.period.startDate} to ${report.period.endDate} (${report.period.days} days)`, 14, 44);
+  doc.text(
+    `Period: ${report.period.startDate} to ${report.period.endDate} (${report.period.days} days)`,
+    14,
+    44,
+  );
   doc.text(`Generated: ${new Date().toISOString().split('T')[0]}`, 14, 50);
 
   // 分隔线
@@ -129,12 +133,14 @@ export async function generateBillingPDF(
   // 签名信息
   doc.setFontSize(8);
   doc.setFont('helvetica', 'normal');
-  const statusText = sig?.status === 'verified'
-    ? 'VERIFIED — Signed with RSA private key'
-    : sig?.status === 'unverified'
-      ? 'UNVERIFIED — Free tier or over limit'
-      : 'UNVERIFIED — Signature unavailable';
-  const statusColor: [number, number, number] = sig?.status === 'verified' ? [0, 128, 0] : [200, 150, 0];
+  const statusText =
+    sig?.status === 'verified'
+      ? 'VERIFIED — Signed with RSA private key'
+      : sig?.status === 'unverified'
+        ? 'UNVERIFIED — Free tier or over limit'
+        : 'UNVERIFIED — Signature unavailable';
+  const statusColor: [number, number, number] =
+    sig?.status === 'verified' ? [0, 128, 0] : [200, 150, 0];
 
   doc.text('Scan QR code to verify this report', 44, footerY + 3);
   doc.setTextColor(...statusColor);

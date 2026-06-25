@@ -34,10 +34,10 @@ pnpm dev
 
 This starts both the API server and the frontend application using Turbo.
 
-| Service | URL |
-|---------|-----|
+| Service  | URL                   |
+| -------- | --------------------- |
 | Frontend | http://localhost:5173 |
-| API | http://localhost:3000 |
+| API      | http://localhost:3000 |
 
 ## Step 4: Explore the Compliance Engine
 

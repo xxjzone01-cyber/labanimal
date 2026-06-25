@@ -49,7 +49,7 @@ export function VetWorkbenchPage() {
     e.preventDefault();
     if (!selectedCage) return;
 
-    const cage = cages.find(c => c.id === selectedCage);
+    const cage = cages.find((c) => c.id === selectedCage);
     if (!cage || cage.animals.length === 0) return;
 
     setSubmitting(true);
@@ -62,7 +62,9 @@ export function VetWorkbenchPage() {
         await api.createHealthRecord({
           animalId: animal.id,
           recordType: batchForm.recordType,
-          bodyConditionScore: batchForm.bodyConditionScore ? parseInt(batchForm.bodyConditionScore) : undefined,
+          bodyConditionScore: batchForm.bodyConditionScore
+            ? parseInt(batchForm.bodyConditionScore)
+            : undefined,
           painScore: batchForm.painScore ? parseFloat(batchForm.painScore) : undefined,
           painScoreType: batchForm.painScore ? batchForm.painScoreType : undefined,
           description: batchForm.description || undefined,
@@ -72,7 +74,14 @@ export function VetWorkbenchPage() {
       }
       setSuccess(`Created ${created} health records for cage ${cage.position}`);
       setSelectedCage(null);
-      setBatchForm({ recordType: 'check', bodyConditionScore: '3', painScore: '', painScoreType: 'MGS', description: '', treatment: '' });
+      setBatchForm({
+        recordType: 'check',
+        bodyConditionScore: '3',
+        painScore: '',
+        painScoreType: 'MGS',
+        description: '',
+        treatment: '',
+      });
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -93,8 +102,14 @@ export function VetWorkbenchPage() {
     <div>
       <h1 className="text-2xl font-bold mb-6">Veterinary Workbench</h1>
 
-      {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>}
-      {success && <div className="bg-green-50 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm">{success}</div>}
+      {error && (
+        <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>
+      )}
+      {success && (
+        <div className="bg-green-50 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm">
+          {success}
+        </div>
+      )}
 
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-1">Rack ID</label>
@@ -114,7 +129,9 @@ export function VetWorkbenchPage() {
             {loading ? (
               <div className="col-span-3 text-center text-gray-500">Loading...</div>
             ) : cages.length === 0 ? (
-              <div className="col-span-3 text-center text-gray-500">Enter a rack ID to view cages</div>
+              <div className="col-span-3 text-center text-gray-500">
+                Enter a rack ID to view cages
+              </div>
             ) : (
               cages.map((cage) => (
                 <button
@@ -133,7 +150,7 @@ export function VetWorkbenchPage() {
                   )}
                   {cage.animals.length > 0 && (
                     <div className="mt-1 text-xs text-gray-500">
-                      {cage.animals.map(a => a.internalId).join(', ')}
+                      {cage.animals.map((a) => a.internalId).join(', ')}
                     </div>
                   )}
                 </button>
@@ -146,15 +163,20 @@ export function VetWorkbenchPage() {
         <div>
           <h2 className="text-lg font-semibold mb-3">Cage Health Check</h2>
           {selectedCage ? (
-            <form onSubmit={handleBatchCheck} className="bg-white rounded-xl p-4 border border-gray-200">
+            <form
+              onSubmit={handleBatchCheck}
+              className="bg-white rounded-xl p-4 border border-gray-200"
+            >
               <div className="text-sm text-gray-600 mb-3">
-                Checking {cages.find(c => c.id === selectedCage)?.animals.length || 0} animals in cage{' '}
-                <strong>{cages.find(c => c.id === selectedCage)?.position}</strong>
+                Checking {cages.find((c) => c.id === selectedCage)?.animals.length || 0} animals in
+                cage <strong>{cages.find((c) => c.id === selectedCage)?.position}</strong>
               </div>
 
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">Record Type</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    Record Type
+                  </label>
                   <select
                     value={batchForm.recordType}
                     onChange={(e) => setBatchForm({ ...batchForm, recordType: e.target.value })}
@@ -167,10 +189,14 @@ export function VetWorkbenchPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">Body Condition Score (1-5)</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    Body Condition Score (1-5)
+                  </label>
                   <select
                     value={batchForm.bodyConditionScore}
-                    onChange={(e) => setBatchForm({ ...batchForm, bodyConditionScore: e.target.value })}
+                    onChange={(e) =>
+                      setBatchForm({ ...batchForm, bodyConditionScore: e.target.value })
+                    }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
                   >
                     <option value="1">1 - Emaciated</option>
@@ -182,7 +208,9 @@ export function VetWorkbenchPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">Pain Score (0-1, optional)</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    Pain Score (0-1, optional)
+                  </label>
                   <div className="flex gap-2">
                     <input
                       type="number"
@@ -196,7 +224,9 @@ export function VetWorkbenchPage() {
                     />
                     <select
                       value={batchForm.painScoreType}
-                      onChange={(e) => setBatchForm({ ...batchForm, painScoreType: e.target.value })}
+                      onChange={(e) =>
+                        setBatchForm({ ...batchForm, painScoreType: e.target.value })
+                      }
                       className="px-2 py-2 border border-gray-300 rounded-lg text-sm"
                     >
                       <option value="MGS">MGS</option>
@@ -206,7 +236,9 @@ export function VetWorkbenchPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">Description</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    Description
+                  </label>
                   <input
                     value={batchForm.description}
                     onChange={(e) => setBatchForm({ ...batchForm, description: e.target.value })}
@@ -217,7 +249,9 @@ export function VetWorkbenchPage() {
 
                 {batchForm.recordType === 'treatment' && (
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">Treatment</label>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
+                      Treatment
+                    </label>
                     <input
                       value={batchForm.treatment}
                       onChange={(e) => setBatchForm({ ...batchForm, treatment: e.target.value })}

@@ -16,7 +16,9 @@ export function DeathReportsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => { loadReports(); }, []);
+  useEffect(() => {
+    loadReports();
+  }, []);
 
   async function loadReports() {
     try {
@@ -33,7 +35,9 @@ export function DeathReportsPage() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Death Reports</h1>
-      {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>}
+      {error && (
+        <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>
+      )}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <table className="w-full">
           <thead className="bg-gray-50">
@@ -46,14 +50,24 @@ export function DeathReportsPage() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={4} className="px-4 py-8 text-center text-gray-500">Loading...</td></tr>
+              <tr>
+                <td colSpan={4} className="px-4 py-8 text-center text-gray-500">
+                  Loading...
+                </td>
+              </tr>
             ) : reports.length === 0 ? (
-              <tr><td colSpan={4} className="px-4 py-8 text-center text-gray-500">No death reports</td></tr>
+              <tr>
+                <td colSpan={4} className="px-4 py-8 text-center text-gray-500">
+                  No death reports
+                </td>
+              </tr>
             ) : (
               reports.map((r) => (
                 <tr key={r.id} className="border-t border-gray-100 hover:bg-gray-50">
                   <td className="px-4 py-3 text-sm">{r.animal.internalId}</td>
-                  <td className="px-4 py-3 text-sm">{new Date(r.dateOfDeath).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-sm">
+                    {new Date(r.dateOfDeath).toLocaleDateString()}
+                  </td>
                   <td className="px-4 py-3 text-sm capitalize">{r.cause.replace(/_/g, ' ')}</td>
                   <td className="px-4 py-3 text-sm">{r.necropsyPerformed ? 'Yes' : 'No'}</td>
                 </tr>

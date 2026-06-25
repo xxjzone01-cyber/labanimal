@@ -1,12 +1,10 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from 'vitepress';
 
 export default defineConfig({
   title: 'LabAnimal Docs',
   description: 'Open-source laboratory animal management system documentation',
   lang: 'en-US',
-  ignoreDeadLinks: [
-    /localhost/,
-  ],
+  ignoreDeadLinks: [/localhost/],
 
   themeConfig: {
     logo: '/logo.svg',
@@ -44,16 +42,12 @@ export default defineConfig({
       '/api/': [
         {
           text: 'API Reference',
-          items: [
-            { text: 'OpenAPI Reference', link: '/api/' },
-          ],
+          items: [{ text: 'OpenAPI Reference', link: '/api/' }],
         },
       ],
     },
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/xxjzone01-cyber/labanimal' },
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/xxjzone01-cyber/labanimal' }],
 
     footer: {
       message: 'Released under the Apache-2.0 License.',
@@ -78,4 +72,4 @@ export default defineConfig({
       text: 'Last updated',
     },
   },
-})
+});

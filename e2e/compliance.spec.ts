@@ -12,7 +12,7 @@ let labId: string;
 async function api(
   method: string,
   path: string,
-  body?: Record<string, unknown>
+  body?: Record<string, unknown>,
 ): Promise<{ status: number; data: any }> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -142,9 +142,7 @@ test('3. Quarantine — quarantined animal blocked from cage assignment', async 
   while (!quarantined) {
     const animals = await api('GET', `/animals?labId=${labId}&page=${page}&limit=50`);
     if (!animals.data.items || animals.data.items.length === 0) break;
-    quarantined = animals.data.items.find(
-      (a: any) => a.quarantineStatus === 'quarantined'
-    );
+    quarantined = animals.data.items.find((a: any) => a.quarantineStatus === 'quarantined');
     if (!quarantined && animals.data.items.length < 50) break;
     page++;
   }
@@ -212,7 +210,7 @@ test('4. Identity deprecation — retired animal links to active replacement', a
     const animals = await api('GET', `/animals?labId=${labId}&page=${page}&limit=50`);
     if (!animals.data.items || animals.data.items.length === 0) break;
     retiredAnimal = animals.data.items.find(
-      (a: any) => a.status === 'retired' && a.identityLinks && a.identityLinks.length > 0
+      (a: any) => a.status === 'retired' && a.identityLinks && a.identityLinks.length > 0,
     );
     if (retiredAnimal) {
       activeAnimal = retiredAnimal.identityLinks[0]?.linkedTo;
@@ -275,7 +273,10 @@ test('5. AVMA block — rabbit + CO2 euthanasia rejected', async () => {
   let rabbit: any = null;
   let page = 1;
   while (!rabbit && page <= 10) {
-    const animals = await api('GET', `/animals?labId=${labId}&species=rabbit&page=${page}&limit=50`);
+    const animals = await api(
+      'GET',
+      `/animals?labId=${labId}&species=rabbit&page=${page}&limit=50`,
+    );
     if (!animals.data.items || animals.data.items.length === 0) break;
     rabbit = animals.data.items.find((a: any) => a.species === 'rabbit' && a.status === 'active');
     if (!rabbit && animals.data.items.length < 50) break;

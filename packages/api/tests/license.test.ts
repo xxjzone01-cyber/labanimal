@@ -25,9 +25,12 @@ beforeAll(async () => {
   process.env.LICENSE_DEPLOY_ID = 'test-deploy';
 
   // 清理测试用户和审计日志（避免月度报告限额影响测试）
-  const existingUsers = await prisma.user.findMany({ where: { email: TEST_EMAIL }, select: { id: true } });
+  const existingUsers = await prisma.user.findMany({
+    where: { email: TEST_EMAIL },
+    select: { id: true },
+  });
   if (existingUsers.length > 0) {
-    await prisma.auditLog.deleteMany({ where: { userId: { in: existingUsers.map(u => u.id) } } });
+    await prisma.auditLog.deleteMany({ where: { userId: { in: existingUsers.map((u) => u.id) } } });
   }
   await prisma.user.deleteMany({ where: { email: TEST_EMAIL } });
 
@@ -60,7 +63,15 @@ afterAll(async () => {
   process.env.LICENSE_DEPLOY_ID = origDeployId;
 
   // 清理
-  await prisma.auditLog.deleteMany({ where: { userId: { in: (await prisma.user.findMany({ where: { email: TEST_EMAIL }, select: { id: true } })).map(u => u.id) } } });
+  await prisma.auditLog.deleteMany({
+    where: {
+      userId: {
+        in: (
+          await prisma.user.findMany({ where: { email: TEST_EMAIL }, select: { id: true } })
+        ).map((u) => u.id),
+      },
+    },
+  });
   await prisma.user.deleteMany({ where: { email: TEST_EMAIL } });
   await prisma.$disconnect();
 });
@@ -155,9 +166,12 @@ describe('POST /api/license/sign', () => {
 describe('POST /api/license/verify', () => {
   // 每个测试前清理审计日志，避免月度报告限额影响
   beforeEach(async () => {
-    const users = await prisma.user.findMany({ where: { email: TEST_EMAIL }, select: { id: true } });
+    const users = await prisma.user.findMany({
+      where: { email: TEST_EMAIL },
+      select: { id: true },
+    });
     if (users.length > 0) {
-      await prisma.auditLog.deleteMany({ where: { userId: { in: users.map(u => u.id) } } });
+      await prisma.auditLog.deleteMany({ where: { userId: { in: users.map((u) => u.id) } } });
     }
   });
 

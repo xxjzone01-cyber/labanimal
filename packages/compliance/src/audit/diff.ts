@@ -30,23 +30,22 @@ export interface DiffEntry {
  * @param prefix - Internal path prefix for recursion
  * @returns Array of DiffEntry describing all changes
  */
-export function generateDiff(
-  oldVal: unknown,
-  newVal: unknown,
-  prefix = ''
-): DiffEntry[] {
+export function generateDiff(oldVal: unknown, newVal: unknown, prefix = ''): DiffEntry[] {
   // Same reference or same value
   if (oldVal === newVal) return [];
 
   // Null/undefined/primitive comparison
   if (!isObject(oldVal) || !isObject(newVal)) {
     if (oldVal !== newVal) {
-      return [{
-        path: prefix || '(root)',
-        oldValue: oldVal,
-        newValue: newVal,
-        changeType: oldVal === undefined ? 'added' : newVal === undefined ? 'removed' : 'modified',
-      }];
+      return [
+        {
+          path: prefix || '(root)',
+          oldValue: oldVal,
+          newValue: newVal,
+          changeType:
+            oldVal === undefined ? 'added' : newVal === undefined ? 'removed' : 'modified',
+        },
+      ];
     }
     return [];
   }

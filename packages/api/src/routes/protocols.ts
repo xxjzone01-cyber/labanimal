@@ -29,11 +29,13 @@ protocols.get('/', async (c) => {
     orderBy: { createdAt: 'desc' },
   });
 
-  return c.json(items.map((p) => ({
-    ...p,
-    animalCount: p._count.animals,
-    _count: undefined,
-  })));
+  return c.json(
+    items.map((p) => ({
+      ...p,
+      animalCount: p._count.animals,
+      _count: undefined,
+    })),
+  );
 });
 
 // POST /api/protocols — create protocol
@@ -121,15 +123,18 @@ protocols.put('/:id', async (c) => {
   if (body.status && body.status !== existing.status) {
     const valid = isValidStatusTransition(
       existing.status as 'draft' | 'submitted' | 'approved' | 'rejected' | 'expired',
-      body.status as 'draft' | 'submitted' | 'approved' | 'rejected' | 'expired'
+      body.status as 'draft' | 'submitted' | 'approved' | 'rejected' | 'expired',
     );
     if (!valid) {
-      return c.json({
-        error: 'Invalid status transition',
-        from: existing.status,
-        to: body.status,
-        allowed: getValidTransitions(existing.status),
-      }, 400);
+      return c.json(
+        {
+          error: 'Invalid status transition',
+          from: existing.status,
+          to: body.status,
+          allowed: getValidTransitions(existing.status),
+        },
+        400,
+      );
     }
 
     // Set timestamp fields for status changes
@@ -153,18 +158,38 @@ protocols.put('/:id', async (c) => {
       ...(body.iacucNumber !== undefined && { iacucNumber: body.iacucNumber as string }),
       ...(body.status !== undefined && { status: body.status as string }),
       ...(body.painCategory !== undefined && { painCategory: body.painCategory as string }),
-      ...(body.startDate !== undefined && { startDate: body.startDate ? new Date(body.startDate as string) : null }),
-      ...(body.endDate !== undefined && { endDate: body.endDate ? new Date(body.endDate as string) : null }),
+      ...(body.startDate !== undefined && {
+        startDate: body.startDate ? new Date(body.startDate as string) : null,
+      }),
+      ...(body.endDate !== undefined && {
+        endDate: body.endDate ? new Date(body.endDate as string) : null,
+      }),
       ...(body.animalLimit !== undefined && { animalLimit: body.animalLimit as number }),
-      ...(body.densityExemption !== undefined && { densityExemption: body.densityExemption as number }),
-      ...(body.threeRsReplacement !== undefined && { threeRsReplacement: body.threeRsReplacement as string }),
-      ...(body.threeRsReduction !== undefined && { threeRsReduction: body.threeRsReduction as string }),
-      ...(body.threeRsRefinement !== undefined && { threeRsRefinement: body.threeRsRefinement as string }),
-      ...(body.hasStatisticalJustification !== undefined && { hasStatisticalJustification: body.hasStatisticalJustification as boolean }),
-      ...(body.involvesSurgery !== undefined && { involvesSurgery: body.involvesSurgery as boolean }),
-      ...(body.survivalSurgery !== undefined && { survivalSurgery: body.survivalSurgery as boolean }),
+      ...(body.densityExemption !== undefined && {
+        densityExemption: body.densityExemption as number,
+      }),
+      ...(body.threeRsReplacement !== undefined && {
+        threeRsReplacement: body.threeRsReplacement as string,
+      }),
+      ...(body.threeRsReduction !== undefined && {
+        threeRsReduction: body.threeRsReduction as string,
+      }),
+      ...(body.threeRsRefinement !== undefined && {
+        threeRsRefinement: body.threeRsRefinement as string,
+      }),
+      ...(body.hasStatisticalJustification !== undefined && {
+        hasStatisticalJustification: body.hasStatisticalJustification as boolean,
+      }),
+      ...(body.involvesSurgery !== undefined && {
+        involvesSurgery: body.involvesSurgery as boolean,
+      }),
+      ...(body.survivalSurgery !== undefined && {
+        survivalSurgery: body.survivalSurgery as boolean,
+      }),
       ...(body.usesAnalgesics !== undefined && { usesAnalgesics: body.usesAnalgesics as boolean }),
-      ...(body.hasHumaneEndpoints !== undefined && { hasHumaneEndpoints: body.hasHumaneEndpoints as boolean }),
+      ...(body.hasHumaneEndpoints !== undefined && {
+        hasHumaneEndpoints: body.hasHumaneEndpoints as boolean,
+      }),
       ...(body.submittedAt !== undefined && { submittedAt: body.submittedAt as Date }),
       ...(body.approvedAt !== undefined && { approvedAt: body.approvedAt as Date }),
       ...(body.approvedBy !== undefined && { approvedBy: body.approvedBy as string }),
@@ -222,10 +247,13 @@ protocols.delete('/:id', async (c) => {
   }
 
   if (existing.status === 'approved' && existing._count.animals > 0) {
-    return c.json({
-      error: 'Cannot delete an approved protocol with active animals',
-      animalCount: existing._count.animals,
-    }, 400);
+    return c.json(
+      {
+        error: 'Cannot delete an approved protocol with active animals',
+        animalCount: existing._count.animals,
+      },
+      400,
+    );
   }
 
   await prisma.protocol.delete({ where: { id } });

@@ -46,11 +46,7 @@ export function validateThreeRs(input: ThreeRsInput): ThreeRsResult {
   const reduction = checkReduction(input);
   const refinement = checkRefinement(input);
 
-  const allIssues = [
-    ...replacement.issues,
-    ...reduction.issues,
-    ...refinement.issues,
-  ];
+  const allIssues = [...replacement.issues, ...reduction.issues, ...refinement.issues];
 
   return {
     compliant: allIssues.length === 0,
@@ -66,7 +62,7 @@ function checkReplacement(input: ThreeRsInput): { met: boolean; issues: string[]
 
   if (!input.alternativesConsidered) {
     issues.push(
-      'Replacement: Non-animal alternatives must be considered and documented. Describe literature search for alternatives.'
+      'Replacement: Non-animal alternatives must be considered and documented. Describe literature search for alternatives.',
     );
   }
 
@@ -78,7 +74,7 @@ function checkReduction(input: ThreeRsInput): { met: boolean; issues: string[] }
 
   if (!input.hasStatisticalJustification) {
     issues.push(
-      'Reduction: Animal numbers must be justified with statistical analysis (power analysis, sample size calculation).'
+      'Reduction: Animal numbers must be justified with statistical analysis (power analysis, sample size calculation).',
     );
   }
 
@@ -94,20 +90,18 @@ function checkRefinement(input: ThreeRsInput): { met: boolean; issues: string[] 
 
   if ((input.painCategory === 'D' || input.painCategory === 'E') && !input.usesAnalgesics) {
     issues.push(
-      'Refinement: Procedures causing pain (Category D/E) must use appropriate analgesics or anesthetics.'
+      'Refinement: Procedures causing pain (Category D/E) must use appropriate analgesics or anesthetics.',
     );
   }
 
   if (!input.hasHumaneEndpoints) {
     issues.push(
-      'Refinement: Humane endpoints must be defined to minimize suffering. Define criteria for early termination.'
+      'Refinement: Humane endpoints must be defined to minimize suffering. Define criteria for early termination.',
     );
   }
 
   if (!input.personnelTrained) {
-    issues.push(
-      'Refinement: All personnel performing procedures must be trained and competent.'
-    );
+    issues.push('Refinement: All personnel performing procedures must be trained and competent.');
   }
 
   return { met: issues.length === 0, issues };

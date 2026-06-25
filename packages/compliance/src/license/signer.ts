@@ -40,10 +40,7 @@ function base64UrlDecode(data: string): string {
  * @param privateKeyPem PEM 格式的 RSA 私钥
  * @returns JWT 字符串
  */
-export async function signLicense(
-  payload: LicensePayload,
-  privateKeyPem: string
-): Promise<string> {
+export async function signLicense(payload: LicensePayload, privateKeyPem: string): Promise<string> {
   const headerB64 = base64UrlEncode(JSON.stringify(JWT_HEADER));
   const payloadB64 = base64UrlEncode(JSON.stringify(payload));
 
@@ -69,7 +66,7 @@ export async function signLicense(
  */
 export async function verifyLicense(
   jwt: string,
-  publicKeyPem: string
+  publicKeyPem: string,
 ): Promise<LicenseVerification> {
   // 1. 拆分 JWT
   const parts = jwt.split('.');

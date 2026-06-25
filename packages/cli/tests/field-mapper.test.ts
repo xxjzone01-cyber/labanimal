@@ -114,11 +114,15 @@ describe('mapEnum', () => {
   });
 
   it('空格转下划线', () => {
-    expect(mapEnum('experimental endpoint', ['experimental_endpoint'], 'natural')).toBe('experimental_endpoint');
+    expect(mapEnum('experimental endpoint', ['experimental_endpoint'], 'natural')).toBe(
+      'experimental_endpoint',
+    );
   });
 
   it('连字符转下划线', () => {
-    expect(mapEnum('experimental-endpoint', ['experimental_endpoint'], 'natural')).toBe('experimental_endpoint');
+    expect(mapEnum('experimental-endpoint', ['experimental_endpoint'], 'natural')).toBe(
+      'experimental_endpoint',
+    );
   });
 
   it('无效值返回 fallback', () => {
@@ -243,14 +247,9 @@ describe('mapRow', () => {
 
 describe('mapRows', () => {
   it('批量映射多行数据', () => {
-    const mappings: FieldMapping[] = [
-      { source: 'name', target: 'name', transform: mapString },
-    ];
+    const mappings: FieldMapping[] = [{ source: 'name', target: 'name', transform: mapString }];
 
-    const rows = [
-      { name: 'Alice' },
-      { name: 'Bob' },
-    ];
+    const rows = [{ name: 'Alice' }, { name: 'Bob' }];
 
     const result = mapRows(rows, mappings);
     expect(result).toHaveLength(2);

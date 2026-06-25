@@ -51,9 +51,11 @@ workSessions.get('/', async (c) => {
 
 // Helper: check if two dates are on the same day (local time)
 function isSameDay(a: Date, b: Date): boolean {
-  return a.getFullYear() === b.getFullYear() &&
+  return (
+    a.getFullYear() === b.getFullYear() &&
     a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate();
+    a.getDate() === b.getDate()
+  );
 }
 
 // GET /api/work-sessions/active — get current user's active session
@@ -86,9 +88,22 @@ workSessions.get('/active', async (c) => {
   if (!isSameDay(session.startedAt, now)) {
     const ended = await prisma.workSession.update({
       where: { id: session.id },
-      data: { endedAt: new Date(session.startedAt.getFullYear(), session.startedAt.getMonth(), session.startedAt.getDate(), 23, 59, 59) },
+      data: {
+        endedAt: new Date(
+          session.startedAt.getFullYear(),
+          session.startedAt.getMonth(),
+          session.startedAt.getDate(),
+          23,
+          59,
+          59,
+        ),
+      },
     });
-    return c.json({ ...ended, crossDayClosed: true, message: 'Session auto-closed: work sessions cannot span multiple days.' });
+    return c.json({
+      ...ended,
+      crossDayClosed: true,
+      message: 'Session auto-closed: work sessions cannot span multiple days.',
+    });
   }
 
   // Check for timeout
@@ -135,14 +150,26 @@ workSessions.post('/', async (c) => {
     if (!isSameDay(existingSession.startedAt, now)) {
       await prisma.workSession.update({
         where: { id: existingSession.id },
-        data: { endedAt: new Date(existingSession.startedAt.getFullYear(), existingSession.startedAt.getMonth(), existingSession.startedAt.getDate(), 23, 59, 59) },
+        data: {
+          endedAt: new Date(
+            existingSession.startedAt.getFullYear(),
+            existingSession.startedAt.getMonth(),
+            existingSession.startedAt.getDate(),
+            23,
+            59,
+            59,
+          ),
+        },
       });
       // Fall through to create new session
     } else {
-      return c.json({
-        error: 'Active session already exists',
-        sessionId: existingSession.id,
-      }, 409);
+      return c.json(
+        {
+          error: 'Active session already exists',
+          sessionId: existingSession.id,
+        },
+        409,
+      );
     }
   }
 

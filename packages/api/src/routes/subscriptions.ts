@@ -82,9 +82,9 @@ subscriptions.post('/create', async (c) => {
     const response = await fetch(`${baseUrl}/v1/billing/subscriptions`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
-        'Prefer': 'return=representation',
+        Prefer: 'return=representation',
       },
       body: JSON.stringify({
         plan_id: plan.paypalPlanId,
@@ -108,7 +108,7 @@ subscriptions.post('/create', async (c) => {
       return c.json({ error: 'Failed to create PayPal subscription' }, 500);
     }
 
-    const data = await response.json() as {
+    const data = (await response.json()) as {
       id: string;
       status: string;
       links: Array<{ href: string; rel: string }>;
@@ -133,7 +133,7 @@ subscriptions.post('/create', async (c) => {
     });
 
     // 返回 PayPal 审批链接
-    const approveLink = data.links.find(l => l.rel === 'approve');
+    const approveLink = data.links.find((l) => l.rel === 'approve');
     return c.json({
       subscriptionId: data.id,
       approveUrl: approveLink?.href,
@@ -170,21 +170,18 @@ subscriptions.post('/activate', async (c) => {
     const baseUrl = getPayPalBaseUrl();
 
     // 查询 PayPal 订阅状态
-    const response = await fetch(
-      `${baseUrl}/v1/billing/subscriptions/${body.subscriptionId}`,
-      {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    const response = await fetch(`${baseUrl}/v1/billing/subscriptions/${body.subscriptionId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
 
     if (!response.ok) {
       return c.json({ error: 'Failed to verify PayPal subscription' }, 500);
     }
 
-    const data = await response.json() as {
+    const data = (await response.json()) as {
       status: string;
       billing_info: {
         next_billing_time: string;
@@ -193,10 +190,13 @@ subscriptions.post('/activate', async (c) => {
     };
 
     if (data.status !== 'ACTIVE') {
-      return c.json({
-        error: `Subscription not active. Status: ${data.status}`,
-        status: data.status,
-      }, 400);
+      return c.json(
+        {
+          error: `Subscription not active. Status: ${data.status}`,
+          status: data.status,
+        },
+        400,
+      );
     }
 
     // 更新数据库
@@ -266,13 +266,13 @@ subscriptions.post('/cancel', async (c) => {
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             reason: body.reason ?? 'User requested cancellation',
           }),
-        }
+        },
       );
 
       if (!response.ok && response.status !== 204) {

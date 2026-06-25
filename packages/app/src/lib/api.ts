@@ -41,7 +41,7 @@ class ApiClient {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...(options.headers as Record<string, string> || {}),
+      ...((options.headers as Record<string, string>) || {}),
     };
 
     const res = await fetch(`${API_BASE}${path}`, {
@@ -66,10 +66,13 @@ class ApiClient {
   }
 
   login(data: { email: string; password: string }) {
-    return this.request<{ user: any; token: string; labs: { labId: string; role: string }[] }>('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
+    return this.request<{ user: any; token: string; labs: { labId: string; role: string }[] }>(
+      '/auth/login',
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+      },
+    );
   }
 
   // Animals
@@ -336,7 +339,9 @@ class ApiClient {
   }
 
   generateBilling(labId: string, startDate: string, endDate: string) {
-    return this.request<any>(`/billing/generate?labId=${labId}&startDate=${startDate}&endDate=${endDate}`);
+    return this.request<any>(
+      `/billing/generate?labId=${labId}&startDate=${startDate}&endDate=${endDate}`,
+    );
   }
 
   // Electronic Signatures
@@ -367,7 +372,12 @@ class ApiClient {
   }
 
   createSubscription(planId: string, labId: string) {
-    return this.request<{ subscriptionId?: string; approveUrl?: string; subscription?: any; message?: string }>('/subscriptions/create', {
+    return this.request<{
+      subscriptionId?: string;
+      approveUrl?: string;
+      subscription?: any;
+      message?: string;
+    }>('/subscriptions/create', {
       method: 'POST',
       body: JSON.stringify({ planId, labId }),
     });
@@ -389,11 +399,23 @@ class ApiClient {
 
   // License
   getLicenseStatus() {
-    return this.request<{ deployId: string; hasLicense: boolean; maxAnimals: number; maxReportsPerMonth: number; publicKeyConfigured: boolean }>('/license/status');
+    return this.request<{
+      deployId: string;
+      hasLicense: boolean;
+      maxAnimals: number;
+      maxReportsPerMonth: number;
+      publicKeyConfigured: boolean;
+    }>('/license/status');
   }
 
   signReport(data: { reportHash?: string; reportData?: string }) {
-    return this.request<{ signature: string; status: string; deployId: string; verifyUrl: string; signedAt: string }>('/license/sign', {
+    return this.request<{
+      signature: string;
+      status: string;
+      deployId: string;
+      verifyUrl: string;
+      signedAt: string;
+    }>('/license/sign', {
       method: 'POST',
       body: JSON.stringify(data),
     });
@@ -408,11 +430,21 @@ class ApiClient {
 
   /** 通过报告哈希从数据库查找签名并验证（公开端点，无需登录） */
   verifyReportByHash(reportHash: string) {
-    return this.request<{ valid: boolean; error?: string; message?: string; data?: { deployId?: string; signedAt?: string; reportHash?: string; status?: string } }>(`/license/verify/${reportHash}`);
+    return this.request<{
+      valid: boolean;
+      error?: string;
+      message?: string;
+      data?: { deployId?: string; signedAt?: string; reportHash?: string; status?: string };
+    }>(`/license/verify/${reportHash}`);
   }
 
   renewLicense(deployId: string) {
-    return this.request<{ renewalCode: string; deployId: string; expiresAt: string; validDays: number }>('/license/renew', {
+    return this.request<{
+      renewalCode: string;
+      deployId: string;
+      expiresAt: string;
+      validDays: number;
+    }>('/license/renew', {
       method: 'POST',
       body: JSON.stringify({ deployId }),
     });

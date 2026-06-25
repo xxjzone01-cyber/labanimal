@@ -27,7 +27,7 @@ const VERIFY_BASE_URL = 'https://labanimal.tech/verify';
 export async function signReport(
   reportHash: string,
   deployId: string,
-  privateKeyPem: string
+  privateKeyPem: string,
 ): Promise<string> {
   const data: ReportSignatureData = {
     reportHash,
@@ -57,9 +57,11 @@ export async function signReport(
 export async function verifyReportSignature(
   signatureBase64: string,
   publicKeyPem: string,
-  reportHash?: string
+  reportHash?: string,
 ): Promise<ReportSignatureVerification> {
-  const emptyResult = (error: ReportSignatureVerification['error']): ReportSignatureVerification => ({
+  const emptyResult = (
+    error: ReportSignatureVerification['error'],
+  ): ReportSignatureVerification => ({
     valid: false,
     data: null,
     verifyUrl: '',
@@ -166,10 +168,7 @@ export async function verifyReportSignature(
  * @param deployId 部署 ID
  * @returns Base64 编码的未验证签名数据
  */
-export async function signReportUnverified(
-  reportHash: string,
-  deployId: string
-): Promise<string> {
+export async function signReportUnverified(reportHash: string, deployId: string): Promise<string> {
   const data: ReportSignatureData = {
     reportHash,
     deployId,

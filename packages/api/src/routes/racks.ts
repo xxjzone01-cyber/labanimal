@@ -42,13 +42,15 @@ racks.get('/', async (c) => {
     orderBy: { name: 'asc' },
   });
 
-  return c.json(items.map((rack) => ({
-    ...rack,
-    cageCount: rack.cages.length,
-    occupiedCages: rack.cages.filter((c) => c.animals.length > 0).length,
-    totalAnimals: rack.cages.reduce((sum, c) => sum + c.animals.length, 0),
-    cages: undefined,
-  })));
+  return c.json(
+    items.map((rack) => ({
+      ...rack,
+      cageCount: rack.cages.length,
+      occupiedCages: rack.cages.filter((c) => c.animals.length > 0).length,
+      totalAnimals: rack.cages.reduce((sum, c) => sum + c.animals.length, 0),
+      cages: undefined,
+    })),
+  );
 });
 
 // POST /api/racks — create rack
@@ -150,7 +152,9 @@ racks.put('/:id', async (c) => {
     data: {
       ...(body.name !== undefined && { name: body.name as string }),
       ...(body.layers !== undefined && { layers: body.layers as number }),
-      ...(body.positionsPerLayer !== undefined && { positionsPerLayer: body.positionsPerLayer as number }),
+      ...(body.positionsPerLayer !== undefined && {
+        positionsPerLayer: body.positionsPerLayer as number,
+      }),
     },
   });
 

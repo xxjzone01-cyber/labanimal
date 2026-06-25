@@ -54,12 +54,12 @@ const DENSITY_TEACHING_HINTS: Record<string, TeachingHint> = {
     guidelines: [
       'OLAW/AALAC requires housing density to comply with the Guide for the Care and Use of Laboratory Animals.',
       'Overcrowding causes stress, aggression, and can compromise research outcomes.',
-      'IACUC protocols may specify approved density exemptions — check the animal\'s protocol.',
+      "IACUC protocols may specify approved density exemptions — check the animal's protocol.",
       'Regulatory inspections (AAALAC, USDA) will cite over-density as a non-compliance finding.',
     ],
     actions: [
       'Redistribute animals to empty or under-populated cages on this rack.',
-      'Request a density exemption on the animal\'s IACUC protocol if scientifically justified.',
+      "Request a density exemption on the animal's IACUC protocol if scientifically justified.",
       'Document the reason and duration if temporary overcrowding is unavoidable.',
       'Contact the facility manager or veterinarian if no suitable cages are available.',
     ],
@@ -118,7 +118,9 @@ export function CagesPage() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Cages</h1>
-      {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>}
+      {error && (
+        <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>
+      )}
 
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-1">Rack ID</label>
@@ -144,26 +146,41 @@ export function CagesPage() {
             return (
               <div
                 key={cage.id}
-                onClick={() => { if (hint) setTeachingHint({ cage, hint }); }}
+                onClick={() => {
+                  if (hint) setTeachingHint({ cage, hint });
+                }}
                 className={`p-4 rounded-xl border ${color.border} ${color.bg} ${isClickable ? 'cursor-pointer hover:shadow-md transition-shadow' : ''}`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-medium text-sm">{cage.position}</span>
                   <div className="flex items-center gap-1">
-                    {hint && <span className="text-xs text-gray-400" title="Click for guidance">ℹ️</span>}
-                    <span className={`text-xs px-1.5 py-0.5 rounded ${
-                      color.label === 'Over capacity' ? 'bg-red-100 text-red-700' :
-                      color.label === 'Empty' ? 'bg-gray-100 text-gray-500' :
-                      color.label === 'At capacity' || color.label === 'Near capacity' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-green-100 text-green-700'
-                    }`}>{color.label}</span>
+                    {hint && (
+                      <span className="text-xs text-gray-400" title="Click for guidance">
+                        ℹ️
+                      </span>
+                    )}
+                    <span
+                      className={`text-xs px-1.5 py-0.5 rounded ${
+                        color.label === 'Over capacity'
+                          ? 'bg-red-100 text-red-700'
+                          : color.label === 'Empty'
+                            ? 'bg-gray-100 text-gray-500'
+                            : color.label === 'At capacity' || color.label === 'Near capacity'
+                              ? 'bg-yellow-100 text-yellow-700'
+                              : 'bg-green-100 text-green-700'
+                      }`}
+                    >
+                      {color.label}
+                    </span>
                   </div>
                 </div>
                 <div className="text-xs font-medium mb-1">
                   {cage.animals.length} / {cage.capacity} animals
                 </div>
                 {cage.isSingleHoused && (
-                  <div className="text-xs text-orange-600 mb-1">Single housing: {cage.singleHousingReason || 'Yes'}</div>
+                  <div className="text-xs text-orange-600 mb-1">
+                    Single housing: {cage.singleHousingReason || 'Yes'}
+                  </div>
                 )}
                 {cage.animals.length > 0 && (
                   <div className="mt-2 text-xs text-gray-600">
@@ -173,7 +190,10 @@ export function CagesPage() {
                 {cage.enrichments.length > 0 && (
                   <div className="mt-2 flex flex-wrap gap-1">
                     {cage.enrichments.map((e) => (
-                      <span key={e.id} className="px-1 py-0.5 text-xs bg-blue-100 text-blue-700 rounded">
+                      <span
+                        key={e.id}
+                        className="px-1 py-0.5 text-xs bg-blue-100 text-blue-700 rounded"
+                      >
                         {e.type}
                       </span>
                     ))}
@@ -187,17 +207,33 @@ export function CagesPage() {
 
       {/* 教学提示弹窗 */}
       {teachingHint && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50" onClick={() => setTeachingHint(null)}>
-          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden" onClick={(e) => e.stopPropagation()}>
-            <div className={`px-6 py-4 ${teachingHint.hint.severity === 'danger' ? 'bg-red-50 border-b border-red-100' : 'bg-amber-50 border-b border-amber-100'}`}>
+        <div
+          className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+          onClick={() => setTeachingHint(null)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              className={`px-6 py-4 ${teachingHint.hint.severity === 'danger' ? 'bg-red-50 border-b border-red-100' : 'bg-amber-50 border-b border-amber-100'}`}
+            >
               <div className="flex items-center justify-between">
-                <h3 className={`text-lg font-semibold ${teachingHint.hint.severity === 'danger' ? 'text-red-800' : 'text-amber-800'}`}>
+                <h3
+                  className={`text-lg font-semibold ${teachingHint.hint.severity === 'danger' ? 'text-red-800' : 'text-amber-800'}`}
+                >
                   {teachingHint.hint.severity === 'danger' ? '🚨' : '⚠️'} {teachingHint.hint.title}
                 </h3>
-                <button onClick={() => setTeachingHint(null)} className="text-gray-400 hover:text-gray-600 text-xl">×</button>
+                <button
+                  onClick={() => setTeachingHint(null)}
+                  className="text-gray-400 hover:text-gray-600 text-xl"
+                >
+                  ×
+                </button>
               </div>
               <p className="text-sm mt-1 ${teachingHint.hint.severity === 'danger' ? 'text-red-600' : 'text-amber-600'}">
-                Cage: <strong>{teachingHint.cage.position}</strong> — {teachingHint.cage.animals.length} / {teachingHint.cage.capacity} animals
+                Cage: <strong>{teachingHint.cage.position}</strong> —{' '}
+                {teachingHint.cage.animals.length} / {teachingHint.cage.capacity} animals
               </p>
             </div>
 

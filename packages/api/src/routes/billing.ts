@@ -18,7 +18,10 @@ billing.get('/generate', async (c) => {
     return c.json({ error: 'labId query parameter is required' }, 400);
   }
   if (!startDate || !endDate) {
-    return c.json({ error: 'startDate and endDate query parameters are required (YYYY-MM-DD)' }, 400);
+    return c.json(
+      { error: 'startDate and endDate query parameters are required (YYYY-MM-DD)' },
+      400,
+    );
   }
 
   const membership = await prisma.userLab.findUnique({
@@ -36,7 +39,7 @@ billing.get('/generate', async (c) => {
 
   // Get rates for this lab
   const rates = await prisma.rate.findMany({ where: { labId } });
-  const rateMap = new Map(rates.map(r => [r.species, r]));
+  const rateMap = new Map(rates.map((r) => [r.species, r]));
 
   // Count active animals per species
   const animals = await prisma.animal.groupBy({
@@ -90,7 +93,7 @@ billing.get('/generate', async (c) => {
   }
 
   // Cage costs (use average cage rate across species, or first available)
-  const cageRate = rates.find(r => r.cageRate)?.cageRate || 0;
+  const cageRate = rates.find((r) => r.cageRate)?.cageRate || 0;
   if (cageRate > 0 && occupiedCages > 0) {
     const subtotal = occupiedCages * cageRate * days;
     lineItems.push({
@@ -134,7 +137,13 @@ billing.get('/usage', async (c) => {
   // 获取订阅信息
   const subscription = await prisma.subscription.findUnique({
     where: { labId },
-    select: { planId: true, status: true, provider: true, currentPeriodEnd: true, cancelAtPeriodEnd: true },
+    select: {
+      planId: true,
+      status: true,
+      provider: true,
+      currentPeriodEnd: true,
+      cancelAtPeriodEnd: true,
+    },
   });
 
   const plan = subscription?.status === 'active' ? subscription.planId : 'academic-free';

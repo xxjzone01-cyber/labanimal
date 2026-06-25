@@ -10,12 +10,12 @@ describe('T12. 费率与计费模块', () => {
     const res = await api('POST', '/rates', {
       labId: getLabId(),
       species: 'mouse',
-      dailyRate: 1.50,
+      dailyRate: 1.5,
       cageRate: 0.75,
     });
     expect(res.status).toBe(201);
     expect(res.data.id).toBeTruthy();
-    expect(res.data.dailyRate).toBe(1.50);
+    expect(res.data.dailyRate).toBe(1.5);
   });
 
   test('T12.2 创建缺必填字段', async () => {
@@ -36,20 +36,20 @@ describe('T12. 费率与计费模块', () => {
     const create = await api('POST', '/rates', {
       labId: getLabId(),
       species: 'rat',
-      dailyRate: 3.00,
+      dailyRate: 3.0,
     });
     const id = create.data.id;
 
-    const res = await api('PUT', `/rates/${id}`, { dailyRate: 3.50 });
+    const res = await api('PUT', `/rates/${id}`, { dailyRate: 3.5 });
     expect(res.status).toBe(200);
-    expect(res.data.dailyRate).toBe(3.50);
+    expect(res.data.dailyRate).toBe(3.5);
   });
 
   test('T12.5 删除费率', async () => {
     const create = await api('POST', '/rates', {
       labId: getLabId(),
       species: 'rabbit',
-      dailyRate: 5.00,
+      dailyRate: 5.0,
     });
     const id = create.data.id;
 
@@ -59,7 +59,10 @@ describe('T12. 费率与计费模块', () => {
   });
 
   test('T12.6 生成账单', async () => {
-    const res = await api('GET', `/billing/generate?labId=${getLabId()}&startDate=2025-01-01&endDate=2025-12-31`);
+    const res = await api(
+      'GET',
+      `/billing/generate?labId=${getLabId()}&startDate=2025-01-01&endDate=2025-12-31`,
+    );
     expect(res.status).toBe(200);
     expect(res.data.lineItems).toBeInstanceOf(Array);
     expect(res.data.summary).toBeDefined();

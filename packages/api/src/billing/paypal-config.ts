@@ -8,10 +8,10 @@
 /** PayPal 订阅套餐定义 */
 export interface PayPalPlan {
   name: string;
-  paypalPlanId: string;  // PayPal Dashboard 中创建的 Plan ID
+  paypalPlanId: string; // PayPal Dashboard 中创建的 Plan ID
   monthlyPrice: number;
-  maxAnimals: number;       // -1 = 无限
-  maxUsers: number;         // -1 = 无限
+  maxAnimals: number; // -1 = 无限
+  maxUsers: number; // -1 = 无限
   maxReportsPerMonth: number; // -1 = 无限
   hasApiAccess: boolean;
   hasAAALACSupport: boolean;
@@ -29,7 +29,7 @@ export const PAYPAL_PLANS: Record<string, PayPalPlan> = {
     hasApiAccess: false,
     hasAAALACSupport: false,
   },
-  'starter': {
+  starter: {
     name: 'Starter',
     paypalPlanId: process.env.PAYPAL_PLAN_STARTER ?? '',
     monthlyPrice: 99,
@@ -39,7 +39,7 @@ export const PAYPAL_PLANS: Record<string, PayPalPlan> = {
     hasApiAccess: false,
     hasAAALACSupport: false,
   },
-  'professional': {
+  professional: {
     name: 'Professional',
     paypalPlanId: process.env.PAYPAL_PLAN_PROFESSIONAL ?? '',
     monthlyPrice: 299,
@@ -65,10 +65,7 @@ export const PAYPAL_PLANS: Record<string, PayPalPlan> = {
 export const ANNUAL_DISCOUNT_PERCENT = 10;
 
 /** PayPal 环境变量 */
-export const PAYPAL_REQUIRED_ENV = [
-  'PAYPAL_CLIENT_ID',
-  'PAYPAL_CLIENT_SECRET',
-] as const;
+export const PAYPAL_REQUIRED_ENV = ['PAYPAL_CLIENT_ID', 'PAYPAL_CLIENT_SECRET'] as const;
 
 /**
  * 获取 PayPal API 基础 URL
@@ -77,9 +74,7 @@ export const PAYPAL_REQUIRED_ENV = [
  */
 export function getPayPalBaseUrl(): string {
   const env = process.env.PAYPAL_ENV ?? 'sandbox';
-  return env === 'production'
-    ? 'https://api-m.paypal.com'
-    : 'https://api-m.sandbox.paypal.com';
+  return env === 'production' ? 'https://api-m.paypal.com' : 'https://api-m.sandbox.paypal.com';
 }
 
 /**
@@ -99,7 +94,7 @@ export async function getPayPalAccessToken(): Promise<string> {
   const response = await fetch(`${baseUrl}/v1/oauth2/token`, {
     method: 'POST',
     headers: {
-      'Authorization': `Basic ${auth}`,
+      Authorization: `Basic ${auth}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: 'grant_type=client_credentials',
@@ -109,7 +104,7 @@ export async function getPayPalAccessToken(): Promise<string> {
     throw new Error(`PayPal auth failed: ${response.status}`);
   }
 
-  const data = await response.json() as { access_token: string };
+  const data = (await response.json()) as { access_token: string };
   return data.access_token;
 }
 

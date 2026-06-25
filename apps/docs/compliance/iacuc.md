@@ -6,22 +6,22 @@ The IACUC module validates protocol submissions against Institutional Animal Car
 
 Protocols must specify a pain category as defined by USDA:
 
-| Category | Description |
-|----------|-------------|
-| **B** | No more than momentary or slight pain or distress |
-| **C** | Pain or distress relieved by appropriate anesthetics/analgesics |
-| **D** | Pain or distress not relieved by anesthetics/analgesics (requires scientific justification) |
-| **E** | Pain or distress without relief (requires extraordinary scientific justification) |
+| Category | Description                                                                                 |
+| -------- | ------------------------------------------------------------------------------------------- |
+| **B**    | No more than momentary or slight pain or distress                                           |
+| **C**    | Pain or distress relieved by appropriate anesthetics/analgesics                             |
+| **D**    | Pain or distress not relieved by anesthetics/analgesics (requires scientific justification) |
+| **E**    | Pain or distress without relief (requires extraordinary scientific justification)           |
 
 ## The 3Rs
 
 The validator checks compliance with the 3Rs framework:
 
-| R | Description | Check |
-|---|-------------|-------|
-| **Replacement** | Use alternatives to animals when possible | `alternativesConsidered` must be true |
-| **Reduction** | Use the minimum number of animals | `hasStatisticalJustification` must be true |
-| **Refinement** | Minimize pain and distress | `usesAnalgesics` and `hasHumaneEndpoints` must be true (for categories C–E) |
+| R               | Description                               | Check                                                                       |
+| --------------- | ----------------------------------------- | --------------------------------------------------------------------------- |
+| **Replacement** | Use alternatives to animals when possible | `alternativesConsidered` must be true                                       |
+| **Reduction**   | Use the minimum number of animals         | `hasStatisticalJustification` must be true                                  |
+| **Refinement**  | Minimize pain and distress                | `usesAnalgesics` and `hasHumaneEndpoints` must be true (for categories C–E) |
 
 ## Usage
 
@@ -88,8 +88,8 @@ The validator also returns non-blocking warnings for:
 ```typescript
 interface ProtocolValidationResult {
   valid: boolean;
-  violations: string[];   // Blocking issues
-  warnings: string[];     // Non-blocking suggestions
+  violations: string[]; // Blocking issues
+  warnings: string[]; // Non-blocking suggestions
   threeRs: {
     replacement: boolean;
     reduction: boolean;

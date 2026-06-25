@@ -150,7 +150,9 @@ enrichments.put('/:id', async (c) => {
     data: {
       ...(body.type !== undefined && { type: body.type as string }),
       ...(body.description !== undefined && { description: body.description as string }),
-      ...(body.removedDate !== undefined && { removedDate: body.removedDate ? new Date(body.removedDate as string) : null }),
+      ...(body.removedDate !== undefined && {
+        removedDate: body.removedDate ? new Date(body.removedDate as string) : null,
+      }),
       ...(body.notes !== undefined && { notes: body.notes as string }),
     },
   });

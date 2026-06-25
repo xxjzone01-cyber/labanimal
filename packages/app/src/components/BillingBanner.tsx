@@ -11,8 +11,8 @@ interface BillingData {
 
 const PLAN_LABELS: Record<string, string> = {
   'academic-free': 'Academic Free',
-  'starter': 'Starter',
-  'professional': 'Professional',
+  starter: 'Starter',
+  professional: 'Professional',
   'enterprise-saas': 'Enterprise SaaS',
   'enterprise-self-hosted': 'Enterprise Self-Hosted',
 };
@@ -23,7 +23,8 @@ export function BillingBanner() {
 
   useEffect(() => {
     if (!labId) return;
-    api.getBillingUsage(labId)
+    api
+      .getBillingUsage(labId)
       .then(setBilling)
       .catch(() => {});
   }, [labId]);

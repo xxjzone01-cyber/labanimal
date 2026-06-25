@@ -33,8 +33,10 @@ export function generateKeyPair(): KeyPair {
  */
 export function isValidPublicKey(pem: string): boolean {
   // 只接受公钥 PEM，拒绝私钥（createPublicKey 会从私钥中提取公钥）
-  if (!pem.includes('-----BEGIN PUBLIC KEY-----') &&
-      !pem.includes('-----BEGIN RSA PUBLIC KEY-----')) {
+  if (
+    !pem.includes('-----BEGIN PUBLIC KEY-----') &&
+    !pem.includes('-----BEGIN RSA PUBLIC KEY-----')
+  ) {
     return false;
   }
   try {

@@ -106,12 +106,12 @@ export function validateProtocol(input: ProtocolInput): ProtocolValidationResult
   if (input.painCategory === 'E') {
     if (!input.alternativesConsidered) {
       violations.push(
-        'Category E protocols must document that non-animal alternatives were considered and explain why they are not feasible.'
+        'Category E protocols must document that non-animal alternatives were considered and explain why they are not feasible.',
       );
     }
     if (input.alternativesConsidered && !input.alternativesExplanation?.trim()) {
       violations.push(
-        'Category E protocols must provide a written justification for unalleviated pain/distress.'
+        'Category E protocols must provide a written justification for unalleviated pain/distress.',
       );
     }
   }
@@ -120,7 +120,7 @@ export function validateProtocol(input: ProtocolInput): ProtocolValidationResult
   if (input.survivalSurgery) {
     if (input.survivalSurgeryCount != null && input.survivalSurgeryCount > 1) {
       warnings.push(
-        'Multiple major survival surgeries on a single animal require strong scientific justification.'
+        'Multiple major survival surgeries on a single animal require strong scientific justification.',
       );
     }
   }
@@ -155,7 +155,7 @@ export function validateProtocol(input: ProtocolInput): ProtocolValidationResult
  */
 export function isValidStatusTransition(
   from: ProtocolInput['status'],
-  to: ProtocolInput['status']
+  to: ProtocolInput['status'],
 ): boolean {
   const validTransitions: Record<string, string[]> = {
     draft: ['submitted'],

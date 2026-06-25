@@ -31,11 +31,11 @@
 
 ## License 策略
 
-| 包/仓库 | License |
-|---------|---------|
+| 包/仓库                 | License    |
+| ----------------------- | ---------- |
 | `@labanimal/compliance` | Apache 2.0 |
-| `labanimal` 主仓库 | Apache 2.0 |
-| 商业插件 | 专有许可 |
+| `labanimal` 主仓库      | Apache 2.0 |
+| 商业插件                | 专有许可   |
 
 ## 问题反馈
 

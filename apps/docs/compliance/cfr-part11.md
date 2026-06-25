@@ -24,7 +24,7 @@ import { generateDiff, summarizeDiff } from '@labanimal/compliance';
 
 const diff = generateDiff(
   { name: 'Alice', age: 25 },
-  { name: 'Bob', age: 30, email: 'bob@example.com' }
+  { name: 'Bob', age: 30, email: 'bob@example.com' },
 );
 
 console.log(summarizeDiff(diff));
@@ -37,11 +37,11 @@ console.log(summarizeDiff(diff));
 
 Each diff entry has a type:
 
-| Type | Symbol | Meaning |
-|------|--------|---------|
-| `added` | `+` | New field added |
-| `removed` | `-` | Field removed |
-| `changed` | `~` | Field value changed |
+| Type      | Symbol | Meaning             |
+| --------- | ------ | ------------------- |
+| `added`   | `+`    | New field added     |
+| `removed` | `-`    | Field removed       |
+| `changed` | `~`    | Field value changed |
 
 ### Hash Chain
 
@@ -65,7 +65,7 @@ const entry2 = await hashAuditEntry({
   entityId: 'anim-001',
   action: 'update',
   diffJson: JSON.stringify({ weight: 25 }),
-  previousHash: entry1.hash,  // Chain to previous entry
+  previousHash: entry1.hash, // Chain to previous entry
 });
 ```
 

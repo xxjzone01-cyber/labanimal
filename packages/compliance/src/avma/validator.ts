@@ -35,7 +35,7 @@ export function validateMethod(input: ValidationInput): ValidationResult {
   const speciesMethods = AVMA_METHODS_DB[species.toLowerCase()];
   if (!speciesMethods) {
     throw new Error(
-      `Unknown species: "${species}". Supported: ${Object.keys(AVMA_METHODS_DB).join(', ')}`
+      `Unknown species: "${species}". Supported: ${Object.keys(AVMA_METHODS_DB).join(', ')}`,
     );
   }
 
@@ -126,10 +126,7 @@ interface ConditionalContext {
   anesthesiaAdministered?: boolean;
 }
 
-function checkConditionalRequirements(
-  method: EuthanasiaMethod,
-  ctx: ConditionalContext
-): string[] {
+function checkConditionalRequirements(method: EuthanasiaMethod, ctx: ConditionalContext): string[] {
   const violations: string[] = [];
 
   for (const req of method.requires) {
@@ -137,7 +134,7 @@ function checkConditionalRequirements(
       case 'certification':
         if (!ctx.performerCertified) {
           violations.push(
-            `Method "${method.id}" requires performer certification. Upload training certificate.`
+            `Method "${method.id}" requires performer certification. Upload training certificate.`,
           );
         }
         break;
@@ -146,7 +143,7 @@ function checkConditionalRequirements(
         if (method.weightLimit != null && ctx.weightGrams != null) {
           if (ctx.weightGrams > method.weightLimit) {
             violations.push(
-              `Method "${method.id}" is only approved for animals <= ${method.weightLimit}g. Current weight: ${ctx.weightGrams}g.`
+              `Method "${method.id}" is only approved for animals <= ${method.weightLimit}g. Current weight: ${ctx.weightGrams}g.`,
             );
           }
         }
@@ -154,16 +151,14 @@ function checkConditionalRequirements(
 
       case 'anesthesia_first':
         if (!ctx.anesthesiaAdministered) {
-          violations.push(
-            `Method "${method.id}" requires prior anesthesia administration.`
-          );
+          violations.push(`Method "${method.id}" requires prior anesthesia administration.`);
         }
         break;
 
       case 'specific_setting':
         // Informational — no auto-block, but flagged
         violations.push(
-          `Method "${method.id}" requires specific setting/justification. Verify with IACUC.`
+          `Method "${method.id}" requires specific setting/justification. Verify with IACUC.`,
         );
         break;
     }

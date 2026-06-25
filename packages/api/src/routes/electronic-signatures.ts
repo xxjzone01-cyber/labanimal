@@ -104,7 +104,10 @@ electronicSignatures.post('/', async (c) => {
     labId = getUser(c).labId;
   }
   if (!labId) {
-    return c.json({ error: 'labId could not be determined. Provide a protocolId or set X-Lab-Id header.' }, 400);
+    return c.json(
+      { error: 'labId could not be determined. Provide a protocolId or set X-Lab-Id header.' },
+      400,
+    );
   }
 
   // Calculate signature hash (21 CFR Part 11 compliant)
@@ -112,7 +115,7 @@ electronicSignatures.post('/', async (c) => {
   const ipAddress = c.req.header('x-forwarded-for') || c.req.header('x-real-ip') || 'unknown';
 
   const signatureHash = await sha256(
-    `${user.userId}|${body.entityType}|${body.entityId}|${signedAt.toISOString()}`
+    `${user.userId}|${body.entityType}|${body.entityId}|${signedAt.toISOString()}`,
   );
 
   const signature = await prisma.electronicSignature.create({
@@ -198,7 +201,7 @@ electronicSignatures.get('/:id/verify', async (c) => {
 
   // Recalculate hash
   const computedHash = await sha256(
-    `${signature.userId}|${signature.entityType}|${signature.entityId}|${signature.signedAt.toISOString()}`
+    `${signature.userId}|${signature.entityType}|${signature.entityId}|${signature.signedAt.toISOString()}`,
   );
 
   const valid = computedHash === signature.signatureHash;

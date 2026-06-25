@@ -18,7 +18,9 @@ export function MedicationsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => { loadMedications(); }, []);
+  useEffect(() => {
+    loadMedications();
+  }, []);
 
   async function loadMedications() {
     try {
@@ -35,7 +37,9 @@ export function MedicationsPage() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Medications</h1>
-      {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>}
+      {error && (
+        <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>
+      )}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <table className="w-full">
           <thead className="bg-gray-50">
@@ -49,9 +53,17 @@ export function MedicationsPage() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={5} className="px-4 py-8 text-center text-gray-500">Loading...</td></tr>
+              <tr>
+                <td colSpan={5} className="px-4 py-8 text-center text-gray-500">
+                  Loading...
+                </td>
+              </tr>
             ) : medications.length === 0 ? (
-              <tr><td colSpan={5} className="px-4 py-8 text-center text-gray-500">No medications</td></tr>
+              <tr>
+                <td colSpan={5} className="px-4 py-8 text-center text-gray-500">
+                  No medications
+                </td>
+              </tr>
             ) : (
               medications.map((m) => (
                 <tr key={m.id} className="border-t border-gray-100 hover:bg-gray-50">
@@ -60,7 +72,9 @@ export function MedicationsPage() {
                   <td className="px-4 py-3 text-sm">{m.dosage}</td>
                   <td className="px-4 py-3 text-sm capitalize">{m.route}</td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-1 text-xs rounded-full ${m.endDate ? 'bg-gray-100 text-gray-500' : 'bg-green-100 text-green-700'}`}>
+                    <span
+                      className={`inline-block px-2 py-1 text-xs rounded-full ${m.endDate ? 'bg-gray-100 text-gray-500' : 'bg-green-100 text-green-700'}`}
+                    >
                       {m.endDate ? 'Completed' : 'Active'}
                     </span>
                   </td>

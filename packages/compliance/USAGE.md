@@ -13,7 +13,7 @@ const result = calculateMaxDensity({
   weightGrams: 22,
   housingStatus: 'group',
   guideStandard: 4,
-  protocolApprovedDensity: null
+  protocolApprovedDensity: null,
 });
 // { allowed: true, maxCount: 4, reason: 'Guide Table 3.1' }
 
@@ -37,7 +37,7 @@ const hash = await sha256('data to hash');
     weightGrams: 22,
     housingStatus: 'group',
     guideStandard: 4,
-    protocolApprovedDensity: null
+    protocolApprovedDensity: null,
   });
 </script>
 ```
@@ -48,7 +48,9 @@ const hash = await sha256('data to hash');
 <script type="module">
   import { calculateMaxDensity } from 'https://unpkg.com/@labanimal/compliance/dist/index.mjs';
 
-  const result = calculateMaxDensity({ /* ... */ });
+  const result = calculateMaxDensity({
+    /* ... */
+  });
 </script>
 ```
 
@@ -98,31 +100,37 @@ export default {
       weightGrams: 22,
       housingStatus: 'group',
       guideStandard: 4,
-      protocolApprovedDensity: null
+      protocolApprovedDensity: null,
     });
     return Response.json(result);
-  }
+  },
 };
 ```
 
 ## Bundle Sizes
 
-| Format | Size (gzip) | Use Case |
-|--------|------------|----------|
-| CJS (`dist/index.js`) | ~8 KB | Node.js require() |
-| ESM (`dist/index.mjs`) | ~7 KB | Modern bundlers, Deno, Bun |
-| IIFE (`dist/index.global.js`) | ~8 KB | Browser script tag |
+| Format                        | Size (gzip) | Use Case                   |
+| ----------------------------- | ----------- | -------------------------- |
+| CJS (`dist/index.js`)         | ~8 KB       | Node.js require()          |
+| ESM (`dist/index.mjs`)        | ~7 KB       | Modern bundlers, Deno, Bun |
+| IIFE (`dist/index.global.js`) | ~8 KB       | Browser script tag         |
 
 ## API Reference
 
 All functions are pure (no side effects, no network calls, no file I/O).
 
 ### `calculateMaxDensity(input)` → `{ allowed, maxCount, reason }`
+
 ### `AVMA_METHODS.validate(species, method, options)` → `{ category, issues }`
+
 ### `validateProtocol(input)` → `{ valid, violations, warnings }`
+
 ### `isValidStatusTransition(from, to)` → `boolean`
+
 ### `sha256(data)` → `Promise<string>`
+
 ### `hashAuditEntry(entry)` → `string`
+
 ### `verifyAuditEntry(entry)` → `boolean`
 
 See [README.md](./README.md) for full API documentation.

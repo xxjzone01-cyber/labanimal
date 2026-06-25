@@ -40,18 +40,15 @@ export function Layout() {
 
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
-            const isActive = item.to === '/'
-              ? location.pathname === '/'
-              : location.pathname.startsWith(item.to);
+            const isActive =
+              item.to === '/' ? location.pathname === '/' : location.pathname.startsWith(item.to);
 
             return (
               <Link
                 key={item.to}
                 to={item.to}
                 className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-blue-50 text-blue-700'
-                    : 'text-gray-700 hover:bg-gray-100'
+                  isActive ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 <span>{item.icon}</span>

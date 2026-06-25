@@ -41,7 +41,7 @@ export function requireLabId(c: Context): string {
 export async function withRLSTransaction<T>(
   prisma: { $transaction: (fn: (tx: any) => Promise<T>) => Promise<T> },
   labId: string,
-  callback: (tx: any) => Promise<T>
+  callback: (tx: any) => Promise<T>,
 ): Promise<T> {
   return prisma.$transaction(async (tx) => {
     await tx.$executeRawUnsafe(`SET LOCAL app.current_lab = '${labId}'`);

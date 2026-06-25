@@ -89,7 +89,7 @@ auditLog.get('/verify', async (c) => {
         diffJson: JSON.stringify(entry.diff),
         previousHash,
       },
-      entry.hash
+      entry.hash,
     );
 
     if (!isValid) {
@@ -104,9 +104,7 @@ auditLog.get('/verify', async (c) => {
     valid: brokenAt === null,
     brokenAt,
     totalEntries: entries.length,
-    message: brokenAt === null
-      ? 'Hash chain is intact'
-      : `Hash chain broken at entry ${brokenAt}`,
+    message: brokenAt === null ? 'Hash chain is intact' : `Hash chain broken at entry ${brokenAt}`,
   });
 });
 

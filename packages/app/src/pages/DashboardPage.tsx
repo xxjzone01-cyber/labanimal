@@ -14,8 +14,8 @@ interface DashboardStats {
 
 const PLAN_LABELS: Record<string, string> = {
   'academic-free': 'Academic Free',
-  'starter': 'Starter',
-  'professional': 'Professional',
+  starter: 'Starter',
+  professional: 'Professional',
   'enterprise-saas': 'Enterprise SaaS',
   'enterprise-self-hosted': 'Enterprise Self-Hosted',
 };
@@ -26,29 +26,47 @@ export function DashboardPage() {
 
   useEffect(() => {
     if (!labId) return;
-    Promise.all([
-      api.getBillingUsage(labId),
-      api.getRooms(labId),
-      api.getProtocols(labId),
-    ]).then(([billing, rooms, protocols]) => {
-      setStats({
-        animalCount: billing.usage.animalCount,
-        roomCount: rooms.length,
-        protocolCount: protocols.length,
-        userCount: billing.usage.userCount,
-        reportsThisMonth: billing.usage.reportsThisMonth,
-        plan: billing.plan,
-        limits: billing.limits,
-        isOverLimit: billing.isOverLimit,
-      });
-    }).catch(() => {});
+    Promise.all([api.getBillingUsage(labId), api.getRooms(labId), api.getProtocols(labId)])
+      .then(([billing, rooms, protocols]) => {
+        setStats({
+          animalCount: billing.usage.animalCount,
+          roomCount: rooms.length,
+          protocolCount: protocols.length,
+          userCount: billing.usage.userCount,
+          reportsThisMonth: billing.usage.reportsThisMonth,
+          plan: billing.plan,
+          limits: billing.limits,
+          isOverLimit: billing.isOverLimit,
+        });
+      })
+      .catch(() => {});
   }, [labId]);
 
   const cards = [
-    { label: 'Total Animals', value: stats?.animalCount ?? '-', icon: '🐭', color: 'bg-blue-50 text-blue-700' },
-    { label: 'Rooms', value: stats?.roomCount ?? '-', icon: '🏠', color: 'bg-green-50 text-green-700' },
-    { label: 'Active Protocols', value: stats?.protocolCount ?? '-', icon: '📋', color: 'bg-purple-50 text-purple-700' },
-    { label: 'Users', value: stats?.userCount ?? '-', icon: '👥', color: 'bg-orange-50 text-orange-700' },
+    {
+      label: 'Total Animals',
+      value: stats?.animalCount ?? '-',
+      icon: '🐭',
+      color: 'bg-blue-50 text-blue-700',
+    },
+    {
+      label: 'Rooms',
+      value: stats?.roomCount ?? '-',
+      icon: '🏠',
+      color: 'bg-green-50 text-green-700',
+    },
+    {
+      label: 'Active Protocols',
+      value: stats?.protocolCount ?? '-',
+      icon: '📋',
+      color: 'bg-purple-50 text-purple-700',
+    },
+    {
+      label: 'Users',
+      value: stats?.userCount ?? '-',
+      icon: '👥',
+      color: 'bg-orange-50 text-orange-700',
+    },
   ];
 
   return (
@@ -64,10 +82,7 @@ export function DashboardPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {cards.map((card) => (
-          <div
-            key={card.label}
-            className={`${card.color} rounded-xl p-6`}
-          >
+          <div key={card.label} className={`${card.color} rounded-xl p-6`}>
             <div className="text-3xl mb-2">{card.icon}</div>
             <div className="text-3xl font-bold">{card.value}</div>
             <div className="text-sm opacity-75">{card.label}</div>
@@ -80,16 +95,8 @@ export function DashboardPage() {
         <div className="mt-8 bg-white rounded-xl p-6 border border-gray-200">
           <h2 className="text-lg font-semibold mb-4">使用量</h2>
           <div className="space-y-4">
-            <UsageBar
-              label="动物数量"
-              current={stats.animalCount}
-              max={stats.limits.maxAnimals}
-            />
-            <UsageBar
-              label="用户数量"
-              current={stats.userCount}
-              max={stats.limits.maxUsers}
-            />
+            <UsageBar label="动物数量" current={stats.animalCount} max={stats.limits.maxAnimals} />
+            <UsageBar label="用户数量" current={stats.userCount} max={stats.limits.maxUsers} />
             <UsageBar
               label="本月报告"
               current={stats.reportsThisMonth}
@@ -102,19 +109,31 @@ export function DashboardPage() {
       <div className="mt-8 bg-white rounded-xl p-6 border border-gray-200">
         <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <a href="/animals" className="block p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors text-center">
+          <a
+            href="/animals"
+            className="block p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors text-center"
+          >
             <div className="text-2xl mb-1">➕</div>
             <div className="text-sm font-medium">Add Animal</div>
           </a>
-          <a href="/rooms" className="block p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors text-center">
+          <a
+            href="/rooms"
+            className="block p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors text-center"
+          >
             <div className="text-2xl mb-1">🏠</div>
             <div className="text-sm font-medium">Manage Rooms</div>
           </a>
-          <a href="/protocols" className="block p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors text-center">
+          <a
+            href="/protocols"
+            className="block p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors text-center"
+          >
             <div className="text-2xl mb-1">📋</div>
             <div className="text-sm font-medium">View Protocols</div>
           </a>
-          <a href="/subscriptions" className="block p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors text-center">
+          <a
+            href="/subscriptions"
+            className="block p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors text-center"
+          >
             <div className="text-2xl mb-1">💳</div>
             <div className="text-sm font-medium">Subscriptions</div>
           </a>

@@ -68,7 +68,16 @@ export function ProtocolsPage() {
         description: newProtocol.description || undefined,
       });
       setShowAdd(false);
-      setNewProtocol({ title: '', piName: '', iacucNumber: '', painCategory: 'C', animalLimit: '', startDate: '', endDate: '', description: '' });
+      setNewProtocol({
+        title: '',
+        piName: '',
+        iacucNumber: '',
+        painCategory: 'C',
+        animalLimit: '',
+        startDate: '',
+        endDate: '',
+        description: '',
+      });
       loadProtocols();
     } catch (err: any) {
       console.error(err);
@@ -93,19 +102,37 @@ export function ProtocolsPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
-              <input value={newProtocol.title} onChange={(e) => setNewProtocol({ ...newProtocol, title: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required />
+              <input
+                value={newProtocol.title}
+                onChange={(e) => setNewProtocol({ ...newProtocol, title: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                required
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">PI Name *</label>
-              <input value={newProtocol.piName} onChange={(e) => setNewProtocol({ ...newProtocol, piName: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required />
+              <input
+                value={newProtocol.piName}
+                onChange={(e) => setNewProtocol({ ...newProtocol, piName: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                required
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">IACUC Number</label>
-              <input value={newProtocol.iacucNumber} onChange={(e) => setNewProtocol({ ...newProtocol, iacucNumber: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+              <input
+                value={newProtocol.iacucNumber}
+                onChange={(e) => setNewProtocol({ ...newProtocol, iacucNumber: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Pain Category</label>
-              <select value={newProtocol.painCategory} onChange={(e) => setNewProtocol({ ...newProtocol, painCategory: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+              <select
+                value={newProtocol.painCategory}
+                onChange={(e) => setNewProtocol({ ...newProtocol, painCategory: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              >
                 <option value="B">B — No procedures</option>
                 <option value="C">C — No pain</option>
                 <option value="D">D — Pain alleviated</option>
@@ -114,20 +141,46 @@ export function ProtocolsPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Animal Limit</label>
-              <input value={newProtocol.animalLimit} onChange={(e) => setNewProtocol({ ...newProtocol, animalLimit: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" type="number" />
+              <input
+                value={newProtocol.animalLimit}
+                onChange={(e) => setNewProtocol({ ...newProtocol, animalLimit: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                type="number"
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
-              <input value={newProtocol.startDate} onChange={(e) => setNewProtocol({ ...newProtocol, startDate: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" type="date" />
+              <input
+                value={newProtocol.startDate}
+                onChange={(e) => setNewProtocol({ ...newProtocol, startDate: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                type="date"
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
-              <input value={newProtocol.endDate} onChange={(e) => setNewProtocol({ ...newProtocol, endDate: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" type="date" />
+              <input
+                value={newProtocol.endDate}
+                onChange={(e) => setNewProtocol({ ...newProtocol, endDate: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                type="date"
+              />
             </div>
           </div>
           <div className="mt-4 flex gap-2">
-            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium">Create</button>
-            <button type="button" onClick={() => setShowAdd(false)} className="px-4 py-2 border border-gray-300 rounded-lg text-sm">Cancel</button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium"
+            >
+              Create
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowAdd(false)}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-sm"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       )}
@@ -146,9 +199,17 @@ export function ProtocolsPage() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500">Loading...</td></tr>
+              <tr>
+                <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
+                  Loading...
+                </td>
+              </tr>
             ) : protocols.length === 0 ? (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500">No protocols found</td></tr>
+              <tr>
+                <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
+                  No protocols found
+                </td>
+              </tr>
             ) : (
               protocols.map((p) => (
                 <tr key={p.id} className="border-t border-gray-100 hover:bg-gray-50 cursor-pointer">
@@ -163,12 +224,15 @@ export function ProtocolsPage() {
                     )}
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-1 text-xs rounded-full ${statusColors[p.status] || 'bg-gray-100'}`}>
+                    <span
+                      className={`inline-block px-2 py-1 text-xs rounded-full ${statusColors[p.status] || 'bg-gray-100'}`}
+                    >
                       {p.status}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm">
-                    {p.animalCount}{p.animalLimit ? ` / ${p.animalLimit}` : ''}
+                    {p.animalCount}
+                    {p.animalLimit ? ` / ${p.animalLimit}` : ''}
                   </td>
                 </tr>
               ))

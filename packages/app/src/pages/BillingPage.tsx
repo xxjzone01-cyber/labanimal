@@ -61,9 +61,14 @@ export function BillingPage() {
     <div>
       <h1 className="text-2xl font-bold mb-6">Billing Report</h1>
 
-      {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>}
+      {error && (
+        <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>
+      )}
 
-      <form onSubmit={handleGenerate} className="bg-white rounded-xl p-6 border border-gray-200 mb-6">
+      <form
+        onSubmit={handleGenerate}
+        className="bg-white rounded-xl p-6 border border-gray-200 mb-6"
+      >
         <div className="flex items-end gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
@@ -118,7 +123,9 @@ export function BillingPage() {
             </div>
             <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
               <div className="text-sm text-blue-600">Total</div>
-              <div className="text-2xl font-bold text-blue-700">${report.summary.total.toFixed(2)}</div>
+              <div className="text-2xl font-bold text-blue-700">
+                ${report.summary.total.toFixed(2)}
+              </div>
             </div>
           </div>
 
@@ -133,14 +140,22 @@ export function BillingPage() {
                   <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Type</th>
                   <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Species</th>
                   <th className="text-right px-4 py-3 text-sm font-medium text-gray-600">Count</th>
-                  <th className="text-right px-4 py-3 text-sm font-medium text-gray-600">Daily Rate</th>
+                  <th className="text-right px-4 py-3 text-sm font-medium text-gray-600">
+                    Daily Rate
+                  </th>
                   <th className="text-right px-4 py-3 text-sm font-medium text-gray-600">Days</th>
-                  <th className="text-right px-4 py-3 text-sm font-medium text-gray-600">Subtotal</th>
+                  <th className="text-right px-4 py-3 text-sm font-medium text-gray-600">
+                    Subtotal
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {report.lineItems.length === 0 ? (
-                  <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500">No billing data</td></tr>
+                  <tr>
+                    <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
+                      No billing data
+                    </td>
+                  </tr>
                 ) : (
                   report.lineItems.map((item, i) => (
                     <tr key={i} className="border-t border-gray-100">
@@ -149,7 +164,9 @@ export function BillingPage() {
                       <td className="px-4 py-3 text-sm text-right">{item.count}</td>
                       <td className="px-4 py-3 text-sm text-right">${item.dailyRate.toFixed(2)}</td>
                       <td className="px-4 py-3 text-sm text-right">{item.days}</td>
-                      <td className="px-4 py-3 text-sm text-right font-medium">${item.subtotal.toFixed(2)}</td>
+                      <td className="px-4 py-3 text-sm text-right font-medium">
+                        ${item.subtotal.toFixed(2)}
+                      </td>
                     </tr>
                   ))
                 )}

@@ -44,7 +44,7 @@ export const STRIPE_PLANS: Record<string, StripePlan> = {
     hasApiAccess: false,
     hasAAALACSupport: false,
   },
-  'starter': {
+  starter: {
     name: 'Starter',
     priceId: process.env.STRIPE_PRICE_STARTER || '',
     annualPriceId: process.env.STRIPE_PRICE_STARTER_ANNUAL || '',
@@ -55,7 +55,7 @@ export const STRIPE_PLANS: Record<string, StripePlan> = {
     hasApiAccess: false,
     hasAAALACSupport: false,
   },
-  'professional': {
+  professional: {
     name: 'Professional',
     priceId: process.env.STRIPE_PRICE_PROFESSIONAL || '',
     annualPriceId: process.env.STRIPE_PRICE_PROFESSIONAL_ANNUAL || '',

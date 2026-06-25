@@ -131,11 +131,17 @@ batchSessions.put('/:id', async (c) => {
       ...(body.batchNumber !== undefined && { batchNumber: body.batchNumber as string }),
       ...(body.materialType !== undefined && { materialType: body.materialType as string }),
       ...(body.supplier !== undefined && { supplier: body.supplier as string }),
-      ...(body.receivedDate !== undefined && { receivedDate: body.receivedDate ? new Date(body.receivedDate as string) : null }),
-      ...(body.expirationDate !== undefined && { expirationDate: body.expirationDate ? new Date(body.expirationDate as string) : null }),
+      ...(body.receivedDate !== undefined && {
+        receivedDate: body.receivedDate ? new Date(body.receivedDate as string) : null,
+      }),
+      ...(body.expirationDate !== undefined && {
+        expirationDate: body.expirationDate ? new Date(body.expirationDate as string) : null,
+      }),
       ...(body.quantity !== undefined && { quantity: body.quantity as number }),
       ...(body.unit !== undefined && { unit: body.unit as string }),
-      ...(body.storageLocation !== undefined && { storageLocation: body.storageLocation as string }),
+      ...(body.storageLocation !== undefined && {
+        storageLocation: body.storageLocation as string,
+      }),
       ...(body.notes !== undefined && { notes: body.notes as string }),
     },
   });

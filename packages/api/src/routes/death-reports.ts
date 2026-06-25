@@ -92,11 +92,14 @@ deathReports.post('/', async (c) => {
     });
 
     if (!validation.allowed) {
-      return c.json({
-        error: 'AVMA violation',
-        violations: validation.violations,
-        suggestedMethods: validation.suggestedMethods,
-      }, 400);
+      return c.json(
+        {
+          error: 'AVMA violation',
+          violations: validation.violations,
+          suggestedMethods: validation.suggestedMethods,
+        },
+        400,
+      );
     }
   }
 
@@ -188,11 +191,14 @@ deathReports.put('/:id', async (c) => {
       });
 
       if (!validation.allowed) {
-        return c.json({
-          error: 'AVMA violation',
-          violations: validation.violations,
-          suggestedMethods: validation.suggestedMethods,
-        }, 400);
+        return c.json(
+          {
+            error: 'AVMA violation',
+            violations: validation.violations,
+            suggestedMethods: validation.suggestedMethods,
+          },
+          400,
+        );
       }
     }
   }
@@ -202,10 +208,16 @@ deathReports.put('/:id', async (c) => {
     data: {
       ...(body.dateOfDeath !== undefined && { dateOfDeath: new Date(body.dateOfDeath as string) }),
       ...(body.cause !== undefined && { cause: body.cause as string }),
-      ...(body.euthanasiaMethodId !== undefined && { euthanasiaMethodId: body.euthanasiaMethodId as string }),
+      ...(body.euthanasiaMethodId !== undefined && {
+        euthanasiaMethodId: body.euthanasiaMethodId as string,
+      }),
       ...(body.performedBy !== undefined && { performedBy: body.performedBy as string }),
-      ...(body.necropsyPerformed !== undefined && { necropsyPerformed: body.necropsyPerformed as boolean }),
-      ...(body.necropsyFindings !== undefined && { necropsyFindings: body.necropsyFindings as string }),
+      ...(body.necropsyPerformed !== undefined && {
+        necropsyPerformed: body.necropsyPerformed as boolean,
+      }),
+      ...(body.necropsyFindings !== undefined && {
+        necropsyFindings: body.necropsyFindings as string,
+      }),
       ...(body.notes !== undefined && { notes: body.notes as string }),
     },
     include: {

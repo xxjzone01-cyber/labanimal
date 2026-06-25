@@ -23,7 +23,10 @@ export interface PainCategoryResult {
   warnings: string[];
 }
 
-const CATEGORY_INFO: Record<USDACategory, { description: string; requiresJustification: boolean; requiresVetOversight: boolean }> = {
+const CATEGORY_INFO: Record<
+  USDACategory,
+  { description: string; requiresJustification: boolean; requiresVetOversight: boolean }
+> = {
   B: {
     description: 'Animals bred for research but not yet used in experimental procedures',
     requiresJustification: false,
@@ -35,12 +38,14 @@ const CATEGORY_INFO: Record<USDACategory, { description: string; requiresJustifi
     requiresVetOversight: false,
   },
   D: {
-    description: 'Animals used in research with pain or distress, alleviated by appropriate anesthetics, analgesics, or tranquilizers',
+    description:
+      'Animals used in research with pain or distress, alleviated by appropriate anesthetics, analgesics, or tranquilizers',
     requiresJustification: false,
     requiresVetOversight: true,
   },
   E: {
-    description: 'Animals used in research with unalleviated pain or distress (requires protocol justification)',
+    description:
+      'Animals used in research with unalleviated pain or distress (requires protocol justification)',
     requiresJustification: true,
     requiresVetOversight: true,
   },
@@ -79,17 +84,15 @@ export function classifyPainCategory(params: {
 
   if (category === 'E') {
     warnings.push(
-      'Category E requires scientific justification in the IACUC protocol for unalleviated pain/distress'
+      'Category E requires scientific justification in the IACUC protocol for unalleviated pain/distress',
     );
     warnings.push(
-      'Must include description of procedures to minimize pain and scientific justification for why alternatives cannot be used'
+      'Must include description of procedures to minimize pain and scientific justification for why alternatives cannot be used',
     );
   }
 
   if (category === 'D' || category === 'E') {
-    warnings.push(
-      'Veterinary oversight required for procedures involving pain or distress'
-    );
+    warnings.push('Veterinary oversight required for procedures involving pain or distress');
   }
 
   return {

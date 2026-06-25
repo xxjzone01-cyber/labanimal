@@ -28,7 +28,9 @@ export function BreedingsPage() {
   const [weanTarget, setWeanTarget] = useState<string | null>(null);
   const [weanForm, setWeanForm] = useState({ weanedCount: '', weaningDate: '' });
 
-  useEffect(() => { loadBreedings(); }, []);
+  useEffect(() => {
+    loadBreedings();
+  }, []);
 
   async function loadBreedings() {
     try {
@@ -74,12 +76,17 @@ export function BreedingsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Breeding</h1>
-        <button onClick={() => setShowAdd(!showAdd)} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium">
+        <button
+          onClick={() => setShowAdd(!showAdd)}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium"
+        >
           + Add Breeding
         </button>
       </div>
 
-      {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>}
+      {error && (
+        <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>
+      )}
 
       {showAdd && (
         <form onSubmit={handleAdd} className="bg-white rounded-xl p-6 border border-gray-200 mb-6">
@@ -87,20 +94,48 @@ export function BreedingsPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Sire ID (Male)</label>
-              <input value={newBreeding.sireId} onChange={(e) => setNewBreeding({ ...newBreeding, sireId: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required />
+              <input
+                value={newBreeding.sireId}
+                onChange={(e) => setNewBreeding({ ...newBreeding, sireId: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                required
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Dam ID (Female)</label>
-              <input value={newBreeding.damId} onChange={(e) => setNewBreeding({ ...newBreeding, damId: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required />
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Dam ID (Female)
+              </label>
+              <input
+                value={newBreeding.damId}
+                onChange={(e) => setNewBreeding({ ...newBreeding, damId: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                required
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Pair Date</label>
-              <input type="date" value={newBreeding.pairDate} onChange={(e) => setNewBreeding({ ...newBreeding, pairDate: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+              <input
+                type="date"
+                value={newBreeding.pairDate}
+                onChange={(e) => setNewBreeding({ ...newBreeding, pairDate: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              />
             </div>
           </div>
           <div className="mt-4 flex gap-2">
-            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium">Create</button>
-            <button type="button" onClick={() => setShowAdd(false)} className="px-4 py-2 border border-gray-300 rounded-lg text-sm">Cancel</button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium"
+            >
+              Create
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowAdd(false)}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-sm"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       )}
@@ -120,22 +155,37 @@ export function BreedingsPage() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-500">Loading...</td></tr>
+              <tr>
+                <td colSpan={7} className="px-4 py-8 text-center text-gray-500">
+                  Loading...
+                </td>
+              </tr>
             ) : breedings.length === 0 ? (
-              <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-500">No breeding records</td></tr>
+              <tr>
+                <td colSpan={7} className="px-4 py-8 text-center text-gray-500">
+                  No breeding records
+                </td>
+              </tr>
             ) : (
               breedings.map((b) => (
                 <tr key={b.id} className="border-t border-gray-100 hover:bg-gray-50">
                   <td className="px-4 py-3 text-sm">{b.sire.internalId}</td>
                   <td className="px-4 py-3 text-sm">{b.dam.internalId}</td>
-                  <td className="px-4 py-3 text-sm">{b.pairDate ? new Date(b.pairDate).toLocaleDateString() : '—'}</td>
+                  <td className="px-4 py-3 text-sm">
+                    {b.pairDate ? new Date(b.pairDate).toLocaleDateString() : '—'}
+                  </td>
                   <td className="px-4 py-3 text-sm">{b.litterSize ?? '—'}</td>
                   <td className="px-4 py-3 text-sm">{b.weanedCount ?? '—'}</td>
-                  <td className="px-4 py-3 text-sm">{b.weaningDate ? new Date(b.weaningDate).toLocaleDateString() : '—'}</td>
+                  <td className="px-4 py-3 text-sm">
+                    {b.weaningDate ? new Date(b.weaningDate).toLocaleDateString() : '—'}
+                  </td>
                   <td className="px-4 py-3 text-sm">
                     {b.litterSize && !b.weaningDate && (
                       <button
-                        onClick={() => { setWeanTarget(b.id); setWeanForm({ weanedCount: String(b.litterSize), weaningDate: '' }); }}
+                        onClick={() => {
+                          setWeanTarget(b.id);
+                          setWeanForm({ weanedCount: String(b.litterSize), weaningDate: '' });
+                        }}
                         className="px-3 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700"
                       >
                         Wean
@@ -152,7 +202,10 @@ export function BreedingsPage() {
       {/* Wean Dialog */}
       {weanTarget && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-          <form onSubmit={handleWean} className="bg-white rounded-xl p-6 border border-gray-200 w-96">
+          <form
+            onSubmit={handleWean}
+            className="bg-white rounded-xl p-6 border border-gray-200 w-96"
+          >
             <h2 className="text-lg font-semibold mb-4">Wean Litter</h2>
             <div className="space-y-4">
               <div>
@@ -178,8 +231,19 @@ export function BreedingsPage() {
               </div>
             </div>
             <div className="mt-4 flex gap-2">
-              <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium">Confirm Wean</button>
-              <button type="button" onClick={() => setWeanTarget(null)} className="px-4 py-2 border border-gray-300 rounded-lg text-sm">Cancel</button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium"
+              >
+                Confirm Wean
+              </button>
+              <button
+                type="button"
+                onClick={() => setWeanTarget(null)}
+                className="px-4 py-2 border border-gray-300 rounded-lg text-sm"
+              >
+                Cancel
+              </button>
             </div>
           </form>
         </div>

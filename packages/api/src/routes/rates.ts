@@ -113,7 +113,9 @@ rates.put('/:id', async (c) => {
       ...(body.species !== undefined && { species: body.species as string }),
       ...(body.dailyRate !== undefined && { dailyRate: body.dailyRate as number }),
       ...(body.cageRate !== undefined && { cageRate: body.cageRate as number }),
-      ...(body.effectiveDate !== undefined && { effectiveDate: body.effectiveDate ? new Date(body.effectiveDate as string) : null }),
+      ...(body.effectiveDate !== undefined && {
+        effectiveDate: body.effectiveDate ? new Date(body.effectiveDate as string) : null,
+      }),
     },
   });
 

@@ -16,8 +16,8 @@ import { prisma } from '../lib/db.js';
 
 /** 套餐限额定义 */
 interface PlanLimits {
-  maxAnimals: number;       // -1 = 无限
-  maxUsers: number;         // -1 = 无限
+  maxAnimals: number; // -1 = 无限
+  maxUsers: number; // -1 = 无限
   maxReportsPerMonth: number; // -1 = 无限
   hasApiAccess: boolean;
   hasAAALACSupport: boolean;
@@ -35,14 +35,14 @@ const FREE_TIER_LIMITS: PlanLimits = {
 /** 套餐限额映射 */
 const PLAN_LIMITS: Record<string, PlanLimits> = {
   'academic-free': FREE_TIER_LIMITS,
-  'starter': {
+  starter: {
     maxAnimals: 1000,
     maxUsers: 15,
     maxReportsPerMonth: -1,
     hasApiAccess: false,
     hasAAALACSupport: false,
   },
-  'professional': {
+  professional: {
     maxAnimals: 15000,
     maxUsers: 40,
     maxReportsPerMonth: -1,
@@ -114,9 +114,7 @@ export async function billingWallMiddleware(c: Context, next: Next): Promise<voi
   });
 
   // 有效订阅状态：active, 或免费版无订阅记录
-  const plan = subscription?.status === 'active'
-    ? subscription.planId
-    : 'academic-free';
+  const plan = subscription?.status === 'active' ? subscription.planId : 'academic-free';
   const limits = PLAN_LIMITS[plan] || FREE_TIER_LIMITS;
 
   // 统计使用量
@@ -152,7 +150,9 @@ export async function billingWallMiddleware(c: Context, next: Next): Promise<voi
     overLimitReasons.push(`User limit exceeded: ${userCount}/${limits.maxUsers}`);
   }
   if (limits.maxReportsPerMonth !== -1 && reportsThisMonth >= limits.maxReportsPerMonth) {
-    overLimitReasons.push(`Monthly report limit reached: ${reportsThisMonth}/${limits.maxReportsPerMonth}`);
+    overLimitReasons.push(
+      `Monthly report limit reached: ${reportsThisMonth}/${limits.maxReportsPerMonth}`,
+    );
   }
 
   const billingCtx: BillingContext = {

@@ -45,7 +45,12 @@ export const AVMA_METHODS_DB: Record<string, SpeciesMethods> = {
       { id: 'sevoflurane_overdose', category: 'acceptable', requires: [] },
     ],
     conditional: [
-      { id: 'cervical_dislocation', category: 'conditional', requires: ['certification', 'weight_limit'], weightLimit: 1000 },
+      {
+        id: 'cervical_dislocation',
+        category: 'conditional',
+        requires: ['certification', 'weight_limit'],
+        weightLimit: 1000,
+      },
       { id: 'decapitation', category: 'conditional', requires: ['anesthesia_first'] },
       { id: 'captive_bolt', category: 'conditional', requires: ['certification'] },
     ],
@@ -68,7 +73,12 @@ export const AVMA_METHODS_DB: Record<string, SpeciesMethods> = {
       { id: 'sevoflurane_overdose', category: 'acceptable', requires: [] },
     ],
     conditional: [
-      { id: 'cervical_dislocation', category: 'conditional', requires: ['certification', 'weight_limit'], weightLimit: 1000 },
+      {
+        id: 'cervical_dislocation',
+        category: 'conditional',
+        requires: ['certification', 'weight_limit'],
+        weightLimit: 1000,
+      },
       { id: 'decapitation', category: 'conditional', requires: ['anesthesia_first'] },
     ],
     unacceptable: [
@@ -89,7 +99,12 @@ export const AVMA_METHODS_DB: Record<string, SpeciesMethods> = {
       { id: 'isoflurane_overdose', category: 'acceptable', requires: [] },
     ],
     conditional: [
-      { id: 'cervical_dislocation', category: 'conditional', requires: ['certification', 'weight_limit'], weightLimit: 1000 },
+      {
+        id: 'cervical_dislocation',
+        category: 'conditional',
+        requires: ['certification', 'weight_limit'],
+        weightLimit: 1000,
+      },
       { id: 'decapitation', category: 'conditional', requires: ['anesthesia_first'] },
     ],
     unacceptable: [
@@ -107,9 +122,7 @@ export const AVMA_METHODS_DB: Record<string, SpeciesMethods> = {
       { id: 'barbiturate_ip', category: 'acceptable', requires: [] },
       { id: 'isoflurane_overdose', category: 'acceptable', requires: [] },
     ],
-    conditional: [
-      { id: 'captive_bolt', category: 'conditional', requires: ['certification'] },
-    ],
+    conditional: [{ id: 'captive_bolt', category: 'conditional', requires: ['certification'] }],
     unacceptable: [
       { id: 'dry_ice', category: 'unacceptable', requires: [] },
       { id: 'freezing', category: 'unacceptable', requires: [] },

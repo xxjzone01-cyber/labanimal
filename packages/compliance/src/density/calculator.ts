@@ -62,7 +62,7 @@ export function calculateMaxDensity(input: DensityInput): DensityResult {
   const standards = GUIDE_STANDARDS[species.toLowerCase()];
   if (!standards) {
     throw new Error(
-      `Unknown species: "${species}". Supported: ${Object.keys(GUIDE_STANDARDS).join(', ')}`
+      `Unknown species: "${species}". Supported: ${Object.keys(GUIDE_STANDARDS).join(', ')}`,
     );
   }
 
@@ -93,7 +93,8 @@ export function calculateMaxDensity(input: DensityInput): DensityResult {
     maxCount = Math.min(maxCount, POST_SURGERY_MAX);
     if (POST_SURGERY_MAX < guideBaseline) {
       source = 'post_surgery_limit';
-      reason = 'Post-surgery recovery: max 1 animal per cage (unless protocol approves group housing)';
+      reason =
+        'Post-surgery recovery: max 1 animal per cage (unless protocol approves group housing)';
     }
   }
 

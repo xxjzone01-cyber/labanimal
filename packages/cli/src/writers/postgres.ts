@@ -143,8 +143,16 @@ const protocolMappings: FieldMapping[] = [
   { source: 'iacuc_number', target: 'iacucNumber', transform: mapString },
   { source: 'iacucNumber', target: 'iacucNumber', transform: mapString },
   { source: 'status', target: 'status', transform: (v) => mapEnum(v, PROTOCOL_STATUS, 'draft') },
-  { source: 'pain_category', target: 'painCategory', transform: (v) => mapEnum(v, PAIN_CATEGORY, 'B') },
-  { source: 'painCategory', target: 'painCategory', transform: (v) => mapEnum(v, PAIN_CATEGORY, 'B') },
+  {
+    source: 'pain_category',
+    target: 'painCategory',
+    transform: (v) => mapEnum(v, PAIN_CATEGORY, 'B'),
+  },
+  {
+    source: 'painCategory',
+    target: 'painCategory',
+    transform: (v) => mapEnum(v, PAIN_CATEGORY, 'B'),
+  },
   { source: 'start_date', target: 'startDate', transform: mapDate },
   { source: 'startDate', target: 'startDate', transform: mapDate },
   { source: 'end_date', target: 'endDate', transform: mapDate },
@@ -157,8 +165,16 @@ const protocolMappings: FieldMapping[] = [
   { source: 'threeRsReduction', target: 'threeRsReduction', transform: mapString },
   { source: 'three_rs_refinement', target: 'threeRsRefinement', transform: mapString },
   { source: 'threeRsRefinement', target: 'threeRsRefinement', transform: mapString },
-  { source: 'has_statistical_justification', target: 'hasStatisticalJustification', transform: mapBoolean },
-  { source: 'hasStatisticalJustification', target: 'hasStatisticalJustification', transform: mapBoolean },
+  {
+    source: 'has_statistical_justification',
+    target: 'hasStatisticalJustification',
+    transform: mapBoolean,
+  },
+  {
+    source: 'hasStatisticalJustification',
+    target: 'hasStatisticalJustification',
+    transform: mapBoolean,
+  },
   { source: 'involves_surgery', target: 'involvesSurgery', transform: mapBoolean },
   { source: 'involvesSurgery', target: 'involvesSurgery', transform: mapBoolean },
   { source: 'survival_surgery', target: 'survivalSurgery', transform: mapBoolean },
@@ -192,8 +208,16 @@ const animalMappings: FieldMapping[] = [
   { source: 'protocol_id', target: 'protocolId' },
   { source: 'protocolId', target: 'protocolId' },
   { source: 'status', target: 'status', transform: (v) => mapEnum(v, ANIMAL_STATUS, 'active') },
-  { source: 'quarantine_status', target: 'quarantineStatus', transform: (v) => mapEnum(v, QUARANTINE_STATUS, 'none') },
-  { source: 'quarantineStatus', target: 'quarantineStatus', transform: (v) => mapEnum(v, QUARANTINE_STATUS, 'none') },
+  {
+    source: 'quarantine_status',
+    target: 'quarantineStatus',
+    transform: (v) => mapEnum(v, QUARANTINE_STATUS, 'none'),
+  },
+  {
+    source: 'quarantineStatus',
+    target: 'quarantineStatus',
+    transform: (v) => mapEnum(v, QUARANTINE_STATUS, 'none'),
+  },
   { source: 'quarantine_until', target: 'quarantineUntil', transform: mapDate },
   { source: 'quarantineUntil', target: 'quarantineUntil', transform: mapDate },
   { source: 'notes', target: 'notes', transform: mapString },
@@ -205,8 +229,16 @@ const healthRecordMappings: FieldMapping[] = [
   { source: 'animalId', target: 'animalId' },
   { source: 'lab_id', target: 'labId' },
   { source: 'labId', target: 'labId' },
-  { source: 'record_type', target: 'recordType', transform: (v) => mapEnum(v, RECORD_TYPE, 'check') },
-  { source: 'recordType', target: 'recordType', transform: (v) => mapEnum(v, RECORD_TYPE, 'check') },
+  {
+    source: 'record_type',
+    target: 'recordType',
+    transform: (v) => mapEnum(v, RECORD_TYPE, 'check'),
+  },
+  {
+    source: 'recordType',
+    target: 'recordType',
+    transform: (v) => mapEnum(v, RECORD_TYPE, 'check'),
+  },
   { source: 'weight', target: 'weight', transform: mapFloat },
   { source: 'body_condition_score', target: 'bodyConditionScore', transform: mapInt },
   { source: 'bodyConditionScore', target: 'bodyConditionScore', transform: mapInt },
@@ -371,11 +403,23 @@ const electronicSignatureMappings: FieldMapping[] = [
   { source: 'labId', target: 'labId' },
   { source: 'protocol_id', target: 'protocolId' },
   { source: 'protocolId', target: 'protocolId' },
-  { source: 'entity_type', target: 'entityType', transform: (v) => mapEnum(v, ENTITY_TYPE, 'protocol') },
-  { source: 'entityType', target: 'entityType', transform: (v) => mapEnum(v, ENTITY_TYPE, 'protocol') },
+  {
+    source: 'entity_type',
+    target: 'entityType',
+    transform: (v) => mapEnum(v, ENTITY_TYPE, 'protocol'),
+  },
+  {
+    source: 'entityType',
+    target: 'entityType',
+    transform: (v) => mapEnum(v, ENTITY_TYPE, 'protocol'),
+  },
   { source: 'entity_id', target: 'entityId' },
   { source: 'entityId', target: 'entityId' },
-  { source: 'meaning', target: 'meaning', transform: (v) => mapEnum(v, SIGNATURE_MEANING, 'reviewed') },
+  {
+    source: 'meaning',
+    target: 'meaning',
+    transform: (v) => mapEnum(v, SIGNATURE_MEANING, 'reviewed'),
+  },
   { source: 'printed_name', target: 'printedName', transform: mapString },
   { source: 'printedName', target: 'printedName', transform: mapString },
   { source: 'title', target: 'title', transform: mapString },
@@ -396,8 +440,16 @@ const batchSessionMappings: FieldMapping[] = [
   { source: 'labId', target: 'labId' },
   { source: 'batch_number', target: 'batchNumber', transform: mapString },
   { source: 'batchNumber', target: 'batchNumber', transform: mapString },
-  { source: 'material_type', target: 'materialType', transform: (v) => mapEnum(v, BATCH_MATERIAL_TYPE, 'other') },
-  { source: 'materialType', target: 'materialType', transform: (v) => mapEnum(v, BATCH_MATERIAL_TYPE, 'other') },
+  {
+    source: 'material_type',
+    target: 'materialType',
+    transform: (v) => mapEnum(v, BATCH_MATERIAL_TYPE, 'other'),
+  },
+  {
+    source: 'materialType',
+    target: 'materialType',
+    transform: (v) => mapEnum(v, BATCH_MATERIAL_TYPE, 'other'),
+  },
   { source: 'supplier', target: 'supplier', transform: mapString },
   { source: 'received_date', target: 'receivedDate', transform: mapDate },
   { source: 'receivedDate', target: 'receivedDate', transform: mapDate },
@@ -456,7 +508,10 @@ function resolveOptionalId(ctx: MigrationContext, sourceId: unknown): string | n
 
 // ===== 各表写入函数 =====
 
-async function migrateLabs(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateLabs(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'labs', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -508,7 +563,10 @@ async function migrateLabs(ctx: MigrationContext, rows: Record<string, unknown>[
   return result;
 }
 
-async function migrateUsers(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateUsers(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'users', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -551,7 +609,10 @@ async function migrateUsers(ctx: MigrationContext, rows: Record<string, unknown>
   return result;
 }
 
-async function migrateUserLabs(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateUserLabs(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'user_labs', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -584,7 +645,10 @@ async function migrateUserLabs(ctx: MigrationContext, rows: Record<string, unkno
   return result;
 }
 
-async function migrateProtocols(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateProtocols(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'protocols', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -600,7 +664,7 @@ async function migrateProtocols(ctx: MigrationContext, rows: Record<string, unkn
       const { sourceId: _, labId: _labId, ...data } = mapped;
       const protocol = await ctx.prisma.protocol.create({
         data: {
-          ...data as any,
+          ...(data as any),
           labId: ctx.labId,
         },
       });
@@ -614,7 +678,10 @@ async function migrateProtocols(ctx: MigrationContext, rows: Record<string, unkn
   return result;
 }
 
-async function migrateRooms(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateRooms(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'rooms', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -630,7 +697,7 @@ async function migrateRooms(ctx: MigrationContext, rows: Record<string, unknown>
       const { sourceId: _, labId: _labId, ...data } = mapped;
       const room = await ctx.prisma.room.create({
         data: {
-          ...data as any,
+          ...(data as any),
           labId: ctx.labId,
         },
       });
@@ -644,7 +711,10 @@ async function migrateRooms(ctx: MigrationContext, rows: Record<string, unknown>
   return result;
 }
 
-async function migrateRacks(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateRacks(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'racks', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -677,7 +747,10 @@ async function migrateRacks(ctx: MigrationContext, rows: Record<string, unknown>
   return result;
 }
 
-async function migrateCages(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateCages(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'cages', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -715,7 +788,10 @@ async function migrateCages(ctx: MigrationContext, rows: Record<string, unknown>
   return result;
 }
 
-async function migrateAnimals(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateAnimals(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'animals', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -778,7 +854,10 @@ async function migrateAnimals(ctx: MigrationContext, rows: Record<string, unknow
   return result;
 }
 
-async function migrateHealthRecords(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateHealthRecords(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'health_records', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -819,7 +898,10 @@ async function migrateHealthRecords(ctx: MigrationContext, rows: Record<string, 
   return result;
 }
 
-async function migrateDeathReports(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateDeathReports(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'death_reports', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -856,7 +938,10 @@ async function migrateDeathReports(ctx: MigrationContext, rows: Record<string, u
   return result;
 }
 
-async function migrateMedications(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateMedications(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'medications', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -897,8 +982,16 @@ async function migrateMedications(ctx: MigrationContext, rows: Record<string, un
   return result;
 }
 
-async function migrateAnimalIdentifiers(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
-  const result: MigrationResult = { table: 'animal_identifiers', imported: 0, skipped: 0, errors: [] };
+async function migrateAnimalIdentifiers(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
+  const result: MigrationResult = {
+    table: 'animal_identifiers',
+    imported: 0,
+    skipped: 0,
+    errors: [],
+  };
 
   for (const row of rows) {
     const mapped = mapRow(row, animalIdentifierMappings);
@@ -944,7 +1037,10 @@ async function migrateAnimalIdentifiers(ctx: MigrationContext, rows: Record<stri
   return result;
 }
 
-async function migrateAnimalLinks(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateAnimalLinks(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'animal_links', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -977,7 +1073,10 @@ async function migrateAnimalLinks(ctx: MigrationContext, rows: Record<string, un
   return result;
 }
 
-async function migrateBreedings(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateBreedings(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'breeding', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -1015,7 +1114,10 @@ async function migrateBreedings(ctx: MigrationContext, rows: Record<string, unkn
   return result;
 }
 
-async function migrateEnrichments(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateEnrichments(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'enrichments', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -1051,7 +1153,10 @@ async function migrateEnrichments(ctx: MigrationContext, rows: Record<string, un
   return result;
 }
 
-async function migrateTrainings(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateTrainings(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'trainings', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -1089,7 +1194,10 @@ async function migrateTrainings(ctx: MigrationContext, rows: Record<string, unkn
   return result;
 }
 
-async function migrateRates(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateRates(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'rates', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -1121,8 +1229,16 @@ async function migrateRates(ctx: MigrationContext, rows: Record<string, unknown>
   return result;
 }
 
-async function migrateElectronicSignatures(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
-  const result: MigrationResult = { table: 'electronic_signatures', imported: 0, skipped: 0, errors: [] };
+async function migrateElectronicSignatures(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
+  const result: MigrationResult = {
+    table: 'electronic_signatures',
+    imported: 0,
+    skipped: 0,
+    errors: [],
+  };
 
   for (const row of rows) {
     const mapped = mapRow(row, electronicSignatureMappings);
@@ -1163,7 +1279,10 @@ async function migrateElectronicSignatures(ctx: MigrationContext, rows: Record<s
   return result;
 }
 
-async function migrateBatchSessions(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateBatchSessions(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'batch_sessions', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -1200,7 +1319,10 @@ async function migrateBatchSessions(ctx: MigrationContext, rows: Record<string, 
   return result;
 }
 
-async function migrateWorkSessions(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateWorkSessions(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'work_sessions', imported: 0, skipped: 0, errors: [] };
 
   for (const row of rows) {
@@ -1233,7 +1355,10 @@ async function migrateWorkSessions(ctx: MigrationContext, rows: Record<string, u
   return result;
 }
 
-async function migrateAuditLogs(ctx: MigrationContext, rows: Record<string, unknown>[]): Promise<MigrationResult> {
+async function migrateAuditLogs(
+  ctx: MigrationContext,
+  rows: Record<string, unknown>[],
+): Promise<MigrationResult> {
   const result: MigrationResult = { table: 'audit_log', imported: 0, skipped: 0, errors: [] };
 
   if (ctx.skipAuditLog) {
@@ -1288,7 +1413,7 @@ async function migrateAuditLogs(ctx: MigrationContext, rows: Record<string, unkn
 export async function writePostgres(
   data: SQLiteData,
   labId: string,
-  options: { dryRun?: boolean; skipAuditLog?: boolean } = {}
+  options: { dryRun?: boolean; skipAuditLog?: boolean } = {},
 ): Promise<MigrationResult[]> {
   const prisma = new PrismaClient();
   const ctx: MigrationContext = {

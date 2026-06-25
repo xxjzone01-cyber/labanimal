@@ -98,11 +98,14 @@ healthRecords.post('/', async (c) => {
     });
 
     if (!validation.allowed) {
-      return c.json({
-        error: 'AVMA violation',
-        violations: validation.violations,
-        suggestedMethods: validation.suggestedMethods,
-      }, 400);
+      return c.json(
+        {
+          error: 'AVMA violation',
+          violations: validation.violations,
+          suggestedMethods: validation.suggestedMethods,
+        },
+        400,
+      );
     }
   }
 
@@ -180,7 +183,10 @@ healthRecords.put('/:id', async (c) => {
   }
 
   // AVMA validation if updating to euthanasia
-  if (body.recordType === 'euthanasia' || (existing.recordType === 'euthanasia' && body.euthanasiaMethodId)) {
+  if (
+    body.recordType === 'euthanasia' ||
+    (existing.recordType === 'euthanasia' && body.euthanasiaMethodId)
+  ) {
     const methodId = (body.euthanasiaMethodId as string) || existing.euthanasiaMethodId;
     if (!methodId) {
       return c.json({ error: 'euthanasiaMethodId is required for euthanasia records' }, 400);
@@ -192,11 +198,14 @@ healthRecords.put('/:id', async (c) => {
     });
 
     if (!validation.allowed) {
-      return c.json({
-        error: 'AVMA violation',
-        violations: validation.violations,
-        suggestedMethods: validation.suggestedMethods,
-      }, 400);
+      return c.json(
+        {
+          error: 'AVMA violation',
+          violations: validation.violations,
+          suggestedMethods: validation.suggestedMethods,
+        },
+        400,
+      );
     }
   }
 
@@ -205,12 +214,16 @@ healthRecords.put('/:id', async (c) => {
     data: {
       ...(body.recordType !== undefined && { recordType: body.recordType as string }),
       ...(body.weight !== undefined && { weight: body.weight as number }),
-      ...(body.bodyConditionScore !== undefined && { bodyConditionScore: body.bodyConditionScore as number }),
+      ...(body.bodyConditionScore !== undefined && {
+        bodyConditionScore: body.bodyConditionScore as number,
+      }),
       ...(body.painScore !== undefined && { painScore: body.painScore as number }),
       ...(body.painScoreType !== undefined && { painScoreType: body.painScoreType as string }),
       ...(body.description !== undefined && { description: body.description as string }),
       ...(body.treatment !== undefined && { treatment: body.treatment as string }),
-      ...(body.euthanasiaMethodId !== undefined && { euthanasiaMethodId: body.euthanasiaMethodId as string }),
+      ...(body.euthanasiaMethodId !== undefined && {
+        euthanasiaMethodId: body.euthanasiaMethodId as string,
+      }),
     },
     include: {
       animal: { select: { id: true, internalId: true, species: true } },

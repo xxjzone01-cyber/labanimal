@@ -4,13 +4,13 @@ The density module calculates maximum animal counts per cage based on the [Guide
 
 ## Supported Species
 
-| Species | Reference |
-|---------|-----------|
-| Mouse | Guide Table 3.1 |
-| Rat | Guide Table 3.2 |
-| Hamster | Guide Table 3.3 |
+| Species    | Reference       |
+| ---------- | --------------- |
+| Mouse      | Guide Table 3.1 |
+| Rat        | Guide Table 3.2 |
+| Hamster    | Guide Table 3.3 |
 | Guinea pig | Guide Table 3.4 |
-| Rabbit | Guide Table 3.4 |
+| Rabbit     | Guide Table 3.4 |
 
 ## Usage
 
@@ -47,23 +47,23 @@ The calculation uses the floor area per animal values from the NRC Guide tables,
 Space requirements increase with body weight. For example, mice:
 
 | Weight Range | Floor Space per Animal |
-|-------------|----------------------|
-| Up to 10g | 6 sq in |
-| 10–15g | 8 sq in |
-| 15–25g | 12 sq in |
-| Over 25g | 15 sq in |
+| ------------ | ---------------------- |
+| Up to 10g    | 6 sq in                |
+| 10–15g       | 8 sq in                |
+| 15–25g       | 12 sq in               |
+| Over 25g     | 15 sq in               |
 
 ## Response Structure
 
 ```typescript
 interface DensityResult {
   allowed: boolean;
-  maxCount: number;       // Maximum animals allowed
-  currentCount: number;   // Current animals in cage
-  addingCount: number;    // Animals being added
-  reason?: string;        // Explanation if blocked
-  floorAreaSqIn: number;  // Cage floor area used
-  requiredSqIn: number;   // Required floor space per animal
+  maxCount: number; // Maximum animals allowed
+  currentCount: number; // Current animals in cage
+  addingCount: number; // Animals being added
+  reason?: string; // Explanation if blocked
+  floorAreaSqIn: number; // Cage floor area used
+  requiredSqIn: number; // Required floor space per animal
 }
 ```
 

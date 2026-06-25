@@ -61,7 +61,9 @@ trainings.get('/', async (c) => {
         return updated;
       }
       if (item.expirationDate) {
-        const daysUntilExpiry = Math.ceil((item.expirationDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+        const daysUntilExpiry = Math.ceil(
+          (item.expirationDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24),
+        );
         if (daysUntilExpiry <= 30 && daysUntilExpiry > 0 && item.status === 'active') {
           const updated = await prisma.training.update({
             where: { id: item.id },
@@ -74,7 +76,7 @@ trainings.get('/', async (c) => {
         }
       }
       return item;
-    })
+    }),
   );
 
   return c.json({ items: updatedItems, total, page, limit, pages: Math.ceil(total / limit) });
@@ -176,10 +178,16 @@ trainings.put('/:id', async (c) => {
     where: { id },
     data: {
       ...(body.type !== undefined && { type: body.type as string }),
-      ...(body.certificationNumber !== undefined && { certificationNumber: body.certificationNumber as string }),
+      ...(body.certificationNumber !== undefined && {
+        certificationNumber: body.certificationNumber as string,
+      }),
       ...(body.issuedBy !== undefined && { issuedBy: body.issuedBy as string }),
-      ...(body.issuedDate !== undefined && { issuedDate: body.issuedDate ? new Date(body.issuedDate as string) : null }),
-      ...(body.expirationDate !== undefined && { expirationDate: body.expirationDate ? new Date(body.expirationDate as string) : null }),
+      ...(body.issuedDate !== undefined && {
+        issuedDate: body.issuedDate ? new Date(body.issuedDate as string) : null,
+      }),
+      ...(body.expirationDate !== undefined && {
+        expirationDate: body.expirationDate ? new Date(body.expirationDate as string) : null,
+      }),
       ...(body.status !== undefined && { status: body.status as string }),
       ...(body.documentUrl !== undefined && { documentUrl: body.documentUrl as string }),
       ...(body.notes !== undefined && { notes: body.notes as string }),

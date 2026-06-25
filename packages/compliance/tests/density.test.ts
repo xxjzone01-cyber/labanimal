@@ -298,7 +298,7 @@ describe('calculateMaxDensity', () => {
           weightGrams: 100,
           currentCount: 0,
           addingCount: 1,
-        })
+        }),
       ).toThrow('Unknown species: "cat"');
     });
 
@@ -309,7 +309,7 @@ describe('calculateMaxDensity', () => {
           weightGrams: 0,
           currentCount: 0,
           addingCount: 1,
-        })
+        }),
       ).toThrow('Weight must be a positive number');
 
       expect(() =>
@@ -318,7 +318,7 @@ describe('calculateMaxDensity', () => {
           weightGrams: -5,
           currentCount: 0,
           addingCount: 1,
-        })
+        }),
       ).toThrow('Weight must be a positive number');
     });
 

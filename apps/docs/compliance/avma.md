@@ -6,24 +6,24 @@ The AVMA module validates euthanasia methods against the [AVMA Guidelines for th
 
 Each method is classified into one of three categories:
 
-| Classification | Meaning |
-|----------------|---------|
-| **Acceptable** | Conditionally acceptable with documented justification |
-| **Conditional** | May be acceptable under specific conditions (e.g., field conditions, emergency) |
-| **Unacceptable** | Not permitted under any circumstances |
+| Classification   | Meaning                                                                         |
+| ---------------- | ------------------------------------------------------------------------------- |
+| **Acceptable**   | Conditionally acceptable with documented justification                          |
+| **Conditional**  | May be acceptable under specific conditions (e.g., field conditions, emergency) |
+| **Unacceptable** | Not permitted under any circumstances                                           |
 
 ## Supported Methods
 
 The engine includes the following euthanasia methods:
 
-| Method ID | Description | Classification |
-|-----------|-------------|----------------|
-| `cervical_dislocation` | Cervical dislocation | Acceptable (with weight limits) |
-| `co2_inhalation` | CO₂ inhalation | Acceptable |
-| `isoflurane` | Isoflurane overdose | Acceptable |
-| `injectable_barbiturate` | Injectable barbiturate (e.g., pentobarbital) | Acceptable |
-| `decapitation` | Decapitation | Conditional |
-| `captive_bolt` | Captive bolt | Conditional |
+| Method ID                | Description                                  | Classification                  |
+| ------------------------ | -------------------------------------------- | ------------------------------- |
+| `cervical_dislocation`   | Cervical dislocation                         | Acceptable (with weight limits) |
+| `co2_inhalation`         | CO₂ inhalation                               | Acceptable                      |
+| `isoflurane`             | Isoflurane overdose                          | Acceptable                      |
+| `injectable_barbiturate` | Injectable barbiturate (e.g., pentobarbital) | Acceptable                      |
+| `decapitation`           | Decapitation                                 | Conditional                     |
+| `captive_bolt`           | Captive bolt                                 | Conditional                     |
 
 ## Usage
 
@@ -58,10 +58,10 @@ The validator checks:
 
 Certain methods have species-specific weight limits:
 
-| Species | Method | Max Weight |
-|---------|--------|------------|
-| Mouse | Cervical dislocation | 200g |
-| Rat | Cervical dislocation | 500g |
+| Species | Method               | Max Weight |
+| ------- | -------------------- | ---------- |
+| Mouse   | Cervical dislocation | 200g       |
+| Rat     | Cervical dislocation | 500g       |
 
 Attempts to use these methods on animals exceeding the weight limit will return a violation with suggested alternatives.
 

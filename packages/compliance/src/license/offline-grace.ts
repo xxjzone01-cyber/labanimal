@@ -149,10 +149,12 @@ export function generateRenewalCode(deployId: string, secret: string): string {
 export function verifyRenewalCode(
   code: string,
   expectedDeployId: string,
-  secret: string
+  secret: string,
 ): { valid: boolean; expiresAt?: number; error?: string } {
   try {
-    const decoded = JSON.parse(Buffer.from(code, 'base64url').toString('utf8')) as RenewalCode & { deployId: string };
+    const decoded = JSON.parse(Buffer.from(code, 'base64url').toString('utf8')) as RenewalCode & {
+      deployId: string;
+    };
 
     // 验证部署 ID
     if (decoded.deployId !== expectedDeployId) {

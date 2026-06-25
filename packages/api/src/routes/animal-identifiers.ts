@@ -75,7 +75,7 @@ animalIdentifiers.post('/', async (c) => {
   });
 
   // Auto-set as primary if it's the first identifier
-  const isPrimary = existingCount === 0 ? true : (body.isPrimary || false);
+  const isPrimary = existingCount === 0 ? true : body.isPrimary || false;
 
   try {
     const identifier = await prisma.animalIdentifier.create({
@@ -96,10 +96,13 @@ animalIdentifiers.post('/', async (c) => {
   } catch (error: unknown) {
     // Handle unique constraint violation
     if (error && typeof error === 'object' && 'code' in error && error.code === 'P2002') {
-      return c.json({
-        error: 'Identifier already exists',
-        message: `A ${body.type} identifier with value "${body.value}" already exists for this animal`,
-      }, 409);
+      return c.json(
+        {
+          error: 'Identifier already exists',
+          message: `A ${body.type} identifier with value "${body.value}" already exists for this animal`,
+        },
+        409,
+      );
     }
     throw error;
   }
@@ -169,10 +172,13 @@ animalIdentifiers.put('/:id', async (c) => {
     return c.json(identifier);
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'code' in error && error.code === 'P2002') {
-      return c.json({
-        error: 'Identifier already exists',
-        message: `A ${body.type} identifier with value "${body.value}" already exists for this animal`,
-      }, 409);
+      return c.json(
+        {
+          error: 'Identifier already exists',
+          message: `A ${body.type} identifier with value "${body.value}" already exists for this animal`,
+        },
+        409,
+      );
     }
     throw error;
   }

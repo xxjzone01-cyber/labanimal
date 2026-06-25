@@ -12,7 +12,7 @@ let labId: string;
 async function api(
   method: string,
   path: string,
-  body?: Record<string, unknown>
+  body?: Record<string, unknown>,
 ): Promise<{ status: number; data: any }> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -113,8 +113,15 @@ test('TE2. Animal lifecycle: create → cage → health record → death report'
 
   // 创建设施并分配笼位
   const room = await api('POST', '/rooms', { labId, name: `Life Room ${Date.now()}` });
-  const rack = await api('POST', '/racks', { roomId: room.data.id, name: `Life Rack ${Date.now()}` });
-  const cage = await api('POST', '/cages', { rackId: rack.data.id, position: `L-${Date.now()}`, capacity: 5 });
+  const rack = await api('POST', '/racks', {
+    roomId: room.data.id,
+    name: `Life Rack ${Date.now()}`,
+  });
+  const cage = await api('POST', '/cages', {
+    rackId: rack.data.id,
+    position: `L-${Date.now()}`,
+    capacity: 5,
+  });
   expect(cage.status).toBe(201);
 
   const assign = await api('POST', `/cages/${cage.data.id}/assign-animal`, { animalId });
@@ -194,7 +201,11 @@ test('TE3. Quarantine workflow: create quarantined → block cage → release �
   // 创建设施
   const room = await api('POST', '/rooms', { labId, name: `Q Room ${Date.now()}` });
   const rack = await api('POST', '/racks', { roomId: room.data.id, name: `Q Rack ${Date.now()}` });
-  const cage = await api('POST', '/cages', { rackId: rack.data.id, position: `QC-${Date.now()}`, capacity: 5 });
+  const cage = await api('POST', '/cages', {
+    rackId: rack.data.id,
+    position: `QC-${Date.now()}`,
+    capacity: 5,
+  });
 
   // 尝试分配检疫动物到普通笼位 — 应被阻断
   const blocked = await api('POST', `/cages/${cage.data.id}/assign-animal`, { animalId });
@@ -341,8 +352,15 @@ test('TE6. Medication + Enrichment workflow', async () => {
 
   // 创建设施和笼位
   const room = await api('POST', '/rooms', { labId, name: `Med Room ${Date.now()}` });
-  const rack = await api('POST', '/racks', { roomId: room.data.id, name: `Med Rack ${Date.now()}` });
-  const cage = await api('POST', '/cages', { rackId: rack.data.id, position: `M-${Date.now()}`, capacity: 5 });
+  const rack = await api('POST', '/racks', {
+    roomId: room.data.id,
+    name: `Med Rack ${Date.now()}`,
+  });
+  const cage = await api('POST', '/cages', {
+    rackId: rack.data.id,
+    position: `M-${Date.now()}`,
+    capacity: 5,
+  });
   await api('POST', `/cages/${cage.data.id}/assign-animal`, { animalId: animal.data.id });
 
   // 创建药物记录
@@ -413,7 +431,7 @@ test('TE7. Billing workflow: rates → animals → generate bill', async () => {
   const rate1 = await api('POST', '/rates', {
     labId,
     species: 'mouse',
-    dailyRate: 1.50,
+    dailyRate: 1.5,
     cageRate: 0.75,
   });
   expect(rate1.status).toBe(201);
@@ -421,8 +439,8 @@ test('TE7. Billing workflow: rates → animals → generate bill', async () => {
   const rate2 = await api('POST', '/rates', {
     labId,
     species: 'rat',
-    dailyRate: 3.00,
-    cageRate: 1.50,
+    dailyRate: 3.0,
+    cageRate: 1.5,
   });
   expect(rate2.status).toBe(201);
 
@@ -432,7 +450,10 @@ test('TE7. Billing workflow: rates → animals → generate bill', async () => {
   expect(rateList.data.length).toBeGreaterThanOrEqual(2);
 
   // 生成账单 (6月1日到7月1日 = 30天)
-  const bill = await api('GET', `/billing/generate?labId=${labId}&startDate=2025-06-01&endDate=2025-07-01`);
+  const bill = await api(
+    'GET',
+    `/billing/generate?labId=${labId}&startDate=2025-06-01&endDate=2025-07-01`,
+  );
   expect(bill.status).toBe(200);
   expect(bill.data.period.days).toBe(30);
   expect(bill.data.lineItems).toBeInstanceOf(Array);

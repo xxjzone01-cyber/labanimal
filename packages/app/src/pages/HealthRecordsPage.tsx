@@ -56,12 +56,24 @@ export function HealthRecordsPage() {
       await api.createHealthRecord({
         ...newRecord,
         weight: newRecord.weight ? parseFloat(newRecord.weight) : undefined,
-        bodyConditionScore: newRecord.bodyConditionScore ? parseInt(newRecord.bodyConditionScore) : undefined,
+        bodyConditionScore: newRecord.bodyConditionScore
+          ? parseInt(newRecord.bodyConditionScore)
+          : undefined,
         painScore: newRecord.painScore ? parseFloat(newRecord.painScore) : undefined,
         painScoreType: newRecord.painScore ? newRecord.painScoreType : undefined,
       });
       setShowAdd(false);
-      setNewRecord({ animalId: '', recordType: 'check', weight: '', bodyConditionScore: '', painScore: '', painScoreType: 'MGS', description: '', treatment: '', euthanasiaMethodId: '' });
+      setNewRecord({
+        animalId: '',
+        recordType: 'check',
+        weight: '',
+        bodyConditionScore: '',
+        painScore: '',
+        painScoreType: 'MGS',
+        description: '',
+        treatment: '',
+        euthanasiaMethodId: '',
+      });
       loadRecords();
     } catch (err: any) {
       setError(err.message);
@@ -120,7 +132,9 @@ export function HealthRecordsPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Body Condition Score</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Body Condition Score
+              </label>
               <input
                 type="number"
                 min="1"
@@ -131,7 +145,9 @@ export function HealthRecordsPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Pain Score (0-1)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Pain Score (0-1)
+              </label>
               <input
                 type="number"
                 min="0"
@@ -164,10 +180,14 @@ export function HealthRecordsPage() {
             </div>
             {newRecord.recordType === 'euthanasia' && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Euthanasia Method</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Euthanasia Method
+                </label>
                 <select
                   value={newRecord.euthanasiaMethodId}
-                  onChange={(e) => setNewRecord({ ...newRecord, euthanasiaMethodId: e.target.value })}
+                  onChange={(e) =>
+                    setNewRecord({ ...newRecord, euthanasiaMethodId: e.target.value })
+                  }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
                   required
                 >
@@ -180,10 +200,17 @@ export function HealthRecordsPage() {
             )}
           </div>
           <div className="mt-4 flex gap-2">
-            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium"
+            >
               Create
             </button>
-            <button type="button" onClick={() => setShowAdd(false)} className="px-4 py-2 border border-gray-300 rounded-lg text-sm">
+            <button
+              type="button"
+              onClick={() => setShowAdd(false)}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-sm"
+            >
               Cancel
             </button>
           </div>
@@ -205,37 +232,57 @@ export function HealthRecordsPage() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-500">Loading...</td></tr>
+              <tr>
+                <td colSpan={7} className="px-4 py-8 text-center text-gray-500">
+                  Loading...
+                </td>
+              </tr>
             ) : records.length === 0 ? (
-              <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-500">No records found</td></tr>
+              <tr>
+                <td colSpan={7} className="px-4 py-8 text-center text-gray-500">
+                  No records found
+                </td>
+              </tr>
             ) : (
               records.map((r) => (
                 <tr key={r.id} className="border-t border-gray-100 hover:bg-gray-50">
                   <td className="px-4 py-3 text-sm font-medium">{r.animal.internalId}</td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-1 text-xs rounded-full ${
-                      r.recordType === 'euthanasia' ? 'bg-red-100 text-red-700' :
-                      r.recordType === 'abnormal' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-green-100 text-green-700'
-                    }`}>
+                    <span
+                      className={`inline-block px-2 py-1 text-xs rounded-full ${
+                        r.recordType === 'euthanasia'
+                          ? 'bg-red-100 text-red-700'
+                          : r.recordType === 'abnormal'
+                            ? 'bg-yellow-100 text-yellow-700'
+                            : 'bg-green-100 text-green-700'
+                      }`}
+                    >
                       {r.recordType}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm">{r.weight ? `${r.weight}g` : '—'}</td>
                   <td className="px-4 py-3 text-sm">
                     {r.painScore != null ? (
-                      <span className={`inline-block px-2 py-1 text-xs rounded-full ${
-                        r.painScore >= 0.6 ? 'bg-red-100 text-red-700' :
-                        r.painScore >= 0.3 ? 'bg-yellow-100 text-yellow-700' :
-                        'bg-green-100 text-green-700'
-                      }`}>
+                      <span
+                        className={`inline-block px-2 py-1 text-xs rounded-full ${
+                          r.painScore >= 0.6
+                            ? 'bg-red-100 text-red-700'
+                            : r.painScore >= 0.3
+                              ? 'bg-yellow-100 text-yellow-700'
+                              : 'bg-green-100 text-green-700'
+                        }`}
+                      >
                         {r.painScore.toFixed(2)} {r.painScoreType || ''}
                       </span>
-                    ) : '—'}
+                    ) : (
+                      '—'
+                    )}
                   </td>
                   <td className="px-4 py-3 text-sm">{r.description || '—'}</td>
                   <td className="px-4 py-3 text-sm">{r.recorder.name}</td>
-                  <td className="px-4 py-3 text-sm">{new Date(r.recordedAt).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-sm">
+                    {new Date(r.recordedAt).toLocaleDateString()}
+                  </td>
                 </tr>
               ))
             )}

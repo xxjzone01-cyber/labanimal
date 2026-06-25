@@ -29,7 +29,11 @@ stripe.get('/config', (c) => {
 /** POST /create — 创建 Stripe Checkout Session */
 stripe.post('/create', authMiddleware, async (c) => {
   const user = getUser(c);
-  const body = await c.req.json<{ planId: string; labId: string; billing?: 'monthly' | 'annual' }>();
+  const body = await c.req.json<{
+    planId: string;
+    labId: string;
+    billing?: 'monthly' | 'annual';
+  }>();
 
   if (!body.planId || !body.labId) {
     return c.json({ error: 'planId and labId are required' }, 400);
@@ -83,13 +87,13 @@ stripe.post('/create', authMiddleware, async (c) => {
   try {
     // 创建 Stripe Checkout Session
     const params = new URLSearchParams({
-      'mode': 'subscription',
-      'success_url': `${process.env.APP_URL ?? 'http://localhost:5173'}/subscriptions?success=true`,
-      'cancel_url': `${process.env.APP_URL ?? 'http://localhost:5173'}/subscriptions?cancelled=true`,
+      mode: 'subscription',
+      success_url: `${process.env.APP_URL ?? 'http://localhost:5173'}/subscriptions?success=true`,
+      cancel_url: `${process.env.APP_URL ?? 'http://localhost:5173'}/subscriptions?cancelled=true`,
       'line_items[0][price]': plan.priceId,
       'line_items[0][quantity]': '1',
-      'client_reference_id': body.labId,
-      'customer_email': user.email,
+      client_reference_id: body.labId,
+      customer_email: user.email,
       'metadata[labId]': body.labId,
       'metadata[planId]': body.planId,
       // Stripe Tax 自动计算税费
@@ -108,7 +112,7 @@ stripe.post('/create', authMiddleware, async (c) => {
     const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${secretKey}`,
+        Authorization: `Bearer ${secretKey}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: params,
@@ -120,7 +124,7 @@ stripe.post('/create', authMiddleware, async (c) => {
       return c.json({ error: 'Failed to create checkout session' }, 500);
     }
 
-    const session = await response.json() as { id: string; url: string };
+    const session = (await response.json()) as { id: string; url: string };
 
     // 保存待激活的订阅
     await prisma.subscription.upsert({
@@ -173,7 +177,10 @@ stripe.post('/webhook', async (c) => {
   // 验证 webhook 签名
   try {
     const timestamp = sig.split(',')[0]?.split('=')[1];
-    const signatures = sig.split(',').filter(s => s.startsWith('v1=')).map(s => s.split('=')[1]);
+    const signatures = sig
+      .split(',')
+      .filter((s) => s.startsWith('v1='))
+      .map((s) => s.split('=')[1]);
     const payload = `${timestamp}.${body}`;
 
     // 使用 Web Crypto 验证 HMAC-SHA256
@@ -182,14 +189,14 @@ stripe.post('/webhook', async (c) => {
       new TextEncoder().encode(webhookSecret),
       { name: 'HMAC', hash: 'SHA-256' },
       false,
-      ['sign']
+      ['sign'],
     );
     const sigBuffer = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
     const expectedSig = Array.from(new Uint8Array(sigBuffer))
-      .map(b => b.toString(16).padStart(2, '0'))
+      .map((b) => b.toString(16).padStart(2, '0'))
       .join('');
 
-    const isValid = signatures.some(s => s === expectedSig);
+    const isValid = signatures.some((s) => s === expectedSig);
     if (!isValid) {
       console.error('Stripe webhook signature verification failed');
       return c.json({ error: 'Invalid signature' }, 400);
@@ -204,7 +211,10 @@ stripe.post('/webhook', async (c) => {
     data: { object: Record<string, any> };
   };
 
-  const { type, data: { object: session } } = event;
+  const {
+    type,
+    data: { object: session },
+  } = event;
 
   switch (type) {
     case 'checkout.session.completed': {
@@ -241,10 +251,14 @@ stripe.post('/webhook', async (c) => {
         where: { stripeSubscriptionId: subscriptionId },
       });
       if (sub) {
-        const newStatus = session.status === 'active' ? 'active'
-          : session.status === 'past_due' ? 'expired'
-          : session.status === 'canceled' ? 'cancelled'
-          : sub.status;
+        const newStatus =
+          session.status === 'active'
+            ? 'active'
+            : session.status === 'past_due'
+              ? 'expired'
+              : session.status === 'canceled'
+                ? 'cancelled'
+                : sub.status;
         await prisma.subscription.update({
           where: { id: sub.id },
           data: {

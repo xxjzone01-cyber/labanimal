@@ -11,7 +11,11 @@ interface Animal {
   status: string;
   cage: { position: string; rack: { name: string; room: { name: string } } } | null;
   identityLinks: { linkedTo: { id: string; internalId: string; status: string } }[];
-  linkedFrom: { id: string; reason: string; animal: { id: string; internalId: string; status: string } }[];
+  linkedFrom: {
+    id: string;
+    reason: string;
+    animal: { id: string; internalId: string; status: string };
+  }[];
 }
 
 export function AnimalsPage() {
@@ -50,7 +54,14 @@ export function AnimalsPage() {
     try {
       await api.createAnimal({ ...newAnimal, labId: api.getLabId() });
       setShowAdd(false);
-      setNewAnimal({ internalId: '', species: 'mouse', strain: '', genotype: '', sex: 'male', source: '' });
+      setNewAnimal({
+        internalId: '',
+        species: 'mouse',
+        strain: '',
+        genotype: '',
+        sex: 'male',
+        source: '',
+      });
       loadAnimals();
     } catch (err: any) {
       setError(err.message);
@@ -140,10 +151,17 @@ export function AnimalsPage() {
             </div>
           </div>
           <div className="mt-4 flex gap-2">
-            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium"
+            >
               Create
             </button>
-            <button type="button" onClick={() => setShowAdd(false)} className="px-4 py-2 border border-gray-300 rounded-lg text-sm">
+            <button
+              type="button"
+              onClick={() => setShowAdd(false)}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-sm"
+            >
               Cancel
             </button>
           </div>
@@ -164,22 +182,33 @@ export function AnimalsPage() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500">Loading...</td></tr>
+              <tr>
+                <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
+                  Loading...
+                </td>
+              </tr>
             ) : animals.length === 0 ? (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500">No animals found</td></tr>
+              <tr>
+                <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
+                  No animals found
+                </td>
+              </tr>
             ) : (
               animals.map((a) => (
-                <tr key={a.id} className={`border-t border-gray-100 hover:bg-gray-50 ${a.status === 'retired' ? 'opacity-70' : ''}`}>
+                <tr
+                  key={a.id}
+                  className={`border-t border-gray-100 hover:bg-gray-50 ${a.status === 'retired' ? 'opacity-70' : ''}`}
+                >
                   <td className="px-4 py-3 text-sm font-medium">
                     <div>{a.internalId}</div>
                     {a.status === 'retired' && a.identityLinks.length > 0 && (
                       <div className="text-xs text-blue-600 mt-1">
-                        &rarr; {a.identityLinks.map(l => l.linkedTo.internalId).join(', ')}
+                        &rarr; {a.identityLinks.map((l) => l.linkedTo.internalId).join(', ')}
                       </div>
                     )}
                     {a.linkedFrom.length > 0 && (
                       <div className="text-xs text-gray-500 mt-1">
-                        Was: {a.linkedFrom.map(l => l.animal.internalId).join(', ')}
+                        Was: {a.linkedFrom.map((l) => l.animal.internalId).join(', ')}
                       </div>
                     )}
                   </td>
@@ -187,17 +216,24 @@ export function AnimalsPage() {
                   <td className="px-4 py-3 text-sm">{a.strain || '—'}</td>
                   <td className="px-4 py-3 text-sm capitalize">{a.sex}</td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-1 text-xs rounded-full ${
-                      a.status === 'active' ? 'bg-green-100 text-green-700' :
-                      a.status === 'deceased' ? 'bg-gray-100 text-gray-500' :
-                      a.status === 'retired' ? 'bg-orange-100 text-orange-700' :
-                      'bg-yellow-100 text-yellow-700'
-                    }`}>
+                    <span
+                      className={`inline-block px-2 py-1 text-xs rounded-full ${
+                        a.status === 'active'
+                          ? 'bg-green-100 text-green-700'
+                          : a.status === 'deceased'
+                            ? 'bg-gray-100 text-gray-500'
+                            : a.status === 'retired'
+                              ? 'bg-orange-100 text-orange-700'
+                              : 'bg-yellow-100 text-yellow-700'
+                      }`}
+                    >
                       {a.status}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm">
-                    {a.cage ? `${a.cage.rack.room.name} / ${a.cage.rack.name} / ${a.cage.position}` : '—'}
+                    {a.cage
+                      ? `${a.cage.rack.room.name} / ${a.cage.rack.name} / ${a.cage.position}`
+                      : '—'}
                   </td>
                 </tr>
               ))

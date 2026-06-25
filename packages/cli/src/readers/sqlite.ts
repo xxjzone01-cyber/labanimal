@@ -114,7 +114,7 @@ function extractRows(db: Database, tableName: string): Record<string, unknown>[]
  */
 function getTableNames(db: Database): string[] {
   const result = db.exec(
-    "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+    "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'",
   );
   if (!result || result.length === 0) return [];
   return result[0].values.map((row: unknown[]) => String(row[0]));
@@ -149,9 +149,7 @@ export async function readSQLite(dbPath: string): Promise<SQLiteData> {
 /**
  * 获取 SQLite 数据库的统计信息（用于 dry-run）
  */
-export async function getSQLiteStats(
-  dbPath: string
-): Promise<Record<string, number>> {
+export async function getSQLiteStats(dbPath: string): Promise<Record<string, number>> {
   const SQL = await initSqlJs();
   const buffer = readFileSync(dbPath);
   const db = new SQL.Database(buffer);
@@ -163,7 +161,7 @@ export async function getSQLiteStats(
     const key = TABLE_MAP[tableName];
     if (key) {
       const result = db.exec(`SELECT COUNT(*) FROM "${tableName}"`);
-      stats[key] = result?.[0]?.values?.[0]?.[0] as number ?? 0;
+      stats[key] = (result?.[0]?.values?.[0]?.[0] as number) ?? 0;
     }
   }
 

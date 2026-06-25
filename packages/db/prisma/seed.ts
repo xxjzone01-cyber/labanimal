@@ -495,15 +495,15 @@ async function main() {
   // ============================================================
 
   await prisma.rate.create({
-    data: { labId: lab.id, species: 'mouse', dailyRate: 0.50, cageRate: 1.00 },
+    data: { labId: lab.id, species: 'mouse', dailyRate: 0.5, cageRate: 1.0 },
   });
 
   await prisma.rate.create({
-    data: { labId: lab.id, species: 'rat', dailyRate: 1.50, cageRate: 2.00 },
+    data: { labId: lab.id, species: 'rat', dailyRate: 1.5, cageRate: 2.0 },
   });
 
   await prisma.rate.create({
-    data: { labId: lab.id, species: 'rabbit', dailyRate: 5.00, cageRate: 8.00 },
+    data: { labId: lab.id, species: 'rabbit', dailyRate: 5.0, cageRate: 8.0 },
   });
 
   console.log('✅ Created billing rates');

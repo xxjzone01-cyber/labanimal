@@ -78,15 +78,17 @@ export function VerifyPage() {
         </div>
 
         {result && (
-          <div className={`rounded-xl border-2 p-6 ${
-            result.valid
-              ? 'bg-green-50 border-green-300'
-              : 'bg-red-50 border-red-300'
-          }`}>
+          <div
+            className={`rounded-xl border-2 p-6 ${
+              result.valid ? 'bg-green-50 border-green-300' : 'bg-red-50 border-red-300'
+            }`}
+          >
             <div className="flex items-center gap-3 mb-4">
               <span className="text-3xl">{result.valid ? '✅' : '❌'}</span>
               <div>
-                <h2 className={`text-lg font-bold ${result.valid ? 'text-green-800' : 'text-red-800'}`}>
+                <h2
+                  className={`text-lg font-bold ${result.valid ? 'text-green-800' : 'text-red-800'}`}
+                >
                   {result.valid ? '签名验证通过' : '签名验证失败'}
                 </h2>
                 <p className={`text-sm ${result.valid ? 'text-green-600' : 'text-red-600'}`}>
@@ -108,8 +110,12 @@ export function VerifyPage() {
                 {result.data.status && (
                   <div className="flex justify-between">
                     <span className="text-gray-500">签名状态</span>
-                    <span className={`font-medium ${result.data.status === 'verified' ? 'text-green-700' : 'text-yellow-700'}`}>
-                      {result.data.status === 'verified' ? 'RSA 签名 (VERIFIED)' : '降级签名 (UNVERIFIED)'}
+                    <span
+                      className={`font-medium ${result.data.status === 'verified' ? 'text-green-700' : 'text-yellow-700'}`}
+                    >
+                      {result.data.status === 'verified'
+                        ? 'RSA 签名 (VERIFIED)'
+                        : '降级签名 (UNVERIFIED)'}
                     </span>
                   </div>
                 )}

@@ -9,7 +9,7 @@ let authToken: string | null = null;
 async function apiRequest(
   method: string,
   path: string,
-  body?: Record<string, unknown>
+  body?: Record<string, unknown>,
 ): Promise<{ status: number; data: any }> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',

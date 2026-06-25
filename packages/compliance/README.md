@@ -4,12 +4,12 @@ LabAnimal compliance engine — zero-dependency TypeScript library for laborator
 
 ## Features
 
-| Module | Description | Standard |
-|--------|-------------|----------|
-| **density** | Cage density calculations | Guide for the Care and Use of Laboratory Animals (NRC, 2011) |
-| **avma** | Euthanasia method validation | AVMA Guidelines for the Euthanasia of Animals (2020) |
-| **iacuc** | Protocol validation (pain categories, 3Rs) | PHS Policy on Humane Care (2015), USDA AWA |
-| **audit** | Diff generator, SHA-256 hash chain | 21 CFR Part 11 inspired |
+| Module      | Description                                | Standard                                                     |
+| ----------- | ------------------------------------------ | ------------------------------------------------------------ |
+| **density** | Cage density calculations                  | Guide for the Care and Use of Laboratory Animals (NRC, 2011) |
+| **avma**    | Euthanasia method validation               | AVMA Guidelines for the Euthanasia of Animals (2020)         |
+| **iacuc**   | Protocol validation (pain categories, 3Rs) | PHS Policy on Humane Care (2015), USDA AWA                   |
+| **audit**   | Diff generator, SHA-256 hash chain         | 21 CFR Part 11 inspired                                      |
 
 ## Install
 
@@ -88,7 +88,7 @@ import { generateDiff, summarizeDiff, hashAuditEntry, GENESIS_HASH } from '@laba
 // Generate diff
 const diff = generateDiff(
   { name: 'Alice', age: 25 },
-  { name: 'Bob', age: 30, email: 'bob@example.com' }
+  { name: 'Bob', age: 30, email: 'bob@example.com' },
 );
 console.log(summarizeDiff(diff));
 // ~ name: "Alice" → "Bob"

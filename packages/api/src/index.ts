@@ -30,11 +30,14 @@ const app = new Hono();
 
 // Global middleware
 app.use('*', logger());
-app.use('*', cors({
-  origin: process.env.CORS_ORIGIN || '*',
-  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowHeaders: ['Content-Type', 'Authorization', 'X-Lab-Id'],
-}));
+app.use(
+  '*',
+  cors({
+    origin: process.env.CORS_ORIGIN || '*',
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization', 'X-Lab-Id'],
+  }),
+);
 
 // Health check
 app.get('/api/health', (c) => {

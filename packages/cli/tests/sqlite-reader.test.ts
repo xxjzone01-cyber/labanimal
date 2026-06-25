@@ -61,7 +61,9 @@ beforeAll(async () => {
   // 插入测试数据
   db.run(`INSERT INTO labs (id, name, institution) VALUES ('lab-1', 'Test Lab', 'MIT')`);
 
-  db.run(`INSERT INTO users (id, email, name, password_hash) VALUES ('user-1', 'admin@test.com', 'Admin User', 'hash123')`);
+  db.run(
+    `INSERT INTO users (id, email, name, password_hash) VALUES ('user-1', 'admin@test.com', 'Admin User', 'hash123')`,
+  );
 
   db.run(`
     INSERT INTO animals (id, lab_id, internal_id, species, strain, sex, status, quarantine_status, is_active, date_of_birth)

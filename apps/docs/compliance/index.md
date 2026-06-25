@@ -4,12 +4,12 @@ LabAnimal's compliance engine (`@labanimal/compliance`) is a zero-dependency Typ
 
 ## Modules
 
-| Module | Description | Standard |
-|--------|-------------|----------|
-| [AVMA Euthanasia](/compliance/avma) | Validates euthanasia methods against species, weight, and certification requirements | AVMA Guidelines for the Euthanasia of Animals (2020) |
-| [IACUC Protocol](/compliance/iacuc) | Validates protocol submissions for pain categories, 3Rs, and required fields | PHS Policy on Humane Care (2015), USDA AWA |
-| [Cage Density](/compliance/density) | Calculates maximum animal counts per cage based on species and weight | Guide for the Care and Use of Laboratory Animals (NRC, 2011) |
-| [Audit Trail](/compliance/cfr-part11) | Generates diffs and SHA-256 hash chains for tamper-evident records | 21 CFR Part 11 (inspired) |
+| Module                                | Description                                                                          | Standard                                                     |
+| ------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| [AVMA Euthanasia](/compliance/avma)   | Validates euthanasia methods against species, weight, and certification requirements | AVMA Guidelines for the Euthanasia of Animals (2020)         |
+| [IACUC Protocol](/compliance/iacuc)   | Validates protocol submissions for pain categories, 3Rs, and required fields         | PHS Policy on Humane Care (2015), USDA AWA                   |
+| [Cage Density](/compliance/density)   | Calculates maximum animal counts per cage based on species and weight                | Guide for the Care and Use of Laboratory Animals (NRC, 2011) |
+| [Audit Trail](/compliance/cfr-part11) | Generates diffs and SHA-256 hash chains for tamper-evident records                   | 21 CFR Part 11 (inspired)                                    |
 
 ## Design Principles
 

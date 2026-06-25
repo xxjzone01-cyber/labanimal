@@ -1,7 +1,11 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { generateKeyPair, isValidPublicKey, isValidPrivateKey } from '../src/license/keys.js';
 import { signLicense, verifyLicense } from '../src/license/signer.js';
-import { signReport, verifyReportSignature, signReportUnverified } from '../src/license/report-signature.js';
+import {
+  signReport,
+  verifyReportSignature,
+  signReportUnverified,
+} from '../src/license/report-signature.js';
 import {
   initOfflineGrace,
   updateOnlineStatus,
@@ -106,7 +110,7 @@ describe('signLicense / verifyLicense', () => {
     // 篡改 payload：修改 maxAnimals
     const tamperedPayload = Buffer.from(
       JSON.stringify({ ...validPayload, maxAnimals: 9999 }),
-      'utf8'
+      'utf8',
     ).toString('base64url');
     const tamperedJwt = `${parts[0]}.${tamperedPayload}.${parts[2]}`;
 
@@ -338,7 +342,9 @@ describe('signReport / verifyReportSignature', () => {
   });
 
   it('缺少必填字段返回 invalid_signature', async () => {
-    const incomplete = Buffer.from(JSON.stringify({ reportHash: 'abc' }) + '|', 'utf8').toString('base64');
+    const incomplete = Buffer.from(JSON.stringify({ reportHash: 'abc' }) + '|', 'utf8').toString(
+      'base64',
+    );
     const result = await verifyReportSignature(incomplete, keys.publicKey);
     expect(result.valid).toBe(false);
     expect(result.error).toBe('invalid_signature');
@@ -346,8 +352,9 @@ describe('signReport / verifyReportSignature', () => {
 
   it('verified 状态但签名为空返回 invalid_signature', async () => {
     const fakeVerified = Buffer.from(
-      JSON.stringify({ reportHash: 'h', deployId: 'd', signedAt: Date.now(), status: 'verified' }) + '|',
-      'utf8'
+      JSON.stringify({ reportHash: 'h', deployId: 'd', signedAt: Date.now(), status: 'verified' }) +
+        '|',
+      'utf8',
     ).toString('base64');
     const result = await verifyReportSignature(fakeVerified, keys.publicKey);
     expect(result.valid).toBe(false);

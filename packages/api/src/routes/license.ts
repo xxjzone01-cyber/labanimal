@@ -8,7 +8,12 @@
 import { Hono } from 'hono';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 import { billingWallMiddleware, canSignReport, getPlanLimits } from '../middleware/billing-wall.js';
-import { signReport, verifyReportSignature, signReportUnverified, generateRenewalCode } from '@labanimal/compliance';
+import {
+  signReport,
+  verifyReportSignature,
+  signReportUnverified,
+  generateRenewalCode,
+} from '@labanimal/compliance';
 import { sha256 } from '@labanimal/compliance';
 import type { Context, Next } from 'hono';
 
@@ -136,11 +141,14 @@ license.post('/verify', async (c) => {
   }
 
   if (!config.publicKey) {
-    return c.json({
-      valid: false,
-      error: 'no_public_key',
-      message: 'License public key not configured. Cannot verify signatures.',
-    }, 500);
+    return c.json(
+      {
+        valid: false,
+        error: 'no_public_key',
+        message: 'License public key not configured. Cannot verify signatures.',
+      },
+      500,
+    );
   }
 
   const result = await verifyReportSignature(body.signature, config.publicKey, body.reportHash);
@@ -158,7 +166,10 @@ license.get('/verify/:hash', async (c) => {
   const config = getConfig();
 
   if (!reportHash || reportHash.length !== 64) {
-    return c.json({ valid: false, error: 'invalid_hash', message: '报告哈希必须是 64 位十六进制字符串' }, 400);
+    return c.json(
+      { valid: false, error: 'invalid_hash', message: '报告哈希必须是 64 位十六进制字符串' },
+      400,
+    );
   }
 
   const { prisma } = await import('../lib/db.js');
@@ -173,11 +184,14 @@ license.get('/verify/:hash', async (c) => {
   });
 
   if (!signEntry) {
-    return c.json({
-      valid: false,
-      error: 'not_found',
-      message: '未找到此报告的签名记录。',
-    }, 404);
+    return c.json(
+      {
+        valid: false,
+        error: 'not_found',
+        message: '未找到此报告的签名记录。',
+      },
+      404,
+    );
   }
 
   const diff = signEntry.diff as { status?: string; deployId?: string; signature?: string } | null;
@@ -186,11 +200,14 @@ license.get('/verify/:hash', async (c) => {
   const deployId = diff?.deployId;
 
   if (!signature) {
-    return c.json({
-      valid: false,
-      error: 'no_signature',
-      message: '签名记录中未包含签名数据。',
-    }, 500);
+    return c.json(
+      {
+        valid: false,
+        error: 'no_signature',
+        message: '签名记录中未包含签名数据。',
+      },
+      500,
+    );
   }
 
   // 验证签名

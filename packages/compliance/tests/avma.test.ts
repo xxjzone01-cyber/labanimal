@@ -219,7 +219,7 @@ describe('validateMethod', () => {
         validateMethod({
           species: 'cat',
           methodId: 'co2_gradual',
-        })
+        }),
       ).toThrow('Unknown species: "cat"');
     });
   });

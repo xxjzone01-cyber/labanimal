@@ -10,10 +10,7 @@ import { migrate } from './migrate.js';
 
 const program = new Command();
 
-program
-  .name('labanimal')
-  .description('LabAnimal CLI - 实验动物管理数据迁移工具')
-  .version('0.1.0');
+program.name('labanimal').description('LabAnimal CLI - 实验动物管理数据迁移工具').version('0.1.0');
 
 program
   .command('migrate')

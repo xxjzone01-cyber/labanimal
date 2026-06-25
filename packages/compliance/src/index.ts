@@ -26,12 +26,14 @@ export {
 export type { DensityInput, DensityResult, DensityStandard } from './density/index.js';
 
 // AVMA module (isSpeciesSupported/getSupportedSpecies omitted to avoid name collision with density module)
-export {
-  validateMethod,
-  getMethodsForSpecies,
-  AVMA_METHODS_DB,
+export { validateMethod, getMethodsForSpecies, AVMA_METHODS_DB } from './avma/index.js';
+export type {
+  ValidationInput,
+  ValidationResult,
+  AVMACategory,
+  EuthanasiaMethod,
+  SpeciesMethods,
 } from './avma/index.js';
-export type { ValidationInput, ValidationResult, AVMACategory, EuthanasiaMethod, SpeciesMethods } from './avma/index.js';
 
 // IACUC module
 export {
@@ -42,7 +44,14 @@ export {
   validateProtocol,
   isValidStatusTransition,
 } from './iacuc/index.js';
-export type { USDACategory, PainCategoryResult, ThreeRsInput, ThreeRsResult, ProtocolInput, ProtocolValidationResult } from './iacuc/index.js';
+export type {
+  USDACategory,
+  PainCategoryResult,
+  ThreeRsInput,
+  ThreeRsResult,
+  ProtocolInput,
+  ProtocolValidationResult,
+} from './iacuc/index.js';
 
 // Audit module
 export {

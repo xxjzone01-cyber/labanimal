@@ -163,7 +163,9 @@ async function main() {
       // Missing 3R statements — teaching scenario
     },
   });
-  console.log(`  Protocols: ${protocolApproved.iacucNumber} (approved), ${protocolPending.title} (submitted)`);
+  console.log(
+    `  Protocols: ${protocolApproved.iacucNumber} (approved), ${protocolPending.title} (submitted)`,
+  );
 
   // ── Scenario 1: Over-density cage ───────────────────────────
   console.log('\n  📦 Scenario 1: Over-density cage (6 mice in capacity-4 cage)');
@@ -323,11 +325,36 @@ async function main() {
   console.log('  🧸 Scenario 6: Environmental enrichment');
   await prisma.enrichment.createMany({
     data: [
-      { cageId: cageOverDensity.id, type: 'nesting_material', description: 'Nestlets (2 per cage)', addedBy: tech.id },
-      { cageId: cageOverDensity.id, type: 'hut', description: 'Small plastic shelter', addedBy: tech.id },
-      { cageId: cageNormal1.id, type: 'nesting_material', description: 'Nestlets', addedBy: tech.id },
-      { cageId: cageSingle.id, type: 'hut', description: 'Post-surgery comfort shelter', addedBy: vet.id },
-      { cageId: cageSingle.id, type: 'chew_block', description: 'Wood chew block', addedBy: tech.id },
+      {
+        cageId: cageOverDensity.id,
+        type: 'nesting_material',
+        description: 'Nestlets (2 per cage)',
+        addedBy: tech.id,
+      },
+      {
+        cageId: cageOverDensity.id,
+        type: 'hut',
+        description: 'Small plastic shelter',
+        addedBy: tech.id,
+      },
+      {
+        cageId: cageNormal1.id,
+        type: 'nesting_material',
+        description: 'Nestlets',
+        addedBy: tech.id,
+      },
+      {
+        cageId: cageSingle.id,
+        type: 'hut',
+        description: 'Post-surgery comfort shelter',
+        addedBy: vet.id,
+      },
+      {
+        cageId: cageSingle.id,
+        type: 'chew_block',
+        description: 'Wood chew block',
+        addedBy: tech.id,
+      },
     ],
   });
   console.log('    → Enrichment items added to 3 cages');
@@ -336,8 +363,8 @@ async function main() {
   await prisma.rate.createMany({
     data: [
       { labId: lab.id, species: 'mouse', dailyRate: 0.85, cageRate: 0.15 },
-      { labId: lab.id, species: 'rat', dailyRate: 1.20, cageRate: 0.25 },
-      { labId: lab.id, species: 'rabbit', dailyRate: 3.50, cageRate: 1.00 },
+      { labId: lab.id, species: 'rat', dailyRate: 1.2, cageRate: 0.25 },
+      { labId: lab.id, species: 'rabbit', dailyRate: 3.5, cageRate: 1.0 },
     ],
   });
 

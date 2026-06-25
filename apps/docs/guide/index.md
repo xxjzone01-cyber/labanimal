@@ -8,11 +8,11 @@ LabAnimal is a monorepo-based system designed to help research institutions mana
 
 ## Key Packages
 
-| Package | Description |
-|---------|-------------|
-| `@labanimal/app` | React + Vite frontend application |
-| `@labanimal/api` | Hono-based REST API server |
-| `@labanimal/db` | Prisma ORM schema and database migrations |
+| Package                 | Description                                                     |
+| ----------------------- | --------------------------------------------------------------- |
+| `@labanimal/app`        | React + Vite frontend application                               |
+| `@labanimal/api`        | Hono-based REST API server                                      |
+| `@labanimal/db`         | Prisma ORM schema and database migrations                       |
 | `@labanimal/compliance` | Zero-dependency compliance engine (AVMA, IACUC, density, audit) |
 
 ## Prerequisites
