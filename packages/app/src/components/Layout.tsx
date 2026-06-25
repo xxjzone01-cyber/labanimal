@@ -1,5 +1,6 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
+import { BillingBanner } from './BillingBanner';
 
 const navItems = [
   { to: '/', label: 'Dashboard', icon: '📊' },
@@ -15,6 +16,7 @@ const navItems = [
   { to: '/audit-log', label: 'Audit Log', icon: '📝' },
   { to: '/signatures', label: 'Signatures', icon: '✍️' },
   { to: '/billing', label: 'Billing', icon: '💰' },
+  { to: '/subscriptions', label: 'Subscriptions', icon: '💳' },
   { to: '/vet-workbench', label: 'Vet Workbench', icon: '🩺' },
 ];
 
@@ -72,6 +74,7 @@ export function Layout() {
       {/* Main content */}
       <main className="flex-1 overflow-auto bg-gray-50">
         <div className="p-8">
+          <BillingBanner />
           <Outlet />
         </div>
       </main>

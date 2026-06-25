@@ -355,6 +355,56 @@ class ApiClient {
   verifySignature(id: string) {
     return this.request<any>(`/electronic-signatures/${id}/verify`);
   }
+
+  // Billing
+  getBillingUsage(labId: string) {
+    return this.request<any>(`/billing/usage?labId=${labId}`);
+  }
+
+  // Subscriptions
+  getSubscriptionStatus(labId: string) {
+    return this.request<any>(`/subscriptions/status?labId=${labId}`);
+  }
+
+  createSubscription(planId: string, labId: string) {
+    return this.request<{ subscriptionId?: string; approveUrl?: string; subscription?: any; message?: string }>('/subscriptions/create', {
+      method: 'POST',
+      body: JSON.stringify({ planId, labId }),
+    });
+  }
+
+  activateSubscription(subscriptionId: string, labId: string) {
+    return this.request<any>('/subscriptions/activate', {
+      method: 'POST',
+      body: JSON.stringify({ subscriptionId, labId }),
+    });
+  }
+
+  cancelSubscription(labId: string, reason?: string) {
+    return this.request<any>('/subscriptions/cancel', {
+      method: 'POST',
+      body: JSON.stringify({ labId, reason }),
+    });
+  }
+
+  // License
+  getLicenseStatus() {
+    return this.request<{ deployId: string; hasLicense: boolean; maxAnimals: number; maxReportsPerMonth: number; publicKeyConfigured: boolean }>('/license/status');
+  }
+
+  signReport(data: { reportHash?: string; reportData?: string }) {
+    return this.request<{ signature: string; status: string; deployId: string; verifyUrl: string; signedAt: string }>('/license/sign', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  verifyReport(signature: string, reportHash?: string) {
+    return this.request<{ valid: boolean; data?: any; error?: string }>('/license/verify', {
+      method: 'POST',
+      body: JSON.stringify({ signature, reportHash }),
+    });
+  }
 }
 
 export const api = new ApiClient();

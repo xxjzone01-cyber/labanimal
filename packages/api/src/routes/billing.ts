@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { prisma } from '../lib/db.js';
 import { authMiddleware, getUser } from '../middleware/auth.js';
+import { getPlanLimits } from '../middleware/billing-wall.js';
 
 const billing = new Hono();
 
@@ -111,6 +112,69 @@ billing.get('/generate', async (c) => {
       cageCost: totalCageCost,
       total: totalAnimalCost + totalCageCost,
     },
+  });
+});
+
+// GET /api/billing/usage — 获取当前 lab 的使用量和套餐信息
+billing.get('/usage', async (c) => {
+  const user = getUser(c);
+  const labId = c.req.query('labId');
+
+  if (!labId) {
+    return c.json({ error: 'labId query parameter is required' }, 400);
+  }
+
+  const membership = await prisma.userLab.findUnique({
+    where: { userId_labId: { userId: user.userId, labId } },
+  });
+  if (!membership) {
+    return c.json({ error: 'Access denied' }, 403);
+  }
+
+  // 获取订阅信息
+  const subscription = await prisma.subscription.findUnique({
+    where: { labId },
+    select: { planId: true, status: true, provider: true, currentPeriodEnd: true, cancelAtPeriodEnd: true },
+  });
+
+  const plan = subscription?.status === 'active' ? subscription.planId : 'academic-free';
+  const limits = getPlanLimits(plan);
+
+  // 统计使用量
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+
+  const [animalCount, userCount, reportsThisMonth, roomCount, protocolCount] = await Promise.all([
+    prisma.animal.count({
+      where: { labId, status: { notIn: ['deceased', 'retired'] } },
+    }),
+    prisma.userLab.count({ where: { labId } }),
+    prisma.auditLog.count({
+      where: { labId, action: 'REPORT_SIGN', createdAt: { gte: monthStart, lte: monthEnd } },
+    }),
+    prisma.room.count({ where: { labId } }),
+    prisma.protocol.count({ where: { labId } }),
+  ]);
+
+  const overLimitReasons: string[] = [];
+  if (limits.maxAnimals !== -1 && animalCount > limits.maxAnimals) {
+    overLimitReasons.push(`动物数量超限: ${animalCount}/${limits.maxAnimals}`);
+  }
+  if (limits.maxUsers !== -1 && userCount > limits.maxUsers) {
+    overLimitReasons.push(`用户数量超限: ${userCount}/${limits.maxUsers}`);
+  }
+  if (limits.maxReportsPerMonth !== -1 && reportsThisMonth >= limits.maxReportsPerMonth) {
+    overLimitReasons.push(`月度报告限额已达: ${reportsThisMonth}/${limits.maxReportsPerMonth}`);
+  }
+
+  return c.json({
+    plan,
+    subscription: subscription || { planId: 'academic-free', status: 'active', provider: 'free' },
+    limits,
+    usage: { animalCount, userCount, reportsThisMonth, roomCount, protocolCount },
+    isOverLimit: overLimitReasons.length > 0,
+    overLimitReasons,
   });
 });
 
