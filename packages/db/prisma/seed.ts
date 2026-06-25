@@ -199,7 +199,7 @@ async function main() {
   });
 
   // Submitted protocol (missing 3Rs - for teaching)
-  const protocolSubmitted = await prisma.protocol.create({
+  await prisma.protocol.create({
     data: {
       labId: lab.id,
       title: 'Novel Drug Testing in Rats',
@@ -399,7 +399,7 @@ async function main() {
   // 8. Scenario 5: AVMA Blocking Example (Rabbit + CO2)
   // ============================================================
 
-  const rabbit = await prisma.animal.create({
+  await prisma.animal.create({
     data: {
       labId: lab.id,
       internalId: 'R-001',

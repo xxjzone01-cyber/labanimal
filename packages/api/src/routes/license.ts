@@ -104,7 +104,7 @@ license.post('/sign', authMiddleware, ensureLabId, billingWallMiddleware, async 
         action: 'REPORT_SIGN',
         entityType: 'Report',
         entityId: reportHash,
-        diff: { status, deployId: config.deployId },
+        diff: { status, deployId: config.deployId, signature },
         hash: reportHash,
         previousHash: lastEntry?.hash || '0'.repeat(64),
       },
@@ -145,6 +145,81 @@ license.post('/verify', async (c) => {
 
   const result = await verifyReportSignature(body.signature, config.publicKey, body.reportHash);
   return c.json(result);
+});
+
+/**
+ * GET /api/license/verify/:hash — 通过报告哈希查找签名并验证
+ *
+ * 从 AuditLog 中查找签名记录，使用公钥验证签名有效性。
+ * 公开端点，无需认证（任何人可通过哈希验证报告真伪）。
+ */
+license.get('/verify/:hash', async (c) => {
+  const reportHash = c.req.param('hash');
+  const config = getConfig();
+
+  if (!reportHash || reportHash.length !== 64) {
+    return c.json({ valid: false, error: 'invalid_hash', message: '报告哈希必须是 64 位十六进制字符串' }, 400);
+  }
+
+  const { prisma } = await import('../lib/db.js');
+
+  // 从 AuditLog 查找签名记录
+  const signEntry = await prisma.auditLog.findFirst({
+    where: {
+      action: 'REPORT_SIGN',
+      entityId: reportHash,
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  if (!signEntry) {
+    return c.json({
+      valid: false,
+      error: 'not_found',
+      message: '未找到此报告的签名记录。',
+    }, 404);
+  }
+
+  const diff = signEntry.diff as { status?: string; deployId?: string; signature?: string } | null;
+  const signature = diff?.signature;
+  const status = diff?.status;
+  const deployId = diff?.deployId;
+
+  if (!signature) {
+    return c.json({
+      valid: false,
+      error: 'no_signature',
+      message: '签名记录中未包含签名数据。',
+    }, 500);
+  }
+
+  // 验证签名
+  if (status === 'verified' && config.publicKey) {
+    const result = await verifyReportSignature(signature, config.publicKey, reportHash);
+    return c.json({
+      ...result,
+      data: {
+        ...result.data,
+        deployId,
+        signedAt: signEntry.createdAt.toISOString(),
+        reportHash,
+        status,
+      },
+    });
+  }
+
+  // unverified 签名（降级/免费版）
+  return c.json({
+    valid: false,
+    error: 'unverified',
+    message: '此报告未使用 RSA 私钥签名（可能是免费版或超限降级）。',
+    data: {
+      deployId,
+      signedAt: signEntry.createdAt.toISOString(),
+      reportHash,
+      status: status || 'unverified',
+    },
+  });
 });
 
 /**

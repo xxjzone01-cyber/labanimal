@@ -8,9 +8,11 @@ interface VerifyResult {
     reportHash?: string;
     deployId?: string;
     signedAt?: string;
+    status?: string;
     [key: string]: any;
   };
   error?: string;
+  message?: string;
 }
 
 export function VerifyPage() {
@@ -19,7 +21,6 @@ export function VerifyPage() {
   const [result, setResult] = useState<VerifyResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [inputHash, setInputHash] = useState(hash || '');
-  const [signature, setSignature] = useState('');
 
   useEffect(() => {
     if (hash) {
@@ -30,8 +31,7 @@ export function VerifyPage() {
   const verifyHash = async (reportHash: string) => {
     setLoading(true);
     try {
-      // 使用公钥验证（不需要签名，只需哈希）
-      const res = await api.verifyReport('', reportHash);
+      const res = await api.verifyReportByHash(reportHash);
       setResult(res);
     } catch (err: any) {
       setResult({ valid: false, error: err.message });
@@ -96,13 +96,23 @@ export function VerifyPage() {
                       ? '报告内容可能已被篡改，签名不匹配。'
                       : result.error === 'unverified'
                         ? '此报告未使用 RSA 私钥签名（可能是免费版或超限降级）。'
-                        : `验证错误: ${result.error}`}
+                        : result.error === 'not_found'
+                          ? '未找到此报告的签名记录。请确认哈希是否正确。'
+                          : `验证错误: ${result.message || result.error}`}
                 </p>
               </div>
             </div>
 
             {result.data && (
               <div className="bg-white rounded-lg p-4 text-sm space-y-2">
+                {result.data.status && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">签名状态</span>
+                    <span className={`font-medium ${result.data.status === 'verified' ? 'text-green-700' : 'text-yellow-700'}`}>
+                      {result.data.status === 'verified' ? 'RSA 签名 (VERIFIED)' : '降级签名 (UNVERIFIED)'}
+                    </span>
+                  </div>
+                )}
                 {result.data.deployId && (
                   <div className="flex justify-between">
                     <span className="text-gray-500">部署 ID</span>

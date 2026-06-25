@@ -406,6 +406,11 @@ class ApiClient {
     });
   }
 
+  /** 通过报告哈希从数据库查找签名并验证（公开端点，无需登录） */
+  verifyReportByHash(reportHash: string) {
+    return this.request<{ valid: boolean; error?: string; message?: string; data?: { deployId?: string; signedAt?: string; reportHash?: string; status?: string } }>(`/license/verify/${reportHash}`);
+  }
+
   renewLicense(deployId: string) {
     return this.request<{ renewalCode: string; deployId: string; expiresAt: string; validDays: number }>('/license/renew', {
       method: 'POST',
