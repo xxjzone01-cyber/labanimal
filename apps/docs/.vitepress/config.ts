@@ -4,6 +4,9 @@ export default defineConfig({
   title: 'LabAnimal Docs',
   description: 'Open-source laboratory animal management system documentation',
   lang: 'en-US',
+  ignoreDeadLinks: [
+    /localhost/,
+  ],
 
   themeConfig: {
     logo: '/logo.svg',

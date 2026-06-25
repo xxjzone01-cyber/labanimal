@@ -76,6 +76,13 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @labanimal/db exec prisma migrate deploy
+      - name: Start API server
+        run: |
+          pnpm --filter @labanimal/api dev &
+          for i in $(seq 1 30); do
+            curl -s http://localhost:3001/api/health > /dev/null 2>&1 && break
+            sleep 1
+          done
       - run: pnpm --filter @labanimal/api test
 
   test-app:
