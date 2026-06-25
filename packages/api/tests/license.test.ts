@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
 import app from '../src/index.js';
 import { prisma } from '../src/lib/db.js';
 import { generateKeyPair } from '@labanimal/compliance';
@@ -17,16 +17,18 @@ const testKeys = generateKeyPair();
 const origPrivateKey = process.env.LICENSE_PRIVATE_KEY;
 const origPublicKey = process.env.LICENSE_PUBLIC_KEY;
 const origDeployId = process.env.LICENSE_DEPLOY_ID;
-const origMaxReports = process.env.LICENSE_MAX_REPORTS_PER_MONTH;
 
 beforeAll(async () => {
   // 设置测试密钥
   process.env.LICENSE_PRIVATE_KEY = testKeys.privateKey;
   process.env.LICENSE_PUBLIC_KEY = testKeys.publicKey;
   process.env.LICENSE_DEPLOY_ID = 'test-deploy';
-  process.env.LICENSE_MAX_REPORTS_PER_MONTH = '5';
 
-  // 清理测试用户
+  // 清理测试用户和审计日志（避免月度报告限额影响测试）
+  const existingUsers = await prisma.user.findMany({ where: { email: TEST_EMAIL }, select: { id: true } });
+  if (existingUsers.length > 0) {
+    await prisma.auditLog.deleteMany({ where: { userId: { in: existingUsers.map(u => u.id) } } });
+  }
   await prisma.user.deleteMany({ where: { email: TEST_EMAIL } });
 
   // 注册测试用户
@@ -56,7 +58,6 @@ afterAll(async () => {
   process.env.LICENSE_PRIVATE_KEY = origPrivateKey;
   process.env.LICENSE_PUBLIC_KEY = origPublicKey;
   process.env.LICENSE_DEPLOY_ID = origDeployId;
-  process.env.LICENSE_MAX_REPORTS_PER_MONTH = origMaxReports;
 
   // 清理
   await prisma.auditLog.deleteMany({ where: { userId: { in: (await prisma.user.findMany({ where: { email: TEST_EMAIL }, select: { id: true } })).map(u => u.id) } } });
@@ -79,7 +80,7 @@ describe('GET /api/license/status', () => {
     expect(data.deployId).toBe('test-deploy');
     expect(data.hasLicense).toBe(true);
     expect(data.maxAnimals).toBe(500);
-    expect(data.maxReportsPerMonth).toBe(5);
+    expect(data.maxReportsPerMonth).toBe(3);
   });
 });
 
@@ -94,6 +95,7 @@ describe('POST /api/license/sign', () => {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+        'X-Lab-Id': labId,
       },
       body: JSON.stringify({ reportHash: testReportHash }),
     });
@@ -116,6 +118,7 @@ describe('POST /api/license/sign', () => {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+        'X-Lab-Id': labId,
       },
       body: JSON.stringify({ reportData: 'some report content here' }),
     });
@@ -150,6 +153,14 @@ describe('POST /api/license/sign', () => {
 // ========== Report Verification ==========
 
 describe('POST /api/license/verify', () => {
+  // 每个测试前清理审计日志，避免月度报告限额影响
+  beforeEach(async () => {
+    const users = await prisma.user.findMany({ where: { email: TEST_EMAIL }, select: { id: true } });
+    if (users.length > 0) {
+      await prisma.auditLog.deleteMany({ where: { userId: { in: users.map(u => u.id) } } });
+    }
+  });
+
   it('验证签名成功', async () => {
     // 先签名
     const reportHash = 'b'.repeat(64);
@@ -158,6 +169,7 @@ describe('POST /api/license/verify', () => {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+        'X-Lab-Id': labId,
       },
       body: JSON.stringify({ reportHash }),
     });
@@ -182,6 +194,7 @@ describe('POST /api/license/verify', () => {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+        'X-Lab-Id': labId,
       },
       body: JSON.stringify({ reportHash }),
     });

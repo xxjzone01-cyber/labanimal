@@ -4,10 +4,6 @@ import { authMiddleware, getUser } from '../middleware/auth.js';
 
 const labs = new Hono();
 
-// 开源版限制
-const OPEN_SOURCE_LAB_LIMIT_PER_USER = 1;
-const OPEN_SOURCE_MEMBER_LIMIT_PER_LAB = 10;
-
 // 所有 lab 路由需要认证
 labs.use('*', authMiddleware);
 
@@ -18,23 +14,6 @@ labs.post('/', async (c) => {
 
   if (!body.name) {
     return c.json({ error: 'name is required' }, 400);
-  }
-
-  // 检查该用户已拥有的实验室数量（作为 pi 或 admin 角色）
-  const existingLabs = await prisma.userLab.count({
-    where: {
-      userId: user.userId,
-      role: { in: ['pi', 'admin'] },
-    },
-  });
-
-  if (existingLabs >= OPEN_SOURCE_LAB_LIMIT_PER_USER) {
-    return c.json({
-      error: 'Open-source lab limit reached',
-      limit: OPEN_SOURCE_LAB_LIMIT_PER_USER,
-      current: existingLabs,
-      message: `Open-source version supports up to ${OPEN_SOURCE_LAB_LIMIT_PER_USER} lab per user. Upgrade to LabAnimal Pro for unlimited labs.`,
-    }, 403);
   }
 
   // 创建实验室并自动关联创建者为 pi
@@ -140,20 +119,6 @@ labs.post('/:id/members', async (c) => {
   });
   if (existing) {
     return c.json({ error: 'User is already a member of this lab' }, 409);
-  }
-
-  // 开源版：每实验室成员数量限制
-  const memberCount = await prisma.userLab.count({
-    where: { labId: id },
-  });
-
-  if (memberCount >= OPEN_SOURCE_MEMBER_LIMIT_PER_LAB) {
-    return c.json({
-      error: 'Open-source member limit reached',
-      limit: OPEN_SOURCE_MEMBER_LIMIT_PER_LAB,
-      current: memberCount,
-      message: `This lab has reached the ${OPEN_SOURCE_MEMBER_LIMIT_PER_LAB}-member limit for the open-source edition. Upgrade to LabAnimal Pro for unlimited members.`,
-    }, 403);
   }
 
   const member = await prisma.userLab.create({

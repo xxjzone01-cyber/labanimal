@@ -95,20 +95,6 @@ animals.post('/', async (c) => {
     return c.json({ error: 'Access denied' }, 403);
   }
 
-  // Open-source limit: 500 active animals per lab
-  const OPEN_SOURCE_ANIMAL_LIMIT = 500;
-  const activeCount = await prisma.animal.count({
-    where: { labId: body.labId, status: { notIn: ['deceased', 'retired'] } },
-  });
-  if (activeCount >= OPEN_SOURCE_ANIMAL_LIMIT) {
-    return c.json({
-      error: 'Open-source animal limit reached',
-      limit: OPEN_SOURCE_ANIMAL_LIMIT,
-      current: activeCount,
-      message: `This lab has reached the ${OPEN_SOURCE_ANIMAL_LIMIT}-animal limit for the open-source edition. Upgrade to LabAnimal Pro for unlimited animals.`,
-    }, 403);
-  }
-
   const animal = await prisma.animal.create({
     data: {
       labId: body.labId,

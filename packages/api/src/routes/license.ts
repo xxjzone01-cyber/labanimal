@@ -7,8 +7,10 @@
 
 import { Hono } from 'hono';
 import { authMiddleware, getUser } from '../middleware/auth.js';
+import { billingWallMiddleware, canSignReport, getPlanLimits } from '../middleware/billing-wall.js';
 import { signReport, verifyReportSignature, signReportUnverified } from '@labanimal/compliance';
 import { sha256 } from '@labanimal/compliance';
+import type { Context, Next } from 'hono';
 
 const license = new Hono();
 
@@ -20,10 +22,28 @@ function getConfig() {
     privateKey,
     publicKey,
     deployId: process.env.LICENSE_DEPLOY_ID || 'open-source',
-    maxAnimals: parseInt(process.env.LICENSE_MAX_ANIMALS || '500', 10),
-    maxReports: parseInt(process.env.LICENSE_MAX_REPORTS_PER_MONTH || '3', 10),
     valid: !!privateKey && !!publicKey,
   };
+}
+
+/**
+ * 确保 labId 可用的中间件
+ * 如果 X-Lab-Id header 未提供，自动使用用户所属的第一个 lab
+ */
+async function ensureLabId(c: Context, next: Next): Promise<void> {
+  const user = getUser(c);
+  if (!user.labId) {
+    const { prisma } = await import('../lib/db.js');
+    const membership = await prisma.userLab.findFirst({
+      where: { userId: user.userId },
+      select: { labId: true },
+    });
+    if (membership) {
+      user.labId = membership.labId;
+      c.set('user', user);
+    }
+  }
+  await next();
 }
 
 /**
@@ -38,7 +58,7 @@ function getConfig() {
  * - status: 'verified' | 'unverified'
  * - verifyUrl: 验证页面 URL
  */
-license.post('/sign', authMiddleware, async (c) => {
+license.post('/sign', authMiddleware, ensureLabId, billingWallMiddleware, async (c) => {
   const user = getUser(c);
   const body = await c.req.json<{ reportHash?: string; reportData?: string }>();
   const config = getConfig();
@@ -53,40 +73,15 @@ license.post('/sign', authMiddleware, async (c) => {
     return c.json({ error: 'reportHash or reportData is required' }, 400);
   }
 
-  // 获取用户的实验室（用于审计日志）
   const { prisma } = await import('../lib/db.js');
-  const membership = await prisma.userLab.findFirst({
-    where: { userId: user.userId },
-    select: { labId: true },
-  });
-  const labId = membership?.labId;
+  const labId = user.labId;
 
-  // 检查月度报告限制
-  const now = new Date();
-  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-  const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-
-  const reportsThisMonth = await prisma.auditLog.count({
-    where: {
-      userId: user.userId,
-      action: 'REPORT_SIGN',
-      createdAt: { gte: monthStart, lte: monthEnd },
-    },
-  });
-
-  if (reportsThisMonth >= config.maxReports) {
-    return c.json({
-      error: 'Monthly report signing limit reached',
-      limit: config.maxReports,
-      used: reportsThisMonth,
-      message: `Open-source version allows ${config.maxReports} signed reports per month. Upgrade for unlimited reports.`,
-    }, 403);
-  }
-
+  // 签名决策：私钥已配置 且 套餐允许签名 → verified，否则 → unverified
+  const allowed = canSignReport(c);
   let signature: string;
   let status: 'verified' | 'unverified';
 
-  if (config.valid) {
+  if (config.valid && allowed) {
     signature = await signReport(reportHash, config.deployId, config.privateKey);
     status = 'verified';
   } else {
@@ -157,11 +152,12 @@ license.post('/verify', async (c) => {
  */
 license.get('/status', async (c) => {
   const config = getConfig();
+  const limits = getPlanLimits('academic-free');
   return c.json({
     deployId: config.deployId,
     hasLicense: config.valid,
-    maxAnimals: config.maxAnimals,
-    maxReportsPerMonth: config.maxReports,
+    maxAnimals: limits.maxAnimals,
+    maxReportsPerMonth: limits.maxReportsPerMonth,
     publicKeyConfigured: !!config.publicKey,
   });
 });

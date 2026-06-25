@@ -4,8 +4,6 @@ import { hashPassword, verifyPassword, signToken } from '../lib/auth.js';
 
 const auth = new Hono();
 
-const OPEN_SOURCE_USER_LIMIT = 10;
-
 auth.post('/register', async (c) => {
   const body = await c.req.json<{ email: string; password: string; name: string }>();
 
@@ -17,17 +15,6 @@ auth.post('/register', async (c) => {
   const existing = await prisma.user.findUnique({ where: { email: body.email } });
   if (existing) {
     return c.json({ error: 'Email already registered' }, 409);
-  }
-
-  // 开源版用户数量限制
-  const userCount = await prisma.user.count();
-  if (userCount >= OPEN_SOURCE_USER_LIMIT) {
-    return c.json({
-      error: 'Open-source user limit reached',
-      limit: OPEN_SOURCE_USER_LIMIT,
-      current: userCount,
-      message: `Open-source version supports up to ${OPEN_SOURCE_USER_LIMIT} users. Upgrade to LabAnimal Pro for unlimited users.`,
-    }, 403);
   }
 
   const passwordHash = await hashPassword(body.password);
