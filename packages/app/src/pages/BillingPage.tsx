@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { api } from '../lib/api';
+import { generateBillingPDF } from '../lib/pdf';
 
 interface LineItem {
   type: 'animal' | 'cage';
@@ -20,6 +21,7 @@ interface BillingReport {
 export function BillingPage() {
   const [report, setReport] = useState<BillingReport | null>(null);
   const [loading, setLoading] = useState(false);
+  const [pdfLoading, setPdfLoading] = useState(false);
   const [error, setError] = useState('');
   const [form, setForm] = useState({
     startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
@@ -37,6 +39,21 @@ export function BillingPage() {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleDownloadPDF() {
+    if (!report) return;
+    try {
+      setPdfLoading(true);
+      await generateBillingPDF(report, 'Lab', async (data) => {
+        const res = await api.signReport(data);
+        return { ...res, status: res.status as 'verified' | 'unverified' };
+      });
+    } catch (err: any) {
+      setError(err.message || 'PDF generation failed');
+    } finally {
+      setPdfLoading(false);
     }
   }
 
@@ -77,6 +94,16 @@ export function BillingPage() {
           </button>
         </div>
       </form>
+
+      {report && (
+        <button
+          onClick={handleDownloadPDF}
+          disabled={pdfLoading}
+          className="mb-6 px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 disabled:opacity-50"
+        >
+          {pdfLoading ? 'Signing & Generating PDF...' : 'Download Signed PDF'}
+        </button>
+      )}
 
       {report && (
         <>

@@ -24,6 +24,7 @@ import { batchSessions } from './routes/batch-sessions.js';
 import { labs } from './routes/labs.js';
 import { license } from './routes/license.js';
 import { subscriptions } from './routes/subscriptions.js';
+import { stripe } from './routes/stripe.js';
 
 const app = new Hono();
 
@@ -64,6 +65,7 @@ app.route('/api/billing', billing);
 app.route('/api/batch-sessions', batchSessions);
 app.route('/api/license', license);
 app.route('/api/subscriptions', subscriptions);
+app.route('/api/stripe', stripe);
 
 // 404 handler
 app.notFound((c) => {
