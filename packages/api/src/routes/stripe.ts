@@ -29,7 +29,7 @@ stripe.get('/config', (c) => {
 /** POST /create — 创建 Stripe Checkout Session */
 stripe.post('/create', authMiddleware, async (c) => {
   const user = getUser(c);
-  const body = await c.req.json<{ planId: string; labId: string }>();
+  const body = await c.req.json<{ planId: string; labId: string; billing?: 'monthly' | 'annual' }>();
 
   if (!body.planId || !body.labId) {
     return c.json({ error: 'planId and labId are required' }, 400);
@@ -92,7 +92,18 @@ stripe.post('/create', authMiddleware, async (c) => {
       'customer_email': user.email,
       'metadata[labId]': body.labId,
       'metadata[planId]': body.planId,
+      // Stripe Tax 自动计算税费
+      'automatic_tax[enabled]': 'true',
+      // 30 天退款保障（通过 trial 实现）
+      'subscription_data[trial_period_days]': '30',
+      'subscription_data[metadata][labId]': body.labId,
+      'subscription_data[metadata][planId]': body.planId,
     });
+
+    // 年付折扣：如果有 annual price ID 且用户选择年付
+    if (body.billing === 'annual' && plan.annualPriceId) {
+      params.set('line_items[0][price]', plan.annualPriceId);
+    }
 
     const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',

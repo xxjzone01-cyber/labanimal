@@ -9,8 +9,10 @@
 export interface StripePlan {
   /** 套餐名称 */
   name: string;
-  /** Stripe Price ID（从 Stripe Dashboard 获取） */
+  /** Stripe Price ID（月付，从 Stripe Dashboard 获取） */
   priceId: string;
+  /** Stripe Price ID（年付，可选） */
+  annualPriceId?: string;
   /** 月价格（美元，显示用） */
   monthlyPrice: number;
   /** 动物上限 */
@@ -45,6 +47,7 @@ export const STRIPE_PLANS: Record<string, StripePlan> = {
   'starter': {
     name: 'Starter',
     priceId: process.env.STRIPE_PRICE_STARTER || '',
+    annualPriceId: process.env.STRIPE_PRICE_STARTER_ANNUAL || '',
     monthlyPrice: 99,
     maxAnimals: 1000,
     maxUsers: 15,
@@ -55,6 +58,7 @@ export const STRIPE_PLANS: Record<string, StripePlan> = {
   'professional': {
     name: 'Professional',
     priceId: process.env.STRIPE_PRICE_PROFESSIONAL || '',
+    annualPriceId: process.env.STRIPE_PRICE_PROFESSIONAL_ANNUAL || '',
     monthlyPrice: 299,
     maxAnimals: 15000,
     maxUsers: 40,
@@ -65,6 +69,7 @@ export const STRIPE_PLANS: Record<string, StripePlan> = {
   'enterprise-saas': {
     name: 'Enterprise SaaS',
     priceId: process.env.STRIPE_PRICE_ENTERPRISE_SAAS || '',
+    annualPriceId: process.env.STRIPE_PRICE_ENTERPRISE_SAAS_ANNUAL || '',
     monthlyPrice: 499,
     maxAnimals: -1,
     maxUsers: -1,
