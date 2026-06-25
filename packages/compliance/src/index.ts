@@ -65,6 +65,12 @@ export {
   signReport,
   verifyReportSignature,
   signReportUnverified,
+  initOfflineGrace,
+  updateOnlineStatus,
+  checkGraceStatus,
+  generateRenewalCode,
+  verifyRenewalCode,
+  OFFLINE_LIMITS,
 } from './license/index.js';
 export type {
   LicensePayload,
@@ -72,4 +78,6 @@ export type {
   ReportSignatureData,
   ReportSignatureVerification,
   KeyPair,
+  OfflineGraceState,
+  RenewalCode,
 } from './license/index.js';

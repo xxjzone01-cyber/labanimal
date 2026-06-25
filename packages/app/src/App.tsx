@@ -16,6 +16,7 @@ import { BillingPage } from './pages/BillingPage';
 import { VetWorkbenchPage } from './pages/VetWorkbenchPage';
 import { SubscriptionsPage } from './pages/SubscriptionsPage';
 import { VerifyPage } from './pages/VerifyPage';
+import { RenewPage } from './pages/RenewPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { api } from './lib/api';
@@ -33,6 +34,7 @@ export default function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/verify" element={<VerifyPage />} />
+      <Route path="/renew" element={<RenewPage />} />
       <Route
         path="/"
         element={

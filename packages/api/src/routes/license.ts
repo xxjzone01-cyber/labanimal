@@ -8,7 +8,7 @@
 import { Hono } from 'hono';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 import { billingWallMiddleware, canSignReport, getPlanLimits } from '../middleware/billing-wall.js';
-import { signReport, verifyReportSignature, signReportUnverified } from '@labanimal/compliance';
+import { signReport, verifyReportSignature, signReportUnverified, generateRenewalCode } from '@labanimal/compliance';
 import { sha256 } from '@labanimal/compliance';
 import type { Context, Next } from 'hono';
 
@@ -159,6 +159,35 @@ license.get('/status', async (c) => {
     maxAnimals: limits.maxAnimals,
     maxReportsPerMonth: limits.maxReportsPerMonth,
     publicKeyConfigured: !!config.publicKey,
+  });
+});
+
+/**
+ * POST /api/license/renew — 生成离线续期码
+ *
+ * 请求体：
+ * - deployId: string — 部署 ID
+ *
+ * 返回：
+ * - renewalCode: Base64URL 编码的续期码（7 天有效）
+ * - expiresAt: 过期时间 ISO 字符串
+ */
+license.post('/renew', async (c) => {
+  const body = await c.req.json<{ deployId?: string }>();
+
+  if (!body.deployId) {
+    return c.json({ error: 'deployId is required' }, 400);
+  }
+
+  const secret = process.env.RENEWAL_SECRET || process.env.JWT_SECRET || 'default-renewal-secret';
+  const renewalCode = generateRenewalCode(body.deployId, secret);
+  const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000; // 7 天
+
+  return c.json({
+    renewalCode,
+    deployId: body.deployId,
+    expiresAt: new Date(expiresAt).toISOString(),
+    validDays: 7,
   });
 });
 

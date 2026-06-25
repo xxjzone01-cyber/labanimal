@@ -405,6 +405,13 @@ class ApiClient {
       body: JSON.stringify({ signature, reportHash }),
     });
   }
+
+  renewLicense(deployId: string) {
+    return this.request<{ renewalCode: string; deployId: string; expiresAt: string; validDays: number }>('/license/renew', {
+      method: 'POST',
+      body: JSON.stringify({ deployId }),
+    });
+  }
 }
 
 export const api = new ApiClient();
