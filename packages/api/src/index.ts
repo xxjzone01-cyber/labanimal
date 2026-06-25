@@ -85,16 +85,10 @@ app.onError((err, c) => {
   return c.json({ error: 'Internal server error' }, 500);
 });
 
-// Node.js serve
+// Node.js serve — 仅在非测试环境启动
 import { serve } from '@hono/node-server';
 
-// 只在直接运行时启动服务器（测试 import 时不启动）
-// tsx/vitest 运行时 process.argv[1] 分别指向不同路径
-const isDirectRun =
-  !process.argv[1]?.includes('vitest') &&
-  !process.argv[1]?.includes('jest');
-
-if (isDirectRun) {
+if (!process.env.VITEST && !process.env.JEST_WORKER_ID) {
   const port = parseInt(process.env.PORT || '3001', 10);
   console.log(`LabAnimal API starting on port ${port}...`);
   serve({ fetch: app.fetch, port }, (info) => {
