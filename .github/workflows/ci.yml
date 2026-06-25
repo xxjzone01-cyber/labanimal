@@ -80,6 +80,7 @@ jobs:
       - run: pnpm --filter @labanimal/compliance build
       - run: pnpm --filter @labanimal/db exec prisma generate
       - run: pnpm --filter @labanimal/db exec prisma migrate deploy
+      - run: pnpm --filter @labanimal/db db:seed
       - name: Start API server
         run: |
           pnpm --filter @labanimal/api dev &
