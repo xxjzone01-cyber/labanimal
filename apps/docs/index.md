@@ -57,4 +57,4 @@ LabAnimal ships with `@labanimal/compliance`, a zero-dependency TypeScript libra
 
 ## License
 
-LabAnimal is released under the [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.html) license.
+LabAnimal is released under the [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) license.

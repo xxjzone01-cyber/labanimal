@@ -37,7 +37,7 @@ jobs:
 
             The CLA covers:
             - `packages/compliance/` contributions under **Apache 2.0**
-            - Main repository contributions under **AGPL-3.0**
+            - Main repository contributions under **Apache-2.0**
 
             You retain ownership of your contributions.
           custom-pr-sign-comment: 'I have read the CLA Document and I sign the CLA'

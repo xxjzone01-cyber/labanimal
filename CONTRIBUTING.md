@@ -22,8 +22,7 @@
 提交 PR 即表示您同意 LabAnimal CLA 条款：
 
 - 您授予 LabAnimal 项目使用、修改和分发您的贡献的权利
-- `packages/compliance` 下的贡献按 **Apache 2.0** 分发
-- 主仓库贡献按 **AGPL-3.0** 分发
+- 所有贡献按 **Apache 2.0** 分发
 - 您保留对贡献的所有权
 
 [点击签署 CLA](https://cla-assistant.io/labanimal/labanimal)
@@ -35,7 +34,7 @@
 | 包/仓库 | License |
 |---------|---------|
 | `@labanimal/compliance` | Apache 2.0 |
-| `labanimal` 主仓库 | AGPL-3.0 |
+| `labanimal` 主仓库 | Apache 2.0 |
 | 商业插件 | 专有许可 |
 
 ## 问题反馈

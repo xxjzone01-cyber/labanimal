@@ -4,7 +4,7 @@
 
 [![Stars](https://img.shields.io/github/stars/xxjzone01-cyber/labanimal?style=social)](https://github.com/xxjzone01-cyber/labanimal/stargazers)
 [![Forks](https://img.shields.io/github/forks/xxjzone01-cyber/labanimal?style=social)](https://github.com/xxjzone01-cyber/labanimal/network/members)
-[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 [![CI](https://github.com/xxjzone01-cyber/labanimal/actions/workflows/ci.yml/badge.svg)](https://github.com/xxjzone01-cyber/labanimal/actions)
 
 ---
@@ -64,7 +64,7 @@ pnpm dev
 | 饲养员 | caretaker@demo.lab | password |
 | 研究员 | researcher@demo.lab | password |
 
-### 开源版限制（AGPL-3.0）
+### 开源版限制（Apache-2.0）
 
 | 维度 | 上限 |
 |------|------|
@@ -170,7 +170,7 @@ Visit http://localhost:5173, demo accounts:
 | Caretaker | caretaker@demo.lab | password |
 | Researcher | researcher@demo.lab | password |
 
-### Open Source Limits (AGPL-3.0)
+### Open Source Limits (Apache-2.0)
 
 | Dimension | Limit |
 |-----------|-------|
@@ -236,5 +236,5 @@ Community contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.
 | Component | License | Reason |
 |-----------|---------|--------|
 | `@labanimal/compliance` | [Apache 2.0](packages/compliance/LICENSE) | Compliance engine needs wide adoption |
-| Main repository | [AGPL-3.0](LICENSE) | Prevent closed-source hosting |
+| Main repository | [Apache 2.0](LICENSE) | Permissive license for broad adoption |
 | Commercial plugins | Proprietary | SaaS revenue stream |
