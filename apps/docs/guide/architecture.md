@@ -22,7 +22,7 @@ labanimal/
 
 ### `@labanimal/app` — Frontend
 
-- **Framework**: React 18 + TypeScript
+- **Framework**: React 19 + TypeScript
 - **Build tool**: Vite
 - **Styling**: Tailwind CSS
 - **State management**: React Query (TanStack Query)

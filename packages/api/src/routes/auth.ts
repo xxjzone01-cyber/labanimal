@@ -69,4 +69,9 @@ auth.post('/login', async (c) => {
   });
 });
 
+auth.post('/logout', (c) => {
+  // 无状态 JWT，客户端自行丢弃 token 即可
+  return c.json({ message: 'Logged out successfully' });
+});
+
 export { auth };

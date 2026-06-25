@@ -11,7 +11,7 @@
 ## Clone the Repository
 
 ```bash
-git clone https://github.com/anthropics/labanimal.git
+git clone https://github.com/xxjzone01-cyber/labanimal.git
 cd labanimal
 ```
 

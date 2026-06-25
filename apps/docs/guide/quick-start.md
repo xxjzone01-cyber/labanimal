@@ -5,7 +5,7 @@ Get LabAnimal up and running in 5 minutes.
 ## Step 1: Install Dependencies
 
 ```bash
-git clone https://github.com/anthropics/labanimal.git
+git clone https://github.com/xxjzone01-cyber/labanimal.git
 cd labanimal
 pnpm install
 ```

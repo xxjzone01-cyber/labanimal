@@ -49,12 +49,12 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/anthropics/labanimal' },
+      { icon: 'github', link: 'https://github.com/xxjzone01-cyber/labanimal' },
     ],
 
     footer: {
       message: 'Released under the Apache-2.0 License.',
-      copyright: 'Copyright © 2024-present LabAnimal Contributors',
+      copyright: 'Copyright © 2026-present LabAnimal Contributors',
     },
 
     search: {
@@ -62,7 +62,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/anthropics/labanimal/edit/main/apps/docs/:path',
+      pattern: 'https://github.com/xxjzone01-cyber/labanimal/edit/main/apps/docs/:path',
       text: 'Edit this page on GitHub',
     },
 

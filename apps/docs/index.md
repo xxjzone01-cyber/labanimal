@@ -11,7 +11,7 @@ hero:
       link: /guide/
     - theme: alt
       text: View on GitHub
-      link: https://github.com/anthropics/labanimal
+      link: https://github.com/xxjzone01-cyber/labanimal
 
 features:
   - icon: "\U0001F9EB"
@@ -38,7 +38,7 @@ features:
 
 ```bash
 # Clone and install
-git clone https://github.com/anthropics/labanimal.git
+git clone https://github.com/xxjzone01-cyber/labanimal.git
 cd labanimal
 pnpm install
 
