@@ -109,6 +109,7 @@ healthRecords.post('/', async (c) => {
   const record = await prisma.healthRecord.create({
     data: {
       animalId: body.animalId,
+      labId: animal.labId,
       recordType: body.recordType,
       weight: body.weight,
       bodyConditionScore: body.bodyConditionScore,

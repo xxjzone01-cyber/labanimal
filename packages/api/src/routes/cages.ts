@@ -84,6 +84,7 @@ cages.post('/', async (c) => {
   const cage = await prisma.cage.create({
     data: {
       rackId: body.rackId,
+      labId: rack.room.labId,
       position: body.position,
       status: body.status || 'empty',
       capacity: body.capacity || 5,

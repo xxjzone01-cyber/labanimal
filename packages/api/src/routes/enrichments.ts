@@ -78,6 +78,7 @@ enrichments.post('/', async (c) => {
   const enrichment = await prisma.enrichment.create({
     data: {
       cageId: body.cageId,
+      labId: cage.rack.room.labId,
       type: body.type,
       description: body.description,
       notes: body.notes,

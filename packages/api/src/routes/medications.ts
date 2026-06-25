@@ -91,6 +91,7 @@ medications.post('/', async (c) => {
   const medication = await prisma.medication.create({
     data: {
       animalId: body.animalId,
+      labId: animal.labId,
       name: body.name,
       dosage: body.dosage,
       route: body.route,

@@ -16,7 +16,7 @@ export interface AuthContext extends JWTPayload {
  * 4. 验证用户属于该 lab
  * 5. 将 user + labId 注入 context
  */
-export async function authMiddleware(c: Context, next: Next): Promise<void> {
+export async function authMiddleware(c: Context, next: Next): Promise<Response | void> {
   const authHeader = c.req.header('Authorization');
 
   if (!authHeader?.startsWith('Bearer ')) {

@@ -92,6 +92,7 @@ animalLinks.post('/', async (c) => {
     const link = await tx.animalLink.create({
       data: {
         animalId: body.animalId,
+        labId: animal.labId,
         linkedToId: body.linkedToId,
         reason: body.reason,
       },

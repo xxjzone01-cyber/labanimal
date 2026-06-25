@@ -88,6 +88,25 @@ electronicSignatures.post('/', async (c) => {
     return c.json({ error: `meaning must be one of: ${validMeanings.join(', ')}` }, 400);
   }
 
+  // Determine labId from protocol or user context
+  let labId: string | undefined;
+  if (body.protocolId) {
+    const protocol = await prisma.protocol.findUnique({
+      where: { id: body.protocolId },
+      select: { labId: true },
+    });
+    if (!protocol) {
+      return c.json({ error: 'Protocol not found' }, 404);
+    }
+    labId = protocol.labId;
+  }
+  if (!labId) {
+    labId = getUser(c).labId;
+  }
+  if (!labId) {
+    return c.json({ error: 'labId could not be determined. Provide a protocolId or set X-Lab-Id header.' }, 400);
+  }
+
   // Calculate signature hash (21 CFR Part 11 compliant)
   const signedAt = new Date();
   const ipAddress = c.req.header('x-forwarded-for') || c.req.header('x-real-ip') || 'unknown';
@@ -99,6 +118,7 @@ electronicSignatures.post('/', async (c) => {
   const signature = await prisma.electronicSignature.create({
     data: {
       userId: user.userId,
+      labId,
       protocolId: body.protocolId,
       entityType: body.entityType,
       entityId: body.entityId,

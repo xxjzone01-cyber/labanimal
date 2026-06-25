@@ -83,6 +83,7 @@ racks.post('/', async (c) => {
   const rack = await prisma.rack.create({
     data: {
       roomId: body.roomId,
+      labId: room.labId,
       name: body.name,
       layers: body.layers,
       positionsPerLayer: body.positionsPerLayer,

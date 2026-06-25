@@ -81,6 +81,7 @@ animalIdentifiers.post('/', async (c) => {
     const identifier = await prisma.animalIdentifier.create({
       data: {
         animalId: body.animalId,
+        labId: animal.labId,
         type: body.type,
         value: body.value,
         isPrimary,
