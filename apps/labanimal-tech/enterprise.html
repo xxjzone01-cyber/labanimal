@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>企业私有化方案 — LabAnimal</title>
+  <meta name="description" content="LabAnimal 企业私有化部署方案，为大型机构提供专属的安全、定制化实验动物管理系统。">
+  <link rel="canonical" href="https://labanimal.tech/enterprise">
+  <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    .gradient-hero { background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #2563eb 100%); }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">首页</a>
+          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium">功能</a>
+          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium">定价</a>
+          <a href="https://labanimal.gitbook.io/docs" target="_blank" class="text-gray-600 hover:text-brand-600 text-sm font-medium">文档</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">登录</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="gradient-hero pt-32 pb-20 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-block bg-white/10 text-white/90 text-sm font-medium px-4 py-1 rounded-full mb-6">企业方案</div>
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-6">
+        企业私有化部署
+      </h1>
+      <p class="text-lg text-blue-100 max-w-2xl mx-auto">
+        为大型研究机构、制药公司和 CRO 提供专属的私有化部署方案，完全掌控数据和基础设施。
+      </p>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="py-16 px-4">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-12 text-center">为什么选择私有化部署？</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">数据主权</h3>
+          <p class="text-gray-600 text-sm">数据完全在您掌控之下，满足最严格的数据驻留要求</p>
+        </div>
+        <div class="text-center">
+          <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">深度定制</h3>
+          <p class="text-gray-600 text-sm">根据您的工作流程定制功能、界面和集成</p>
+        </div>
+        <div class="text-center">
+          <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">专属支持</h3>
+          <p class="text-gray-600 text-sm">专属客户成功经理 + 优先技术支持 + SLA 保障</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison -->
+  <section class="py-16 px-4 bg-gray-50">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-12 text-center">方案对比</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- SaaS -->
+        <div class="bg-white rounded-xl p-8 border border-gray-200">
+          <div class="text-center mb-6">
+            <h3 class="text-xl font-bold mb-2">SaaS 托管版</h3>
+            <p class="text-gray-500 text-sm">适合中小型实验室</p>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-2 text-gray-600">
+              <span class="text-green-500">✓</span>
+              <span>快速启动，无需运维</span>
+            </li>
+            <li class="flex items-center gap-2 text-gray-600">
+              <span class="text-green-500">✓</span>
+              <span>自动更新和备份</span>
+            </li>
+            <li class="flex items-center gap-2 text-gray-600">
+              <span class="text-green-500">✓</span>
+              <span>按月订阅，灵活扩展</span>
+            </li>
+            <li class="flex items-center gap-2 text-gray-600">
+              <span class="text-green-500">✓</span>
+              <span>多租户 RLS 数据隔离</span>
+            </li>
+            <li class="flex items-center gap-2 text-gray-400">
+              <span class="text-gray-300">✗</span>
+              <span>数据存储在云端</span>
+            </li>
+            <li class="flex items-center gap-2 text-gray-400">
+              <span class="text-gray-300">✗</span>
+              <span>有限的定制能力</span>
+            </li>
+          </ul>
+          <a href="/#pricing" class="block text-center border border-brand-600 text-brand-600 px-6 py-3 rounded-lg font-semibold hover:bg-brand-50 transition">
+            查看定价
+          </a>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="bg-white rounded-xl p-8 border-2 border-brand-500 relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+            <span class="bg-brand-600 text-white text-xs font-medium px-4 py-1 rounded-full">推荐</span>
+          </div>
+          <div class="text-center mb-6">
+            <h3 class="text-xl font-bold mb-2">企业私有化版</h3>
+            <p class="text-gray-500 text-sm">适合大型机构和制药公司</p>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-2 text-gray-600">
+              <span class="text-green-500">✓</span>
+              <span>部署在您自己的服务器</span>
+            </li>
+            <li class="flex items-center gap-2 text-gray-600">
+              <span class="text-green-500">✓</span>
+              <span>完全数据主权</span>
+            </li>
+            <li class="flex items-center gap-2 text-gray-600">
+              <span class="text-green-500">✓</span>
+              <span>深度功能定制</span>
+            </li>
+            <li class="flex items-center gap-2 text-gray-600">
+              <span class="text-green-500">✓</span>
+              <span>SSO/LDAP 集成</span>
+            </li>
+            <li class="flex items-center gap-2 text-gray-600">
+              <span class="text-green-500">✓</span>
+              <span>专属客户成功经理</span>
+            </li>
+            <li class="flex items-center gap-2 text-gray-600">
+              <span class="text-green-500">✓</span>
+              <span>SLA 保障 + 优先支持</span>
+            </li>
+          </ul>
+          <a href="#contact" class="block text-center bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700 transition">
+            联系销售
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="py-16 px-4">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-12 text-center">企业版专属功能</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="flex items-start gap-4 p-4">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-1">SSO/LDAP 集成</h3>
+            <p class="text-gray-600 text-sm">与企业现有的身份认证系统无缝集成，支持 SAML 2.0 和 LDAP</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4">
+          <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-1">无限数据容量</h3>
+            <p class="text-gray-600 text-sm">无动物数量和实验室限制，适合大型研究机构</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4">
+          <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-1">API 优先架构</h3>
+            <p class="text-gray-600 text-sm">完整的 RESTful API，支持与 LIMS、ERP 等系统集成</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4">
+          <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-1">自定义报告</h3>
+            <p class="text-gray-600 text-sm">根据您的需求定制报告模板和数据导出格式</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4">
+          <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-1">离线模式</h3>
+            <p class="text-gray-600 text-sm">支持离线授权码，适合网络受限的环境</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4">
+          <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-1">AAALAC 材料包</h3>
+            <p class="text-gray-600 text-sm">预置 AAALAC 认证所需的模板、检查清单和最佳实践</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="py-16 px-4 bg-gray-50">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-4">定价</h2>
+      <p class="text-gray-600 mb-8">企业私有化方案根据您的具体需求定制报价</p>
+      <div class="bg-white rounded-xl p-8 border border-gray-200">
+        <div class="text-4xl font-bold text-brand-600 mb-2">定制报价</div>
+        <p class="text-gray-500 mb-6">根据机构规模和需求定制</p>
+        <ul class="text-left max-w-md mx-auto space-y-3 mb-8">
+          <li class="flex items-center gap-2 text-gray-600">
+            <span class="text-green-500">✓</span>
+            <span>私有化部署支持</span>
+          </li>
+          <li class="flex items-center gap-2 text-gray-600">
+            <span class="text-green-500">✓</span>
+            <span>SSO/LDAP 集成</span>
+          </li>
+          <li class="flex items-center gap-2 text-gray-600">
+            <span class="text-green-500">✓</span>
+            <span>无限动物和实验室</span>
+          </li>
+          <li class="flex items-center gap-2 text-gray-600">
+            <span class="text-green-500">✓</span>
+            <span>专属客户成功经理</span>
+          </li>
+          <li class="flex items-center gap-2 text-gray-600">
+            <span class="text-green-500">✓</span>
+            <span>99.99% SLA 保障</span>
+          </li>
+          <li class="flex items-center gap-2 text-gray-600">
+            <span class="text-green-500">✓</span>
+            <span>深度功能定制</span>
+          </li>
+        </ul>
+        <a href="#contact" class="inline-block bg-brand-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-brand-700 transition">
+          联系销售团队
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section id="contact" class="py-16 px-4">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8 text-center">预约咨询</h2>
+      <form id="enterpriseForm" class="space-y-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名 *</label>
+            <input type="text" id="name" name="name" required
+              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">工作邮箱 *</label>
+            <input type="email" id="email" name="email" required
+              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label for="company" class="block text-sm font-medium text-gray-700 mb-1">机构名称 *</label>
+            <input type="text" id="company" name="company" required
+              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">联系电话</label>
+            <input type="tel" id="phone" name="phone"
+              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
+          </div>
+        </div>
+        <div>
+          <label for="size" class="block text-sm font-medium text-gray-700 mb-1">机构规模 *</label>
+          <select id="size" name="size" required
+            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
+            <option value="">请选择</option>
+            <option value="small">小型（1-50 人）</option>
+            <option value="medium">中型（51-200 人）</option>
+            <option value="large">大型（201-1000 人）</option>
+            <option value="enterprise">企业级（1000+ 人）</option>
+          </select>
+        </div>
+        <div>
+          <label for="needs" class="block text-sm font-medium text-gray-700 mb-1">需求描述 *</label>
+          <textarea id="needs" name="needs" rows="4" required
+            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition resize-none"
+            placeholder="请描述您的具体需求，例如：动物数量、实验室数量、集成需求等"></textarea>
+        </div>
+        <div class="flex items-start gap-2">
+          <input type="checkbox" id="privacy" required
+            class="mt-1 h-4 w-4 text-brand-600 border-gray-300 rounded focus:ring-brand-500">
+          <label for="privacy" class="text-sm text-gray-600">
+            我已阅读并同意 <a href="/privacy" class="text-brand-600 hover:underline">隐私政策</a>
+          </label>
+        </div>
+        <button type="submit"
+          class="w-full bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700 transition focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
+          提交咨询
+        </button>
+      </form>
+      <div id="successMessage" class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-center">
+        <p class="font-semibold">咨询已提交！</p>
+        <p class="text-sm mt-1">我们的企业销售团队会在 1 个工作日内联系您。</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('enterpriseForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // In production, this would send to an API endpoint
+      this.classList.add('hidden');
+      document.getElementById('successMessage').classList.remove('hidden');
+
+      // Track event (Plausible)
+      if (window.plausible) {
+        plausible('Enterprise Inquiry', { props: {
+          company: document.getElementById('company').value,
+          size: document.getElementById('size').value
+        }});
+      }
+    });
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <span class="text-lg font-bold text-white">LabAnimal</span>
+          </div>
+          <p class="text-sm">实验动物合规管理系统<br>开源核心，合规无忧</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">产品</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/#features" class="hover:text-white transition">功能</a></li>
+            <li><a href="/#pricing" class="hover:text-white transition">定价</a></li>
+            <li><a href="https://labanimal.gitbook.io/docs" target="_blank" class="hover:text-white transition">文档</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">法律</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/terms" class="hover:text-white transition">服务条款</a></li>
+            <li><a href="/privacy" class="hover:text-white transition">隐私政策</a></li>
+            <li><a href="/refund-policy" class="hover:text-white transition">退款政策</a></li>
+            <li><a href="/sla" class="hover:text-white transition">服务等级协议</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">联系</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="mailto:contact@labanimal.tech" class="hover:text-white transition">contact@labanimal.tech</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition">提交 Issue</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm">&copy; 2026 LabAnimal. Apache-2.0 License.</p>
+        <div class="flex gap-4 text-sm">
+          <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a>
+          <a href="https://labanimal.gitbook.io/docs" target="_blank" class="hover:text-white transition">文档</a>
+          <a href="https://labanimal.cloud/login" class="hover:text-white transition">登录</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

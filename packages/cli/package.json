@@ -1,6 +1,6 @@
 {
   "name": "@labanimal/cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "LabAnimal CLI - 数据迁移工具",
   "type": "module",
   "bin": {

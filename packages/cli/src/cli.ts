@@ -5,12 +5,16 @@
  *   labanimal migrate --from <sqlite> --to <postgres>  迁移数据
  */
 
+import { createRequire } from 'node:module';
 import { Command } from 'commander';
 import { migrate } from './migrate.js';
 
+const require = createRequire(import.meta.url);
+const { version } = require('../package.json') as { version: string };
+
 const program = new Command();
 
-program.name('labanimal').description('LabAnimal CLI - 实验动物管理数据迁移工具').version('0.1.0');
+program.name('labanimal').description('LabAnimal CLI - 实验动物管理数据迁移工具').version(version);
 
 program
   .command('migrate')

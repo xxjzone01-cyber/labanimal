@@ -19,6 +19,8 @@ import { VerifyPage } from './pages/VerifyPage';
 import { RenewPage } from './pages/RenewPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { ApiKeysPage } from './pages/ApiKeysPage';
+import { AdminPage } from './pages/AdminPage';
 import { api } from './lib/api';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -58,6 +60,8 @@ export default function App() {
         <Route path="billing" element={<BillingPage />} />
         <Route path="subscriptions" element={<SubscriptionsPage />} />
         <Route path="vet-workbench" element={<VetWorkbenchPage />} />
+        <Route path="api-keys" element={<ApiKeysPage />} />
+        <Route path="admin" element={<AdminPage />} />
       </Route>
     </Routes>
   );

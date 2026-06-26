@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>安全白皮书下载 — LabAnimal</title>
+  <meta name="description" content="下载 LabAnimal 安全白皮书，了解我们的数据安全架构、加密标准和合规认证。">
+  <link rel="canonical" href="https://labanimal.tech/resources/security-whitepaper">
+  <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    .gradient-hero { background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #2563eb 100%); }
+    .blur-overlay { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">首页</a>
+          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium">功能</a>
+          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium">定价</a>
+          <a href="https://labanimal.gitbook.io/docs" target="_blank" class="text-gray-600 hover:text-brand-600 text-sm font-medium">文档</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">登录</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="gradient-hero pt-32 pb-16 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-block bg-white/10 text-white/90 text-sm font-medium px-4 py-1 rounded-full mb-6">技术白皮书</div>
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-6">
+        LabAnimal 安全架构白皮书
+      </h1>
+      <p class="text-lg text-blue-100 max-w-2xl mx-auto">
+        深入了解 LabAnimal 的数据安全架构、加密标准、多租户隔离和合规认证实现。
+      </p>
+    </div>
+  </section>
+
+  <!-- Preview Section -->
+  <section class="py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      <!-- Table of Contents -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">目录</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+            <span class="w-8 h-8 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center text-sm font-semibold">1</span>
+            <span class="text-gray-700">安全概述与设计理念</span>
+            <span class="ml-auto text-xs text-green-600 font-medium">免费预览</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+            <span class="w-8 h-8 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center text-sm font-semibold">2</span>
+            <span class="text-gray-700">数据加密架构</span>
+            <span class="ml-auto text-xs text-green-600 font-medium">免费预览</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+            <span class="w-8 h-8 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center text-sm font-semibold">3</span>
+            <span class="text-gray-700">多租户数据隔离</span>
+            <span class="ml-auto text-xs text-green-600 font-medium">免费预览</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+            <span class="w-8 h-8 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center text-sm font-semibold">4</span>
+            <span class="text-gray-700">认证与授权机制</span>
+            <span class="ml-auto text-xs text-green-600 font-medium">免费预览</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+            <span class="w-8 h-8 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center text-sm font-semibold">5</span>
+            <span class="text-gray-700">审计追踪与合规</span>
+            <span class="ml-auto text-xs text-green-600 font-medium">免费预览</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg opacity-60">
+            <span class="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-semibold">6</span>
+            <span class="text-gray-500">基础设施安全</span>
+            <span class="ml-auto text-xs text-gray-400">🔒 需解锁</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg opacity-60">
+            <span class="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-semibold">7</span>
+            <span class="text-gray-500">合规标准映射</span>
+            <span class="ml-auto text-xs text-gray-400">🔒 需解锁</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg opacity-60">
+            <span class="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-semibold">8</span>
+            <span class="text-gray-500">安全运维实践</span>
+            <span class="ml-auto text-xs text-gray-400">🔒 需解锁</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg opacity-60">
+            <span class="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-semibold">9</span>
+            <span class="text-gray-500">漏洞响应流程</span>
+            <span class="ml-auto text-xs text-gray-400">🔒 需解锁</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg opacity-60">
+            <span class="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-semibold">10</span>
+            <span class="text-gray-500">附录：安全检查清单</span>
+            <span class="ml-auto text-xs text-gray-400">🔒 需解锁</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Content -->
+      <div class="relative">
+        <!-- Free Preview (Chapters 1-5) -->
+        <div id="previewContent" class="prose prose-gray max-w-none space-y-8">
+          <section>
+            <h2 class="text-2xl font-bold mb-4">第一章：安全概述与设计理念</h2>
+            <p class="text-gray-600 leading-relaxed">
+              LabAnimal 将数据安全视为最高优先级。作为实验动物合规管理系统，我们处理的数据涉及研究协议、动物福利记录和审计追踪，这些数据的完整性和保密性至关重要。
+            </p>
+            <p class="text-gray-600 leading-relaxed mt-4">
+              我们的安全设计遵循以下核心原则：
+            </p>
+            <ul class="list-disc list-inside text-gray-600 mt-2 space-y-2">
+              <li><strong>纵深防御</strong>：多层安全控制，不依赖单一安全机制</li>
+              <li><strong>最小权限</strong>：每个组件只拥有完成工作所需的最小权限</li>
+              <li><strong>零信任</strong>：所有请求都必须经过验证和授权</li>
+              <li><strong>透明开源</strong>：核心安全实现公开可审计</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold mb-4">第二章：数据加密架构</h2>
+            <h3 class="text-xl font-semibold mb-3 mt-6">2.1 传输加密</h3>
+            <p class="text-gray-600 leading-relaxed">
+              所有数据传输使用 TLS 1.3 加密，这是目前最安全的传输层协议版本。我们强制启用 HTTPS，所有 HTTP 请求都会自动重定向到 HTTPS。
+            </p>
+            <div class="bg-gray-50 rounded-lg p-4 my-4">
+              <p class="text-sm font-mono text-gray-700">
+                Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+              </p>
+            </div>
+            <p class="text-gray-600 leading-relaxed">
+              HSTS（HTTP Strict Transport Security）头确保浏览器始终使用 HTTPS 连接，防止降级攻击。
+            </p>
+
+            <h3 class="text-xl font-semibold mb-3 mt-6">2.2 存储加密</h3>
+            <p class="text-gray-600 leading-relaxed">
+              密码使用 bcrypt 哈希存储，cost factor 为 12。这意味着即使数据库泄露，攻击者也无法在合理时间内破解密码。
+            </p>
+            <div class="bg-gray-50 rounded-lg p-4 my-4">
+              <p class="text-sm text-gray-700">
+                <strong>密码哈希示例：</strong><br>
+                原始密码: MySecurePass123<br>
+                bcrypt 哈希: $2b$12$LJ3m4ys3Lz0YBODCJn.MqOXPgFaHsVpJSKFTLKYqlVJTFHY.GGHKG
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold mb-4">第三章：多租户数据隔离</h2>
+            <p class="text-gray-600 leading-relaxed">
+              LabAnimal 采用 PostgreSQL 行级安全（RLS）实现严格的多租户数据隔离。这是数据库层面的强制隔离，即使应用代码出现漏洞，也无法跨租户访问数据。
+            </p>
+            <div class="bg-gray-50 rounded-lg p-4 my-4">
+              <p class="text-sm font-mono text-gray-700">
+                CREATE POLICY tenant_isolation ON animals<br>
+                &nbsp;&nbsp;USING (lab_id = current_setting('app.current_lab_id'));
+              </p>
+            </div>
+            <p class="text-gray-600 leading-relaxed mt-4">
+              每个数据库查询都会自动附加租户过滤条件，确保用户只能访问自己实验室的数据。这种隔离是强制性的，无法被绕过。
+            </p>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold mb-4">第四章：认证与授权机制</h2>
+            <p class="text-gray-600 leading-relaxed">
+              LabAnimal 使用 JWT（JSON Web Token）进行无状态认证。Token 使用 RS256 算法签名，这是一种非对称签名算法，比对称签名更安全。
+            </p>
+            <h3 class="text-xl font-semibold mb-3 mt-6">4.1 密码策略</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+              <li>最小 8 位字符</li>
+              <li>必须包含大小写字母和数字</li>
+              <li>bcrypt 加密存储（cost factor 12）</li>
+              <li>登录失败速率限制：5 次/分钟</li>
+            </ul>
+            <h3 class="text-xl font-semibold mb-3 mt-6">4.2 角色权限</h3>
+            <p class="text-gray-600 leading-relaxed">
+              基于角色的访问控制（RBAC）定义了四种角色：Owner、Admin、Member、Viewer，每种角色拥有不同的权限集。
+            </p>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold mb-4">第五章：审计追踪与合规</h2>
+            <p class="text-gray-600 leading-relaxed">
+              为满足 21 CFR Part 11 合规要求，LabAnimal 实现了完整的审计追踪系统。每条审计记录包含操作类型、操作者、时间戳和数据快照。
+            </p>
+            <p class="text-gray-600 leading-relaxed mt-4">
+              审计日志采用 SHA-256 哈希链技术，每条记录的哈希值都包含前一条记录的哈希，形成不可篡改的链条。
+            </p>
+            <div class="bg-gray-50 rounded-lg p-4 my-4">
+              <p class="text-sm font-mono text-gray-700">
+                hash(n) = SHA-256(data(n) + hash(n-1))
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <!-- Blur Overlay & Gate -->
+        <div id="gateOverlay" class="relative -mt-32">
+          <div class="h-32 bg-gradient-to-t from-white via-white/90 to-transparent"></div>
+          <div class="bg-white py-12">
+            <div class="max-w-lg mx-auto text-center">
+              <div class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold mb-2">解锁完整白皮书</h3>
+              <p class="text-gray-600 mb-6">
+                输入您的邮箱，获取完整 10 章内容，包括基础设施安全、合规映射、运维实践和安全检查清单。
+              </p>
+              <form id="gateForm" class="space-y-3">
+                <input type="email" id="gateEmail" placeholder="输入您的工作邮箱" required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition text-center">
+                <button type="submit"
+                  class="w-full bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700 transition">
+                  免费获取完整白皮书
+                </button>
+              </form>
+              <p class="text-xs text-gray-500 mt-3">
+                提交即表示您同意接收 LabAnimal 的产品更新邮件。您可以随时退订。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full Content (hidden by default) -->
+      <div id="fullContent" class="hidden prose prose-gray max-w-none space-y-8 mt-8">
+        <section>
+          <h2 class="text-2xl font-bold mb-4">第六章：基础设施安全</h2>
+          <h3 class="text-xl font-semibold mb-3 mt-6">6.1 托管环境</h3>
+          <p class="text-gray-600 leading-relaxed">
+            LabAnimal 的前端部署在 Vercel，这是一个全球 CDN 平台，内置 DDoS 防护和 Web 应用防火墙（WAF）。API 服务器部署在安全的云服务器上，使用防火墙和安全组限制访问。
+          </p>
+          <h3 class="text-xl font-semibold mb-3 mt-6">6.2 网络安全</h3>
+          <ul class="list-disc list-inside text-gray-600 space-y-2">
+            <li><strong>CORS 配置</strong>：严格的跨域资源共享策略，只允许白名单域名访问</li>
+            <li><strong>速率限制</strong>：API 端点实施速率限制，防止暴力攻击和 DDoS</li>
+            <li><strong>输入验证</strong>：所有用户输入使用 Zod schema 验证，防止注入攻击</li>
+            <li><strong>SQL 注入防护</strong>：Prisma ORM 使用参数化查询，杜绝 SQL 注入</li>
+          </ul>
+          <h3 class="text-xl font-semibold mb-3 mt-6">6.3 数据库安全</h3>
+          <p class="text-gray-600 leading-relaxed">
+            PostgreSQL 数据库使用以下安全措施：
+          </p>
+          <ul class="list-disc list-inside text-gray-600 mt-2 space-y-2">
+            <li>SSL 加密连接</li>
+            <li>行级安全策略（RLS）</li>
+            <li>定期备份</li>
+            <li>访问日志记录</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold mb-4">第七章：合规标准映射</h2>
+          <p class="text-gray-600 leading-relaxed">
+            LabAnimal 的功能设计直接映射到以下合规标准：
+          </p>
+          <div class="overflow-x-auto mt-4">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">合规标准</th>
+                  <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">LabAnimal 功能</th>
+                  <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">实现方式</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium">21 CFR Part 11</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">电子签名</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">SHA-256 哈希 + RSA 签名</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium">AVMA Guidelines 2020</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">安乐死验证</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">物种+方法匹配引擎</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium">NRC Guide 2011</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">密度计算</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">动态公式+物种参数</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium">AAALAC</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">审计准备</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">完整审计追踪+报告</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium">GDPR</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">数据保护</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">加密+访问控制+数据导出</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold mb-4">第八章：安全运维实践</h2>
+          <p class="text-gray-600 leading-relaxed">
+            LabAnimal 采用以下安全运维实践：
+          </p>
+          <ul class="list-disc list-inside text-gray-600 mt-2 space-y-2">
+            <li><strong>CI/CD 安全扫描</strong>：每次代码提交都触发安全扫描，包括依赖审计和硬编码密钥检测</li>
+            <li><strong>依赖更新</strong>：定期更新依赖项，修补已知安全漏洞</li>
+            <li><strong>密钥管理</strong>：所有敏感配置使用环境变量，不硬编码在代码中</li>
+            <li><strong>日志监控</strong>：记录所有安全相关事件，便于审计和故障排查</li>
+            <li><strong>备份策略</strong>：定期数据库备份，支持灾难恢复</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold mb-4">第九章：漏洞响应流程</h2>
+          <p class="text-gray-600 leading-relaxed">
+            LabAnimal 建立了完整的漏洞响应流程：
+          </p>
+          <ol class="list-decimal list-inside text-gray-600 mt-2 space-y-2">
+            <li><strong>接收</strong>：通过 security@labanimal.tech 或 GitHub Security Advisories 接收漏洞报告</li>
+            <li><strong>确认</strong>：48 小时内确认收到并开始评估</li>
+            <li><strong>分类</strong>：按 CVSS 评分分类严重程度</li>
+            <li><strong>修复</strong>：高危漏洞 7 天内修复，中危 30 天内修复</li>
+            <li><strong>发布</strong>：发布安全补丁并通知用户</li>
+            <li><strong>公开</strong>：修复后 90 天公开漏洞详情</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold mb-4">第十章：附录 — 安全检查清单</h2>
+          <p class="text-gray-600 leading-relaxed">
+            以下是 LabAnimal 的安全检查清单，可用于评估系统的安全状态：
+          </p>
+          <div class="space-y-3 mt-4">
+            <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+              <span class="text-green-600 mt-0.5">✓</span>
+              <div>
+                <p class="font-medium text-green-800">传输加密</p>
+                <p class="text-sm text-green-600">TLS 1.3 + HSTS 启用</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+              <span class="text-green-600 mt-0.5">✓</span>
+              <div>
+                <p class="font-medium text-green-800">密码安全</p>
+                <p class="text-sm text-green-600">bcrypt (cost 12) + 强度策略</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+              <span class="text-green-600 mt-0.5">✓</span>
+              <div>
+                <p class="font-medium text-green-800">多租户隔离</p>
+                <p class="text-sm text-green-600">PostgreSQL RLS + API 层强制</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+              <span class="text-green-600 mt-0.5">✓</span>
+              <div>
+                <p class="font-medium text-green-800">审计追踪</p>
+                <p class="text-sm text-green-600">SHA-256 哈希链 + 完整日志</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+              <span class="text-green-600 mt-0.5">✓</span>
+              <div>
+                <p class="font-medium text-green-800">输入验证</p>
+                <p class="text-sm text-green-600">Zod schema + 参数化查询</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+              <span class="text-green-600 mt-0.5">✓</span>
+              <div>
+                <p class="font-medium text-green-800">速率限制</p>
+                <p class="text-sm text-green-600">登录/注册/API 端点</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+              <span class="text-green-600 mt-0.5">✓</span>
+              <div>
+                <p class="font-medium text-green-800">开源审计</p>
+                <p class="text-sm text-green-600">Apache-2.0 公开代码</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Download CTA -->
+        <div class="bg-brand-50 rounded-xl p-8 border border-brand-100 text-center mt-12">
+          <h3 class="text-xl font-bold mb-2">需要 PDF 版本？</h3>
+          <p class="text-gray-600 mb-4">下载完整的安全白皮书 PDF，方便分享和存档。</p>
+          <button class="bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700 transition">
+            下载 PDF 白皮书
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Simple email gate - store in localStorage
+    const GATE_KEY = 'labalanimal_whitepaper_unlocked';
+
+    function checkGate() {
+      if (localStorage.getItem(GATE_KEY) === 'true') {
+        showFullContent();
+      }
+    }
+
+    function showFullContent() {
+      document.getElementById('gateOverlay').classList.add('hidden');
+      document.getElementById('fullContent').classList.remove('hidden');
+    }
+
+    document.getElementById('gateForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('gateEmail').value;
+
+      // In production, this would POST to an API to save the email
+      // For now, just unlock locally
+      localStorage.setItem(GATE_KEY, 'true');
+      localStorage.setItem('labalanimal_whitepaper_email', email);
+
+      // Track event (Plausible)
+      if (window.plausible) {
+        plausible('Whitepaper Download', { props: { email: email } });
+      }
+
+      showFullContent();
+
+      // Scroll to the newly revealed content
+      setTimeout(() => {
+        document.getElementById('fullContent').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    });
+
+    checkGate();
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <span class="text-lg font-bold text-white">LabAnimal</span>
+          </div>
+          <p class="text-sm">实验动物合规管理系统<br>开源核心，合规无忧</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">产品</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/#features" class="hover:text-white transition">功能</a></li>
+            <li><a href="/#pricing" class="hover:text-white transition">定价</a></li>
+            <li><a href="https://labanimal.gitbook.io/docs" target="_blank" class="hover:text-white transition">文档</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">法律</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/terms" class="hover:text-white transition">服务条款</a></li>
+            <li><a href="/privacy" class="hover:text-white transition">隐私政策</a></li>
+            <li><a href="/refund-policy" class="hover:text-white transition">退款政策</a></li>
+            <li><a href="/sla" class="hover:text-white transition">服务等级协议</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">联系</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="mailto:contact@labanimal.tech" class="hover:text-white transition">contact@labanimal.tech</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition">提交 Issue</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm">&copy; 2026 LabAnimal. Apache-2.0 License.</p>
+        <div class="flex gap-4 text-sm">
+          <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a>
+          <a href="https://labanimal.gitbook.io/docs" target="_blank" class="hover:text-white transition">文档</a>
+          <a href="https://labanimal.cloud/login" class="hover:text-white transition">登录</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

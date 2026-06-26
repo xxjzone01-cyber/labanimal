@@ -57,8 +57,38 @@ class ApiClient {
     return res.json();
   }
 
+  // Generic methods
+  get<T>(path: string): Promise<T> {
+    return this.request<T>(path);
+  }
+
+  post<T>(path: string, data?: Record<string, any>): Promise<T> {
+    return this.request<T>(path, {
+      method: 'POST',
+      ...(data ? { body: JSON.stringify(data) } : {}),
+    });
+  }
+
+  put<T>(path: string, data?: Record<string, any>): Promise<T> {
+    return this.request<T>(path, {
+      method: 'PUT',
+      ...(data ? { body: JSON.stringify(data) } : {}),
+    });
+  }
+
+  delete<T>(path: string): Promise<T> {
+    return this.request<T>(path, { method: 'DELETE' });
+  }
+
   // Auth
-  register(data: { email: string; password: string; name: string }) {
+  sendVerificationCode(email: string) {
+    return this.request<{ message: string }>('/auth/send-code', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    });
+  }
+
+  register(data: { email: string; password: string; name: string; verificationCode: string }) {
     return this.request<{ user: any; token: string }>('/auth/register', {
       method: 'POST',
       body: JSON.stringify(data),

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { api } from '../lib/api';
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -22,7 +24,7 @@ export function LoginPage() {
       }
       navigate('/');
     } catch (err: any) {
-      setError(err.message || 'Login failed');
+      setError(err.message || t('auth.loginError'));
     } finally {
       setLoading(false);
     }
@@ -33,7 +35,7 @@ export function LoginPage() {
       <div className="w-full max-w-md bg-white rounded-xl shadow-sm p-8">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-blue-600">LabAnimal</h1>
-          <p className="text-gray-500 mt-2">Sign in to your account</p>
+          <p className="text-gray-500 mt-2">{t('auth.loginTitle')}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -42,7 +44,7 @@ export function LoginPage() {
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('auth.email')}</label>
             <input
               type="email"
               value={email}
@@ -53,7 +55,7 @@ export function LoginPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('auth.password')}</label>
             <input
               type="password"
               value={password}
@@ -68,14 +70,14 @@ export function LoginPage() {
             disabled={loading}
             className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium"
           >
-            {loading ? 'Signing in...' : 'Sign in'}
+            {loading ? t('common.loading') : t('auth.loginButton')}
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
-          Don't have an account?{' '}
+          {t('auth.noAccount')}{' '}
           <Link to="/register" className="text-blue-600 hover:underline">
-            Register
+            {t('auth.registerButton')}
           </Link>
         </p>
       </div>

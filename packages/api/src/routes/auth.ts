@@ -1,14 +1,60 @@
 import { Hono } from 'hono';
+import { z } from 'zod';
 import { prisma } from '../lib/db.js';
 import { hashPassword, verifyPassword, signToken } from '../lib/auth.js';
+import { sendVerificationCode, verifyCode } from '../lib/verification.js';
+import { loginRateLimit, registerRateLimit } from '../middleware/rate-limit.js';
+import { parseBody } from '../middleware/validate.js';
+
+const sendCodeSchema = z.object({
+  email: z.string().email('Invalid email format'),
+});
+
+const registerSchema = z.object({
+  email: z.string().email('Invalid email format'),
+  password: z
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[a-z]/, 'Password must contain lowercase letter')
+    .regex(/[A-Z]/, 'Password must contain uppercase letter')
+    .regex(/[0-9]/, 'Password must contain number'),
+  name: z.string().min(1, 'Name is required'),
+  verificationCode: z.string().length(6, 'Verification code must be 6 digits'),
+});
+
+const loginSchema = z.object({
+  email: z.string().email('Invalid email format'),
+  password: z.string().min(1, 'Password is required'),
+});
 
 const auth = new Hono();
 
-auth.post('/register', async (c) => {
-  const body = await c.req.json<{ email: string; password: string; name: string }>();
+// 发送验证码
+auth.post('/send-code', async (c) => {
+  const body = parseBody(sendCodeSchema, await c.req.json());
 
-  if (!body.email || !body.password || !body.name) {
-    return c.json({ error: 'email, password, and name are required' }, 400);
+  // 检查邮箱是否已注册
+  const existing = await prisma.user.findUnique({ where: { email: body.email } });
+  if (existing) {
+    return c.json({ error: 'Email already registered' }, 409);
+  }
+
+  try {
+    await sendVerificationCode(body.email);
+    return c.json({ message: 'Verification code sent' });
+  } catch (err: any) {
+    console.error('Failed to send verification code:', err.message);
+    return c.json({ error: 'Failed to send verification email' }, 500);
+  }
+});
+
+// 注册（需要验证码）
+auth.post('/register', registerRateLimit, async (c) => {
+  const body = parseBody(registerSchema, await c.req.json());
+
+  // 验证验证码
+  if (!verifyCode(body.email, body.verificationCode)) {
+    return c.json({ error: 'Invalid or expired verification code' }, 400);
   }
 
   // 先检查重复邮箱（优先于用户数量限制）
@@ -33,12 +79,8 @@ auth.post('/register', async (c) => {
   return c.json({ user, token, labs: [] }, 201);
 });
 
-auth.post('/login', async (c) => {
-  const body = await c.req.json<{ email: string; password: string }>();
-
-  if (!body.email || !body.password) {
-    return c.json({ error: 'email and password are required' }, 400);
-  }
+auth.post('/login', loginRateLimit, async (c) => {
+  const body = parseBody(loginSchema, await c.req.json());
 
   const user = await prisma.user.findUnique({
     where: { email: body.email },

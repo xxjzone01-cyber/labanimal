@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>博客 — LabAnimal</title>
+  <meta name="description" content="LabAnimal 博客，了解实验动物管理、合规要求和产品更新的最新动态。">
+  <link rel="canonical" href="https://labanimal.tech/blog">
+  <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    .gradient-hero { background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #2563eb 100%); }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">首页</a>
+          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium">功能</a>
+          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium">定价</a>
+          <a href="https://labanimal.gitbook.io/docs" target="_blank" class="text-gray-600 hover:text-brand-600 text-sm font-medium">文档</a>
+          <a href="/blog" class="text-brand-600 font-medium text-sm">博客</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">登录</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="gradient-hero pt-32 pb-16 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-6">博客</h1>
+      <p class="text-lg text-blue-100 max-w-2xl mx-auto">
+        实验动物管理、合规要求和 LabAnimal 产品更新的最新动态。
+      </p>
+    </div>
+  </section>
+
+  <!-- Blog Posts -->
+  <section class="py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      <!-- Featured Post -->
+      <article class="mb-12">
+        <div class="bg-gradient-to-br from-brand-50 to-blue-50 rounded-2xl p-8 border border-brand-100">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="bg-brand-600 text-white text-xs font-medium px-3 py-1 rounded-full">发布</span>
+            <span class="text-gray-500 text-sm">2026 年 6 月 26 日</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold mb-4">
+            <a href="/blog/introducing-labanimal" class="hover:text-brand-600 transition">
+              LabAnimal v0.2.0 发布：开源实验动物合规管理系统
+            </a>
+          </h2>
+          <p class="text-gray-600 leading-relaxed mb-6">
+            我们很高兴地宣布 LabAnimal v0.2.0 正式发布！这是一个专为实验动物设施设计的合规管理系统，
+            内置 AVMA 安乐死标准、动态笼位密度计算、21 CFR Part 11 电子签名、AAALAC 审计准备等核心功能。
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="bg-white text-gray-600 text-xs px-3 py-1 rounded-full border border-gray-200">开源</span>
+            <span class="bg-white text-gray-600 text-xs px-3 py-1 rounded-full border border-gray-200">合规</span>
+            <span class="bg-white text-gray-600 text-xs px-3 py-1 rounded-full border border-gray-200">AAALAC</span>
+            <span class="bg-white text-gray-600 text-xs px-3 py-1 rounded-full border border-gray-200">21 CFR Part 11</span>
+          </div>
+          <a href="/blog/introducing-labanimal" class="inline-flex items-center text-brand-600 font-semibold hover:text-brand-700 transition">
+            阅读全文
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Post List -->
+      <div class="space-y-8">
+        <article class="border-b border-gray-200 pb-8">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="bg-green-100 text-green-700 text-xs font-medium px-3 py-1 rounded-full">技术</span>
+            <span class="text-gray-500 text-sm">2026 年 6 月 25 日</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">
+            <a href="/blog/compliance-engine" class="hover:text-brand-600 transition">
+              深入解析 LabAnimal 合规引擎：如何实现 AVMA 和 NRC 标准验证
+            </a>
+          </h3>
+          <p class="text-gray-600 mb-4">
+            本文详细介绍 LabAnimal 合规引擎的架构设计，包括 AVMA 安乐死方法验证、NRC 密度计算、3R 原则验证等核心功能的实现原理。
+          </p>
+          <a href="/blog/compliance-engine" class="text-brand-600 font-medium text-sm hover:text-brand-700 transition">
+            阅读更多 →
+          </a>
+        </article>
+
+        <article class="border-b border-gray-200 pb-8">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="bg-purple-100 text-purple-700 text-xs font-medium px-3 py-1 rounded-full">指南</span>
+            <span class="text-gray-500 text-sm">2026 年 6 月 24 日</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">
+            <a href="/blog/aaalac-preparation" class="hover:text-brand-600 transition">
+              AAALAC 认证准备指南：LabAnimal 如何帮助您通过审计
+            </a>
+          </h3>
+          <p class="text-gray-600 mb-4">
+            AAALAC 认证是实验动物设施的重要里程碑。本文介绍 LabAnimal 如何通过自动化记录、审计追踪和合规验证帮助您准备 AAALAC 认证。
+          </p>
+          <a href="/blog/aaalac-preparation" class="text-brand-600 font-medium text-sm hover:text-brand-700 transition">
+            阅读更多 →
+          </a>
+        </article>
+
+        <article class="border-b border-gray-200 pb-8">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="bg-orange-100 text-orange-700 text-xs font-medium px-3 py-1 rounded-full">公告</span>
+            <span class="text-gray-500 text-sm">2026 年 6 月 24 日</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">
+            <a href="/blog/open-source-launch" class="hover:text-brand-600 transition">
+              LabAnimal 开源发布：为什么我们选择 Apache-2.0 许可证
+            </a>
+          </h3>
+          <p class="text-gray-600 mb-4">
+            我们选择 Apache-2.0 而非 AGPL-3.0 的原因，以及这个决定如何影响 LabAnimal 的商业模式和社区发展。
+          </p>
+          <a href="/blog/open-source-launch" class="text-brand-600 font-medium text-sm hover:text-brand-700 transition">
+            阅读更多 →
+          </a>
+        </article>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="mt-16 bg-gray-50 rounded-2xl p-8 text-center">
+        <h3 class="text-xl font-bold mb-2">订阅更新</h3>
+        <p class="text-gray-600 mb-6">获取 LabAnimal 最新动态、产品更新和实验动物管理最佳实践。</p>
+        <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <input type="email" placeholder="输入您的邮箱" required
+            class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
+          <button type="submit" class="bg-brand-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-brand-700 transition">
+            订阅
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <span class="text-lg font-bold text-white">LabAnimal</span>
+          </div>
+          <p class="text-sm">实验动物合规管理系统<br>开源核心，合规无忧</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">产品</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/#features" class="hover:text-white transition">功能</a></li>
+            <li><a href="/#pricing" class="hover:text-white transition">定价</a></li>
+            <li><a href="https://labanimal.gitbook.io/docs" target="_blank" class="hover:text-white transition">文档</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">法律</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/terms" class="hover:text-white transition">服务条款</a></li>
+            <li><a href="/privacy" class="hover:text-white transition">隐私政策</a></li>
+            <li><a href="/refund-policy" class="hover:text-white transition">退款政策</a></li>
+            <li><a href="/sla" class="hover:text-white transition">服务等级协议</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">联系</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="mailto:contact@labanimal.tech" class="hover:text-white transition">contact@labanimal.tech</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition">提交 Issue</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm">&copy; 2026 LabAnimal. Apache-2.0 License.</p>
+        <div class="flex gap-4 text-sm">
+          <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a>
+          <a href="https://labanimal.gitbook.io/docs" target="_blank" class="hover:text-white transition">文档</a>
+          <a href="https://labanimal.cloud/login" class="hover:text-white transition">登录</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

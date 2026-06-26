@@ -49,3 +49,4 @@ test-results/
 # Vercel
 .vercel/
 .vercel
+.env*

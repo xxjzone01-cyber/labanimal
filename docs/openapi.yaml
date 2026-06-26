@@ -1,0 +1,2110 @@
+openapi: 3.0.3
+info:
+  title: LabAnimal API
+  description: |
+    Open-source laboratory animal management system API.
+    Compliance: AVMA euthanasia, 21 CFR Part 11, AAALAC, 3R principles.
+  version: 0.2.0
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: http://localhost:3001/api
+    description: Local development
+  - url: https://labanimal.cloud/api
+    description: Production (SaaS)
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Auth
+    description: Authentication & registration
+  - name: Labs
+    description: Laboratory & membership management
+  - name: Animals
+    description: Animal records CRUD
+  - name: Animal Identifiers
+    description: Animal identification tags (ear tag, microchip, etc.)
+  - name: Animal Links
+    description: Animal lineage/transfer relationships
+  - name: Rooms
+    description: Facility rooms
+  - name: Racks
+    description: Cage racks within rooms
+  - name: Cages
+    description: Cage management & animal assignment
+  - name: Protocols
+    description: IACUC protocols with 3R validation
+  - name: Health Records
+    description: Health observations & treatments
+  - name: Death Reports
+    description: Death/euthanasia reporting with AVMA validation
+  - name: Medications
+    description: Medication administration records
+  - name: Breedings
+    description: Breeding pairs & litter tracking
+  - name: Enrichments
+    description: Environmental enrichment records
+  - name: Trainings
+    description: Personnel training & certification
+  - name: Work Sessions
+    description: Daily work session tracking
+  - name: Audit Log
+    description: Tamper-evident audit trail (SHA-256 chain)
+  - name: Electronic Signatures
+    description: 21 CFR Part 11 compliant e-signatures
+  - name: Batch Sessions
+    description: Material/supply batch tracking
+  - name: Rates
+    description: Per-diem billing rates
+  - name: Billing
+    description: Usage reports & billing generation
+  - name: License
+    description: Report signing & license verification
+  - name: Subscriptions
+    description: PayPal subscription management
+  - name: Stripe
+    description: Stripe checkout & webhooks
+
+paths:
+  # ── Health ──────────────────────────────────────────────
+  /health:
+    get:
+      summary: Health check
+      security: []
+      tags: [Auth]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: ok }
+                  version: { type: string }
+                  timestamp: { type: string, format: date-time }
+
+  # ── Auth ────────────────────────────────────────────────
+  /auth/register:
+    post:
+      summary: Register a new user
+      security: []
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, name]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, minLength: 8, description: Must contain uppercase, lowercase, and number }
+                name: { type: string }
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: { type: string }
+                  user: { $ref: '#/components/schemas/User' }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: Email already registered
+
+  /auth/login:
+    post:
+      summary: User login
+      security: []
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: { type: string }
+                  user: { $ref: '#/components/schemas/User' }
+                  labs:
+                    type: array
+                    items: { $ref: '#/components/schemas/Lab' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/logout:
+    post:
+      summary: User logout (stateless — client discards token)
+      tags: [Auth]
+      responses:
+        '200':
+          description: Logged out
+
+  # ── Labs ────────────────────────────────────────────────
+  /labs:
+    post:
+      summary: Create laboratory (creator becomes PI)
+      tags: [Labs]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: { type: string }
+                institution: { type: string }
+                address: { type: string }
+      responses:
+        '201':
+          description: Lab created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Lab' }
+
+  /labs/{id}:
+    get:
+      summary: Get lab details with members
+      tags: [Labs]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: Lab details
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Lab' }
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /labs/{id}/members:
+    get:
+      summary: List lab members
+      tags: [Labs]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: Member list
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/LabMember' }
+    post:
+      summary: Add lab member (PI/admin only)
+      tags: [Labs]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [userId, role]
+              properties:
+                userId: { type: string }
+                role: { type: string, enum: [pi, admin, veterinarian, researcher, technician] }
+      responses:
+        '201':
+          description: Member added
+        '409':
+          description: Already a member
+
+  /labs/{id}/members/{userId}:
+    delete:
+      summary: Remove lab member (cannot remove self)
+      tags: [Labs]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - name: userId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Member removed
+        '400':
+          description: Cannot remove yourself
+
+  # ── Animals ─────────────────────────────────────────────
+  /animals:
+    get:
+      summary: List animals (paginated, filterable)
+      tags: [Animals]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: species
+          in: query
+          schema: { type: string }
+        - name: status
+          in: query
+          schema: { type: string, enum: [active, deceased, transferred, retired] }
+        - name: search
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Animal list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Animal' }
+                  total: { type: integer }
+                  page: { type: integer }
+                  limit: { type: integer }
+    post:
+      summary: Create animal
+      tags: [Animals]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [labId, internalId, species, sex]
+              properties:
+                labId: { type: string }
+                internalId: { type: string }
+                species: { type: string }
+                sex: { type: string, enum: [male, female, unknown] }
+                strain: { type: string }
+                genotype: { type: string }
+                dateOfBirth: { type: string, format: date }
+                source: { type: string }
+                cageId: { type: string }
+                protocolId: { type: string }
+                notes: { type: string }
+      responses:
+        '201':
+          description: Animal created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Animal' }
+
+  /animals/{id}:
+    get:
+      summary: Get animal details (includes cage, protocol, recent health records)
+      tags: [Animals]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: Animal details
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Animal' }
+    put:
+      summary: Update animal
+      tags: [Animals]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                internalId: { type: string }
+                species: { type: string }
+                strain: { type: string }
+                genotype: { type: string }
+                sex: { type: string, enum: [male, female, unknown] }
+                dateOfBirth: { type: string, format: date }
+                source: { type: string }
+                cageId: { type: string }
+                protocolId: { type: string }
+                status: { type: string }
+                notes: { type: string }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete animal
+      tags: [Animals]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: Deleted
+
+  /animals/{id}/release-quarantine:
+    post:
+      summary: Release animal from quarantine (veterinarian/PI only)
+      tags: [Animals]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: Released
+        '403':
+          description: Role not permitted
+
+  # ── Animal Identifiers ──────────────────────────────────
+  /animal-identifiers:
+    get:
+      summary: List animal identifiers
+      tags: [Animal Identifiers]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: animalId
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Identifier list
+    post:
+      summary: Create animal identifier (first one auto-set as primary)
+      tags: [Animal Identifiers]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [animalId, type, value]
+              properties:
+                animalId: { type: string }
+                type: { type: string, enum: [ear_tag, microchip, tattoo, tail_mark, other] }
+                value: { type: string }
+                isPrimary: { type: boolean }
+                notes: { type: string }
+      responses:
+        '201':
+          description: Created
+
+  /animal-identifiers/{id}:
+    get:
+      summary: Get identifier details
+      tags: [Animal Identifiers]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Identifier
+    put:
+      summary: Update identifier
+      tags: [Animal Identifiers]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type: { type: string }
+                value: { type: string }
+                isPrimary: { type: boolean }
+                notes: { type: string }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete identifier
+      tags: [Animal Identifiers]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  # ── Animal Links ────────────────────────────────────────
+  /animal-links:
+    get:
+      summary: List animal relationships
+      tags: [Animal Links]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: animalId
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Link list
+    post:
+      summary: Create animal link (old animal marked retired)
+      tags: [Animal Links]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [animalId, linkedToId, reason]
+              properties:
+                animalId: { type: string }
+                linkedToId: { type: string }
+                reason: { type: string }
+      responses:
+        '201':
+          description: Created
+
+  /animal-links/{id}:
+    get:
+      summary: Get link details
+      tags: [Animal Links]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Link details
+    delete:
+      summary: Delete link
+      tags: [Animal Links]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  # ── Rooms ───────────────────────────────────────────────
+  /rooms:
+    get:
+      summary: List rooms with cage/animal stats
+      tags: [Rooms]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+      responses:
+        '200':
+          description: Room list
+    post:
+      summary: Create room
+      tags: [Rooms]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [labId, name]
+              properties:
+                labId: { type: string }
+                name: { type: string }
+                location: { type: string }
+                building: { type: string }
+                floor: { type: string }
+                capacity: { type: integer }
+                temperatureMin: { type: number }
+                temperatureMax: { type: number }
+                humidityMin: { type: number }
+                humidityMax: { type: number }
+      responses:
+        '201':
+          description: Room created
+
+  /rooms/{id}:
+    get:
+      summary: Get room details (nested racks/cages/animals/enrichments)
+      tags: [Rooms]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Room details
+    put:
+      summary: Update room
+      tags: [Rooms]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                location: { type: string }
+                building: { type: string }
+                floor: { type: string }
+                capacity: { type: integer }
+                temperatureMin: { type: number }
+                temperatureMax: { type: number }
+                humidityMin: { type: number }
+                humidityMax: { type: number }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete room (fails if has cages)
+      tags: [Rooms]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+        '400':
+          description: Room has cages
+
+  # ── Racks ───────────────────────────────────────────────
+  /racks:
+    get:
+      summary: List racks in a room
+      tags: [Racks]
+      parameters:
+        - name: roomId
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Rack list
+    post:
+      summary: Create rack
+      tags: [Racks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [roomId, name]
+              properties:
+                roomId: { type: string }
+                name: { type: string }
+                layers: { type: integer }
+                positionsPerLayer: { type: integer }
+      responses:
+        '201':
+          description: Rack created
+
+  /racks/{id}:
+    get:
+      summary: Get rack details (cages & animals)
+      tags: [Racks]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Rack details
+    put:
+      summary: Update rack
+      tags: [Racks]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                layers: { type: integer }
+                positionsPerLayer: { type: integer }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete rack
+      tags: [Racks]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  # ── Cages ───────────────────────────────────────────────
+  /cages:
+    get:
+      summary: List cages in a rack
+      tags: [Cages]
+      parameters:
+        - name: rackId
+          in: query
+          required: true
+          schema: { type: string }
+        - name: status
+          in: query
+          schema: { type: string, enum: [available, occupied, maintenance, quarantine] }
+      responses:
+        '200':
+          description: Cage list
+    post:
+      summary: Create cage
+      tags: [Cages]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [rackId, position]
+              properties:
+                rackId: { type: string }
+                position: { type: string }
+                status: { type: string }
+                capacity: { type: integer }
+                isSingleHoused: { type: boolean }
+                singleHousingReason: { type: string }
+                singleHousingUntil: { type: string, format: date-time }
+      responses:
+        '201':
+          description: Cage created
+
+  /cages/{id}:
+    get:
+      summary: Get cage details (animals & enrichments)
+      tags: [Cages]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Cage details
+    put:
+      summary: Update cage
+      tags: [Cages]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status: { type: string }
+                capacity: { type: integer }
+                isSingleHoused: { type: boolean }
+                singleHousingReason: { type: string }
+                singleHousingUntil: { type: string, format: date-time }
+                lastCleaned: { type: string, format: date-time }
+                nextCleaning: { type: string, format: date-time }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete cage (fails if has animals)
+      tags: [Cages]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  /cages/{id}/assign-animal:
+    post:
+      summary: Assign animal to cage (density compliance check + quarantine validation)
+      tags: [Cages]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [animalId]
+              properties:
+                animalId: { type: string }
+      responses:
+        '200':
+          description: Assigned
+
+  /cages/{id}/remove-animal:
+    post:
+      summary: Remove animal from cage
+      tags: [Cages]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [animalId]
+              properties:
+                animalId: { type: string }
+      responses:
+        '200':
+          description: Removed
+
+  # ── Protocols ───────────────────────────────────────────
+  /protocols:
+    get:
+      summary: List protocols with animal counts
+      tags: [Protocols]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+      responses:
+        '200':
+          description: Protocol list
+    post:
+      summary: Create IACUC protocol
+      tags: [Protocols]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [labId, title, piName]
+              properties:
+                labId: { type: string }
+                title: { type: string }
+                piName: { type: string }
+                description: { type: string }
+                iacucNumber: { type: string }
+                status: { type: string, enum: [draft, submitted, approved, rejected, expired] }
+                painCategory: { type: string, enum: [A, B, C, D, E] }
+                startDate: { type: string, format: date }
+                endDate: { type: string, format: date }
+                animalLimit: { type: integer }
+                densityExemption: { type: boolean }
+                threeRsReplacement: { type: string }
+                threeRsReduction: { type: string }
+                threeRsRefinement: { type: string }
+                hasStatisticalJustification: { type: boolean }
+                involvesSurgery: { type: boolean }
+                survivalSurgery: { type: boolean }
+                usesAnalgesics: { type: boolean }
+                hasHumaneEndpoints: { type: boolean }
+      responses:
+        '201':
+          description: Protocol created
+
+  /protocols/{id}:
+    get:
+      summary: Get protocol details (with linked animals)
+      tags: [Protocols]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Protocol details
+    put:
+      summary: Update protocol (validates status transitions)
+      tags: [Protocols]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string }
+                description: { type: string }
+                piName: { type: string }
+                iacucNumber: { type: string }
+                status: { type: string }
+                painCategory: { type: string }
+                startDate: { type: string, format: date }
+                endDate: { type: string, format: date }
+                animalLimit: { type: integer }
+                reviewComments: { type: string }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete protocol (fails if approved with animals)
+      tags: [Protocols]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  /protocols/{id}/validate:
+    post:
+      summary: Run 3R compliance validation
+      tags: [Protocols]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid: { type: boolean }
+                  warnings:
+                    type: array
+                    items: { type: string }
+
+  # ── Health Records ──────────────────────────────────────
+  /health-records:
+    get:
+      summary: List health records (paginated)
+      tags: [Health Records]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: animalId
+          in: query
+          schema: { type: string }
+        - name: recordType
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Health record list
+    post:
+      summary: Create health record (euthanasia records validated against AVMA methods)
+      tags: [Health Records]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [animalId, recordType]
+              properties:
+                animalId: { type: string }
+                recordType: { type: string, enum: [observation, treatment, euthanasia, procedure, other] }
+                weight: { type: number }
+                bodyConditionScore: { type: number, minimum: 1, maximum: 5 }
+                painScore: { type: integer }
+                painScoreType: { type: string, enum: [MGS, RGS] }
+                description: { type: string }
+                treatment: { type: string }
+                euthanasiaMethodId: { type: string }
+      responses:
+        '201':
+          description: Record created
+
+  /health-records/{id}:
+    get:
+      summary: Get health record details
+      tags: [Health Records]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Health record
+    put:
+      summary: Update health record
+      tags: [Health Records]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recordType: { type: string }
+                weight: { type: number }
+                bodyConditionScore: { type: number }
+                painScore: { type: integer }
+                painScoreType: { type: string }
+                description: { type: string }
+                treatment: { type: string }
+                euthanasiaMethodId: { type: string }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete health record
+      tags: [Health Records]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  # ── Death Reports ───────────────────────────────────────
+  /death-reports:
+    get:
+      summary: List death reports (paginated)
+      tags: [Death Reports]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: animalId
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Death report list
+    post:
+      summary: Create death report (auto-sets animal status to deceased; euthanasia requires AVMA method)
+      tags: [Death Reports]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [animalId, labId, dateOfDeath, cause]
+              properties:
+                animalId: { type: string }
+                labId: { type: string }
+                dateOfDeath: { type: string, format: date }
+                cause: { type: string }
+                euthanasiaMethodId: { type: string }
+                performedBy: { type: string }
+                necropsyPerformed: { type: boolean }
+                necropsyFindings: { type: string }
+                notes: { type: string }
+      responses:
+        '201':
+          description: Report created
+
+  /death-reports/{id}:
+    get:
+      summary: Get death report details
+      tags: [Death Reports]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Death report
+    put:
+      summary: Update death report
+      tags: [Death Reports]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dateOfDeath: { type: string, format: date }
+                cause: { type: string }
+                euthanasiaMethodId: { type: string }
+                performedBy: { type: string }
+                necropsyPerformed: { type: boolean }
+                necropsyFindings: { type: string }
+                notes: { type: string }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete death report
+      tags: [Death Reports]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  # ── Medications ─────────────────────────────────────────
+  /medications:
+    get:
+      summary: List medication records (paginated)
+      tags: [Medications]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: animalId
+          in: query
+          schema: { type: string }
+        - name: activeOnly
+          in: query
+          description: "Set to 'true' to show only active medications"
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Medication list
+    post:
+      summary: Create medication record
+      tags: [Medications]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [animalId, name, dosage, route, frequency, startDate]
+              properties:
+                animalId: { type: string }
+                name: { type: string }
+                dosage: { type: string }
+                route: { type: string }
+                frequency: { type: string }
+                startDate: { type: string, format: date }
+                endDate: { type: string, format: date }
+                reason: { type: string }
+                prescribedBy: { type: string }
+                administeredBy: { type: string }
+                outcome: { type: string }
+                notes: { type: string }
+      responses:
+        '201':
+          description: Medication created
+
+  /medications/{id}:
+    get:
+      summary: Get medication details
+      tags: [Medications]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Medication
+    put:
+      summary: Update medication
+      tags: [Medications]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                dosage: { type: string }
+                route: { type: string }
+                frequency: { type: string }
+                startDate: { type: string, format: date }
+                endDate: { type: string, format: date }
+                reason: { type: string }
+                prescribedBy: { type: string }
+                administeredBy: { type: string }
+                outcome: { type: string }
+                notes: { type: string }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete medication
+      tags: [Medications]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  # ── Breedings ───────────────────────────────────────────
+  /breedings:
+    get:
+      summary: List breeding records (paginated)
+      tags: [Breedings]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Breeding list
+    post:
+      summary: Create breeding record (sire must be male, dam must be female, cannot be same)
+      tags: [Breedings]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [labId, sireId, damId]
+              properties:
+                labId: { type: string }
+                sireId: { type: string }
+                damId: { type: string }
+                pairDate: { type: string, format: date }
+                litterDate: { type: string, format: date }
+                litterSize: { type: integer }
+                weanedCount: { type: integer }
+                weaningDate: { type: string, format: date }
+                notes: { type: string }
+      responses:
+        '201':
+          description: Breeding created
+
+  /breedings/{id}:
+    get:
+      summary: Get breeding details
+      tags: [Breedings]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Breeding
+    put:
+      summary: Update breeding
+      tags: [Breedings]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pairDate: { type: string, format: date }
+                litterDate: { type: string, format: date }
+                litterSize: { type: integer }
+                weanedCount: { type: integer }
+                weaningDate: { type: string, format: date }
+                notes: { type: string }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete breeding
+      tags: [Breedings]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  /breedings/{id}/wean:
+    post:
+      summary: Mark litter as weaned (warns if pups < 14 days old)
+      tags: [Breedings]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [weanedCount]
+              properties:
+                weanedCount: { type: integer }
+                weaningDate: { type: string, format: date }
+                pupIds:
+                  type: array
+                  items: { type: string }
+      responses:
+        '200':
+          description: Weaned
+
+  # ── Enrichments ─────────────────────────────────────────
+  /enrichments:
+    get:
+      summary: List enrichments for a cage
+      tags: [Enrichments]
+      parameters:
+        - name: cageId
+          in: query
+          required: true
+          schema: { type: string }
+        - name: activeOnly
+          in: query
+          description: "Set to 'true' to show only non-removed items"
+          schema: { type: string }
+      responses:
+        '200':
+          description: Enrichment list
+    post:
+      summary: Create enrichment record
+      tags: [Enrichments]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [cageId, type]
+              properties:
+                cageId: { type: string }
+                type: { type: string }
+                description: { type: string }
+                notes: { type: string }
+      responses:
+        '201':
+          description: Created
+
+  /enrichments/{id}:
+    get:
+      summary: Get enrichment details
+      tags: [Enrichments]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Enrichment
+    put:
+      summary: Update enrichment
+      tags: [Enrichments]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type: { type: string }
+                description: { type: string }
+                removedDate: { type: string, format: date-time }
+                notes: { type: string }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete enrichment
+      tags: [Enrichments]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  # ── Trainings ───────────────────────────────────────────
+  /trainings:
+    get:
+      summary: List training records (auto-marks expired/expiring status)
+      tags: [Trainings]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: userId
+          in: query
+          schema: { type: string }
+        - name: type
+          in: query
+          schema: { type: string }
+        - name: status
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Training list
+    post:
+      summary: Create training record
+      tags: [Trainings]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [userId, labId, type]
+              properties:
+                userId: { type: string }
+                labId: { type: string }
+                type: { type: string }
+                certificationNumber: { type: string }
+                issuedBy: { type: string }
+                issuedDate: { type: string, format: date }
+                expirationDate: { type: string, format: date }
+                status: { type: string }
+                documentUrl: { type: string }
+                notes: { type: string }
+      responses:
+        '201':
+          description: Created
+
+  /trainings/{id}:
+    get:
+      summary: Get training details
+      tags: [Trainings]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Training
+    put:
+      summary: Update training
+      tags: [Trainings]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type: { type: string }
+                certificationNumber: { type: string }
+                issuedBy: { type: string }
+                issuedDate: { type: string, format: date }
+                expirationDate: { type: string, format: date }
+                status: { type: string }
+                documentUrl: { type: string }
+                notes: { type: string }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete training
+      tags: [Trainings]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  # ── Work Sessions ───────────────────────────────────────
+  /work-sessions:
+    get:
+      summary: List work sessions (paginated)
+      tags: [Work Sessions]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: userId
+          in: query
+          schema: { type: string }
+        - name: activeOnly
+          in: query
+          description: "Set to 'true' to show only active sessions"
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Session list
+    post:
+      summary: Start work session (8h timeout, one per day)
+      tags: [Work Sessions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [labId]
+              properties:
+                labId: { type: string }
+      responses:
+        '201':
+          description: Session started
+
+  /work-sessions/active:
+    get:
+      summary: Get current user's active session (auto-closes on day change/timeout)
+      tags: [Work Sessions]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+      responses:
+        '200':
+          description: Active session or null
+
+  /work-sessions/{id}:
+    get:
+      summary: Get session details
+      tags: [Work Sessions]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Session
+
+  /work-sessions/{id}/end:
+    put:
+      summary: End work session
+      tags: [Work Sessions]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Session ended
+
+  # ── Audit Log ───────────────────────────────────────────
+  /audit-log:
+    get:
+      summary: List audit log entries (paginated)
+      tags: [Audit Log]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: entityType
+          in: query
+          schema: { type: string }
+        - name: entityId
+          in: query
+          schema: { type: string }
+        - name: userId
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Audit log list
+    post:
+      summary: Create audit log entry (internal use, auto-computes hash chain)
+      tags: [Audit Log]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [labId, entityType, entityId, action]
+              properties:
+                labId: { type: string }
+                entityType: { type: string }
+                entityId: { type: string }
+                action: { type: string }
+                diff: { type: object }
+      responses:
+        '201':
+          description: Created
+
+  /audit-log/verify:
+    get:
+      summary: Verify hash chain integrity
+      tags: [Audit Log]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+      responses:
+        '200':
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid: { type: boolean }
+                  totalEntries: { type: integer }
+                  brokenAt: { type: integer, nullable: true }
+
+  /audit-log/{id}:
+    get:
+      summary: Get audit entry details
+      tags: [Audit Log]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Audit entry
+
+  # ── Electronic Signatures ───────────────────────────────
+  /electronic-signatures:
+    get:
+      summary: List electronic signatures (21 CFR Part 11 compliant)
+      tags: [Electronic Signatures]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: entityType
+          in: query
+          schema: { type: string }
+        - name: entityId
+          in: query
+          schema: { type: string }
+        - name: userId
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Signature list
+    post:
+      summary: Create electronic signature (auto-computes SHA-256 hash, records IP)
+      tags: [Electronic Signatures]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [entityType, entityId, meaning]
+              properties:
+                entityType: { type: string }
+                entityId: { type: string }
+                meaning: { type: string, enum: [approved, reviewed, witnessed, authored] }
+                protocolId: { type: string }
+                printedName: { type: string }
+                title: { type: string }
+                reasonForSigning: { type: string }
+                notes: { type: string }
+      responses:
+        '201':
+          description: Signature created
+
+  /electronic-signatures/{id}:
+    get:
+      summary: Get signature details
+      tags: [Electronic Signatures]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Signature
+
+  /electronic-signatures/{id}/verify:
+    get:
+      summary: Verify signature integrity (recomputes hash and compares)
+      tags: [Electronic Signatures]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid: { type: boolean }
+                  expectedHash: { type: string }
+                  actualHash: { type: string }
+
+  # ── Batch Sessions ──────────────────────────────────────
+  /batch-sessions:
+    get:
+      summary: List batch sessions (paginated)
+      tags: [Batch Sessions]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: materialType
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Batch list
+    post:
+      summary: Create batch session
+      tags: [Batch Sessions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [labId, batchNumber, materialType]
+              properties:
+                labId: { type: string }
+                batchNumber: { type: string }
+                materialType: { type: string }
+                supplier: { type: string }
+                receivedDate: { type: string, format: date }
+                expirationDate: { type: string, format: date }
+                quantity: { type: number }
+                unit: { type: string }
+                storageLocation: { type: string }
+                notes: { type: string }
+      responses:
+        '201':
+          description: Created
+
+  /batch-sessions/{id}:
+    get:
+      summary: Get batch details
+      tags: [Batch Sessions]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Batch
+    put:
+      summary: Update batch
+      tags: [Batch Sessions]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                batchNumber: { type: string }
+                materialType: { type: string }
+                supplier: { type: string }
+                receivedDate: { type: string, format: date }
+                expirationDate: { type: string, format: date }
+                quantity: { type: number }
+                unit: { type: string }
+                storageLocation: { type: string }
+                notes: { type: string }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete batch
+      tags: [Batch Sessions]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  # ── Rates ───────────────────────────────────────────────
+  /rates:
+    get:
+      summary: List billing rates
+      tags: [Rates]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: species
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Rate list
+    post:
+      summary: Create billing rate
+      tags: [Rates]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [labId, species, dailyRate]
+              properties:
+                labId: { type: string }
+                species: { type: string }
+                dailyRate: { type: number }
+                cageRate: { type: number }
+                effectiveDate: { type: string, format: date }
+      responses:
+        '201':
+          description: Created
+
+  /rates/{id}:
+    get:
+      summary: Get rate details
+      tags: [Rates]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Rate
+    put:
+      summary: Update rate
+      tags: [Rates]
+      parameters: [$ref: '#/components/parameters/Id']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                species: { type: string }
+                dailyRate: { type: number }
+                cageRate: { type: number }
+                effectiveDate: { type: string, format: date }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete rate
+      tags: [Rates]
+      parameters: [$ref: '#/components/parameters/Id']
+      responses:
+        '200':
+          description: Deleted
+
+  # ── Billing ─────────────────────────────────────────────
+  /billing/generate:
+    get:
+      summary: Generate billing report (per-diem: species count x daily rate x days + cage fees)
+      tags: [Billing]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+        - name: startDate
+          in: query
+          required: true
+          schema: { type: string, format: date }
+        - name: endDate
+          in: query
+          required: true
+          schema: { type: string, format: date }
+      responses:
+        '200':
+          description: Billing report
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  labId: { type: string }
+                  period:
+                    type: object
+                    properties:
+                      start: { type: string }
+                      end: { type: string }
+                      days: { type: integer }
+                  lineItems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        species: { type: string }
+                        count: { type: integer }
+                        dailyRate: { type: number }
+                        days: { type: integer }
+                        subtotal: { type: number }
+                  summary:
+                    type: object
+                    properties:
+                      subtotal: { type: number }
+                      cageFees: { type: number }
+                      total: { type: number }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /billing/usage:
+    get:
+      summary: Get current lab usage & plan limits (animal count, user count, monthly report count)
+      tags: [Billing]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+      responses:
+        '200':
+          description: Usage data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  plan: { type: string }
+                  limits: { $ref: '#/components/schemas/PlanLimits' }
+                  usage:
+                    type: object
+                    properties:
+                      animalCount: { type: integer }
+                      userCount: { type: integer }
+                      reportsThisMonth: { type: integer }
+                  isOverLimit: { type: boolean }
+                  overLimitReasons:
+                    type: array
+                    items: { type: string }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # ── License ─────────────────────────────────────────────
+  /license/sign:
+    post:
+      summary: Sign report (verified if private key + plan allows, otherwise unverified)
+      tags: [License]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reportHash: { type: string, description: SHA-256 hash of report }
+                reportData: { type: string, description: Raw report data (hash computed automatically) }
+      responses:
+        '200':
+          description: Signature result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  signature: { type: string }
+                  reportHash: { type: string }
+                  type: { type: string, enum: [verified, unverified] }
+                  signedAt: { type: string, format: date-time }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /license/verify:
+    post:
+      summary: Verify report signature
+      tags: [License]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [signature]
+              properties:
+                signature: { type: string }
+                reportHash: { type: string }
+      responses:
+        '200':
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid: { type: boolean }
+                  type: { type: string }
+                  signedAt: { type: string, format: date-time }
+
+  /license/verify/{hash}:
+    get:
+      summary: Verify signature by report hash from audit log (public, no auth required)
+      security: []
+      tags: [License]
+      parameters:
+        - name: hash
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Verification result
+        '404':
+          description: No signature found for this hash
+
+  /license/status:
+    get:
+      summary: Get license status (deploy ID, private key availability, plan limits)
+      security: []
+      tags: [License]
+      responses:
+        '200':
+          description: License status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deployId: { type: string }
+                  hasPrivateKey: { type: boolean }
+                  plan: { type: string }
+                  limits: { $ref: '#/components/schemas/PlanLimits' }
+
+  /license/renew:
+    post:
+      summary: Generate offline renewal code (7-day validity)
+      tags: [License]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [deployId]
+              properties:
+                deployId: { type: string }
+      responses:
+        '200':
+          description: Renewal code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code: { type: string }
+                  expiresAt: { type: string, format: date-time }
+
+  # ── Subscriptions (PayPal) ──────────────────────────────
+  /subscriptions/create:
+    post:
+      summary: Create PayPal subscription (free plan activates directly, paid returns approve URL)
+      tags: [Subscriptions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [planId, labId]
+              properties:
+                planId: { type: string }
+                labId: { type: string }
+      responses:
+        '200':
+          description: Subscription created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriptionId: { type: string }
+                  status: { type: string }
+                  approveUrl: { type: string, nullable: true }
+
+  /subscriptions/activate:
+    post:
+      summary: Activate subscription (called after PayPal approval)
+      tags: [Subscriptions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [subscriptionId, labId]
+              properties:
+                subscriptionId: { type: string }
+                labId: { type: string }
+      responses:
+        '200':
+          description: Activated
+
+  /subscriptions/cancel:
+    post:
+      summary: Cancel subscription (calls PayPal cancel API + marks cancelAtPeriodEnd)
+      tags: [Subscriptions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [labId]
+              properties:
+                labId: { type: string }
+                reason: { type: string }
+      responses:
+        '200':
+          description: Cancelled
+
+  /subscriptions/status:
+    get:
+      summary: Get current subscription status
+      tags: [Subscriptions]
+      parameters:
+        - $ref: '#/components/parameters/LabId'
+      responses:
+        '200':
+          description: Subscription status
+
+  /subscriptions/webhook:
+    post:
+      summary: PayPal webhook (handles ACTIVATED/CANCELLED/SUSPENDED/PAYMENT.FAILED)
+      security: []
+      tags: [Subscriptions]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Webhook processed
+        '400':
+          description: Invalid webhook signature
+
+  # ── Stripe ──────────────────────────────────────────────
+  /stripe/config:
+    get:
+      summary: Get Stripe publishable key & plan config (public, no auth required)
+      security: []
+      tags: [Stripe]
+      responses:
+        '200':
+          description: Stripe config
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  publishableKey: { type: string }
+                  plans:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id: { type: string }
+                        name: { type: string }
+                        monthlyPrice: { type: number }
+                        annualPrice: { type: number }
+
+  /stripe/create:
+    post:
+      summary: Create Stripe Checkout Session (free plan activates directly, 30-day trial for paid)
+      tags: [Stripe]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [planId, labId]
+              properties:
+                planId: { type: string }
+                labId: { type: string }
+                billing: { type: string, enum: [monthly, annual] }
+      responses:
+        '200':
+          description: Session created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sessionId: { type: string, nullable: true }
+                  url: { type: string, nullable: true }
+
+  /stripe/webhook:
+    post:
+      summary: Stripe webhook (checkout.session.completed / subscription.updated / subscription.deleted / invoice.payment_failed)
+      security: []
+      tags: [Stripe]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Webhook processed
+        '400':
+          description: Invalid webhook signature
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema: { type: string }
+    LabId:
+      name: labId
+      in: query
+      required: true
+      schema: { type: string }
+    Page:
+      name: page
+      in: query
+      schema: { type: integer, default: 1 }
+    Limit:
+      name: limit
+      in: query
+      schema: { type: integer, default: 20 }
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id: { type: string }
+        email: { type: string }
+        name: { type: string }
+        role: { type: string }
+
+    Lab:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        institution: { type: string }
+        address: { type: string }
+        members:
+          type: array
+          items: { $ref: '#/components/schemas/LabMember' }
+
+    LabMember:
+      type: object
+      properties:
+        id: { type: string }
+        userId: { type: string }
+        role: { type: string }
+        user: { $ref: '#/components/schemas/User' }
+
+    Animal:
+      type: object
+      properties:
+        id: { type: string }
+        internalId: { type: string }
+        species: { type: string }
+        sex: { type: string }
+        strain: { type: string }
+        genotype: { type: string }
+        dateOfBirth: { type: string, format: date }
+        source: { type: string }
+        status: { type: string }
+        cageId: { type: string }
+        protocolId: { type: string }
+        notes: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+
+    PlanLimits:
+      type: object
+      properties:
+        maxAnimals: { type: integer }
+        maxUsers: { type: integer }
+        maxReportsPerMonth: { type: integer, description: "-1 means unlimited" }
+        hasApiAccess: { type: boolean }
+        hasAAALACSupport: { type: boolean }
+
+    Error:
+      type: object
+      properties:
+        error: { type: string }
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Unauthorized:
+      description: Unauthorized (missing or invalid token)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
