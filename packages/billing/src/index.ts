@@ -1,8 +1,8 @@
 /**
  * @labanimal/billing — 计费与订阅核心逻辑
  *
- * 纯业务逻辑包，不含 HTTP 框架依赖。
  * 可独立发布为私有 npm 包。
+ * 包含：限额计算、支付配置、Hono 路由工厂、中间件。
  */
 
 /** 套餐限额定义 */
@@ -125,3 +125,14 @@ export function canSignReport(billing: BillingContext | null): boolean {
   if (billing.limits.maxReportsPerMonth === -1) return true;
   return billing.usage.reportsThisMonth < billing.limits.maxReportsPerMonth;
 }
+
+// Re-export 子模块
+export { PAYPAL_PLANS, getPayPalBaseUrl, getPayPalAccessToken, getPayPalPlan, ANNUAL_DISCOUNT_PERCENT as PAYPAL_ANNUAL_DISCOUNT } from './paypal-config.js';
+export type { PayPalPlan } from './paypal-config.js';
+export { STRIPE_PLANS, ANNUAL_DISCOUNT_PERCENT as STRIPE_ANNUAL_DISCOUNT } from './stripe-config.js';
+export type { StripePlan } from './stripe-config.js';
+export { createBillingWallMiddleware, getBilling, canSignReport as canSignReportFromContext } from './billing-wall.js';
+export type { BillingWallDeps, PrismaClient, UserInfo } from './billing-wall.js';
+export { createBillingRoutes } from './routes/billing.js';
+export { createStripeRoutes } from './routes/stripe.js';
+export { createSubscriptionsRoutes } from './routes/subscriptions.js';

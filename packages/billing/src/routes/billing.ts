@@ -1,0 +1,122 @@
+/**
+ * Billing 路由 — 计费报告和使用量查询
+ */
+
+import { Hono } from 'hono';
+import type { BillingWallDeps } from '../billing-wall.js';
+import { computeBillingContext } from '../index.js';
+
+export function createBillingRoutes(deps: BillingWallDeps) {
+  const { prisma, getUser } = deps;
+  const billing = new Hono();
+
+  billing.get('/generate', async (c) => {
+    const user = getUser(c);
+    const labId = c.req.query('labId');
+    const startDate = c.req.query('startDate');
+    const endDate = c.req.query('endDate');
+
+    if (!labId) return c.json({ error: 'labId query parameter is required' }, 400);
+    if (!startDate || !endDate) {
+      return c.json({ error: 'startDate and endDate query parameters are required (YYYY-MM-DD)' }, 400);
+    }
+
+    const membership = await prisma.userLab.findUnique({
+      where: { userId_labId: { userId: user.userId, labId } },
+    });
+    if (!membership) return c.json({ error: 'Access denied' }, 403);
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    if (end <= start) return c.json({ error: 'endDate must be after startDate' }, 400);
+
+    const rates: any[] = await prisma.rate.findMany({ where: { labId } });
+    const rateMap = new Map(rates.map((r: any) => [r.species, r]));
+
+    const animals = await prisma.animal.groupBy({
+      by: ['species'],
+      where: { labId, status: { notIn: ['deceased', 'retired'] }, createdAt: { lte: end } },
+      _count: { id: true },
+    });
+
+    const occupiedCages = await prisma.cage.count({
+      where: { rack: { room: { labId } }, animals: { some: {} } },
+    });
+
+    const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+
+    const lineItems: Array<{
+      type: 'animal' | 'cage'; species?: string; count: number; dailyRate: number; days: number; subtotal: number;
+    }> = [];
+
+    let totalAnimalCost = 0;
+    let totalCageCost = 0;
+
+    for (const group of animals) {
+      const rate = rateMap.get(group.species);
+      if (rate) {
+        const subtotal = group._count.id * rate.dailyRate * days;
+        lineItems.push({ type: 'animal', species: group.species, count: group._count.id, dailyRate: rate.dailyRate, days, subtotal });
+        totalAnimalCost += subtotal;
+      }
+    }
+
+    const cageRate = rates.find((r: any) => r.cageRate)?.cageRate || 0;
+    if (cageRate > 0 && occupiedCages > 0) {
+      const subtotal = occupiedCages * cageRate * days;
+      lineItems.push({ type: 'cage', count: occupiedCages, dailyRate: cageRate, days, subtotal });
+      totalCageCost = subtotal;
+    }
+
+    return c.json({
+      labId,
+      period: { startDate, endDate, days },
+      lineItems,
+      summary: { animalCost: totalAnimalCost, cageCost: totalCageCost, total: totalAnimalCost + totalCageCost },
+    });
+  });
+
+  billing.get('/usage', async (c) => {
+    const user = getUser(c);
+    const labId = c.req.query('labId');
+
+    if (!labId) return c.json({ error: 'labId query parameter is required' }, 400);
+
+    const membership = await prisma.userLab.findUnique({
+      where: { userId_labId: { userId: user.userId, labId } },
+    });
+    if (!membership) return c.json({ error: 'Access denied' }, 403);
+
+    const subscription = await prisma.subscription.findUnique({
+      where: { labId },
+      select: { planId: true, status: true, provider: true, currentPeriodEnd: true, cancelAtPeriodEnd: true },
+    });
+
+    const plan = subscription?.status === 'active' ? subscription.planId : 'academic-free';
+
+    const now = new Date();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+
+    const [animalCount, userCount, reportsThisMonth, roomCount, protocolCount] = await Promise.all([
+      prisma.animal.count({ where: { labId, status: { notIn: ['deceased', 'retired'] } } }),
+      prisma.userLab.count({ where: { labId } }),
+      prisma.auditLog.count({ where: { labId, action: 'REPORT_SIGN', createdAt: { gte: monthStart, lte: monthEnd } } }),
+      prisma.room.count({ where: { labId } }),
+      prisma.protocol.count({ where: { labId } }),
+    ]);
+
+    const billingCtx = computeBillingContext(plan, { animalCount, userCount, reportsThisMonth });
+
+    return c.json({
+      plan,
+      subscription: subscription || { planId: 'academic-free', status: 'active', provider: 'free' },
+      limits: billingCtx.limits,
+      usage: { animalCount, userCount, reportsThisMonth, roomCount, protocolCount },
+      isOverLimit: billingCtx.isOverLimit,
+      overLimitReasons: billingCtx.overLimitReasons,
+    });
+  });
+
+  return billing;
+}

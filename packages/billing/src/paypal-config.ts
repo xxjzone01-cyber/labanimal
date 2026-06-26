@@ -8,11 +8,11 @@
 /** PayPal 订阅套餐定义 */
 export interface PayPalPlan {
   name: string;
-  paypalPlanId: string; // PayPal Dashboard 中创建的 Plan ID
+  paypalPlanId: string;
   monthlyPrice: number;
-  maxAnimals: number; // -1 = 无限
-  maxUsers: number; // -1 = 无限
-  maxReportsPerMonth: number; // -1 = 无限
+  maxAnimals: number;
+  maxUsers: number;
+  maxReportsPerMonth: number;
   hasApiAccess: boolean;
   hasAAALACSupport: boolean;
 }
@@ -69,8 +69,6 @@ export const PAYPAL_REQUIRED_ENV = ['PAYPAL_CLIENT_ID', 'PAYPAL_CLIENT_SECRET'] 
 
 /**
  * 获取 PayPal API 基础 URL
- * 沙箱: https://api-m.sandbox.paypal.com
- * 生产: https://api-m.paypal.com
  */
 export function getPayPalBaseUrl(): string {
   const env = process.env.PAYPAL_ENV ?? 'sandbox';

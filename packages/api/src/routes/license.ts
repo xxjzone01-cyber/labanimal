@@ -7,7 +7,6 @@
 
 import { Hono } from 'hono';
 import { authMiddleware, getUser } from '../middleware/auth.js';
-import { billingWallMiddleware, canSignReport, getPlanLimits } from '../middleware/billing-wall.js';
 import {
   signReport,
   verifyReportSignature,
@@ -16,6 +15,25 @@ import {
 } from '@labanimal/compliance';
 import { sha256 } from '@labanimal/compliance';
 import type { Context, Next } from 'hono';
+
+// 条件加载 billing 中间件：闭源包可用时使用完整实现，否则使用 stub
+let billingWallMiddleware: (c: Context, next: Next) => Promise<void>;
+let canSignReport: (c: Context) => boolean;
+let getPlanLimits: (plan?: string) => { maxAnimals: number; maxUsers: number; maxReportsPerMonth: number };
+try {
+  const billing = await import('@labanimal/billing');
+  billingWallMiddleware = billing.createBillingWallMiddleware({
+    prisma: (await import('../lib/db.js')).prisma,
+    getUser,
+  });
+  canSignReport = billing.canSignReportFromContext;
+  getPlanLimits = billing.getPlanLimits;
+} catch {
+  const stub = await import('../billing-stub.js');
+  billingWallMiddleware = stub.billingWallMiddleware;
+  canSignReport = stub.canSignReport;
+  getPlanLimits = stub.getPlanLimits;
+}
 
 const license = new Hono();
 

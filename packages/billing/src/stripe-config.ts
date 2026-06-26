@@ -1,38 +1,21 @@
 /**
  * Stripe 订阅套餐配置
- *
- * 套餐 ID 和价格 ID 来自 Stripe Dashboard。
- * 测试环境和生产环境使用不同的 key。
  */
 
 /** Stripe 订阅套餐定义 */
 export interface StripePlan {
-  /** 套餐名称 */
   name: string;
-  /** Stripe Price ID（月付，从 Stripe Dashboard 获取） */
   priceId: string;
-  /** Stripe Price ID（年付，可选） */
   annualPriceId?: string;
-  /** 月价格（美元，显示用） */
   monthlyPrice: number;
-  /** 动物上限 */
   maxAnimals: number;
-  /** 用户上限 */
   maxUsers: number;
-  /** 报告限制（-1 = 无限） */
   maxReportsPerMonth: number;
-  /** 是否包含 API 访问 */
   hasApiAccess: boolean;
-  /** 是否包含 AAALAC 审计包 */
   hasAAALACSupport: boolean;
 }
 
-/**
- * 订阅套餐配置
- *
- * priceId 需要在 Stripe Dashboard 中创建产品和价格后填入。
- * 格式：price_xxxxx（测试环境）或 price_xxxxx（生产环境）
- */
+/** 订阅套餐配置 */
 export const STRIPE_PLANS: Record<string, StripePlan> = {
   'academic-free': {
     name: 'Academic Free',

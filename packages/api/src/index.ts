@@ -23,14 +23,31 @@ import { workSessions } from './routes/work-sessions.js';
 import { enrichments } from './routes/enrichments.js';
 import { rates } from './routes/rates.js';
 import { electronicSignatures } from './routes/electronic-signatures.js';
-import { billing } from './routes/billing.js';
 import { batchSessions } from './routes/batch-sessions.js';
 import { labs } from './routes/labs.js';
 import { license } from './routes/license.js';
-import { subscriptions } from './routes/subscriptions.js';
-import { stripe } from './routes/stripe.js';
 import { apiKeys } from './routes/api-keys.js';
 import { admin } from './routes/admin.js';
+
+// 条件加载 billing 路由：闭源包可用时使用完整实现，否则使用 stub
+let billingRoutes: any, stripeRoutes: any, subscriptionsRoutes: any;
+try {
+  const billing = await import('@labanimal/billing');
+  const prisma = (await import('./lib/db.js')).prisma;
+  const { getUser } = await import('./middleware/auth.js');
+  const deps = { prisma, getUser };
+  billingRoutes = billing.createBillingRoutes(deps);
+  stripeRoutes = billing.createStripeRoutes(deps);
+  subscriptionsRoutes = billing.createSubscriptionsRoutes(deps);
+  console.log('[Billing] Loaded @labanimal/billing (full)');
+} catch {
+  const { createStubRoutes } = await import('./billing-stub-routes.js');
+  const stubs = createStubRoutes();
+  billingRoutes = stubs.billing;
+  stripeRoutes = stubs.stripe;
+  subscriptionsRoutes = stubs.subscriptions;
+  console.log('[Billing] @labanimal/billing not found, using open-source stubs');
+}
 
 const app = new Hono();
 
@@ -79,11 +96,11 @@ app.route('/api/work-sessions', workSessions);
 app.route('/api/enrichments', enrichments);
 app.route('/api/rates', rates);
 app.route('/api/electronic-signatures', electronicSignatures);
-app.route('/api/billing', billing);
+app.route('/api/billing', billingRoutes);
 app.route('/api/batch-sessions', batchSessions);
 app.route('/api/license', license);
-app.route('/api/subscriptions', subscriptions);
-app.route('/api/stripe', stripe);
+app.route('/api/subscriptions', subscriptionsRoutes);
+app.route('/api/stripe', stripeRoutes);
 app.route('/api/api-keys', apiKeys);
 app.route('/api/admin', admin);
 
