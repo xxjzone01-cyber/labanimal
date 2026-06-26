@@ -1,8 +1,20 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-const SECRET = process.env.AUTH_SECRET || 'dev-secret-change-in-production';
+const DEFAULT_SECRET = 'dev-secret-change-in-production';
+const SECRET = process.env.AUTH_SECRET || DEFAULT_SECRET;
 const EXPIRES_IN = '7d';
+
+// 生产环境强制要求设置 AUTH_SECRET
+if (
+  process.env.NODE_ENV === 'production' &&
+  (!process.env.AUTH_SECRET || process.env.AUTH_SECRET === DEFAULT_SECRET)
+) {
+  throw new Error(
+    'FATAL: AUTH_SECRET environment variable must be set in production. ' +
+      'Generate one with: openssl rand -hex 32',
+  );
+}
 
 export interface JWTPayload {
   userId: string;

@@ -13,73 +13,16 @@
 import type { Context, Next } from 'hono';
 import { getUser } from './auth.js';
 import { prisma } from '../lib/db.js';
+import {
+  computeBillingContext,
+  canSignReport as _canSignReport,
+  type BillingContext,
+  type UsageStats,
+} from '@labanimal/billing';
 
-/** 套餐限额定义 */
-interface PlanLimits {
-  maxAnimals: number; // -1 = 无限
-  maxUsers: number; // -1 = 无限
-  maxReportsPerMonth: number; // -1 = 无限
-  hasApiAccess: boolean;
-  hasAAALACSupport: boolean;
-}
-
-/** 免费版限额（开源版默认） */
-const FREE_TIER_LIMITS: PlanLimits = {
-  maxAnimals: 500,
-  maxUsers: 10,
-  maxReportsPerMonth: 3,
-  hasApiAccess: false,
-  hasAAALACSupport: false,
-};
-
-/** 套餐限额映射 */
-const PLAN_LIMITS: Record<string, PlanLimits> = {
-  'academic-free': FREE_TIER_LIMITS,
-  starter: {
-    maxAnimals: 1000,
-    maxUsers: 15,
-    maxReportsPerMonth: -1,
-    hasApiAccess: false,
-    hasAAALACSupport: false,
-  },
-  professional: {
-    maxAnimals: 15000,
-    maxUsers: 40,
-    maxReportsPerMonth: -1,
-    hasApiAccess: true,
-    hasAAALACSupport: false,
-  },
-  'enterprise-saas': {
-    maxAnimals: -1,
-    maxUsers: -1,
-    maxReportsPerMonth: -1,
-    hasApiAccess: true,
-    hasAAALACSupport: true,
-  },
-  'enterprise-self-hosted': {
-    maxAnimals: -1,
-    maxUsers: -1,
-    maxReportsPerMonth: 20,
-    hasApiAccess: true,
-    hasAAALACSupport: true,
-  },
-};
-
-/** 使用量统计 */
-export interface UsageStats {
-  animalCount: number;
-  userCount: number;
-  reportsThisMonth: number;
-}
-
-/** Billing Wall 注入的 context */
-export interface BillingContext {
-  plan: string;
-  limits: PlanLimits;
-  usage: UsageStats;
-  isOverLimit: boolean;
-  overLimitReasons: string[];
-}
+// 重新导出类型和函数，保持 API 包的导入路径不变
+export type { BillingContext, UsageStats } from '@labanimal/billing';
+export { getPlanLimits } from '@labanimal/billing';
 
 /**
  * Billing Wall 中间件
@@ -115,7 +58,6 @@ export async function billingWallMiddleware(c: Context, next: Next): Promise<voi
 
   // 有效订阅状态：active, 或免费版无订阅记录
   const plan = subscription?.status === 'active' ? subscription.planId : 'academic-free';
-  const limits = PLAN_LIMITS[plan] || FREE_TIER_LIMITS;
 
   // 统计使用量
   const [animalCount, userCount] = await Promise.all([
@@ -140,28 +82,7 @@ export async function billingWallMiddleware(c: Context, next: Next): Promise<voi
   });
 
   const usage: UsageStats = { animalCount, userCount, reportsThisMonth };
-
-  // 检查超限
-  const overLimitReasons: string[] = [];
-  if (limits.maxAnimals !== -1 && animalCount > limits.maxAnimals) {
-    overLimitReasons.push(`Animal limit exceeded: ${animalCount}/${limits.maxAnimals}`);
-  }
-  if (limits.maxUsers !== -1 && userCount > limits.maxUsers) {
-    overLimitReasons.push(`User limit exceeded: ${userCount}/${limits.maxUsers}`);
-  }
-  if (limits.maxReportsPerMonth !== -1 && reportsThisMonth >= limits.maxReportsPerMonth) {
-    overLimitReasons.push(
-      `Monthly report limit reached: ${reportsThisMonth}/${limits.maxReportsPerMonth}`,
-    );
-  }
-
-  const billingCtx: BillingContext = {
-    plan,
-    limits,
-    usage,
-    isOverLimit: overLimitReasons.length > 0,
-    overLimitReasons,
-  };
+  const billingCtx = computeBillingContext(plan, usage);
 
   c.set('billing', billingCtx);
   await next();
@@ -180,14 +101,5 @@ export function getBilling(c: Context): BillingContext {
  */
 export function canSignReport(c: Context): boolean {
   const billing = getBilling(c);
-  if (!billing) return true; // 无 billing context 时允许
-  if (billing.limits.maxReportsPerMonth === -1) return true; // 无限
-  return billing.usage.reportsThisMonth < billing.limits.maxReportsPerMonth;
-}
-
-/**
- * 获取套餐限额
- */
-export function getPlanLimits(plan: string): PlanLimits {
-  return PLAN_LIMITS[plan] || FREE_TIER_LIMITS;
+  return _canSignReport(billing);
 }

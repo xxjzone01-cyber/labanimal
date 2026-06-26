@@ -1,6 +1,22 @@
 import { Hono } from 'hono';
+import { z } from 'zod';
 import { prisma } from '../lib/db.js';
 import { authMiddleware, getUser } from '../middleware/auth.js';
+import { parseBody } from '../middleware/validate.js';
+
+const createAnimalSchema = z.object({
+  labId: z.string().min(1, 'labId is required'),
+  internalId: z.string().min(1, 'internalId is required'),
+  species: z.string().min(1, 'species is required'),
+  sex: z.enum(['male', 'female', 'unknown'], { message: 'sex must be male, female, or unknown' }),
+  strain: z.string().optional(),
+  genotype: z.string().optional(),
+  dateOfBirth: z.string().optional(),
+  source: z.string().optional(),
+  cageId: z.string().optional(),
+  protocolId: z.string().optional(),
+  notes: z.string().optional(),
+});
 
 const animals = new Hono();
 
@@ -68,23 +84,7 @@ animals.get('/', async (c) => {
 
 // POST /api/animals — create animal
 animals.post('/', async (c) => {
-  const body = await c.req.json<{
-    labId: string;
-    internalId: string;
-    species: string;
-    strain?: string;
-    genotype?: string;
-    sex: string;
-    dateOfBirth?: string;
-    source?: string;
-    cageId?: string;
-    protocolId?: string;
-    notes?: string;
-  }>();
-
-  if (!body.labId || !body.internalId || !body.species || !body.sex) {
-    return c.json({ error: 'labId, internalId, species, and sex are required' }, 400);
-  }
+  const body = parseBody(createAnimalSchema, await c.req.json());
 
   // 检查用户是否属于目标 lab
   const user = getUser(c);

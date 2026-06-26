@@ -1,7 +1,21 @@
 import { Hono } from 'hono';
+import { z } from 'zod';
 import { prisma } from '../lib/db.js';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 import { validateMethod } from '@labanimal/compliance';
+import { parseBody } from '../middleware/validate.js';
+
+const createDeathReportSchema = z.object({
+  animalId: z.string().min(1, 'animalId is required'),
+  labId: z.string().min(1, 'labId is required'),
+  dateOfDeath: z.string().min(1, 'dateOfDeath is required'),
+  cause: z.string().min(1, 'cause is required'),
+  euthanasiaMethodId: z.string().optional(),
+  performedBy: z.string().optional(),
+  necropsyPerformed: z.boolean().optional(),
+  necropsyFindings: z.string().optional(),
+  notes: z.string().optional(),
+});
 
 const deathReports = new Hono();
 
@@ -49,21 +63,7 @@ deathReports.get('/', async (c) => {
 // POST /api/death-reports — create death report
 deathReports.post('/', async (c) => {
   const user = getUser(c);
-  const body = await c.req.json<{
-    animalId: string;
-    labId: string;
-    dateOfDeath: string;
-    cause: string;
-    euthanasiaMethodId?: string;
-    performedBy?: string;
-    necropsyPerformed?: boolean;
-    necropsyFindings?: string;
-    notes?: string;
-  }>();
-
-  if (!body.animalId || !body.labId || !body.dateOfDeath || !body.cause) {
-    return c.json({ error: 'animalId, labId, dateOfDeath, and cause are required' }, 400);
-  }
+  const body = parseBody(createDeathReportSchema, await c.req.json());
 
   // Verify animal exists and user has access
   const animal = await prisma.animal.findUnique({

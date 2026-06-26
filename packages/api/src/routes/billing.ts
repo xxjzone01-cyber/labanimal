@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { prisma } from '../lib/db.js';
 import { authMiddleware, getUser } from '../middleware/auth.js';
-import { getPlanLimits } from '../middleware/billing-wall.js';
+import { computeBillingContext } from '@labanimal/billing';
 
 const billing = new Hono();
 
@@ -147,7 +147,6 @@ billing.get('/usage', async (c) => {
   });
 
   const plan = subscription?.status === 'active' ? subscription.planId : 'academic-free';
-  const limits = getPlanLimits(plan);
 
   // 统计使用量
   const now = new Date();
@@ -166,24 +165,15 @@ billing.get('/usage', async (c) => {
     prisma.protocol.count({ where: { labId } }),
   ]);
 
-  const overLimitReasons: string[] = [];
-  if (limits.maxAnimals !== -1 && animalCount > limits.maxAnimals) {
-    overLimitReasons.push(`动物数量超限: ${animalCount}/${limits.maxAnimals}`);
-  }
-  if (limits.maxUsers !== -1 && userCount > limits.maxUsers) {
-    overLimitReasons.push(`用户数量超限: ${userCount}/${limits.maxUsers}`);
-  }
-  if (limits.maxReportsPerMonth !== -1 && reportsThisMonth >= limits.maxReportsPerMonth) {
-    overLimitReasons.push(`月度报告限额已达: ${reportsThisMonth}/${limits.maxReportsPerMonth}`);
-  }
+  const billingCtx = computeBillingContext(plan, { animalCount, userCount, reportsThisMonth });
 
   return c.json({
     plan,
     subscription: subscription || { planId: 'academic-free', status: 'active', provider: 'free' },
-    limits,
+    limits: billingCtx.limits,
     usage: { animalCount, userCount, reportsThisMonth, roomCount, protocolCount },
-    isOverLimit: overLimitReasons.length > 0,
-    overLimitReasons,
+    isOverLimit: billingCtx.isOverLimit,
+    overLimitReasons: billingCtx.overLimitReasons,
   });
 });
 

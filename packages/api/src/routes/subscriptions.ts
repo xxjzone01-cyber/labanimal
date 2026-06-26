@@ -331,6 +331,67 @@ subscriptions.get('/status', async (c) => {
 });
 
 /**
+ * 验证 PayPal Webhook 签名
+ *
+ * 调用 PayPal 官方 /v1/notifications/verify-webhook-signature API。
+ * 文档: https://developer.paypal.com/docs/api-basics/notifications/webhooks/
+ */
+async function verifyPayPalWebhookSignature(
+  headers: Record<string, string | undefined>,
+  rawBody: string,
+): Promise<boolean> {
+  const webhookId = process.env.PAYPAL_WEBHOOK_ID;
+  if (!webhookId) {
+    console.error('PAYPAL_WEBHOOK_ID not configured');
+    return false;
+  }
+
+  const transmissionId = headers['paypal-transmission-id'];
+  const transmissionTime = headers['paypal-transmission-time'];
+  const certUrl = headers['paypal-cert-url'];
+  const authAlgo = headers['paypal-auth-algo'];
+  const transmissionSig = headers['paypal-transmission-sig'];
+
+  if (!transmissionId || !transmissionTime || !certUrl || !authAlgo || !transmissionSig) {
+    console.error('Missing PayPal webhook signature headers');
+    return false;
+  }
+
+  try {
+    const accessToken = await getPayPalAccessToken();
+    const baseUrl = getPayPalBaseUrl();
+
+    const response = await fetch(`${baseUrl}/v1/notifications/verify-webhook-signature`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        auth_algo: authAlgo,
+        cert_url: certUrl,
+        transmission_id: transmissionId,
+        transmission_sig: transmissionSig,
+        transmission_time: transmissionTime,
+        webhook_id: webhookId,
+        webhook_event: JSON.parse(rawBody),
+      }),
+    });
+
+    if (!response.ok) {
+      console.error('PayPal verify-webhook-signature API error:', response.status);
+      return false;
+    }
+
+    const data = (await response.json()) as { verification_status: string };
+    return data.verification_status === 'SUCCESS';
+  } catch (err) {
+    console.error('PayPal webhook verification error:', err);
+    return false;
+  }
+}
+
+/**
  * POST /webhook — PayPal Webhook 回调
  *
  * 处理订阅生命周期事件：
@@ -340,7 +401,23 @@ subscriptions.get('/status', async (c) => {
  * - BILLING.SUBSCRIPTION.PAYMENT.FAILED
  */
 subscriptions.post('/webhook', async (c) => {
-  const body = await c.req.json<{
+  // 先读取原始 body（text），用于验签和后续解析
+  const rawBody = await c.req.text();
+
+  // 验证 webhook 签名
+  const headers: Record<string, string | undefined> = {
+    'paypal-transmission-id': c.req.header('paypal-transmission-id'),
+    'paypal-transmission-time': c.req.header('paypal-transmission-time'),
+    'paypal-cert-url': c.req.header('paypal-cert-url'),
+    'paypal-auth-algo': c.req.header('paypal-auth-algo'),
+    'paypal-transmission-sig': c.req.header('paypal-transmission-sig'),
+  };
+  const isValid = await verifyPayPalWebhookSignature(headers, rawBody);
+  if (!isValid) {
+    return c.json({ error: 'Invalid webhook signature' }, 400);
+  }
+
+  const body = JSON.parse(rawBody) as {
     event_type: string;
     resource: {
       id: string;
@@ -349,7 +426,7 @@ subscriptions.post('/webhook', async (c) => {
         next_billing_time?: string;
       };
     };
-  }>();
+  };
 
   const { event_type, resource } = body;
 
