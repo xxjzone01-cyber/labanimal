@@ -1,0 +1,11 @@
+[Unit]
+Description=LabAnimal Database Backup
+After=postgresql.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/labanimal/scripts/backup-db.sh
+EnvironmentFile=/opt/labanimal/packages/api/.env
+User=labanimal
+StandardOutput=journal
+StandardError=journal
