@@ -1,8 +1,8 @@
 import { describe, test, expect, beforeAll, afterAll } from 'vitest';
 import { api, setToken, clearAuth } from './helper';
-import { PrismaClient } from '@prisma/client';
+import { createPrismaClient } from '@labanimal/db';
 
-const prisma = new PrismaClient();
+const prisma = createPrismaClient();
 
 describe('T1. 认证模块', () => {
   const testEmail = `test-auth-${Date.now()}@test.lab`;

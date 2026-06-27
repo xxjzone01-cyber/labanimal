@@ -13,10 +13,10 @@
  * Usage: pnpm tsx scripts/seed-demo.ts
  */
 
-import { PrismaClient } from '@prisma/client';
+import { createPrismaClient } from '../packages/db/src/index.js';
 import { hash } from 'bcryptjs';
 
-const prisma = new PrismaClient();
+const prisma = createPrismaClient();
 
 async function main() {
   console.log('🌱 Seeding Demo Lab...\n');

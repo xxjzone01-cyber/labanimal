@@ -75,8 +75,8 @@ describe('T14. 实验室模块', () => {
   // T14.8 非成员不能访问实验室详情
   it('T14.8 非成员不能访问实验室详情', async () => {
     // 通过 Prisma 直接创建用户（绕过全局用户限制）
-    const { PrismaClient } = await import('@prisma/client');
-    const prisma = new PrismaClient();
+    const { createPrismaClient } = await import('@labanimal/db');
+    const prisma = createPrismaClient();
     const bcrypt = await import('bcryptjs');
     const unique = Date.now();
 
@@ -106,15 +106,15 @@ describe('T14. 实验室模块', () => {
     setToken(oldToken);
 
     // 清理
-    const prisma2 = new PrismaClient();
+    const prisma2 = createPrismaClient();
     await prisma2.user.deleteMany({ where: { id: user.id } });
     await prisma2.$disconnect();
   });
 
   // T14.9 创建新实验室（以新用户身份，他们没有 lab）
   it('T14.9 新用户可以创建第一个实验室', async () => {
-    const { PrismaClient } = await import('@prisma/client');
-    const prisma = new PrismaClient();
+    const { createPrismaClient } = await import('@labanimal/db');
+    const prisma = createPrismaClient();
     const bcrypt = await import('bcryptjs');
     const unique = Date.now();
 
@@ -151,7 +151,7 @@ describe('T14. 实验室模块', () => {
     setToken(oldToken);
 
     // 清理
-    const prisma2 = new PrismaClient();
+    const prisma2 = createPrismaClient();
     await prisma2.userLab.deleteMany({ where: { userId: user.id } });
     await prisma2.lab.deleteMany({ where: { id: res.data.id } });
     await prisma2.user.deleteMany({ where: { id: user.id } });

@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { PrismaClient } from '@prisma/client';
+import { createPrismaClient } from '@labanimal/db';
 
 const API = 'http://localhost:3001/api';
-const prisma = new PrismaClient();
+const prisma = createPrismaClient();
 
 let token: string;
 let labId: string;

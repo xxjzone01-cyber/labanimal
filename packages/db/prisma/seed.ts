@@ -4,9 +4,15 @@
  * Usage: pnpm db:seed
  */
 
-import { PrismaClient } from '@prisma/client';
+import dotenv from 'dotenv';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: resolve(__dirname, '../../../.env') });
 
-const prisma = new PrismaClient();
+import { createPrismaClient } from '../src/index.js';
+
+const prisma = createPrismaClient();
 
 async function main() {
   console.log('🌱 Seeding database with AAALAC demo scenarios...');

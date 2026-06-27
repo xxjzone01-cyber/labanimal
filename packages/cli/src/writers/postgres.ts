@@ -5,7 +5,7 @@
  * 严格遵循外键依赖顺序，使用 upsert 保证幂等。
  */
 
-import { PrismaClient } from '@prisma/client';
+import { createPrismaClient, type PrismaClient } from '@labanimal/db';
 import type { SQLiteData } from '../readers/sqlite.js';
 import {
   mapRow,
@@ -1415,7 +1415,7 @@ export async function writePostgres(
   labId: string,
   options: { dryRun?: boolean; skipAuditLog?: boolean } = {},
 ): Promise<MigrationResult[]> {
-  const prisma = new PrismaClient();
+  const prisma = createPrismaClient();
   const ctx: MigrationContext = {
     prisma,
     labId,
