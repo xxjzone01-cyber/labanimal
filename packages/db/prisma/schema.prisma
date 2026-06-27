@@ -11,6 +11,142 @@ datasource db {
 }
 
 // ============================================================
+// Enums (PostgreSQL native enum types)
+// ============================================================
+
+enum CageStatus {
+  empty
+  occupied
+  cleaning
+  maintenance
+}
+
+enum AnimalStatus {
+  active
+  allocated
+  used
+  deceased
+  transferred
+  retired
+}
+
+enum QuarantineStatus {
+  none
+  pending
+  quarantined
+  released
+  extended
+}
+
+enum ProtocolStatus {
+  draft
+  submitted
+  approved
+  rejected
+  expired
+}
+
+enum PainCategory {
+  B
+  C
+  D
+  E
+}
+
+enum RecordType {
+  check
+  observation
+  abnormal
+  treatment
+  euthanasia
+}
+
+enum TrainingStatus {
+  active
+  expired
+  pending_renewal
+}
+
+enum TrainingType {
+  aalas_lat
+  aalas_latg
+  iacuc_orientation
+  iACUC
+  species_specific
+  surgery
+  euthanasia
+  other
+}
+
+enum UserRole {
+  pi
+  caretaker
+  researcher
+  admin
+  veterinarian
+}
+
+// Note: DB constraint also allows 'ear-tag' (dash variant) for backward compatibility
+enum IdentifierType {
+  ear_tag
+  microchip
+  toe_clip
+  tail_tattoo
+  other
+}
+
+enum DeathCause {
+  euthanasia
+  natural
+  experimental_endpoint
+  found_dead
+}
+
+enum MedicationRoute {
+  oral
+  ip
+  iv
+  sc
+  im
+  subcutaneous
+  topical
+  other
+}
+
+enum SubscriptionStatus {
+  active
+  cancelled
+  expired
+  suspended
+}
+
+enum InvoiceStatus {
+  draft
+  sent
+  paid
+  overdue
+}
+
+enum SignatureStatus {
+  verified
+  unverified
+}
+
+enum AuditAction {
+  create
+  update
+  delete
+  REPORT_SIGN
+}
+
+enum LicenseCheckResult {
+  valid
+  expired
+  invalid
+  missing
+}
+
+// ============================================================
 // Multi-tenant: Labs & Users
 // ============================================================
 
@@ -67,7 +203,7 @@ model User {
 model UserLab {
   userId String @map("user_id")
   labId  String @map("lab_id")
-  role   String // pi, caretaker, researcher, admin, veterinarian
+  role   UserRole
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   lab  Lab  @relation(fields: [labId], references: [id], onDelete: Cascade)
@@ -141,7 +277,7 @@ model Cage {
   rackId              String    @map("rack_id")
   labId               String    @map("lab_id")
   position            String
-  status              String    @default("empty") // empty, occupied, cleaning, maintenance
+  status              CageStatus @default(empty)
   capacity            Int       @default(5)
   isSingleHoused     Boolean   @default(false) @map("is_single_housed")
   singleHousingReason String?   @map("single_housing_reason")
@@ -175,8 +311,8 @@ model Animal {
   source          String?
   cageId          String?   @map("cage_id")
   protocolId      String?   @map("protocol_id")
-  status          String    @default("active") // active, allocated, used, deceased, transferred, retired
-  quarantineStatus String   @default("none") // none, pending, quarantined, released
+  status          AnimalStatus    @default(active)
+  quarantineStatus QuarantineStatus @default(none)
   quarantineUntil DateTime? @map("quarantine_until")
   notes           String?
   createdAt       DateTime  @default(now()) @map("created_at")
@@ -229,8 +365,8 @@ model Protocol {
   description     String?
   piName          String    @map("pi_name")
   iacucNumber     String?   @map("iacuc_number")
-  status          String    @default("draft") // draft, submitted, approved, rejected, expired
-  painCategory    String?   @map("pain_category") // B, C, D, E
+  status          ProtocolStatus @default(draft)
+  painCategory    PainCategory?  @map("pain_category")
   startDate       DateTime? @map("start_date")
   endDate         DateTime? @map("end_date")
   animalLimit     Int?      @map("animal_limit")
@@ -294,7 +430,7 @@ model HealthRecord {
   id              String    @id @default(cuid())
   animalId        String    @map("animal_id")
   labId           String    @map("lab_id")
-  recordType      String    @map("record_type") // check, abnormal, treatment, euthanasia
+  recordType      RecordType @map("record_type")
   weight          Float?
   bodyConditionScore Int?   @map("body_condition_score")
   painScore       Float?   @map("pain_score") // MGS/RGS pain score (0-1 scale)
@@ -359,7 +495,7 @@ model AuditLog {
   id          String   @id @default(cuid())
   labId       String   @map("lab_id")
   userId      String   @map("user_id")
-  action      String   // create, update, delete
+  action      AuditAction
   entityType  String   @map("entity_type") // animal, cage, protocol, etc.
   entityId    String   @map("entity_id")
   diff        Json?    // { path, oldValue, newValue }[] — only what changed
@@ -383,7 +519,7 @@ model AnimalIdentifier {
   id          String   @id @default(cuid())
   animalId    String   @map("animal_id")
   labId       String   @map("lab_id")
-  type        String   // ear_tag, microchip, toe_clip, tail_tattoo, other
+  type        IdentifierType
   value       String
   isPrimary   Boolean  @default(false) @map("is_primary")
   notes       String?
@@ -405,7 +541,7 @@ model DeathReport {
   animalId        String    @map("animal_id")
   labId           String    @map("lab_id")
   dateOfDeath     DateTime  @map("date_of_death")
-  cause           String    // euthanasia, natural, experimental_endpoint, found_dead
+  cause           DeathCause
   euthanasiaMethodId String? @map("euthanasia_method_id") // references AVMA method ID
   performedBy     String?   @map("performed_by")
   necropsyPerformed Boolean @default(false) @map("necropsy_performed")
@@ -430,7 +566,7 @@ model Medication {
   labId       String    @map("lab_id")
   name        String
   dosage      String
-  route       String    // oral, ip, iv, sc, im, topical, other
+  route       MedicationRoute
   frequency   String
   startDate   DateTime  @map("start_date")
   endDate     DateTime? @map("end_date")
@@ -456,12 +592,12 @@ model Training {
   id              String    @id @default(cuid())
   userId          String    @map("user_id")
   labId           String    @map("lab_id")
-  type            String    // aalas_lat, aalas_latg, iacuc_orientation, species_specific, surgery, euthanasia, other
+  type            TrainingType
   certificationNumber String? @map("certification_number")
   issuedBy        String?   @map("issued_by")
   issuedDate      DateTime? @map("issued_date")
   expirationDate  DateTime? @map("expiration_date")
-  status          String    @default("active") // active, expired, pending_renewal
+  status          TrainingStatus @default(active)
   documentUrl     String?   @map("document_url")
   notes           String?
   createdAt       DateTime  @default(now()) @map("created_at")
@@ -559,7 +695,7 @@ model Subscription {
   labId                 String    @unique @map("lab_id")
   provider              String    // paypal, stripe
   planId                String    @map("plan_id") // academic-free, starter, professional, enterprise-saas
-  status                String    // active, cancelled, expired, suspended
+  status                SubscriptionStatus @default(active)
   paypalSubscriptionId  String?   @map("paypal_subscription_id")
   stripeSubscriptionId  String?   @map("stripe_subscription_id")
   currentPeriodStart    DateTime? @map("current_period_start")
@@ -586,7 +722,7 @@ model Invoice {
   animalCost    Float    @map("animal_cost")
   cageCost      Float    @map("cage_cost")
   totalAmount   Float    @map("total_amount")
-  status        String   @default("sent") // draft, sent, paid, overdue
+  status        InvoiceStatus @default(sent)
   sentAt        DateTime? @map("sent_at")
   paidAt        DateTime? @map("paid_at")
   createdAt     DateTime @default(now()) @map("created_at")
@@ -608,7 +744,7 @@ model ReportSignature {
   userId      String   @map("user_id")
   reportHash  String   @map("report_hash")
   signature   String
-  status      String   // verified, unverified
+  status      SignatureStatus @default(verified)
   deployId    String   @map("deploy_id")
   signedAt    DateTime @default(now()) @map("signed_at")
 
@@ -627,7 +763,7 @@ model ReportSignature {
 model LicenseCheck {
   id          String   @id @default(cuid())
   deployId    String   @map("deploy_id")
-  result      String   // valid, expired, invalid, missing
+  result      LicenseCheckResult
   maxAnimals  Int?     @map("max_animals")
   maxReports  Int?     @map("max_reports")
   checkedAt   DateTime @default(now()) @map("checked_at")

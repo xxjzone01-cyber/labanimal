@@ -19,7 +19,7 @@ import type { Context, Next } from 'hono';
 // 条件加载 billing 中间件：闭源包可用时使用完整实现，否则使用 stub
 let billingWallMiddleware: (c: Context, next: Next) => Promise<void>;
 let canSignReport: (c: Context) => boolean;
-let getPlanLimits: (plan?: string) => { maxAnimals: number; maxUsers: number; maxReportsPerMonth: number };
+let getPlanLimits: (plan: string) => { maxAnimals: number; maxUsers: number; maxReportsPerMonth: number };
 try {
   const billing = await import('@labanimal/billing');
   billingWallMiddleware = billing.createBillingWallMiddleware({

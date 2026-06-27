@@ -1,0 +1,34 @@
+{
+  "name": "@labanimal/enterprise",
+  "version": "0.2.0",
+  "description": "LabAnimal enterprise features — offline licenses, AAALAC materials",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "@prisma/client": ">=7.0.0",
+    "hono": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@prisma/client": { "optional": true },
+    "hono": { "optional": true }
+  },
+  "devDependencies": {
+    "@prisma/client": "7.8.0",
+    "@types/node": "^22.0.0",
+    "hono": "^4.6.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.2.0"
+  }
+}

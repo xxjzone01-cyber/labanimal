@@ -13,6 +13,12 @@ import { PrismaClient } from '../generated/prisma/client.js';
 
 export { PrismaClient } from '../generated/prisma/client.js';
 export type { Prisma, Animal, User, Lab, Protocol, Cage, Room, Rack, Subscription, Invoice, ReportSignature } from '../generated/prisma/client.js';
+export {
+  CageStatus, AnimalStatus, QuarantineStatus, ProtocolStatus, PainCategory,
+  RecordType, TrainingStatus, TrainingType, UserRole, IdentifierType,
+  DeathCause, MedicationRoute, SubscriptionStatus, InvoiceStatus,
+  SignatureStatus, AuditAction, LicenseCheckResult,
+} from '../generated/prisma/enums.js';
 
 /** 创建带 PostgreSQL adapter 的 PrismaClient 实例 */
 export function createPrismaClient(databaseUrl?: string): PrismaClient {

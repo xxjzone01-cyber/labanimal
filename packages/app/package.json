@@ -23,7 +23,8 @@
     "react-dom": "19.2.7",
     "react-i18next": "^17.0.8",
     "react-router-dom": "^7.1.0",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.6.0",
+    "@labanimal/ui": "workspace:*"
   },
   "devDependencies": {
     "@types/qrcode": "^1.5.6",

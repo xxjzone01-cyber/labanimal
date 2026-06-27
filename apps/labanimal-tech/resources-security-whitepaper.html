@@ -422,43 +422,61 @@
   </section>
 
   <script>
-    // Simple email gate - store in localStorage
-    const GATE_KEY = 'labalanimal_whitepaper_unlocked';
+    (function() {
+      var GATE_KEY = 'labanimal_whitepaper_unlocked';
 
-    function checkGate() {
-      if (localStorage.getItem(GATE_KEY) === 'true') {
-        showFullContent();
-      }
-    }
-
-    function showFullContent() {
-      document.getElementById('gateOverlay').classList.add('hidden');
-      document.getElementById('fullContent').classList.remove('hidden');
-    }
-
-    document.getElementById('gateForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = document.getElementById('gateEmail').value;
-
-      // In production, this would POST to an API to save the email
-      // For now, just unlock locally
-      localStorage.setItem(GATE_KEY, 'true');
-      localStorage.setItem('labalanimal_whitepaper_email', email);
-
-      // Track event (Plausible)
-      if (window.plausible) {
-        plausible('Whitepaper Download', { props: { email: email } });
+      function showFullContent() {
+        document.getElementById('gateOverlay').classList.add('hidden');
+        document.getElementById('fullContent').classList.remove('hidden');
       }
 
-      showFullContent();
+      function checkGate() {
+        if (localStorage.getItem(GATE_KEY) === 'true') {
+          showFullContent();
+        }
+      }
 
-      // Scroll to the newly revealed content
-      setTimeout(() => {
-        document.getElementById('fullContent').scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    });
+      document.getElementById('gateForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var email = document.getElementById('gateEmail').value;
+        var btn = this.querySelector('button[type="submit"]');
+        var origText = btn.textContent;
+        btn.textContent = '发送中...';
+        btn.disabled = true;
 
-    checkGate();
+        try {
+          var resp = await fetch('https://api.labanimal.tech/api/resources/gate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: email,
+              resource: 'security-whitepaper',
+            }),
+          });
+          var data = await resp.json();
+          if (resp.ok) {
+            localStorage.setItem(GATE_KEY, 'true');
+            localStorage.setItem('labanimal_whitepaper_email', email);
+            if (window.plausible) {
+              plausible('Whitepaper Download', { props: { email: email } });
+            }
+            showFullContent();
+            setTimeout(function() {
+              document.getElementById('fullContent').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          } else {
+            alert(data.error || '提交失败，请稍后重试。');
+          }
+        } catch (err) {
+          alert('网络错误，请稍后重试。');
+        } finally {
+          btn.textContent = origText;
+          btn.disabled = false;
+        }
+      });
+
+      checkGate();
+    })();
   </script>
 
   <!-- Footer -->

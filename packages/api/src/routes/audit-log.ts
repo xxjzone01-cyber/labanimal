@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { prisma } from '../lib/db.js';
+import { AuditAction } from '@labanimal/db';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 import { hashAuditEntry, verifyAuditEntry, GENESIS_HASH } from '@labanimal/compliance';
 
@@ -181,7 +182,7 @@ auditLog.post('/', async (c) => {
     data: {
       labId: body.labId,
       userId: user.userId,
-      action: body.action,
+      action: body.action as AuditAction,
       entityType: body.entityType,
       entityId: body.entityId,
       diff: body.diff as any,

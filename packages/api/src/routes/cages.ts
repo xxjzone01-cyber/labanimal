@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { prisma } from '../lib/db.js';
+import { CageStatus } from '@labanimal/db';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 import { calculateMaxDensity } from '@labanimal/compliance';
 
@@ -86,7 +87,7 @@ cages.post('/', async (c) => {
       rackId: body.rackId,
       labId: rack.room.labId,
       position: body.position,
-      status: body.status || 'empty',
+      status: (body.status || 'empty') as CageStatus,
       capacity: body.capacity || 5,
       isSingleHoused: body.isSingleHoused || false,
       singleHousingReason: body.singleHousingReason,
@@ -153,7 +154,7 @@ cages.put('/:id', async (c) => {
   const cage = await prisma.cage.update({
     where: { id },
     data: {
-      ...(body.status !== undefined && { status: body.status as string }),
+      ...(body.status !== undefined && { status: body.status as CageStatus }),
       ...(body.capacity !== undefined && { capacity: body.capacity as number }),
       ...(body.isSingleHoused !== undefined && { isSingleHoused: body.isSingleHoused as boolean }),
       ...(body.singleHousingReason !== undefined && {

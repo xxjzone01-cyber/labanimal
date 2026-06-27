@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { prisma } from '../lib/db.js';
+import { MedicationRoute } from '@labanimal/db';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 
 const medications = new Hono();
@@ -104,7 +105,7 @@ medications.post('/', async (c) => {
       labId: animal.labId,
       name: body.name,
       dosage: body.dosage,
-      route: body.route,
+      route: body.route as MedicationRoute,
       frequency: body.frequency,
       startDate: new Date(body.startDate),
       endDate: body.endDate ? new Date(body.endDate) : null,
@@ -174,7 +175,7 @@ medications.put('/:id', async (c) => {
     data: {
       ...(body.name !== undefined && { name: body.name as string }),
       ...(body.dosage !== undefined && { dosage: body.dosage as string }),
-      ...(body.route !== undefined && { route: body.route as string }),
+      ...(body.route !== undefined && { route: body.route as MedicationRoute }),
       ...(body.frequency !== undefined && { frequency: body.frequency as string }),
       ...(body.startDate !== undefined && { startDate: new Date(body.startDate as string) }),
       ...(body.endDate !== undefined && {

@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { prisma } from '../lib/db.js';
+import { RecordType } from '@labanimal/db';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 import { validateMethod } from '@labanimal/compliance';
 
@@ -113,7 +114,7 @@ healthRecords.post('/', async (c) => {
     data: {
       animalId: body.animalId,
       labId: animal.labId,
-      recordType: body.recordType,
+      recordType: body.recordType as RecordType,
       weight: body.weight,
       bodyConditionScore: body.bodyConditionScore,
       painScore: body.painScore,
@@ -212,7 +213,7 @@ healthRecords.put('/:id', async (c) => {
   const record = await prisma.healthRecord.update({
     where: { id },
     data: {
-      ...(body.recordType !== undefined && { recordType: body.recordType as string }),
+      ...(body.recordType !== undefined && { recordType: body.recordType as RecordType }),
       ...(body.weight !== undefined && { weight: body.weight as number }),
       ...(body.bodyConditionScore !== undefined && {
         bodyConditionScore: body.bodyConditionScore as number,

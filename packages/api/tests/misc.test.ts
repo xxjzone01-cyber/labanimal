@@ -34,12 +34,12 @@ describe('T13. 其他模块', () => {
     const animal = await createTestAnimal();
     const res = await api('POST', '/animal-identifiers', {
       animalId: animal.id,
-      type: 'ear-tag',
+      type: 'ear_tag',
       value: `TAG-${Date.now()}`,
     });
     expect(res.status).toBe(201);
     expect(res.data.id).toBeTruthy();
-    expect(res.data.type).toBe('ear-tag');
+    expect(res.data.type).toBe('ear_tag');
     // 第一个标识应自动设为 primary
     expect(res.data.isPrimary).toBe(true);
   });

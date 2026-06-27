@@ -282,29 +282,59 @@
   </footer>
 
   <script>
-    document.getElementById('gateForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      var email = document.getElementById('gateEmail').value;
-      var name = document.getElementById('gateName').value;
-      var institution = document.getElementById('gateInstitution').value;
+    (function() {
+      var GATE_KEY = 'labanimal_aaalac_unlocked';
 
-      // Track event (if PostHog is available)
-      if (window.posthog) {
-        window.posthog.capture('aaalac_guide_download', {
-          email: email,
-          name: name,
-          institution: institution,
-        });
+      function checkGate() {
+        if (localStorage.getItem(GATE_KEY) === 'true') {
+          document.getElementById('gateForm').classList.add('hidden');
+          document.getElementById('gateSuccess').classList.remove('hidden');
+        }
       }
 
-      // Show success
-      this.classList.add('hidden');
-      document.getElementById('gateSuccess').classList.remove('hidden');
+      document.getElementById('gateForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var form = this;
+        var email = document.getElementById('gateEmail').value;
+        var name = document.getElementById('gateName').value;
+        var institution = document.getElementById('gateInstitution').value;
+        var btn = form.querySelector('button[type="submit"]');
+        var origText = btn.textContent;
+        btn.textContent = '发送中...';
+        btn.disabled = true;
 
-      // In production, this would POST to an API endpoint
-      // For now, just show success message
-      console.log('Gate submission:', { email, name, institution });
-    });
+        try {
+          var resp = await fetch('https://api.labanimal.tech/api/resources/gate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: email,
+              name: name,
+              institution: institution,
+              resource: 'aaalac-50-questions',
+            }),
+          });
+          var data = await resp.json();
+          if (resp.ok) {
+            localStorage.setItem(GATE_KEY, 'true');
+            form.classList.add('hidden');
+            document.getElementById('gateSuccess').classList.remove('hidden');
+            if (window.plausible) {
+              plausible('AAALAC Guide Download', { props: { email: email } });
+            }
+          } else {
+            alert(data.error || '提交失败，请稍后重试。');
+          }
+        } catch (err) {
+          alert('网络错误，请稍后重试。');
+        } finally {
+          btn.textContent = origText;
+          btn.disabled = false;
+        }
+      });
+
+      checkGate();
+    })();
   </script>
 
 </body>

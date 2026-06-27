@@ -9,8 +9,8 @@
 
 import { Hono } from 'hono';
 import { prisma } from '../lib/db.js';
-import { authMiddleware } from '../middleware/auth.js';
-import { generateApiKey, hashApiKey } from '../lib/api-key.js';
+import { authMiddleware, getUser } from '../middleware/auth.js';
+import { generateApiKey } from '../lib/api-key.js';
 
 export const apiKeys = new Hono();
 
@@ -19,7 +19,7 @@ apiKeys.use('*', authMiddleware);
 
 // 创建 API Key
 apiKeys.post('/', async (c) => {
-  const user = c.get('user');
+  const user = getUser(c);
   const body = await c.req.json();
   const { name, labId, permissions = 'read', expiresInDays } = body;
 
@@ -29,7 +29,7 @@ apiKeys.post('/', async (c) => {
 
   // 验证用户是否属于该实验室
   const userLab = await prisma.userLab.findUnique({
-    where: { userId_labId: { userId: user.id, labId } },
+    where: { userId_labId: { userId: user.userId, labId } },
   });
 
   if (!userLab) {
@@ -47,7 +47,7 @@ apiKeys.post('/', async (c) => {
   // 保存到数据库
   const apiKey = await prisma.apiKey.create({
     data: {
-      userId: user.id,
+      userId: user.userId,
       labId,
       name,
       keyHash: hash,
@@ -70,10 +70,10 @@ apiKeys.post('/', async (c) => {
 
 // 列出当前用户的 API Key
 apiKeys.get('/', async (c) => {
-  const user = c.get('user');
+  const user = getUser(c);
   const labId = c.req.query('labId');
 
-  const where: any = { userId: user.id };
+  const where: any = { userId: user.userId };
   if (labId) where.labId = labId;
 
   const keys = await prisma.apiKey.findMany({
@@ -96,11 +96,11 @@ apiKeys.get('/', async (c) => {
 
 // 删除 API Key
 apiKeys.delete('/:id', async (c) => {
-  const user = c.get('user');
+  const user = getUser(c);
   const id = c.req.param('id');
 
   const apiKey = await prisma.apiKey.findFirst({
-    where: { id, userId: user.id },
+    where: { id, userId: user.userId },
   });
 
   if (!apiKey) {
@@ -114,11 +114,11 @@ apiKeys.delete('/:id', async (c) => {
 
 // 轮换 API Key（删除旧的，创建新的）
 apiKeys.post('/:id/rotate', async (c) => {
-  const user = c.get('user');
+  const user = getUser(c);
   const id = c.req.param('id');
 
   const oldKey = await prisma.apiKey.findFirst({
-    where: { id, userId: user.id },
+    where: { id, userId: user.userId },
   });
 
   if (!oldKey) {

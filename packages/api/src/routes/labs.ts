@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { prisma } from '../lib/db.js';
+import { UserRole } from '@labanimal/db';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 import { signToken, verifyToken } from '../lib/auth.js';
 import { sendInviteEmail, sendWelcomeEmail } from '../lib/email/send.js';
@@ -127,7 +128,7 @@ labs.post('/:id/members', async (c) => {
     data: {
       userId: body.userId,
       labId: id,
-      role: body.role,
+      role: body.role as UserRole,
     },
     include: {
       user: { select: { id: true, email: true, name: true } },
@@ -276,7 +277,7 @@ labs.post('/accept-invite', async (c) => {
 
   // 创建成员关系
   const member = await prisma.userLab.create({
-    data: { userId: targetUser.id, labId, role },
+    data: { userId: targetUser.id, labId, role: role as UserRole },
     include: { lab: { select: { name: true } } },
   });
 

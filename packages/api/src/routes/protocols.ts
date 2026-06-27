@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { prisma } from '../lib/db.js';
+import { ProtocolStatus, PainCategory } from '@labanimal/db';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 import { validateProtocol, isValidStatusTransition } from '@labanimal/compliance';
 
@@ -73,8 +74,8 @@ protocols.post('/', async (c) => {
       description: body.description,
       piName: body.piName,
       iacucNumber: body.iacucNumber,
-      status: body.status || 'draft',
-      painCategory: body.painCategory,
+      status: (body.status || 'draft') as ProtocolStatus,
+      painCategory: body.painCategory as PainCategory,
       startDate: body.startDate ? new Date(body.startDate) : null,
       endDate: body.endDate ? new Date(body.endDate) : null,
       animalLimit: body.animalLimit,
@@ -156,8 +157,8 @@ protocols.put('/:id', async (c) => {
       ...(body.description !== undefined && { description: body.description as string }),
       ...(body.piName !== undefined && { piName: body.piName as string }),
       ...(body.iacucNumber !== undefined && { iacucNumber: body.iacucNumber as string }),
-      ...(body.status !== undefined && { status: body.status as string }),
-      ...(body.painCategory !== undefined && { painCategory: body.painCategory as string }),
+      ...(body.status !== undefined && { status: body.status as ProtocolStatus }),
+      ...(body.painCategory !== undefined && { painCategory: body.painCategory as PainCategory }),
       ...(body.startDate !== undefined && {
         startDate: body.startDate ? new Date(body.startDate as string) : null,
       }),

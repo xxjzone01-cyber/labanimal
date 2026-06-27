@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { prisma } from '../lib/db.js';
+import { AnimalStatus } from '@labanimal/db';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 import { parseBody } from '../middleware/validate.js';
 import { sendQuotaAlert } from '../lib/email/send.js';
@@ -180,7 +181,7 @@ animals.put('/:id', async (c) => {
       ...(body.source !== undefined && { source: body.source as string }),
       ...(body.cageId !== undefined && { cageId: (body.cageId as string) || null }),
       ...(body.protocolId !== undefined && { protocolId: (body.protocolId as string) || null }),
-      ...(body.status !== undefined && { status: body.status as string }),
+      ...(body.status !== undefined && { status: body.status as AnimalStatus }),
       ...(body.notes !== undefined && { notes: body.notes as string }),
     },
   });

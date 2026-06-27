@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { prisma } from '../lib/db.js';
+import { DeathCause } from '@labanimal/db';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 import { validateMethod } from '@labanimal/compliance';
 import { parseBody } from '../middleware/validate.js';
@@ -110,7 +111,7 @@ deathReports.post('/', async (c) => {
         animalId: body.animalId,
         labId: body.labId,
         dateOfDeath: new Date(body.dateOfDeath),
-        cause: body.cause,
+        cause: body.cause as DeathCause,
         euthanasiaMethodId: body.euthanasiaMethodId,
         performedBy: body.performedBy,
         necropsyPerformed: body.necropsyPerformed || false,
@@ -207,7 +208,7 @@ deathReports.put('/:id', async (c) => {
     where: { id },
     data: {
       ...(body.dateOfDeath !== undefined && { dateOfDeath: new Date(body.dateOfDeath as string) }),
-      ...(body.cause !== undefined && { cause: body.cause as string }),
+      ...(body.cause !== undefined && { cause: body.cause as DeathCause }),
       ...(body.euthanasiaMethodId !== undefined && {
         euthanasiaMethodId: body.euthanasiaMethodId as string,
       }),

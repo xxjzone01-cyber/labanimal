@@ -16,7 +16,7 @@ admin.use('*', async (c, next) => {
   if (!membership) {
     return c.json({ error: 'Admin access required' }, 403);
   }
-  await next();
+  return next();
 });
 
 // GET /api/admin/stats — 平台总览统计

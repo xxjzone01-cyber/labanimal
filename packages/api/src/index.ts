@@ -34,6 +34,8 @@ import { apiKeys } from './routes/api-keys.js';
 import { admin } from './routes/admin.js';
 import { emailCron } from './routes/email-cron.js';
 import { metrics } from './routes/metrics.js';
+import { contact } from './routes/contact.js';
+import { resources } from './routes/resources.js';
 import { sendSubscriptionConfirmation } from './lib/email/send.js';
 import { startScheduler } from './lib/email-scheduler.js';
 import { startMonitor } from './lib/monitor.js';
@@ -100,6 +102,24 @@ try {
   console.log('[Billing] @labanimal/billing not found, using open-source stubs');
 }
 
+// 条件加载 enterprise 路由：闭源包可用时使用完整实现，否则使用 stub
+let enterpriseRoutes: any, aaalacRoutes: any;
+try {
+  const enterprise = await import('@labanimal/enterprise');
+  const prisma = (await import('./lib/db.js')).prisma;
+  const { getUser } = await import('./middleware/auth.js');
+  const deps = { prisma, getUser };
+  enterpriseRoutes = enterprise.createEnterpriseRoutes(deps);
+  aaalacRoutes = enterprise.createAaaLacRoutes(deps);
+  console.log('[Enterprise] Loaded @labanimal/enterprise (full)');
+} catch {
+  const { createEnterpriseStubRoutes } = await import('./enterprise-stub.js');
+  const stubs = createEnterpriseStubRoutes();
+  enterpriseRoutes = stubs.enterprise;
+  aaalacRoutes = stubs.aaalac;
+  console.log('[Enterprise] @labanimal/enterprise not found, using open-source stubs');
+}
+
 const app = new Hono();
 
 // CORS 配置：支持逗号分隔的多域名白名单
@@ -163,6 +183,12 @@ app.route('/api/stripe', stripeRoutes);
 app.route('/api/api-keys', apiKeys);
 app.route('/api/admin', admin);
 app.route('/api/email-cron', emailCron);
+app.route('/api/contact', contact);
+app.route('/api/resources', resources);
+app.use('/api/enterprise/*', authMiddleware);
+app.use('/api/aaalac/*', authMiddleware);
+app.route('/api/enterprise', enterpriseRoutes);
+app.route('/api/aaalac', aaalacRoutes);
 
 // 404 handler
 app.notFound((c) => {

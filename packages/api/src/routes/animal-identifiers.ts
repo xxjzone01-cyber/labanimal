@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { prisma } from '../lib/db.js';
+import { IdentifierType } from '@labanimal/db';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 
 const animalIdentifiers = new Hono();
@@ -82,7 +83,7 @@ animalIdentifiers.post('/', async (c) => {
       data: {
         animalId: body.animalId,
         labId: animal.labId,
-        type: body.type,
+        type: body.type as IdentifierType,
         value: body.value,
         isPrimary,
         notes: body.notes,
@@ -159,7 +160,7 @@ animalIdentifiers.put('/:id', async (c) => {
     const identifier = await prisma.animalIdentifier.update({
       where: { id },
       data: {
-        ...(body.type !== undefined && { type: body.type as string }),
+        ...(body.type !== undefined && { type: body.type as IdentifierType }),
         ...(body.value !== undefined && { value: body.value as string }),
         ...(body.isPrimary !== undefined && { isPrimary: body.isPrimary as boolean }),
         ...(body.notes !== undefined && { notes: body.notes as string }),

@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { prisma } from '../lib/db.js';
+import { TrainingType, TrainingStatus } from '@labanimal/db';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 
 const trainings = new Hono();
@@ -113,12 +114,12 @@ trainings.post('/', async (c) => {
     data: {
       userId: body.userId,
       labId: body.labId,
-      type: body.type,
+      type: body.type as TrainingType,
       certificationNumber: body.certificationNumber,
       issuedBy: body.issuedBy,
       issuedDate: body.issuedDate ? new Date(body.issuedDate) : null,
       expirationDate: body.expirationDate ? new Date(body.expirationDate) : null,
-      status: body.status || 'active',
+      status: (body.status || 'active') as TrainingStatus,
       documentUrl: body.documentUrl,
       notes: body.notes,
     },
@@ -177,7 +178,7 @@ trainings.put('/:id', async (c) => {
   const training = await prisma.training.update({
     where: { id },
     data: {
-      ...(body.type !== undefined && { type: body.type as string }),
+      ...(body.type !== undefined && { type: body.type as TrainingType }),
       ...(body.certificationNumber !== undefined && {
         certificationNumber: body.certificationNumber as string,
       }),
@@ -188,7 +189,7 @@ trainings.put('/:id', async (c) => {
       ...(body.expirationDate !== undefined && {
         expirationDate: body.expirationDate ? new Date(body.expirationDate as string) : null,
       }),
-      ...(body.status !== undefined && { status: body.status as string }),
+      ...(body.status !== undefined && { status: body.status as TrainingStatus }),
       ...(body.documentUrl !== undefined && { documentUrl: body.documentUrl as string }),
       ...(body.notes !== undefined && { notes: body.notes as string }),
     },

@@ -58,6 +58,6 @@ export function canSignReport(_c: Context): boolean {
 }
 
 /** 获取套餐限额 */
-export function getPlanLimits(_plan?: string): PlanLimits {
+export function getPlanLimits(_plan: string): PlanLimits {
   return DEFAULT_LIMITS;
 }

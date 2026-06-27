@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { api } from '../lib/api';
+import { trackEvent } from '../lib/posthog';
 
 interface SubscriptionData {
   planId: string;
@@ -80,6 +81,7 @@ export function SubscriptionsPage() {
       const result = await api.createSubscription(planId, labId);
       if (result.approveUrl) {
         // PayPal 付费套餐：跳转到 PayPal 审批页面
+        trackEvent('subscription_upgraded', { planId });
         window.location.href = result.approveUrl;
       } else {
         // 免费套餐：直接激活

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { api } from '../lib/api';
+import { trackEvent } from '../lib/posthog';
 
 interface Animal {
   id: string;
@@ -53,6 +54,10 @@ export function AnimalsPage() {
     e.preventDefault();
     try {
       await api.createAnimal({ ...newAnimal, labId: api.getLabId() });
+      if (!localStorage.getItem('labanimal_first_animal')) {
+        localStorage.setItem('labanimal_first_animal', 'true');
+        trackEvent('first_animal_created', { species: newAnimal.species });
+      }
       setShowAdd(false);
       setNewAnimal({
         internalId: '',

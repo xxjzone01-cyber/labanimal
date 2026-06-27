@@ -177,12 +177,41 @@
   </section>
 
   <script>
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      // In production, this would send to an API endpoint
-      // For now, show success message
-      this.classList.add('hidden');
-      document.getElementById('successMessage').classList.remove('hidden');
+      var form = this;
+      var btn = form.querySelector('button[type="submit"]');
+      var origText = btn.textContent;
+      btn.textContent = '发送中...';
+      btn.disabled = true;
+
+      try {
+        var resp = await fetch('https://api.labanimal.tech/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value,
+          }),
+        });
+        var data = await resp.json();
+        if (resp.ok) {
+          form.classList.add('hidden');
+          document.getElementById('successMessage').classList.remove('hidden');
+          if (window.plausible) {
+            plausible('Contact Form Submitted');
+          }
+        } else {
+          alert(data.error || '发送失败，请稍后重试。');
+        }
+      } catch (err) {
+        alert('网络错误，请稍后重试。');
+      } finally {
+        btn.textContent = origText;
+        btn.disabled = false;
+      }
     });
   </script>
 

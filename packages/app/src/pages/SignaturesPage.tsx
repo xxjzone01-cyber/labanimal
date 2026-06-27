@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { api } from '../lib/api';
+import { trackEvent } from '../lib/posthog';
 
 interface Signature {
   id: string;
@@ -64,6 +65,10 @@ export function SignaturesPage() {
         protocolId: signForm.entityType === 'protocol' ? signForm.entityId : undefined,
       });
       setLastSigned(result);
+      if (!localStorage.getItem('labanimal_first_report')) {
+        localStorage.setItem('labanimal_first_report', 'true');
+        trackEvent('first_report_generated', { entityType: signForm.entityType });
+      }
       setShowSign(false);
       setSignForm({ entityType: 'protocol', entityId: '', meaning: 'approved', notes: '' });
       loadSignatures();

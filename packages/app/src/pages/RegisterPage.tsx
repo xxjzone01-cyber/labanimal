@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../lib/api';
+import { trackEvent } from '../lib/posthog';
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ export function RegisterPage() {
     try {
       const { user, token } = await api.register({ name, email, password, verificationCode: code });
       api.setToken(token);
+      trackEvent('signup_completed', { email });
       navigate('/');
     } catch (err: any) {
       setError(err.message || 'Registration failed');
@@ -64,9 +66,11 @@ export function RegisterPage() {
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label htmlFor="register-email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <div className="flex gap-2">
               <input
+                id="register-email"
+                name="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -87,8 +91,10 @@ export function RegisterPage() {
 
           {codeSent && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Verification Code</label>
+              <label htmlFor="register-code" className="block text-sm font-medium text-gray-700 mb-1">Verification Code</label>
               <input
+                id="register-code"
+                name="verificationCode"
                 type="text"
                 value={code}
                 onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
@@ -102,8 +108,10 @@ export function RegisterPage() {
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+            <label htmlFor="register-name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
             <input
+              id="register-name"
+              name="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -113,8 +121,10 @@ export function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <label htmlFor="register-password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <input
+              id="register-password"
+              name="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
