@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { DashboardPage } from './pages/DashboardPage';
 import { AnimalsPage } from './pages/AnimalsPage';
@@ -22,6 +23,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { ApiKeysPage } from './pages/ApiKeysPage';
 import { AdminPage } from './pages/AdminPage';
 import { api } from './lib/api';
+import { initPostHog, trackPageView } from './lib/posthog';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   if (!api.getToken()) {
@@ -30,9 +32,26 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+/** PostHog 页面浏览追踪 */
+function PostHogTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    initPostHog();
+  }, []);
+
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location.pathname]);
+
+  return null;
+}
+
 export default function App() {
   return (
-    <Routes>
+    <>
+      <PostHogTracker />
+      <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/verify" element={<VerifyPage />} />
@@ -64,5 +83,6 @@ export default function App() {
         <Route path="admin" element={<AdminPage />} />
       </Route>
     </Routes>
+    </>
   );
 }

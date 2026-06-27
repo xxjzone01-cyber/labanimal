@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { api } from '../lib/api';
+import { resetUser } from '../lib/posthog';
 import { BillingBanner } from './BillingBanner';
 
 export function Layout() {
@@ -29,6 +30,7 @@ export function Layout() {
   ];
 
   const handleLogout = () => {
+    resetUser();
     api.setToken(null);
     navigate('/login');
   };

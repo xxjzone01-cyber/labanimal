@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { api } from '../lib/api';
+import { identifyUser } from '../lib/posthog';
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export function LoginPage() {
       if (labs && labs.length > 0) {
         api.setLabId(labs[0].labId);
       }
+      identifyUser(user.id, { email: user.email, name: user.name });
       navigate('/');
     } catch (err: any) {
       setError(err.message || t('auth.loginError'));
