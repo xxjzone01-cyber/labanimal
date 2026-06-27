@@ -135,6 +135,7 @@ export function createStripeRoutes(deps: BillingWallDeps) {
             update: { provider: 'stripe', planId: planId || 'starter', status: 'active', stripeSubscriptionId: subscriptionId, currentPeriodStart: new Date() },
             create: { labId, provider: 'stripe', planId: planId || 'starter', status: 'active', stripeSubscriptionId: subscriptionId },
           });
+          deps.onSubscriptionActivated?.(labId, planId || 'starter');
         }
         break;
       }

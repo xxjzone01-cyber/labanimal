@@ -374,6 +374,10 @@ class ApiClient {
     );
   }
 
+  getInvoices(labId: string) {
+    return this.request<any[]>(`/billing/invoices?labId=${labId}`);
+  }
+
   // Electronic Signatures
   getSignatures(labId: string, params?: Record<string, string>) {
     const query = new URLSearchParams({ labId, ...params }).toString();

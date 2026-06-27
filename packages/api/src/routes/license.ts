@@ -112,7 +112,7 @@ license.post('/sign', authMiddleware, ensureLabId, billingWallMiddleware, async 
     status = 'unverified';
   }
 
-  // 记录审计日志
+  // 记录审计日志 + ReportSignature
   if (labId) {
     const lastEntry = await prisma.auditLog.findFirst({
       where: { labId },
@@ -130,6 +130,18 @@ license.post('/sign', authMiddleware, ensureLabId, billingWallMiddleware, async 
         diff: { status, deployId: config.deployId, signature },
         hash: reportHash,
         previousHash: lastEntry?.hash || '0'.repeat(64),
+      },
+    });
+
+    // 保存到专用签名表
+    await prisma.reportSignature.create({
+      data: {
+        labId,
+        userId: user.userId,
+        reportHash,
+        signature,
+        status,
+        deployId: config.deployId,
       },
     });
   }

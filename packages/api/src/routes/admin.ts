@@ -213,3 +213,94 @@ admin.get('/labs/:id', async (c) => {
     })),
   });
 });
+
+// GET /api/admin/report-signatures — 报告签名监控
+admin.get('/report-signatures', async (c) => {
+  const page = parseInt(c.req.query('page') || '1');
+  const limit = Math.min(parseInt(c.req.query('limit') || '20'), 100);
+
+  const [signatures, total, verifiedCount, unverifiedCount] = await Promise.all([
+    prisma.reportSignature.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: { signedAt: 'desc' },
+      include: {
+        user: { select: { id: true, email: true, name: true } },
+        lab: { select: { id: true, name: true } },
+      },
+    }),
+    prisma.reportSignature.count(),
+    prisma.reportSignature.count({ where: { status: 'verified' } }),
+    prisma.reportSignature.count({ where: { status: 'unverified' } }),
+  ]);
+
+  return c.json({
+    signatures: signatures.map((s) => ({
+      id: s.id,
+      reportHash: s.reportHash,
+      status: s.status,
+      deployId: s.deployId,
+      signedAt: s.signedAt,
+      user: s.user,
+      lab: s.lab,
+    })),
+    total,
+    verifiedCount,
+    unverifiedCount,
+    page,
+    totalPages: Math.ceil(total / limit),
+  });
+});
+
+// GET /api/admin/license-checks — License 检查记录
+admin.get('/license-checks', async (c) => {
+  const page = parseInt(c.req.query('page') || '1');
+  const limit = Math.min(parseInt(c.req.query('limit') || '50'), 100);
+
+  const [checks, total] = await Promise.all([
+    prisma.licenseCheck.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: { checkedAt: 'desc' },
+    }),
+    prisma.licenseCheck.count(),
+  ]);
+
+  // 按 deployId 分组统计
+  const deployStats = await prisma.licenseCheck.groupBy({
+    by: ['deployId', 'result'],
+    _count: { id: true },
+  });
+
+  return c.json({
+    checks,
+    total,
+    page,
+    totalPages: Math.ceil(total / limit),
+    deployStats: deployStats.map((s) => ({
+      deployId: s.deployId,
+      result: s.result,
+      count: s._count.id,
+    })),
+  });
+});
+
+// GET /api/admin/offline-licenses — 离线授权码管理
+admin.get('/offline-licenses', async (c) => {
+  const licenses = await prisma.offlineLicense.findMany({
+    orderBy: { createdAt: 'desc' },
+    take: 50,
+  });
+
+  return c.json({
+    licenses: licenses.map((l) => ({
+      id: l.id,
+      deployId: l.deployId,
+      validDays: l.validDays,
+      expiresAt: l.expiresAt,
+      redeemedAt: l.redeemedAt,
+      createdAt: l.createdAt,
+      isExpired: new Date() > l.expiresAt,
+    })),
+  });
+});

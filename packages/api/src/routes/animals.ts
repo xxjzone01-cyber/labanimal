@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { prisma } from '../lib/db.js';
 import { authMiddleware, getUser } from '../middleware/auth.js';
 import { parseBody } from '../middleware/validate.js';
+import { sendQuotaAlert } from '../lib/email/send.js';
 
 const createAnimalSchema = z.object({
   labId: z.string().min(1, 'labId is required'),
@@ -110,6 +111,9 @@ animals.post('/', async (c) => {
       notes: body.notes,
     },
   });
+
+  // fire-and-forget 配额告警检查
+  checkQuotaAlert(body.labId).catch(() => {});
 
   return c.json(animal, 201);
 });
@@ -241,5 +245,50 @@ animals.post('/:id/release-quarantine', async (c) => {
 
   return c.json({ success: true, animal: updated });
 });
+
+/** 配额告警检查（fire-and-forget） */
+async function checkQuotaAlert(labId: string): Promise<void> {
+  try {
+    const [count, sub, lab] = await Promise.all([
+      prisma.animal.count({ where: { labId, status: { notIn: ['deceased', 'retired'] } } }),
+      prisma.subscription.findFirst({ where: { labId, status: 'active' } }),
+      prisma.lab.findUnique({
+        where: { id: labId },
+        select: {
+          name: true,
+          users: { where: { role: 'admin' }, include: { user: { select: { email: true, name: true } } } },
+        },
+      }),
+    ]);
+
+    if (!lab) return;
+
+    // 获取套餐限额
+    const planLimits: Record<string, number> = {
+      'academic-free': 500,
+      starter: 1000,
+      professional: 15000,
+      'enterprise-saas': Infinity,
+    };
+    const planId = sub?.planId || 'academic-free';
+    const limit = planLimits[planId] ?? 500;
+
+    // 80% 阈值告警
+    if (count >= limit * 0.8 && count < limit) {
+      const admins = (lab as any).users || [];
+      for (const m of admins) {
+        if (!m.user?.email) continue;
+        sendQuotaAlert(m.user.email, {
+          userName: m.user.name || 'User',
+          labName: lab.name,
+          currentCount: count,
+          limit,
+        });
+      }
+    }
+  } catch (err) {
+    console.error('[Quota] Alert check failed:', err);
+  }
+}
 
 export { animals };

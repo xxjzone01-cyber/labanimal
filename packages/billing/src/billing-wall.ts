@@ -35,6 +35,7 @@ export interface UserInfo {
 export interface BillingWallDeps {
   prisma: PrismaClient;
   getUser: (c: Context) => UserInfo;
+  onSubscriptionActivated?: (labId: string, planId: string) => void;
 }
 
 /**

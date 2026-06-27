@@ -71,7 +71,7 @@ const STATUS_COLORS: Record<string, string> = {
   none: 'bg-gray-100 text-gray-500',
 };
 
-type Tab = 'overview' | 'labs' | 'subscriptions';
+type Tab = 'overview' | 'labs' | 'subscriptions' | 'signatures';
 
 export function AdminPage() {
   const [tab, setTab] = useState<Tab>('overview');
@@ -145,7 +145,7 @@ export function AdminPage() {
 
       {/* Tabs */}
       <div className="flex gap-4 mb-6 border-b border-gray-200">
-        {(['overview', 'labs', 'subscriptions'] as Tab[]).map((t) => (
+        {(['overview', 'labs', 'subscriptions', 'signatures'] as Tab[]).map((t) => (
           <button
             key={t}
             onClick={() => { setTab(t); setSelectedLab(null); }}
@@ -155,7 +155,7 @@ export function AdminPage() {
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
-            {t === 'overview' ? 'Overview' : t === 'labs' ? 'Labs' : 'Subscriptions'}
+            {t === 'overview' ? 'Overview' : t === 'labs' ? 'Labs' : t === 'subscriptions' ? 'Subscriptions' : 'Signatures'}
           </button>
         ))}
       </div>
@@ -378,7 +378,10 @@ export function AdminPage() {
 
           {/* Users */}
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="font-semibold mb-3">Members ({selectedLab.users.length})</h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold">Members ({selectedLab.users.length})</h3>
+              <InviteButton labId={selectedLab.id} />
+            </div>
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-500 border-b">
@@ -422,6 +425,9 @@ export function AdminPage() {
 
       {/* Subscriptions Tab */}
       {tab === 'subscriptions' && <SubscriptionsTab />}
+
+      {/* Signatures Tab */}
+      {tab === 'signatures' && <SignaturesTab />}
     </div>
   );
 }
@@ -483,6 +489,192 @@ function SubscriptionsTab() {
           )}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+interface SignatureItem {
+  id: string;
+  reportHash: string;
+  status: string;
+  deployId: string;
+  signedAt: string;
+  user: { id: string; email: string; name: string };
+  lab: { id: string; name: string };
+}
+
+function SignaturesTab() {
+  const [data, setData] = useState<{
+    signatures: SignatureItem[];
+    total: number;
+    verifiedCount: number;
+    unverifiedCount: number;
+    page: number;
+    totalPages: number;
+  } | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    setLoading(true);
+    api
+      .get<any>(`/admin/report-signatures?page=${page}&limit=20`)
+      .then(setData)
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [page]);
+
+  if (loading) return <div className="text-center py-8 text-gray-500">Loading...</div>;
+  if (!data) return <div className="text-center py-8 text-gray-500">Failed to load</div>;
+
+  return (
+    <div className="space-y-4">
+      {/* Summary Cards */}
+      <div className="grid grid-cols-3 gap-4">
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
+          <div className="text-2xl font-bold">{data.total}</div>
+          <div className="text-sm text-gray-500">Total Signatures</div>
+        </div>
+        <div className="bg-green-50 rounded-lg border border-green-200 p-4">
+          <div className="text-2xl font-bold text-green-700">{data.verifiedCount}</div>
+          <div className="text-sm text-green-600">Verified (RSA)</div>
+        </div>
+        <div className="bg-amber-50 rounded-lg border border-amber-200 p-4">
+          <div className="text-2xl font-bold text-amber-700">{data.unverifiedCount}</div>
+          <div className="text-sm text-amber-600">Unverified (Fallback)</div>
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="bg-white rounded-lg border border-gray-200">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-left text-gray-500 border-b bg-gray-50">
+              <th className="p-3">Report Hash</th>
+              <th className="p-3">Lab</th>
+              <th className="p-3">User</th>
+              <th className="p-3">Status</th>
+              <th className="p-3">Deploy ID</th>
+              <th className="p-3">Signed At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.signatures.map((sig) => (
+              <tr key={sig.id} className="border-b last:border-0 hover:bg-gray-50">
+                <td className="p-3 font-mono text-xs">{sig.reportHash.slice(0, 16)}...</td>
+                <td className="p-3">{sig.lab.name}</td>
+                <td className="p-3 text-gray-600">{sig.user.name}</td>
+                <td className="p-3">
+                  <span className={`px-2 py-0.5 rounded text-xs ${
+                    sig.status === 'verified' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'
+                  }`}>
+                    {sig.status}
+                  </span>
+                </td>
+                <td className="p-3 text-gray-500 text-xs">{sig.deployId}</td>
+                <td className="p-3 text-gray-500">{new Date(sig.signedAt).toLocaleString()}</td>
+              </tr>
+            ))}
+            {data.signatures.length === 0 && (
+              <tr>
+                <td colSpan={6} className="p-6 text-center text-gray-500">No signatures yet</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      {data.totalPages > 1 && (
+        <div className="flex justify-center gap-2">
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Prev
+          </button>
+          <span className="px-3 py-1 text-sm text-gray-600">
+            Page {data.page} of {data.totalPages}
+          </span>
+          <button
+            onClick={() => setPage((p) => Math.min(data.totalPages, p + 1))}
+            disabled={page === data.totalPages}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function InviteButton({ labId }: { labId: string }) {
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [role, setRole] = useState('researcher');
+  const [sending, setSending] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+
+  const handleInvite = async () => {
+    if (!email) return;
+    setSending(true);
+    setResult(null);
+    try {
+      await api.post(`/labs/${labId}/invite`, { email, role });
+      setResult(`Invitation sent to ${email}`);
+      setEmail('');
+    } catch (err: any) {
+      setResult(err.message || 'Failed to send invitation');
+    }
+    setSending(false);
+  };
+
+  if (!open) {
+    return (
+      <button
+        onClick={() => setOpen(true)}
+        className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+      >
+        + Invite
+      </button>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-2">
+      <input
+        type="email"
+        placeholder="Email address"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="text-sm border border-gray-300 rounded px-2 py-1 w-48"
+      />
+      <select
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+        className="text-sm border border-gray-300 rounded px-2 py-1"
+      >
+        <option value="researcher">Researcher</option>
+        <option value="vet">Vet</option>
+        <option value="admin">Admin</option>
+        <option value="pi">PI</option>
+      </select>
+      <button
+        onClick={handleInvite}
+        disabled={sending || !email}
+        className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 disabled:opacity-50"
+      >
+        {sending ? '...' : 'Send'}
+      </button>
+      <button
+        onClick={() => { setOpen(false); setResult(null); }}
+        className="text-sm text-gray-500 hover:text-gray-700"
+      >
+        Cancel
+      </button>
+      {result && <span className="text-xs text-gray-500">{result}</span>}
     </div>
   );
 }

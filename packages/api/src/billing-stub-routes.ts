@@ -50,6 +50,27 @@ function createBillingStub() {
     return c.json({ message: MSG }, 400);
   });
 
+  // 发票历史列表
+  billing.get('/invoices', async (c) => {
+    const user = getUser(c);
+    const labId = c.req.query('labId');
+
+    if (!labId) return c.json({ error: 'labId query parameter is required' }, 400);
+
+    const membership = await prisma.userLab.findUnique({
+      where: { userId_labId: { userId: user.userId, labId } },
+    });
+    if (!membership) return c.json({ error: 'Access denied' }, 403);
+
+    const invoices = await prisma.invoice.findMany({
+      where: { labId },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
+
+    return c.json(invoices);
+  });
+
   return billing;
 }
 

@@ -104,6 +104,8 @@ export function createSubscriptionsRoutes(deps: BillingWallDeps) {
         data: { status: 'active', currentPeriodStart: new Date(), currentPeriodEnd: data.billing_info.next_billing_time ? new Date(data.billing_info.next_billing_time) : null },
       });
 
+      deps.onSubscriptionActivated?.(body.labId, subscription.planId);
+
       return c.json({ subscription, message: 'Subscription activated' });
     } catch (err) {
       console.error('PayPal activation error:', err);
@@ -227,6 +229,7 @@ export function createSubscriptionsRoutes(deps: BillingWallDeps) {
     switch (event_type) {
       case 'BILLING.SUBSCRIPTION.ACTIVATED':
         await prisma.subscription.update({ where: { id: subscription.id }, data: { status: 'active', currentPeriodEnd: resource.billing_info?.next_billing_time ? new Date(resource.billing_info.next_billing_time) : null } });
+        deps.onSubscriptionActivated?.(subscription.labId, subscription.planId);
         break;
       case 'BILLING.SUBSCRIPTION.CANCELLED':
         await prisma.subscription.update({ where: { id: subscription.id }, data: { status: 'cancelled' } });

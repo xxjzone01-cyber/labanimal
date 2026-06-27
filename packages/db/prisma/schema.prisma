@@ -35,6 +35,8 @@ model Lab {
   deathReports DeathReport[]
   batchSessions BatchSession[]
   subscription Subscription?
+  invoices    Invoice[]
+  reportSignatures ReportSignature[]
   apiKeys     ApiKey[]
 
   @@map("labs")
@@ -56,6 +58,7 @@ model User {
   workSessions  WorkSession[]
   trainings Training[]
   signatures ElectronicSignature[]
+  reportSignatures ReportSignature[]
   apiKeys   ApiKey[]
 
   @@map("users")
@@ -568,4 +571,86 @@ model Subscription {
   lab Lab @relation(fields: [labId], references: [id], onDelete: Cascade)
 
   @@map("subscriptions")
+}
+
+// ============================================================
+// Invoices (Monthly billing records)
+// ============================================================
+
+model Invoice {
+  id            String   @id @default(cuid())
+  labId         String   @map("lab_id")
+  month         String   // e.g. "2026-06"
+  animalCount   Int      @map("animal_count")
+  reportCount   Int      @map("report_count")
+  animalCost    Float    @map("animal_cost")
+  cageCost      Float    @map("cage_cost")
+  totalAmount   Float    @map("total_amount")
+  status        String   @default("sent") // draft, sent, paid, overdue
+  sentAt        DateTime? @map("sent_at")
+  paidAt        DateTime? @map("paid_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  lab Lab @relation(fields: [labId], references: [id], onDelete: Cascade)
+
+  @@unique([labId, month])
+  @@index([labId, createdAt])
+  @@map("invoices")
+}
+
+// ============================================================
+// Report Signatures (dedicated tracking for signed reports)
+// ============================================================
+
+model ReportSignature {
+  id          String   @id @default(cuid())
+  labId       String   @map("lab_id")
+  userId      String   @map("user_id")
+  reportHash  String   @map("report_hash")
+  signature   String
+  status      String   // verified, unverified
+  deployId    String   @map("deploy_id")
+  signedAt    DateTime @default(now()) @map("signed_at")
+
+  user User @relation(fields: [userId], references: [id])
+  lab  Lab  @relation(fields: [labId], references: [id], onDelete: Cascade)
+
+  @@index([labId, signedAt])
+  @@index([reportHash])
+  @@map("report_signatures")
+}
+
+// ============================================================
+// License Checks (audit trail for license verification)
+// ============================================================
+
+model LicenseCheck {
+  id          String   @id @default(cuid())
+  deployId    String   @map("deploy_id")
+  result      String   // valid, expired, invalid, missing
+  maxAnimals  Int?     @map("max_animals")
+  maxReports  Int?     @map("max_reports")
+  checkedAt   DateTime @default(now()) @map("checked_at")
+
+  @@index([deployId, checkedAt])
+  @@map("license_checks")
+}
+
+// ============================================================
+// Offline Licenses (renewal codes for air-gapped deployments)
+// ============================================================
+
+model OfflineLicense {
+  id            String   @id @default(cuid())
+  deployId      String   @map("deploy_id")
+  renewalCode   String   @map("renewal_code")
+  issuedBy      String?  @map("issued_by")
+  validDays     Int      @map("valid_days")
+  expiresAt     DateTime @map("expires_at")
+  redeemedAt    DateTime? @map("redeemed_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@index([deployId])
+  @@index([expiresAt])
+  @@map("offline_licenses")
 }

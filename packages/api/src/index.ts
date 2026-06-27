@@ -1,10 +1,7 @@
-import { createRequire } from 'node:module';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 
-const require = createRequire(import.meta.url);
-const { version } = require('../package.json') as { version: string };
 import { auth } from './routes/auth.js';
 import { animals } from './routes/animals.js';
 import { rooms } from './routes/rooms.js';
@@ -28,6 +25,12 @@ import { labs } from './routes/labs.js';
 import { license } from './routes/license.js';
 import { apiKeys } from './routes/api-keys.js';
 import { admin } from './routes/admin.js';
+import { emailCron } from './routes/email-cron.js';
+import { metrics } from './routes/metrics.js';
+import { sendSubscriptionConfirmation } from './lib/email/send.js';
+import { startScheduler } from './lib/email-scheduler.js';
+import { startMonitor } from './lib/monitor.js';
+import { monitorMiddleware } from './middleware/monitor.js';
 
 // 条件加载 billing 路由：闭源包可用时使用完整实现，否则使用 stub
 let billingRoutes: any, stripeRoutes: any, subscriptionsRoutes: any;
@@ -35,7 +38,47 @@ try {
   const billing = await import('@labanimal/billing');
   const prisma = (await import('./lib/db.js')).prisma;
   const { getUser } = await import('./middleware/auth.js');
-  const deps = { prisma, getUser };
+  const deps = {
+    prisma,
+    getUser,
+    onSubscriptionActivated: async (labId: string, planId: string) => {
+      try {
+        // 查 lab 管理员邮箱，发订阅确认邮件
+        const lab = await prisma.lab.findUnique({
+          where: { id: labId },
+          select: {
+            name: true,
+            users: {
+              where: { role: 'admin' },
+              select: { user: { select: { email: true, name: true } } },
+            },
+          },
+        });
+        if (!lab) return;
+
+        const planNames: Record<string, string> = {
+          starter: 'Starter',
+          professional: 'Professional',
+          'enterprise-saas': 'Enterprise SaaS',
+        };
+        const planName = planNames[planId] || planId;
+        const periodEnd = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString();
+
+        for (const membership of lab.users) {
+          const user = membership.user;
+          if (!user?.email) continue;
+          sendSubscriptionConfirmation(user.email, {
+            userName: user.name || 'User',
+            planName,
+            amount: planId === 'starter' ? '$99/mo' : planId === 'professional' ? '$299/mo' : '$499/mo',
+            periodEnd,
+          });
+        }
+      } catch (err) {
+        console.error('[Billing] Failed to send subscription confirmation:', err);
+      }
+    },
+  };
   billingRoutes = billing.createBillingRoutes(deps);
   stripeRoutes = billing.createStripeRoutes(deps);
   subscriptionsRoutes = billing.createSubscriptionsRoutes(deps);
@@ -59,6 +102,7 @@ if (process.env.NODE_ENV === 'production' && (!corsOrigin || corsOrigin === '*')
 
 // Global middleware
 app.use('*', logger());
+app.use('*', monitorMiddleware);
 app.use(
   '*',
   cors({
@@ -71,10 +115,8 @@ app.use(
   }),
 );
 
-// Health check
-app.get('/api/health', (c) => {
-  return c.json({ status: 'ok', version, timestamp: new Date().toISOString() });
-});
+// Health check + Metrics + Alerts
+app.route('/api', metrics);
 
 // Routes
 app.route('/api/auth', auth);
@@ -103,6 +145,7 @@ app.route('/api/subscriptions', subscriptionsRoutes);
 app.route('/api/stripe', stripeRoutes);
 app.route('/api/api-keys', apiKeys);
 app.route('/api/admin', admin);
+app.route('/api/email-cron', emailCron);
 
 // 404 handler
 app.notFound((c) => {
@@ -137,6 +180,8 @@ if (!process.env.VITEST && !process.env.JEST_WORKER_ID) {
   serve({ fetch: app.fetch, port }, (info) => {
     console.log(`LabAnimal API running at http://localhost:${info.port}`);
   });
+  startScheduler();
+  startMonitor();
 }
 
 export default app;
