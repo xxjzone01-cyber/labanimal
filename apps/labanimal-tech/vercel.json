@@ -2,5 +2,20 @@
   "framework": null,
   "buildCommand": null,
   "outputDirectory": ".",
-  "routes": [{ "src": "/(.*)", "dest": "/index.html" }]
+  "routes": [
+    { "src": "/docs", "dest": "/docs.html" },
+    { "src": "/about", "dest": "/about.html" },
+    { "src": "/contact", "dest": "/contact.html" },
+    { "src": "/blog", "dest": "/blog.html" },
+    { "src": "/enterprise", "dest": "/enterprise.html" },
+    { "src": "/open-source", "dest": "/open-source.html" },
+    { "src": "/terms", "dest": "/terms.html" },
+    { "src": "/privacy", "dest": "/privacy.html" },
+    { "src": "/refund-policy", "dest": "/refund-policy.html" },
+    { "src": "/sla", "dest": "/sla.html" },
+    { "src": "/security", "dest": "/security.html" },
+    { "src": "/enterprise-offline-purchase", "dest": "/enterprise-offline-purchase.html" },
+    { "src": "/resources/aaalac-50-questions", "dest": "/resources-aaalac-50-questions.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }

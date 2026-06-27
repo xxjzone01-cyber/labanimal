@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开源版 — LabAnimal</title>
+  <meta name="description" content="LabAnimal 开源版：完整的实验动物管理核心功能，Apache-2.0 许可证，免费使用，自主部署。">
+  <link rel="canonical" href="https://labanimal.tech/open-source">
+  <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    .gradient-hero { background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #2563eb 100%); }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">首页</a>
+          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium">功能</a>
+          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium">定价</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">文档</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">登录</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="gradient-hero pt-32 pb-16 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-block bg-white/10 border border-white/20 rounded-full px-4 py-1 text-sm text-blue-100 mb-6">Apache-2.0 License</div>
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-6">开源版</h1>
+      <p class="text-lg text-blue-100 max-w-2xl mx-auto">
+        完整的实验动物管理核心功能，免费使用，自主部署。没有供应商锁定，没有隐性费用。
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+        <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="bg-white text-brand-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-50 transition shadow-lg">
+          GitHub 仓库
+        </a>
+        <a href="/docs" class="border-2 border-white/40 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white/10 transition">
+          阅读文档
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's Included -->
+  <section class="py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4 text-center">包含功能</h2>
+      <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">开源版包含日常实验室管理所需的全部核心功能，不限制动物数量或用户数。</p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl p-6 border border-gray-200">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold">动物管理</h3>
+          </div>
+          <ul class="space-y-2 text-gray-600 text-sm">
+            <li>动物档案（多标识：耳标、芯片、趾 clip）</li>
+            <li>笼位管理（NRC 密度计算）</li>
+            <li>健康记录与体重追踪</li>
+            <li>死亡报告与尸检记录</li>
+            <li>繁殖管理</li>
+            <li>药物/治疗记录</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-gray-200">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold">合规功能</h3>
+          </div>
+          <ul class="space-y-2 text-gray-600 text-sm">
+            <li>IACUC 协议管理与审批流程</li>
+            <li>AVMA 安乐死方法验证</li>
+            <li>21 CFR Part 11 审计追踪</li>
+            <li>电子签名（RSA 签名验证）</li>
+            <li>人员培训与资质管理</li>
+            <li>环境富化记录</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-gray-200">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold">团队协作</h3>
+          </div>
+          <ul class="space-y-2 text-gray-600 text-sm">
+            <li>多角色权限（PI、管理员、研究员、兽医、饲养员）</li>
+            <li>邮件邀请加入实验室</li>
+            <li>API Keys 管理</li>
+            <li>中英文双语界面</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-gray-200">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold">系统管理</h3>
+          </div>
+          <ul class="space-y-2 text-gray-600 text-sm">
+            <li>计费报告生成与 PDF 签名</li>
+            <li>发票历史记录</li>
+            <li>设施管理（房间→机架→笼位）</li>
+            <li>批次物料追踪</li>
+            <li>邮件通知（到期提醒、配额告警）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Limitations -->
+  <section class="py-16 px-4 bg-gray-50">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4 text-center">开源版限制</h2>
+      <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">开源版适用于中小型实验室。如需更高限额或高级功能，请考虑商业版。</p>
+
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <table class="w-full">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="text-left px-6 py-4 text-sm font-medium text-gray-600">项目</th>
+              <th class="text-center px-6 py-4 text-sm font-medium text-gray-600">开源版</th>
+              <th class="text-center px-6 py-4 text-sm font-medium text-gray-600">商业版</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr>
+              <td class="px-6 py-4 text-sm">动物数量</td>
+              <td class="px-6 py-4 text-sm text-center">500</td>
+              <td class="px-6 py-4 text-sm text-center text-green-600 font-medium">无限</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 text-sm">用户数</td>
+              <td class="px-6 py-4 text-sm text-center">10 / 实验室</td>
+              <td class="px-6 py-4 text-sm text-center text-green-600 font-medium">无限</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 text-sm">月度签名报告</td>
+              <td class="px-6 py-4 text-sm text-center">3</td>
+              <td class="px-6 py-4 text-sm text-center text-green-600 font-medium">无限</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 text-sm">API 访问</td>
+              <td class="px-6 py-4 text-sm text-center">
+                <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </td>
+              <td class="px-6 py-4 text-sm text-center">
+                <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 text-sm">AAALAC 专家支持</td>
+              <td class="px-6 py-4 text-sm text-center">
+                <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </td>
+              <td class="px-6 py-4 text-sm text-center">
+                <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 text-sm">离线授权码</td>
+              <td class="px-6 py-4 text-sm text-center">
+                <svg class="w-5 h-5 text-red-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </td>
+              <td class="px-6 py-4 text-sm text-center">
+                <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 text-sm">计费</td>
+              <td class="px-6 py-4 text-sm text-center">免费</td>
+              <td class="px-6 py-4 text-sm text-center text-brand-600 font-medium">从 $99/月起</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center mt-8">
+        <a href="/#pricing" class="text-brand-600 hover:text-brand-700 font-medium text-sm">
+          查看完整定价方案 →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold mb-12 text-center">快速开始</h2>
+
+      <div class="space-y-8">
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center text-brand-700 font-bold text-lg">1</div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2">克隆仓库</h3>
+            <div class="bg-gray-900 rounded-lg p-4 text-sm text-green-400 font-mono overflow-x-auto">
+              git clone https://github.com/xxjzone01-cyber/labanimal.git<br>
+              cd labanimal
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center text-brand-700 font-bold text-lg">2</div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2">安装依赖</h3>
+            <div class="bg-gray-900 rounded-lg p-4 text-sm text-green-400 font-mono overflow-x-auto">
+              pnpm install
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center text-brand-700 font-bold text-lg">3</div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2">配置环境变量</h3>
+            <div class="bg-gray-900 rounded-lg p-4 text-sm text-green-400 font-mono overflow-x-auto">
+              cp packages/api/.env.example packages/api/.env<br>
+              # 编辑 .env，设置 DATABASE_URL 和 AUTH_SECRET
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center text-brand-700 font-bold text-lg">4</div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2">初始化数据库并启动</h3>
+            <div class="bg-gray-900 rounded-lg p-4 text-sm text-green-400 font-mono overflow-x-auto">
+              pnpm --filter @labanimal/db push<br>
+              pnpm dev
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6">
+        <div class="flex items-start gap-3">
+          <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <div>
+            <h4 class="font-semibold text-blue-800 mb-1">需要 PostgreSQL</h4>
+            <p class="text-sm text-blue-700">LabAnimal 使用 PostgreSQL 数据库。您可以使用本地安装、Docker 或 Neon 等云数据库服务。详见 <a href="/docs" class="underline">文档</a>。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="gradient-hero py-16 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-white mb-4">立即开始使用</h2>
+      <p class="text-blue-100 text-lg mb-8">5 分钟内完成部署，开始管理您的实验动物设施。</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="bg-white text-brand-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-50 transition shadow-lg">
+          GitHub 仓库
+        </a>
+        <a href="/enterprise" class="border-2 border-white/40 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white/10 transition">
+          了解商业版
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <span class="text-lg font-bold text-white">LabAnimal</span>
+          </div>
+          <p class="text-sm">实验动物合规管理系统<br>开源核心，合规无忧</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">产品</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/#features" class="hover:text-white transition">功能</a></li>
+            <li><a href="/#pricing" class="hover:text-white transition">定价</a></li>
+            <li><a href="/docs" class="hover:text-white transition">文档</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">法律</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/terms" class="hover:text-white transition">服务条款</a></li>
+            <li><a href="/privacy" class="hover:text-white transition">隐私政策</a></li>
+            <li><a href="/refund-policy" class="hover:text-white transition">退款政策</a></li>
+            <li><a href="/sla" class="hover:text-white transition">服务等级协议</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">联系</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="mailto:contact@labanimal.tech" class="hover:text-white transition">contact@labanimal.tech</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition">提交 Issue</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm">&copy; 2026 LabAnimal. Apache-2.0 License.</p>
+        <div class="flex gap-4 text-sm">
+          <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a>
+          <a href="/docs" class="hover:text-white transition">文档</a>
+          <a href="https://labanimal.cloud/login" class="hover:text-white transition">登录</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
