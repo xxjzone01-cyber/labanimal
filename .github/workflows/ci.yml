@@ -103,6 +103,7 @@ jobs:
       - name: Start API server
         env:
           DISABLE_RATE_LIMIT: 'true'
+          SKIP_EMAIL_VERIFICATION: 'true'
         run: |
           pnpm --filter @labanimal/api dev &
           for i in $(seq 1 30); do

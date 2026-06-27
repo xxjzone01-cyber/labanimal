@@ -24,13 +24,15 @@ beforeAll(async () => {
   process.env.LICENSE_PUBLIC_KEY = testKeys.publicKey;
   process.env.LICENSE_DEPLOY_ID = 'test-deploy';
 
-  // 清理测试用户和审计日志（避免月度报告限额影响测试）
+  // 清理测试用户和关联数据（避免月度报告限额影响测试）
   const existingUsers = await prisma.user.findMany({
     where: { email: TEST_EMAIL },
     select: { id: true },
   });
   if (existingUsers.length > 0) {
-    await prisma.auditLog.deleteMany({ where: { userId: { in: existingUsers.map((u) => u.id) } } });
+    const userIds = existingUsers.map((u) => u.id);
+    await prisma.reportSignature.deleteMany({ where: { userId: { in: userIds } } });
+    await prisma.auditLog.deleteMany({ where: { userId: { in: userIds } } });
   }
   await prisma.user.deleteMany({ where: { email: TEST_EMAIL } });
 
@@ -38,7 +40,7 @@ beforeAll(async () => {
   const registerRes = await app.request('/api/auth/register', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: TEST_EMAIL, password: TEST_PASSWORD, name: TEST_NAME }),
+    body: JSON.stringify({ email: TEST_EMAIL, password: TEST_PASSWORD, name: TEST_NAME, verificationCode: '000000' }),
   });
   const registerData = await registerRes.json<{ token: string; labs: Array<{ id: string }> }>();
   token = registerData.token;
@@ -62,16 +64,13 @@ afterAll(async () => {
   process.env.LICENSE_PUBLIC_KEY = origPublicKey;
   process.env.LICENSE_DEPLOY_ID = origDeployId;
 
-  // 清理
-  await prisma.auditLog.deleteMany({
-    where: {
-      userId: {
-        in: (
-          await prisma.user.findMany({ where: { email: TEST_EMAIL }, select: { id: true } })
-        ).map((u) => u.id),
-      },
-    },
-  });
+  // 清理（先删子表再删用户，避免外键约束）
+  const users = await prisma.user.findMany({ where: { email: TEST_EMAIL }, select: { id: true } });
+  const userIds = users.map((u) => u.id);
+  if (userIds.length > 0) {
+    await prisma.reportSignature.deleteMany({ where: { userId: { in: userIds } } });
+    await prisma.auditLog.deleteMany({ where: { userId: { in: userIds } } });
+  }
   await prisma.user.deleteMany({ where: { email: TEST_EMAIL } });
   await prisma.$disconnect();
 });
@@ -171,7 +170,9 @@ describe('POST /api/license/verify', () => {
       select: { id: true },
     });
     if (users.length > 0) {
-      await prisma.auditLog.deleteMany({ where: { userId: { in: users.map((u) => u.id) } } });
+      const userIds = users.map((u) => u.id);
+      await prisma.reportSignature.deleteMany({ where: { userId: { in: userIds } } });
+      await prisma.auditLog.deleteMany({ where: { userId: { in: userIds } } });
     }
   });
 

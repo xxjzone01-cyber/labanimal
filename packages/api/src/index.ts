@@ -38,6 +38,7 @@ import { sendSubscriptionConfirmation } from './lib/email/send.js';
 import { startScheduler } from './lib/email-scheduler.js';
 import { startMonitor } from './lib/monitor.js';
 import { monitorMiddleware } from './middleware/monitor.js';
+import { authMiddleware } from './middleware/auth.js';
 
 // 条件加载 billing 路由：闭源包可用时使用完整实现，否则使用 stub
 let billingRoutes: any, stripeRoutes: any, subscriptionsRoutes: any;
@@ -145,6 +146,15 @@ app.route('/api/work-sessions', workSessions);
 app.route('/api/enrichments', enrichments);
 app.route('/api/rates', rates);
 app.route('/api/electronic-signatures', electronicSignatures);
+
+// Billing/Subscription/Stripe 路由需要 auth middleware（这些路由内部调用 getUser(c)）
+app.use('/api/billing/*', authMiddleware);
+app.use('/api/subscriptions/*', (c, next) => {
+  // Webhook 端点跳过 auth（PayPal/Stripe 回调无需 JWT）
+  if (c.req.path.endsWith('/webhook')) return next();
+  return authMiddleware(c, next);
+});
+app.use('/api/stripe/*', authMiddleware);
 app.route('/api/billing', billingRoutes);
 app.route('/api/batch-sessions', batchSessions);
 app.route('/api/license', license);

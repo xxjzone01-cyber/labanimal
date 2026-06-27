@@ -11,3 +11,6 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: resolve(__dirname, '../../../.env') });
+
+// 测试环境跳过邮箱验证码
+process.env.SKIP_EMAIL_VERIFICATION = 'true';

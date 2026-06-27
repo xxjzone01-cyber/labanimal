@@ -39,6 +39,9 @@ export async function sendVerificationCode(email: string): Promise<void> {
 
 /** 验证验证码，成功后删除 */
 export function verifyCode(email: string, code: string): boolean {
+  // 测试环境跳过验证码校验
+  if (process.env.SKIP_EMAIL_VERIFICATION === 'true') return true;
+
   const key = email.toLowerCase();
   const entry = codes.get(key);
   if (!entry) return false;

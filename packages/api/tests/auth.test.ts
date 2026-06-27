@@ -9,13 +9,31 @@ describe('T1. 认证模块', () => {
 
   beforeAll(async () => {
     // 清理之前测试遗留的用户，确保不超限
+    const users = await prisma.user.findMany({
+      where: { email: { contains: '@test.lab' } },
+      select: { id: true },
+    });
+    const userIds = users.map((u) => u.id);
+    if (userIds.length > 0) {
+      await prisma.reportSignature.deleteMany({ where: { userId: { in: userIds } } });
+      await prisma.auditLog.deleteMany({ where: { userId: { in: userIds } } });
+    }
     await prisma.user.deleteMany({
       where: { email: { contains: '@test.lab' } },
     });
   });
 
   afterAll(async () => {
-    // 清理本次测试创建的用户
+    // 清理本次测试创建的用户（先删子表再删用户）
+    const users = await prisma.user.findMany({
+      where: { email: { contains: '@test.lab' } },
+      select: { id: true },
+    });
+    const userIds = users.map((u) => u.id);
+    if (userIds.length > 0) {
+      await prisma.reportSignature.deleteMany({ where: { userId: { in: userIds } } });
+      await prisma.auditLog.deleteMany({ where: { userId: { in: userIds } } });
+    }
     await prisma.user.deleteMany({
       where: { email: { contains: '@test.lab' } },
     });
@@ -27,6 +45,7 @@ describe('T1. 认证模块', () => {
       email: testEmail,
       password: 'TestPass123!',
       name: 'Test User',
+      verificationCode: '000000',
     });
     expect(res.status).toBe(201);
     expect(res.data.user.email).toBe(testEmail);
@@ -39,6 +58,7 @@ describe('T1. 认证模块', () => {
       email: testEmail,
       password: 'TestPass123!',
       name: 'Test User 2',
+      verificationCode: '000000',
     });
     expect(res.status).toBe(409);
     expect(res.data.error).toMatch(/already registered/i);
@@ -47,6 +67,7 @@ describe('T1. 认证模块', () => {
   test('T1.3 注册缺字段', async () => {
     const res = await api('POST', '/auth/register', {
       email: 'no-pass@test.lab',
+      verificationCode: '000000',
     });
     expect(res.status).toBe(400);
   });
