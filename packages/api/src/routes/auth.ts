@@ -1,8 +1,9 @@
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { prisma } from '../lib/db.js';
-import { hashPassword, verifyPassword, signToken } from '../lib/auth.js';
+import { hashPassword, verifyPassword, signToken, verifyToken } from '../lib/auth.js';
 import { sendVerificationCode, verifyCode } from '../lib/verification.js';
+import { sendWelcomeEmail, sendPasswordReset } from '../lib/email/send.js';
 import { loginRateLimit, registerRateLimit } from '../middleware/rate-limit.js';
 import { parseBody } from '../middleware/validate.js';
 
@@ -25,6 +26,20 @@ const registerSchema = z.object({
 const loginSchema = z.object({
   email: z.string().email('Invalid email format'),
   password: z.string().min(1, 'Password is required'),
+});
+
+const forgotPasswordSchema = z.object({
+  email: z.string().email('Invalid email format'),
+});
+
+const resetPasswordSchema = z.object({
+  token: z.string().min(1, 'Token is required'),
+  newPassword: z
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[a-z]/, 'Password must contain lowercase letter')
+    .regex(/[A-Z]/, 'Password must contain uppercase letter')
+    .regex(/[0-9]/, 'Password must contain number'),
 });
 
 const auth = new Hono();
@@ -76,6 +91,9 @@ auth.post('/register', registerRateLimit, async (c) => {
 
   const token = signToken({ userId: user.id, email: user.email });
 
+  // fire-and-forget 欢迎邮件
+  sendWelcomeEmail(user.email, user.name);
+
   return c.json({ user, token, labs: [] }, 201);
 });
 
@@ -109,6 +127,54 @@ auth.post('/login', loginRateLimit, async (c) => {
     token,
     labs: user.labs,
   });
+});
+
+// 忘记密码 — 发送重置链接
+auth.post('/forgot-password', async (c) => {
+  const body = parseBody(forgotPasswordSchema, await c.req.json());
+
+  // 不论用户是否存在都返回相同消息（防邮箱枚举）
+  const user = await prisma.user.findUnique({
+    where: { email: body.email },
+    select: { id: true, email: true, name: true },
+  });
+
+  if (user) {
+    const resetToken = signToken(
+      { userId: user.id, email: user.email, purpose: 'password-reset' },
+      '1h',
+    );
+    const appUrl = process.env.APP_URL || 'http://localhost:3000';
+    const resetLink = `${appUrl}/reset-password?token=${resetToken}`;
+    sendPasswordReset(user.email, user.name, resetLink);
+  }
+
+  return c.json({ message: 'If an account with that email exists, a reset link has been sent.' });
+});
+
+// 重置密码 — 验证 token 并更新密码
+auth.post('/reset-password', async (c) => {
+  const body = parseBody(resetPasswordSchema, await c.req.json());
+
+  let payload;
+  try {
+    payload = verifyToken(body.token);
+  } catch {
+    return c.json({ error: 'Invalid or expired reset token' }, 400);
+  }
+
+  if (payload.purpose !== 'password-reset') {
+    return c.json({ error: 'Invalid reset token' }, 400);
+  }
+
+  const passwordHash = await hashPassword(body.newPassword);
+
+  await prisma.user.update({
+    where: { id: payload.userId },
+    data: { passwordHash },
+  });
+
+  return c.json({ message: 'Password has been reset successfully' });
 });
 
 auth.post('/logout', (c) => {

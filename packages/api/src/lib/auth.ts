@@ -19,6 +19,7 @@ if (
 export interface JWTPayload {
   userId: string;
   email: string;
+  purpose?: string;
 }
 
 export function hashPassword(password: string): Promise<string> {
@@ -29,8 +30,8 @@ export function verifyPassword(password: string, hash: string): Promise<boolean>
   return bcrypt.compare(password, hash);
 }
 
-export function signToken(payload: JWTPayload): string {
-  return jwt.sign(payload, SECRET, { expiresIn: EXPIRES_IN });
+export function signToken(payload: JWTPayload, expiresIn?: string): string {
+  return jwt.sign(payload, SECRET, { expiresIn: (expiresIn || EXPIRES_IN) as any });
 }
 
 export function verifyToken(token: string): JWTPayload {
