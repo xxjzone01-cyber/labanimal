@@ -23,6 +23,10 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  
+    .lang-btn { cursor: pointer; user-select: none; }
+    .lang-btn.active { font-weight: 700; color: #2563eb; }
+
   </style>
   <script type="application/ld+json">
   {
@@ -189,7 +193,8 @@
           <a href="/guides" class="text-brand-600 font-semibold text-sm font-medium">Guides</a>
           <a href="/about" class="text-gray-600 hover:text-brand-600 text-sm font-medium">About</a>
           <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">Login</a>
-        </div>
+            <span id="langToggle" class="text-gray-400 text-sm flex items-center gap-1"><span class="lang-btn active" data-lang="en">EN</span><span class="text-gray-300">|</span><span class="lang-btn" data-lang="zh">中文</span></span>
+          </div>
       </div>
     </div>
   </nav>
@@ -564,6 +569,34 @@
       </p>
     </div>
   </footer>
+
+
+  <script>
+    (function() {
+      var lang = localStorage.getItem('lang') || 'en';
+      function setLang(l) {
+        lang = l;
+        localStorage.setItem('lang', l);
+        document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+        document.querySelectorAll('[data-en]').forEach(function(el) {
+          var text = el.getAttribute('data-' + l);
+          if (text) {
+            if (el.tagName === 'TITLE') { document.title = text; }
+            else { el.innerHTML = text.replace(/&#10;/g, '<br>'); }
+          }
+        });
+        document.querySelectorAll('.lang-btn').forEach(function(btn) {
+          btn.classList.toggle('active', btn.getAttribute('data-lang') === l);
+        });
+      }
+      setLang(lang);
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          setLang(this.getAttribute('data-lang'));
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>

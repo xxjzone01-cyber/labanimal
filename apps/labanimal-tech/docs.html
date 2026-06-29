@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>文档 — LabAnimal</title>
-  <meta name="description" content="LabAnimal 文档中心：快速开始、API 参考、部署指南、合规功能说明。">
+  <title data-en="Docs — LabAnimal" data-zh="文档 — LabAnimal">Docs — LabAnimal</title>
+  <meta name="description" content="LabAnimal documentation: quick start, API reference, deployment guide, and compliance features.">
   <link rel="canonical" href="https://labanimal.tech/docs">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -27,6 +27,8 @@
     pre .keyword { color: #c084fc; }
     pre .string { color: #86efac; }
     pre .func { color: #7dd3fc; }
+    .lang-btn { cursor: pointer; user-select: none; }
+    .lang-btn.active { font-weight: 700; color: #2563eb; }
   </style>
   <script type="application/ld+json">
 {
@@ -60,12 +62,17 @@
           <span class="text-xl font-bold text-brand-800">LabAnimal</span>
         </a>
         <div class="hidden md:flex items-center gap-8">
-          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">首页</a>
-          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium">功能</a>
-          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium">定价</a>
-          <a href="/docs" class="text-brand-600 font-semibold text-sm">文档</a>
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Home" data-zh="首页">Home</a>
+          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Features" data-zh="功能">Features</a>
+          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Pricing" data-zh="定价">Pricing</a>
+          <a href="/docs" class="text-brand-600 font-semibold text-sm" data-en="Docs" data-zh="文档">Docs</a>
           <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="text-gray-600 hover:text-brand-600 text-sm font-medium">GitHub</a>
-          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">登录</a>
+          <span id="langToggle" class="text-gray-400 text-sm flex items-center gap-1">
+            <span class="lang-btn active" data-lang="en">EN</span>
+            <span class="text-gray-300">|</span>
+            <span class="lang-btn" data-lang="zh">中文</span>
+          </span>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition" data-en="Login" data-zh="登录">Login</a>
         </div>
       </div>
     </div>
@@ -74,8 +81,8 @@
   <!-- Header -->
   <section class="pt-28 pb-12 px-4 bg-gradient-to-b from-brand-50 to-white">
     <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl font-extrabold text-brand-900 mb-4">文档中心</h1>
-      <p class="text-lg text-gray-500">从安装到生产部署，快速上手 LabAnimal</p>
+      <h1 class="text-4xl font-extrabold text-brand-900 mb-4" data-en="Documentation Center" data-zh="文档中心">Documentation Center</h1>
+      <p class="text-lg text-gray-500" data-en="From installation to production deployment, get started with LabAnimal quickly" data-zh="从安装到生产部署，快速上手 LabAnimal">From installation to production deployment, get started with LabAnimal quickly</p>
     </div>
   </section>
 
@@ -84,19 +91,19 @@
     <div class="max-w-4xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <a href="#quickstart" class="bg-white border border-gray-200 rounded-xl p-5 card-hover text-center">
         <div class="text-2xl mb-2">🚀</div>
-        <div class="font-semibold text-sm">快速开始</div>
+        <div class="font-semibold text-sm" data-en="Quick Start" data-zh="快速开始">Quick Start</div>
       </a>
       <a href="#api" class="bg-white border border-gray-200 rounded-xl p-5 card-hover text-center">
         <div class="text-2xl mb-2">📡</div>
-        <div class="font-semibold text-sm">API 参考</div>
+        <div class="font-semibold text-sm" data-en="API Reference" data-zh="API 参考">API Reference</div>
       </a>
       <a href="#compliance" class="bg-white border border-gray-200 rounded-xl p-5 card-hover text-center">
         <div class="text-2xl mb-2">✅</div>
-        <div class="font-semibold text-sm">合规模块</div>
+        <div class="font-semibold text-sm" data-en="Compliance" data-zh="合规模块">Compliance</div>
       </a>
       <a href="#deployment" class="bg-white border border-gray-200 rounded-xl p-5 card-hover text-center">
         <div class="text-2xl mb-2">🏗️</div>
-        <div class="font-semibold text-sm">部署指南</div>
+        <div class="font-semibold text-sm" data-en="Deployment Guide" data-zh="部署指南">Deployment Guide</div>
       </a>
     </div>
   </section>
@@ -104,51 +111,51 @@
   <!-- Quick Start -->
   <section id="quickstart" class="py-16 px-4 border-t border-gray-100">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold mb-8">🚀 快速开始</h2>
+      <h2 class="text-2xl font-bold mb-8" data-en="🚀 Quick Start" data-zh="🚀 快速开始">🚀 Quick Start</h2>
 
-      <h3 class="text-lg font-semibold mb-4">环境要求</h3>
+      <h3 class="text-lg font-semibold mb-4" data-en="Prerequisites" data-zh="环境要求">Prerequisites</h3>
       <ul class="list-disc list-inside text-gray-600 mb-6 space-y-1">
         <li>Node.js ≥ 20</li>
         <li>pnpm ≥ 9</li>
         <li>PostgreSQL ≥ 15</li>
       </ul>
 
-      <h3 class="text-lg font-semibold mb-4">1. 克隆仓库</h3>
-      <pre><span class="comment"># 克隆项目</span>
+      <h3 class="text-lg font-semibold mb-4" data-en="1. Clone Repository" data-zh="1. 克隆仓库">1. Clone Repository</h3>
+      <pre><span class="comment" data-en="# Clone the project" data-zh="# 克隆项目"># Clone the project</span>
 git clone https://github.com/xxjzone01-cyber/labanimal.git
 cd labanimal
 
-<span class="comment"># 安装依赖</span>
+<span class="comment" data-en="# Install dependencies" data-zh="# 安装依赖"># Install dependencies</span>
 pnpm install</pre>
 
-      <h3 class="text-lg font-semibold mb-4 mt-8">2. 配置数据库</h3>
-      <pre><span class="comment"># 复制环境变量模板</span>
+      <h3 class="text-lg font-semibold mb-4 mt-8" data-en="2. Configure Database" data-zh="2. 配置数据库">2. Configure Database</h3>
+      <pre><span class="comment" data-en="# Copy environment variable template" data-zh="# 复制环境变量模板"># Copy environment variable template</span>
 cp packages/api/.env.example packages/api/.env
 
-<span class="comment"># 编辑 .env，设置 PostgreSQL 连接串</span>
+<span class="comment" data-en="# Edit .env, set PostgreSQL connection string" data-zh="# 编辑 .env，设置 PostgreSQL 连接串"># Edit .env, set PostgreSQL connection string</span>
 <span class="comment"># DATABASE_URL="postgresql://user:password@localhost:5432/labanimal"</span>
 
-<span class="comment"># 运行数据库迁移</span>
+<span class="comment" data-en="# Run database migration" data-zh="# 运行数据库迁移"># Run database migration</span>
 pnpm <span class="keyword">--filter</span> @labanimal/db push
 
-<span class="comment"># 生成 Prisma Client</span>
+<span class="comment" data-en="# Generate Prisma Client" data-zh="# 生成 Prisma Client"># Generate Prisma Client</span>
 pnpm <span class="keyword">--filter</span> @labanimal/db generate
 
-<span class="comment"># 填充示例数据（可选）</span>
+<span class="comment" data-en="# Seed sample data (optional)" data-zh="# 填充示例数据（可选）"># Seed sample data (optional)</span>
 pnpm <span class="keyword">--filter</span> @labanimal/db seed</pre>
 
-      <h3 class="text-lg font-semibold mb-4 mt-8">3. 启动开发服务器</h3>
-      <pre><span class="comment"># 同时启动 API + 前端（Turborepo）</span>
+      <h3 class="text-lg font-semibold mb-4 mt-8" data-en="3. Start Dev Server" data-zh="3. 启动开发服务器">3. Start Dev Server</h3>
+      <pre><span class="comment" data-en="# Start API + frontend simultaneously (Turborepo)" data-zh="# 同时启动 API + 前端（Turborepo）"># Start API + frontend simultaneously (Turborepo)</span>
 pnpm dev
 
 <span class="comment"># API: http://localhost:3001</span>
-<span class="comment"># 前端: http://localhost:5173</span></pre>
+<span class="comment" data-en="# Frontend: http://localhost:5173" data-zh="# 前端: http://localhost:5173"># Frontend: http://localhost:5173</span></pre>
 
-      <h3 class="text-lg font-semibold mb-4 mt-8">4. 运行测试</h3>
-      <pre><span class="comment"># 运行全部测试（103 个用例）</span>
+      <h3 class="text-lg font-semibold mb-4 mt-8" data-en="4. Run Tests" data-zh="4. 运行测试">4. Run Tests</h3>
+      <pre><span class="comment" data-en="# Run all tests (103 test cases)" data-zh="# 运行全部测试（103 个用例）"># Run all tests (103 test cases)</span>
 pnpm <span class="keyword">--filter</span> @labanimal/api test
 
-<span class="comment"># 监听模式</span>
+<span class="comment" data-en="# Watch mode" data-zh="# 监听模式"># Watch mode</span>
 pnpm <span class="keyword">--filter</span> @labanimal/api test:watch</pre>
     </div>
   </section>
@@ -156,83 +163,83 @@ pnpm <span class="keyword">--filter</span> @labanimal/api test:watch</pre>
   <!-- API Reference -->
   <section id="api" class="py-16 px-4 bg-gray-50 border-t border-gray-100">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold mb-8">📡 API 参考</h2>
-      <p class="text-gray-500 mb-8">API 基础路径：<code class="bg-gray-100 px-2 py-1 rounded text-sm">/api</code>，所有端点需要 JWT Bearer Token（除注册/登录外）。</p>
+      <h2 class="text-2xl font-bold mb-8" data-en="📡 API Reference" data-zh="📡 API 参考">📡 API Reference</h2>
+      <p class="text-gray-500 mb-8" data-en='API base path: <code class="bg-gray-100 px-2 py-1 rounded text-sm">/api</code>, all endpoints require JWT Bearer Token (except register/login).' data-zh='API 基础路径：<code class="bg-gray-100 px-2 py-1 rounded text-sm">/api</code>，所有端点需要 JWT Bearer Token（除注册/登录外）。'>API base path: <code class="bg-gray-100 px-2 py-1 rounded text-sm">/api</code>, all endpoints require JWT Bearer Token (except register/login).</p>
 
-      <h3 class="text-lg font-semibold mb-4">认证</h3>
+      <h3 class="text-lg font-semibold mb-4" data-en="Authentication" data-zh="认证">Authentication</h3>
       <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-6">
         <table class="w-full text-sm">
-          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold">方法</th><th class="px-4 py-3 font-semibold">路径</th><th class="px-4 py-3 font-semibold">说明</th></tr></thead>
+          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold" data-en="Method" data-zh="方法">Method</th><th class="px-4 py-3 font-semibold" data-en="Path" data-zh="路径">Path</th><th class="px-4 py-3 font-semibold" data-en="Description" data-zh="说明">Description</th></tr></thead>
           <tbody class="divide-y divide-gray-100">
-            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/auth/send-code</code></td><td class="px-4 py-3 text-gray-500">发送邮箱验证码</td></tr>
-            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/auth/register</code></td><td class="px-4 py-3 text-gray-500">注册（需要验证码）</td></tr>
-            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/auth/login</code></td><td class="px-4 py-3 text-gray-500">登录，返回 JWT</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/auth/send-code</code></td><td class="px-4 py-3 text-gray-500" data-en="Send email verification code" data-zh="发送邮箱验证码">Send email verification code</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/auth/register</code></td><td class="px-4 py-3 text-gray-500" data-en="Register (requires verification code)" data-zh="注册（需要验证码）">Register (requires verification code)</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/auth/login</code></td><td class="px-4 py-3 text-gray-500" data-en="Login, returns JWT" data-zh="登录，返回 JWT">Login, returns JWT</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h3 class="text-lg font-semibold mb-4">动物管理</h3>
+      <h3 class="text-lg font-semibold mb-4" data-en="Animal Management" data-zh="动物管理">Animal Management</h3>
       <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-6">
         <table class="w-full text-sm">
-          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold">方法</th><th class="px-4 py-3 font-semibold">路径</th><th class="px-4 py-3 font-semibold">说明</th></tr></thead>
+          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold" data-en="Method" data-zh="方法">Method</th><th class="px-4 py-3 font-semibold" data-en="Path" data-zh="路径">Path</th><th class="px-4 py-3 font-semibold" data-en="Description" data-zh="说明">Description</th></tr></thead>
           <tbody class="divide-y divide-gray-100">
-            <tr><td class="px-4 py-3"><code class="text-green-600">GET</code></td><td class="px-4 py-3"><code>/api/animals?labId=xxx</code></td><td class="px-4 py-3 text-gray-500">获取动物列表</td></tr>
-            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/animals</code></td><td class="px-4 py-3 text-gray-500">创建动物</td></tr>
-            <tr><td class="px-4 py-3"><code class="text-orange-600">PUT</code></td><td class="px-4 py-3"><code>/api/animals/:id</code></td><td class="px-4 py-3 text-gray-500">更新动物</td></tr>
-            <tr><td class="px-4 py-3"><code class="text-red-600">DELETE</code></td><td class="px-4 py-3"><code>/api/animals/:id</code></td><td class="px-4 py-3 text-gray-500">删除动物</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-green-600">GET</code></td><td class="px-4 py-3"><code>/api/animals?labId=xxx</code></td><td class="px-4 py-3 text-gray-500" data-en="Get animal list" data-zh="获取动物列表">Get animal list</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/animals</code></td><td class="px-4 py-3 text-gray-500" data-en="Create animal" data-zh="创建动物">Create animal</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-orange-600">PUT</code></td><td class="px-4 py-3"><code>/api/animals/:id</code></td><td class="px-4 py-3 text-gray-500" data-en="Update animal" data-zh="更新动物">Update animal</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-red-600">DELETE</code></td><td class="px-4 py-3"><code>/api/animals/:id</code></td><td class="px-4 py-3 text-gray-500" data-en="Delete animal" data-zh="删除动物">Delete animal</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h3 class="text-lg font-semibold mb-4">健康记录</h3>
+      <h3 class="text-lg font-semibold mb-4" data-en="Health Records" data-zh="健康记录">Health Records</h3>
       <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-6">
         <table class="w-full text-sm">
-          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold">方法</th><th class="px-4 py-3 font-semibold">路径</th><th class="px-4 py-3 font-semibold">说明</th></tr></thead>
+          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold" data-en="Method" data-zh="方法">Method</th><th class="px-4 py-3 font-semibold" data-en="Path" data-zh="路径">Path</th><th class="px-4 py-3 font-semibold" data-en="Description" data-zh="说明">Description</th></tr></thead>
           <tbody class="divide-y divide-gray-100">
-            <tr><td class="px-4 py-3"><code class="text-green-600">GET</code></td><td class="px-4 py-3"><code>/api/health-records?labId=xxx</code></td><td class="px-4 py-3 text-gray-500">获取健康记录</td></tr>
-            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/health-records</code></td><td class="px-4 py-3 text-gray-500">创建健康记录</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-green-600">GET</code></td><td class="px-4 py-3"><code>/api/health-records?labId=xxx</code></td><td class="px-4 py-3 text-gray-500" data-en="Get health records" data-zh="获取健康记录">Get health records</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/health-records</code></td><td class="px-4 py-3 text-gray-500" data-en="Create health record" data-zh="创建健康记录">Create health record</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h3 class="text-lg font-semibold mb-4">IACUC 协议</h3>
+      <h3 class="text-lg font-semibold mb-4" data-en="IACUC Protocols" data-zh="IACUC 协议">IACUC Protocols</h3>
       <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-6">
         <table class="w-full text-sm">
-          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold">方法</th><th class="px-4 py-3 font-semibold">路径</th><th class="px-4 py-3 font-semibold">说明</th></tr></thead>
+          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold" data-en="Method" data-zh="方法">Method</th><th class="px-4 py-3 font-semibold" data-en="Path" data-zh="路径">Path</th><th class="px-4 py-3 font-semibold" data-en="Description" data-zh="说明">Description</th></tr></thead>
           <tbody class="divide-y divide-gray-100">
-            <tr><td class="px-4 py-3"><code class="text-green-600">GET</code></td><td class="px-4 py-3"><code>/api/protocols?labId=xxx</code></td><td class="px-4 py-3 text-gray-500">获取协议列表</td></tr>
-            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/protocols</code></td><td class="px-4 py-3 text-gray-500">创建协议</td></tr>
-            <tr><td class="px-4 py-3"><code class="text-orange-600">PUT</code></td><td class="px-4 py-3"><code>/api/protocols/:id</code></td><td class="px-4 py-3 text-gray-500">更新协议</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-green-600">GET</code></td><td class="px-4 py-3"><code>/api/protocols?labId=xxx</code></td><td class="px-4 py-3 text-gray-500" data-en="Get protocol list" data-zh="获取协议列表">Get protocol list</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/protocols</code></td><td class="px-4 py-3 text-gray-500" data-en="Create protocol" data-zh="创建协议">Create protocol</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-orange-600">PUT</code></td><td class="px-4 py-3"><code>/api/protocols/:id</code></td><td class="px-4 py-3 text-gray-500" data-en="Update protocol" data-zh="更新协议">Update protocol</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h3 class="text-lg font-semibold mb-4">报告签名</h3>
+      <h3 class="text-lg font-semibold mb-4" data-en="Report Signing" data-zh="报告签名">Report Signing</h3>
       <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-6">
         <table class="w-full text-sm">
-          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold">方法</th><th class="px-4 py-3 font-semibold">路径</th><th class="px-4 py-3 font-semibold">说明</th></tr></thead>
+          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold" data-en="Method" data-zh="方法">Method</th><th class="px-4 py-3 font-semibold" data-en="Path" data-zh="路径">Path</th><th class="px-4 py-3 font-semibold" data-en="Description" data-zh="说明">Description</th></tr></thead>
           <tbody class="divide-y divide-gray-100">
-            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/license/sign</code></td><td class="px-4 py-3 text-gray-500">RSA 签名报告</td></tr>
-            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/license/verify</code></td><td class="px-4 py-3 text-gray-500">验证签名</td></tr>
-            <tr><td class="px-4 py-3"><code class="text-green-600">GET</code></td><td class="px-4 py-3"><code>/api/license/verify/:hash</code></td><td class="px-4 py-3 text-gray-500">通过哈希公开验证</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/license/sign</code></td><td class="px-4 py-3 text-gray-500" data-en="RSA sign report" data-zh="RSA 签名报告">RSA sign report</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-blue-600">POST</code></td><td class="px-4 py-3"><code>/api/license/verify</code></td><td class="px-4 py-3 text-gray-500" data-en="Verify signature" data-zh="验证签名">Verify signature</td></tr>
+            <tr><td class="px-4 py-3"><code class="text-green-600">GET</code></td><td class="px-4 py-3"><code>/api/license/verify/:hash</code></td><td class="px-4 py-3 text-gray-500" data-en="Public verification via hash" data-zh="通过哈希公开验证">Public verification via hash</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h3 class="text-lg font-semibold mb-4">其他模块</h3>
+      <h3 class="text-lg font-semibold mb-4" data-en="Other Modules" data-zh="其他模块">Other Modules</h3>
       <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <table class="w-full text-sm">
-          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold">模块</th><th class="px-4 py-3 font-semibold">路径前缀</th><th class="px-4 py-3 font-semibold">说明</th></tr></thead>
+          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold" data-en="Module" data-zh="模块">Module</th><th class="px-4 py-3 font-semibold" data-en="Path Prefix" data-zh="路径前缀">Path Prefix</th><th class="px-4 py-3 font-semibold" data-en="Description" data-zh="说明">Description</th></tr></thead>
           <tbody class="divide-y divide-gray-100">
-            <tr><td class="px-4 py-3 font-medium">房间/笼位</td><td class="px-4 py-3"><code>/api/rooms, /api/racks, /api/cages</code></td><td class="px-4 py-3 text-gray-500">设施管理</td></tr>
-            <tr><td class="px-4 py-3 font-medium">繁殖</td><td class="px-4 py-3"><code>/api/breedings</code></td><td class="px-4 py-3 text-gray-500">繁殖记录 + 断奶</td></tr>
-            <tr><td class="px-4 py-3 font-medium">死亡报告</td><td class="px-4 py-3"><code>/api/death-reports</code></td><td class="px-4 py-3 text-gray-500">死亡记录</td></tr>
-            <tr><td class="px-4 py-3 font-medium">药物</td><td class="px-4 py-3"><code>/api/medications</code></td><td class="px-4 py-3 text-gray-500">用药记录</td></tr>
-            <tr><td class="px-4 py-3 font-medium">审计日志</td><td class="px-4 py-3"><code>/api/audit-log</code></td><td class="px-4 py-3 text-gray-500">SHA-256 哈希链审计</td></tr>
-            <tr><td class="px-4 py-3 font-medium">电子签名</td><td class="px-4 py-3"><code>/api/electronic-signatures</code></td><td class="px-4 py-3 text-gray-500">21 CFR Part 11 签名</td></tr>
-            <tr><td class="px-4 py-3 font-medium">培训</td><td class="px-4 py-3"><code>/api/trainings</code></td><td class="px-4 py-3 text-gray-500">人员培训记录</td></tr>
-            <tr><td class="px-4 py-3 font-medium">API Keys</td><td class="px-4 py-3"><code>/api/api-keys</code></td><td class="px-4 py-3 text-gray-500">程序化访问密钥</td></tr>
-            <tr><td class="px-4 py-3 font-medium">订阅</td><td class="px-4 py-3"><code>/api/subscriptions</code></td><td class="px-4 py-3 text-gray-500">Stripe / PayPal 订阅</td></tr>
+            <tr><td class="px-4 py-3 font-medium" data-en="Rooms / Cages" data-zh="房间/笼位">Rooms / Cages</td><td class="px-4 py-3"><code>/api/rooms, /api/racks, /api/cages</code></td><td class="px-4 py-3 text-gray-500" data-en="Facility management" data-zh="设施管理">Facility management</td></tr>
+            <tr><td class="px-4 py-3 font-medium" data-en="Breeding" data-zh="繁殖">Breeding</td><td class="px-4 py-3"><code>/api/breedings</code></td><td class="px-4 py-3 text-gray-500" data-en="Breeding records + weaning" data-zh="繁殖记录 + 断奶">Breeding records + weaning</td></tr>
+            <tr><td class="px-4 py-3 font-medium" data-en="Death Reports" data-zh="死亡报告">Death Reports</td><td class="px-4 py-3"><code>/api/death-reports</code></td><td class="px-4 py-3 text-gray-500" data-en="Death records" data-zh="死亡记录">Death records</td></tr>
+            <tr><td class="px-4 py-3 font-medium" data-en="Medications" data-zh="药物">Medications</td><td class="px-4 py-3"><code>/api/medications</code></td><td class="px-4 py-3 text-gray-500" data-en="Medication records" data-zh="用药记录">Medication records</td></tr>
+            <tr><td class="px-4 py-3 font-medium" data-en="Audit Log" data-zh="审计日志">Audit Log</td><td class="px-4 py-3"><code>/api/audit-log</code></td><td class="px-4 py-3 text-gray-500" data-en="SHA-256 hash chain audit" data-zh="SHA-256 哈希链审计">SHA-256 hash chain audit</td></tr>
+            <tr><td class="px-4 py-3 font-medium" data-en="Electronic Signatures" data-zh="电子签名">Electronic Signatures</td><td class="px-4 py-3"><code>/api/electronic-signatures</code></td><td class="px-4 py-3 text-gray-500" data-en="21 CFR Part 11 signatures" data-zh="21 CFR Part 11 签名">21 CFR Part 11 signatures</td></tr>
+            <tr><td class="px-4 py-3 font-medium" data-en="Training" data-zh="培训">Training</td><td class="px-4 py-3"><code>/api/trainings</code></td><td class="px-4 py-3 text-gray-500" data-en="Personnel training records" data-zh="人员培训记录">Personnel training records</td></tr>
+            <tr><td class="px-4 py-3 font-medium">API Keys</td><td class="px-4 py-3"><code>/api/api-keys</code></td><td class="px-4 py-3 text-gray-500" data-en="Programmatic access keys" data-zh="程序化访问密钥">Programmatic access keys</td></tr>
+            <tr><td class="px-4 py-3 font-medium" data-en="Subscriptions" data-zh="订阅">Subscriptions</td><td class="px-4 py-3"><code>/api/subscriptions</code></td><td class="px-4 py-3 text-gray-500" data-en="Stripe / PayPal subscriptions" data-zh="Stripe / PayPal 订阅">Stripe / PayPal subscriptions</td></tr>
           </tbody>
         </table>
       </div>
@@ -242,46 +249,46 @@ pnpm <span class="keyword">--filter</span> @labanimal/api test:watch</pre>
   <!-- Compliance -->
   <section id="compliance" class="py-16 px-4 border-t border-gray-100">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold mb-8">✅ 合规模块</h2>
+      <h2 class="text-2xl font-bold mb-8" data-en="✅ Compliance Module" data-zh="✅ 合规模块">✅ Compliance Module</h2>
 
       <div class="grid md:grid-cols-2 gap-6">
         <div class="bg-white border border-gray-200 rounded-xl p-6">
-          <h3 class="font-semibold text-lg mb-3">AVMA 安乐死验证</h3>
-          <p class="text-gray-500 text-sm mb-4">内置 AVMA Guidelines 2020 规则引擎，按物种、年龄、设备自动匹配合规安乐死方法。</p>
+          <h3 class="font-semibold text-lg mb-3" data-en="AVMA Euthanasia Validation" data-zh="AVMA 安乐死验证">AVMA Euthanasia Validation</h3>
+          <p class="text-gray-500 text-sm mb-4" data-en="Built-in AVMA Guidelines 2020 rule engine, automatically matches compliant euthanasia methods by species, age, and equipment." data-zh="内置 AVMA Guidelines 2020 规则引擎，按物种、年龄、设备自动匹配合规安乐死方法。">Built-in AVMA Guidelines 2020 rule engine, automatically matches compliant euthanasia methods by species, age, and equipment.</p>
           <ul class="text-sm text-gray-600 space-y-1">
-            <li>• 合规方法自动推荐</li>
-            <li>• 不合规方法自动阻断</li>
-            <li>• 见证人签名确认</li>
+            <li data-en="• Auto-recommend compliant methods" data-zh="• 合规方法自动推荐">• Auto-recommend compliant methods</li>
+            <li data-en="• Auto-block non-compliant methods" data-zh="• 不合规方法自动阻断">• Auto-block non-compliant methods</li>
+            <li data-en="• Witness signature confirmation" data-zh="• 见证人签名确认">• Witness signature confirmation</li>
           </ul>
         </div>
 
         <div class="bg-white border border-gray-200 rounded-xl p-6">
-          <h3 class="font-semibold text-lg mb-3">动态笼位密度</h3>
-          <p class="text-gray-500 text-sm mb-4">基于 NRC Guide 2011 标准，实时计算最大饲养密度。</p>
+          <h3 class="font-semibold text-lg mb-3" data-en="Dynamic Cage Density" data-zh="动态笼位密度">Dynamic Cage Density</h3>
+          <p class="text-gray-500 text-sm mb-4" data-en="Based on NRC Guide 2011 standard, real-time calculation of maximum housing density." data-zh="基于 NRC Guide 2011 标准，实时计算最大饲养密度。">Based on NRC Guide 2011 standard, real-time calculation of maximum housing density.</p>
           <ul class="text-sm text-gray-600 space-y-1">
-            <li>• 支持小鼠/大鼠/仓鼠/豚鼠/兔</li>
-            <li>• 超限自动锁定笼位</li>
-            <li>• 体重 + 笼位面积实时计算</li>
+            <li data-en="• Supports mouse/rat/hamster/guinea pig/rabbit" data-zh="• 支持小鼠/大鼠/仓鼠/豚鼠/兔">• Supports mouse/rat/hamster/guinea pig/rabbit</li>
+            <li data-en="• Auto-lock cages when limit exceeded" data-zh="• 超限自动锁定笼位">• Auto-lock cages when limit exceeded</li>
+            <li data-en="• Real-time weight + cage area calculation" data-zh="• 体重 + 笼位面积实时计算">• Real-time weight + cage area calculation</li>
           </ul>
         </div>
 
         <div class="bg-white border border-gray-200 rounded-xl p-6">
-          <h3 class="font-semibold text-lg mb-3">21 CFR Part 11 电子签名</h3>
-          <p class="text-gray-500 text-sm mb-4">满足 FDA 电子记录和电子签名法规要求。</p>
+          <h3 class="font-semibold text-lg mb-3" data-en="21 CFR Part 11 Electronic Signatures" data-zh="21 CFR Part 11 电子签名">21 CFR Part 11 Electronic Signatures</h3>
+          <p class="text-gray-500 text-sm mb-4" data-en="Meets FDA electronic records and electronic signature regulatory requirements." data-zh="满足 FDA 电子记录和电子签名法规要求。">Meets FDA electronic records and electronic signature regulatory requirements.</p>
           <ul class="text-sm text-gray-600 space-y-1">
-            <li>• SHA-256 哈希链审计追踪</li>
-            <li>• 签名含义声明</li>
-            <li>• 签名不可篡改</li>
+            <li data-en="• SHA-256 hash chain audit trail" data-zh="• SHA-256 哈希链审计追踪">• SHA-256 hash chain audit trail</li>
+            <li data-en="• Signature meaning declaration" data-zh="• 签名含义声明">• Signature meaning declaration</li>
+            <li data-en="• Tamper-proof signatures" data-zh="• 签名不可篡改">• Tamper-proof signatures</li>
           </ul>
         </div>
 
         <div class="bg-white border border-gray-200 rounded-xl p-6">
-          <h3 class="font-semibold text-lg mb-3">AAALAC 审计准备</h3>
-          <p class="text-gray-500 text-sm mb-4">一键生成 AAALAC 认证所需报告。</p>
+          <h3 class="font-semibold text-lg mb-3" data-en="AAALAC Audit Preparation" data-zh="AAALAC 审计准备">AAALAC Audit Preparation</h3>
+          <p class="text-gray-500 text-sm mb-4" data-en="One-click generation of reports required for AAALAC certification." data-zh="一键生成 AAALAC 认证所需报告。">One-click generation of reports required for AAALAC certification.</p>
           <ul class="text-sm text-gray-600 space-y-1">
-            <li>• 动物使用年度报告</li>
-            <li>• 死亡率统计</li>
-            <li>• 协议合规率</li>
+            <li data-en="• Annual animal use report" data-zh="• 动物使用年度报告">• Annual animal use report</li>
+            <li data-en="• Mortality statistics" data-zh="• 死亡率统计">• Mortality statistics</li>
+            <li data-en="• Protocol compliance rate" data-zh="• 协议合规率">• Protocol compliance rate</li>
           </ul>
         </div>
       </div>
@@ -291,50 +298,50 @@ pnpm <span class="keyword">--filter</span> @labanimal/api test:watch</pre>
   <!-- Deployment -->
   <section id="deployment" class="py-16 px-4 bg-gray-50 border-t border-gray-100">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold mb-8">🏗️ 部署指南</h2>
+      <h2 class="text-2xl font-bold mb-8" data-en="🏗️ Deployment Guide" data-zh="🏗️ 部署指南">🏗️ Deployment Guide</h2>
 
-      <h3 class="text-lg font-semibold mb-4">选项 A：SaaS（推荐）</h3>
+      <h3 class="text-lg font-semibold mb-4" data-en="Option A: SaaS (Recommended)" data-zh="选项 A：SaaS（推荐）">Option A: SaaS (Recommended)</h3>
       <div class="bg-white border border-gray-200 rounded-xl p-6 mb-6">
-        <p class="text-gray-600 mb-4">直接使用 <a href="https://labanimal.cloud" class="text-brand-600 hover:underline">labanimal.cloud</a>，无需自行部署。</p>
+        <p class="text-gray-600 mb-4" data-en='Use <a href="https://labanimal.cloud" class="text-brand-600 hover:underline">labanimal.cloud</a> directly, no need to deploy yourself.' data-zh='直接使用 <a href="https://labanimal.cloud" class="text-brand-600 hover:underline">labanimal.cloud</a>，无需自行部署。'>Use <a href="https://labanimal.cloud" class="text-brand-600 hover:underline">labanimal.cloud</a> directly, no need to deploy yourself.</p>
         <ol class="list-decimal list-inside text-gray-600 space-y-2">
-          <li>访问 <a href="https://labanimal.cloud/register" class="text-brand-600 hover:underline">labanimal.cloud/register</a></li>
-          <li>邮箱验证注册</li>
-          <li>选择套餐（Academic Free 永久免费）</li>
-          <li>创建实验室，开始使用</li>
+          <li data-en='Visit <a href="https://labanimal.cloud/register" class="text-brand-600 hover:underline">labanimal.cloud/register</a>' data-zh='访问 <a href="https://labanimal.cloud/register" class="text-brand-600 hover:underline">labanimal.cloud/register</a>'>Visit <a href="https://labanimal.cloud/register" class="text-brand-600 hover:underline">labanimal.cloud/register</a></li>
+          <li data-en="Register with email verification" data-zh="邮箱验证注册">Register with email verification</li>
+          <li data-en="Choose a plan (Academic Free is forever free)" data-zh="选择套餐（Academic Free 永久免费）">Choose a plan (Academic Free is forever free)</li>
+          <li data-en="Create a lab and start using" data-zh="创建实验室，开始使用">Create a lab and start using</li>
         </ol>
       </div>
 
-      <h3 class="text-lg font-semibold mb-4">选项 B：自行部署</h3>
+      <h3 class="text-lg font-semibold mb-4" data-en="Option B: Self-Deploy" data-zh="选项 B：自行部署">Option B: Self-Deploy</h3>
       <div class="bg-white border border-gray-200 rounded-xl p-6 mb-6">
-        <pre><span class="comment"># 1. 克隆并安装</span>
+        <pre><span class="comment" data-en="# 1. Clone and install" data-zh="# 1. 克隆并安装"># 1. Clone and install</span>
 git clone https://github.com/xxjzone01-cyber/labanimal.git
 cd labanimal && pnpm install
 
-<span class="comment"># 2. 构建</span>
+<span class="comment" data-en="# 2. Build" data-zh="# 2. 构建"># 2. Build</span>
 pnpm build
 
-<span class="comment"># 3. 配置环境变量</span>
+<span class="comment" data-en="# 3. Configure environment variables" data-zh="# 3. 配置环境变量"># 3. Configure environment variables</span>
 cp packages/api/.env.example packages/api/.env
-<span class="comment"># 编辑 .env 设置 DATABASE_URL、AUTH_SECRET 等</span>
+<span class="comment" data-en="# Edit .env to set DATABASE_URL, AUTH_SECRET, etc." data-zh="# 编辑 .env 设置 DATABASE_URL、AUTH_SECRET 等"># Edit .env to set DATABASE_URL, AUTH_SECRET, etc.</span>
 
-<span class="comment"># 4. 运行数据库迁移</span>
+<span class="comment" data-en="# 4. Run database migration" data-zh="# 4. 运行数据库迁移"># 4. Run database migration</span>
 pnpm <span class="keyword">--filter</span> @labanimal/db push
 pnpm <span class="keyword">--filter</span> @labanimal/db generate
 
-<span class="comment"># 5. 启动 API</span>
+<span class="comment" data-en="# 5. Start API" data-zh="# 5. 启动 API"># 5. Start API</span>
 cd packages/api && node dist/index.js
 
-<span class="comment"># 6. 部署前端（packages/app/dist）到任意静态托管</span></pre>
+<span class="comment" data-en="# 6. Deploy frontend (packages/app/dist) to any static hosting" data-zh="# 6. 部署前端（packages/app/dist）到任意静态托管"># 6. Deploy frontend (packages/app/dist) to any static hosting</span></pre>
       </div>
 
-      <h3 class="text-lg font-semibold mb-4">选项 C：私有部署（Enterprise）</h3>
+      <h3 class="text-lg font-semibold mb-4" data-en="Option C: Private Deployment (Enterprise)" data-zh="选项 C：私有部署（Enterprise）">Option C: Private Deployment (Enterprise)</h3>
       <div class="bg-white border border-gray-200 rounded-xl p-6">
-        <p class="text-gray-600 mb-4">适合需要完全数据控制的机构，$5,000 起（一次性付费）。</p>
+        <p class="text-gray-600 mb-4" data-en="For organizations needing full data control, starting at $5,000 (one-time payment)." data-zh="适合需要完全数据控制的机构，$5,000 起（一次性付费）。">For organizations needing full data control, starting at $5,000 (one-time payment).</p>
         <ul class="list-disc list-inside text-gray-600 space-y-2">
-          <li>离线授权码，无需联网验证</li>
-          <li>30 天宽限期</li>
-          <li>包含安装支持</li>
-          <li><a href="/enterprise-offline-purchase" class="text-brand-600 hover:underline">查看离线授权购买页 →</a></li>
+          <li data-en="Offline license code, no internet verification required" data-zh="离线授权码，无需联网验证">Offline license code, no internet verification required</li>
+          <li data-en="30-day grace period" data-zh="30 天宽限期">30-day grace period</li>
+          <li data-en="Includes installation support" data-zh="包含安装支持">Includes installation support</li>
+          <li><a href="/enterprise-offline-purchase" class="text-brand-600 hover:underline" data-en="View offline license purchase page →" data-zh="查看离线授权购买页 →">View offline license purchase page →</a></li>
         </ul>
       </div>
     </div>
@@ -343,18 +350,18 @@ cd packages/api && node dist/index.js
   <!-- Environment Variables -->
   <section class="py-16 px-4 border-t border-gray-100">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold mb-8">🔧 环境变量</h2>
+      <h2 class="text-2xl font-bold mb-8" data-en="🔧 Environment Variables" data-zh="🔧 环境变量">🔧 Environment Variables</h2>
       <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <table class="w-full text-sm">
-          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold">变量</th><th class="px-4 py-3 font-semibold">必填</th><th class="px-4 py-3 font-semibold">说明</th></tr></thead>
+          <thead class="bg-gray-50"><tr class="text-left"><th class="px-4 py-3 font-semibold" data-en="Variable" data-zh="变量">Variable</th><th class="px-4 py-3 font-semibold" data-en="Required" data-zh="必填">Required</th><th class="px-4 py-3 font-semibold" data-en="Description" data-zh="说明">Description</th></tr></thead>
           <tbody class="divide-y divide-gray-100">
-            <tr><td class="px-4 py-3"><code>DATABASE_URL</code></td><td class="px-4 py-3">是</td><td class="px-4 py-3 text-gray-500">PostgreSQL 连接串</td></tr>
-            <tr><td class="px-4 py-3"><code>AUTH_SECRET</code></td><td class="px-4 py-3">生产环境必填</td><td class="px-4 py-3 text-gray-500">JWT 签名密钥（≥32 字符）</td></tr>
-            <tr><td class="px-4 py-3"><code>PORT</code></td><td class="px-4 py-3">否</td><td class="px-4 py-3 text-gray-500">API 端口，默认 3001</td></tr>
-            <tr><td class="px-4 py-3"><code>CORS_ORIGIN</code></td><td class="px-4 py-3">生产环境必填</td><td class="px-4 py-3 text-gray-500">允许的前端域名</td></tr>
-            <tr><td class="px-4 py-3"><code>BREVO_API_KEY</code></td><td class="px-4 py-3">是</td><td class="px-4 py-3 text-gray-500">Brevo 邮件服务密钥</td></tr>
-            <tr><td class="px-4 py-3"><code>LICENSE_PRIVATE_KEY</code></td><td class="px-4 py-3">否</td><td class="px-4 py-3 text-gray-500">RSA 私钥（报告签名用）</td></tr>
-            <tr><td class="px-4 py-3"><code>LICENSE_PUBLIC_KEY</code></td><td class="px-4 py-3">否</td><td class="px-4 py-3 text-gray-500">RSA 公钥（签名验证用）</td></tr>
+            <tr><td class="px-4 py-3"><code>DATABASE_URL</code></td><td class="px-4 py-3" data-en="Yes" data-zh="是">Yes</td><td class="px-4 py-3 text-gray-500" data-en="PostgreSQL connection string" data-zh="PostgreSQL 连接串">PostgreSQL connection string</td></tr>
+            <tr><td class="px-4 py-3"><code>AUTH_SECRET</code></td><td class="px-4 py-3" data-en="Required in production" data-zh="生产环境必填">Required in production</td><td class="px-4 py-3 text-gray-500" data-en="JWT signing key (≥32 characters)" data-zh="JWT 签名密钥（≥32 字符）">JWT signing key (≥32 characters)</td></tr>
+            <tr><td class="px-4 py-3"><code>PORT</code></td><td class="px-4 py-3" data-en="No" data-zh="否">No</td><td class="px-4 py-3 text-gray-500" data-en="API port, default 3001" data-zh="API 端口，默认 3001">API port, default 3001</td></tr>
+            <tr><td class="px-4 py-3"><code>CORS_ORIGIN</code></td><td class="px-4 py-3" data-en="Required in production" data-zh="生产环境必填">Required in production</td><td class="px-4 py-3 text-gray-500" data-en="Allowed frontend domain" data-zh="允许的前端域名">Allowed frontend domain</td></tr>
+            <tr><td class="px-4 py-3"><code>BREVO_API_KEY</code></td><td class="px-4 py-3" data-en="Yes" data-zh="是">Yes</td><td class="px-4 py-3 text-gray-500" data-en="Brevo email service key" data-zh="Brevo 邮件服务密钥">Brevo email service key</td></tr>
+            <tr><td class="px-4 py-3"><code>LICENSE_PRIVATE_KEY</code></td><td class="px-4 py-3" data-en="No" data-zh="否">No</td><td class="px-4 py-3 text-gray-500" data-en="RSA private key (for report signing)" data-zh="RSA 私钥（报告签名用）">RSA private key (for report signing)</td></tr>
+            <tr><td class="px-4 py-3"><code>LICENSE_PUBLIC_KEY</code></td><td class="px-4 py-3" data-en="No" data-zh="否">No</td><td class="px-4 py-3 text-gray-500" data-en="RSA public key (for signature verification)" data-zh="RSA 公钥（签名验证用）">RSA public key (for signature verification)</td></tr>
           </tbody>
         </table>
       </div>
@@ -372,33 +379,33 @@ cd packages/api && node dist/index.js
             </svg>
             <span class="text-lg font-bold text-white">LabAnimal</span>
           </div>
-          <p class="text-sm">实验动物合规管理系统<br>开源核心，合规无忧</p>
+          <p class="text-sm" data-en="Laboratory animal compliance management system<br>Open core, compliance worry-free" data-zh="实验动物合规管理系统<br>开源核心，合规无忧">Laboratory animal compliance management system<br>Open core, compliance worry-free</p>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">产品</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Product" data-zh="产品">Product</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/#features" class="hover:text-white transition">功能</a></li>
-            <li><a href="/#pricing" class="hover:text-white transition">定价</a></li>
-            <li><a href="/docs" class="hover:text-white transition">文档</a></li>
+            <li><a href="/#features" class="hover:text-white transition" data-en="Features" data-zh="功能">Features</a></li>
+            <li><a href="/#pricing" class="hover:text-white transition" data-en="Pricing" data-zh="定价">Pricing</a></li>
+            <li><a href="/docs" class="hover:text-white transition" data-en="Documentation" data-zh="文档">Documentation</a></li>
             <li><a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">合规</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Compliance" data-zh="合规">Compliance</h4>
           <ul class="space-y-2 text-sm">
             <li>AVMA Guidelines 2020</li>
             <li>NRC Guide 2011</li>
             <li>21 CFR Part 11</li>
-            <li>AAALAC 认证准备</li>
+            <li data-en="AAALAC Certification Preparation" data-zh="AAALAC 认证准备">AAALAC Certification Preparation</li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">法律</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Legal" data-zh="法律">Legal</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/terms" class="hover:text-white transition">服务条款</a></li>
-            <li><a href="/privacy" class="hover:text-white transition">隐私政策</a></li>
-            <li><a href="/refund-policy" class="hover:text-white transition">退款政策</a></li>
-            <li><a href="/sla" class="hover:text-white transition">服务等级协议</a></li>
+            <li><a href="/terms" class="hover:text-white transition" data-en="Terms of Service" data-zh="服务条款">Terms of Service</a></li>
+            <li><a href="/privacy" class="hover:text-white transition" data-en="Privacy Policy" data-zh="隐私政策">Privacy Policy</a></li>
+            <li><a href="/refund-policy" class="hover:text-white transition" data-en="Refund Policy" data-zh="退款政策">Refund Policy</a></li>
+            <li><a href="/sla" class="hover:text-white transition" data-en="Service Level Agreement" data-zh="服务等级协议">Service Level Agreement</a></li>
           </ul>
         </div>
       </div>
@@ -406,12 +413,39 @@ cd packages/api && node dist/index.js
         <p class="text-sm">&copy; 2026 LabAnimal. Apache-2.0 License.</p>
         <div class="flex gap-4 text-sm">
           <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a>
-          <a href="/docs" class="hover:text-white transition">文档</a>
-          <a href="https://labanimal.cloud/login" class="hover:text-white transition">登录</a>
+          <a href="/docs" class="hover:text-white transition" data-en="Docs" data-zh="文档">Docs</a>
+          <a href="https://labanimal.cloud/login" class="hover:text-white transition" data-en="Login" data-zh="登录">Login</a>
         </div>
       </div>
     </div>
   </footer>
+
+  <script>
+    (function() {
+      var lang = localStorage.getItem('lang') || 'en';
+      function setLang(l) {
+        lang = l;
+        localStorage.setItem('lang', l);
+        document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+        document.querySelectorAll('[data-en]').forEach(function(el) {
+          var text = el.getAttribute('data-' + l);
+          if (text) {
+            if (el.tagName === 'TITLE') { document.title = text; }
+            else { el.innerHTML = text.replace(/&#10;/g, '<br>'); }
+          }
+        });
+        document.querySelectorAll('.lang-btn').forEach(function(btn) {
+          btn.classList.toggle('active', btn.getAttribute('data-lang') === l);
+        });
+      }
+      setLang(lang);
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          setLang(this.getAttribute('data-lang'));
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>

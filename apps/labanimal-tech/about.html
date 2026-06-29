@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>关于我们 — LabAnimal</title>
+  <title data-en="About Us — LabAnimal" data-zh="关于我们 — LabAnimal">About Us — LabAnimal</title>
   <meta name="description" content="了解 LabAnimal 团队和我们的使命——为实验动物设施提供合规、高效的管理工具。">
   <link rel="canonical" href="https://labanimal.tech/about">
   <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
@@ -23,6 +23,8 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
     .gradient-hero { background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #2563eb 100%); }
+    .lang-btn { cursor: pointer; user-select: none; }
+    .lang-btn.active { font-weight: 700; color: #2563eb; }
   </style>
   <script type="application/ld+json">
 {
@@ -57,11 +59,16 @@
           <span class="text-xl font-bold text-brand-800">LabAnimal</span>
         </a>
         <div class="hidden md:flex items-center gap-8">
-          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">首页</a>
-          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium">功能</a>
-          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium">定价</a>
-          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">文档</a>
-          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">登录</a>
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Home" data-zh="首页">Home</a>
+          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Features" data-zh="功能">Features</a>
+          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Pricing" data-zh="定价">Pricing</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Docs" data-zh="文档">Docs</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition" data-en="Login" data-zh="登录">Login</a>
+          <span id="langToggle" class="text-gray-400 text-sm flex items-center gap-1">
+            <span class="lang-btn active" data-lang="en">EN</span>
+            <span class="text-gray-300">|</span>
+            <span class="lang-btn" data-lang="zh">中文</span>
+          </span>
         </div>
       </div>
     </div>
@@ -70,9 +77,9 @@
   <!-- Hero -->
   <section class="gradient-hero pt-32 pb-16 px-4">
     <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-6">关于 LabAnimal</h1>
-      <p class="text-lg text-blue-100 max-w-2xl mx-auto">
-        我们致力于为实验动物设施提供合规、高效、开源的管理工具，让研究人员专注于科学研究，而不是繁琐的文书工作。
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-6" data-en="About LabAnimal" data-zh="关于 LabAnimal">About LabAnimal</h1>
+      <p class="text-lg text-blue-100 max-w-2xl mx-auto" data-en="We are committed to providing compliant, efficient, and open-source management tools for laboratory animal facilities, so researchers can focus on science instead of paperwork." data-zh="我们致力于为实验动物设施提供合规、高效、开源的管理工具，让研究人员专注于科学研究，而不是繁琐的文书工作。">
+        We are committed to providing compliant, efficient, and open-source management tools for laboratory animal facilities, so researchers can focus on science instead of paperwork.
       </p>
     </div>
   </section>
@@ -80,7 +87,7 @@
   <!-- Mission -->
   <section class="py-16 px-4">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold mb-8 text-center">我们的使命</h2>
+      <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Mission" data-zh="我们的使命">Our Mission</h2>
       <div class="grid md:grid-cols-3 gap-8">
         <div class="text-center">
           <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -88,8 +95,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
             </svg>
           </div>
-          <h3 class="text-xl font-semibold mb-2">合规优先</h3>
-          <p class="text-gray-600">每一个功能都直接对应 AAALAC 认证和 USDA 审查的具体要求</p>
+          <h3 class="text-xl font-semibold mb-2" data-en="Compliance First" data-zh="合规优先">Compliance First</h3>
+          <p class="text-gray-600" data-en="Every feature directly addresses specific AAALAC certification and USDA review requirements." data-zh="每一个功能都直接对应 AAALAC 认证和 USDA 审查的具体要求">Every feature directly addresses specific AAALAC certification and USDA review requirements.</p>
         </div>
         <div class="text-center">
           <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -97,8 +104,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
             </svg>
           </div>
-          <h3 class="text-xl font-semibold mb-2">开源透明</h3>
-          <p class="text-gray-600">核心代码以 Apache-2.0 许可证开源，任何人都可以审查和贡献</p>
+          <h3 class="text-xl font-semibold mb-2" data-en="Open Source &amp; Transparent" data-zh="开源透明">Open Source &amp; Transparent</h3>
+          <p class="text-gray-600" data-en="Core code is open-sourced under the Apache-2.0 license. Anyone can review and contribute." data-zh="核心代码以 Apache-2.0 许可证开源，任何人都可以审查和贡献">Core code is open-sourced under the Apache-2.0 license. Anyone can review and contribute.</p>
         </div>
         <div class="text-center">
           <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -106,8 +113,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
             </svg>
           </div>
-          <h3 class="text-xl font-semibold mb-2">动物福利</h3>
-          <p class="text-gray-600">通过技术手段确保实验动物得到妥善对待，符合 3R 原则</p>
+          <h3 class="text-xl font-semibold mb-2" data-en="Animal Welfare" data-zh="动物福利">Animal Welfare</h3>
+          <p class="text-gray-600" data-en="Using technology to ensure laboratory animals are treated properly, in compliance with the 3Rs principles." data-zh="通过技术手段确保实验动物得到妥善对待，符合 3R 原则">Using technology to ensure laboratory animals are treated properly, in compliance with the 3Rs principles.</p>
         </div>
       </div>
     </div>
@@ -116,16 +123,16 @@
   <!-- Story -->
   <section class="py-16 px-4 bg-gray-50">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold mb-8 text-center">项目背景</h2>
+      <h2 class="text-3xl font-bold mb-8 text-center" data-en="Project Background" data-zh="项目背景">Project Background</h2>
       <div class="prose prose-gray max-w-none">
-        <p class="text-gray-600 leading-relaxed text-lg">
-          LabAnimal 诞生于一个简单的观察：实验动物设施的管理工具要么过于昂贵，要么功能不全，要么难以满足日益严格的合规要求。
+        <p class="text-gray-600 leading-relaxed text-lg" data-en="LabAnimal was born from a simple observation: management tools for laboratory animal facilities are either too expensive, lack features, or struggle to meet increasingly stringent compliance requirements." data-zh="LabAnimal 诞生于一个简单的观察：实验动物设施的管理工具要么过于昂贵，要么功能不全，要么难以满足日益严格的合规要求。">
+          LabAnimal was born from a simple observation: management tools for laboratory animal facilities are either too expensive, lack features, or struggle to meet increasingly stringent compliance requirements.
         </p>
-        <p class="text-gray-600 leading-relaxed text-lg mt-4">
-          我们决定从零开始构建一个现代化的解决方案，将 AVMA 安乐死标准、NRC 密度计算、21 CFR Part 11 电子签名、AAALAC 审计准备等合规要求直接内置到系统中，而不是事后添加。
+        <p class="text-gray-600 leading-relaxed text-lg mt-4" data-en="We decided to build a modern solution from scratch, embedding compliance requirements such as AVMA euthanasia standards, NRC density calculations, 21 CFR Part 11 electronic signatures, and AAALAC audit preparation directly into the system — rather than adding them as afterthoughts." data-zh="我们决定从零开始构建一个现代化的解决方案，将 AVMA 安乐死标准、NRC 密度计算、21 CFR Part 11 电子签名、AAALAC 审计准备等合规要求直接内置到系统中，而不是事后添加。">
+          We decided to build a modern solution from scratch, embedding compliance requirements such as AVMA euthanasia standards, NRC density calculations, 21 CFR Part 11 electronic signatures, and AAALAC audit preparation directly into the system — rather than adding them as afterthoughts.
         </p>
-        <p class="text-gray-600 leading-relaxed text-lg mt-4">
-          作为开源项目，LabAnimal 的每一行代码都是透明的。我们相信，开源不仅是一种开发模式，更是建立信任的方式——研究人员可以完全了解系统如何处理他们的数据，审计人员可以验证合规实现的正确性。
+        <p class="text-gray-600 leading-relaxed text-lg mt-4" data-en="As an open-source project, every line of LabAnimal's code is transparent. We believe open source is not just a development model, but a way to build trust — researchers can fully understand how the system handles their data, and auditors can verify the correctness of compliance implementations." data-zh="作为开源项目，LabAnimal 的每一行代码都是透明的。我们相信，开源不仅是一种开发模式，更是建立信任的方式——研究人员可以完全了解系统如何处理他们的数据，审计人员可以验证合规实现的正确性。">
+          As an open-source project, every line of LabAnimal's code is transparent. We believe open source is not just a development model, but a way to build trust — researchers can fully understand how the system handles their data, and auditors can verify the correctness of compliance implementations.
         </p>
       </div>
     </div>
@@ -134,23 +141,23 @@
   <!-- Stats -->
   <section class="py-16 px-4">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold mb-12 text-center">项目数据</h2>
+      <h2 class="text-3xl font-bold mb-12 text-center" data-en="Project Stats" data-zh="项目数据">Project Stats</h2>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
         <div>
           <div class="text-4xl font-bold text-brand-600">108</div>
-          <div class="text-sm text-gray-500 mt-2">API 端点</div>
+          <div class="text-sm text-gray-500 mt-2" data-en="API Endpoints" data-zh="API 端点">API Endpoints</div>
         </div>
         <div>
           <div class="text-4xl font-bold text-brand-600">18</div>
-          <div class="text-sm text-gray-500 mt-2">数据库模型</div>
+          <div class="text-sm text-gray-500 mt-2" data-en="Database Models" data-zh="数据库模型">Database Models</div>
         </div>
         <div>
           <div class="text-4xl font-bold text-brand-600">122</div>
-          <div class="text-sm text-gray-500 mt-2">测试用例</div>
+          <div class="text-sm text-gray-500 mt-2" data-en="Test Cases" data-zh="测试用例">Test Cases</div>
         </div>
         <div>
           <div class="text-4xl font-bold text-brand-600">Apache-2.0</div>
-          <div class="text-sm text-gray-500 mt-2">开源许可证</div>
+          <div class="text-sm text-gray-500 mt-2" data-en="Open Source License" data-zh="开源许可证">Open Source License</div>
         </div>
       </div>
     </div>
@@ -159,89 +166,89 @@
   <!-- Tech Stack -->
   <section class="py-16 px-4 bg-gray-50">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold mb-8 text-center">技术栈</h2>
+      <h2 class="text-3xl font-bold mb-8 text-center" data-en="Tech Stack" data-zh="技术栈">Tech Stack</h2>
       <div class="grid md:grid-cols-2 gap-6">
         <div class="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 class="text-lg font-semibold mb-3">前端</h3>
+          <h3 class="text-lg font-semibold mb-3" data-en="Frontend" data-zh="前端">Frontend</h3>
           <ul class="space-y-2 text-gray-600">
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
-              React 19 + TypeScript
+              <span data-en="React 19 + TypeScript" data-zh="React 19 + TypeScript">React 19 + TypeScript</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
-              Vite 构建工具
+              <span data-en="Vite Build Tool" data-zh="Vite 构建工具">Vite Build Tool</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
-              Tailwind CSS
+              <span data-en="Tailwind CSS" data-zh="Tailwind CSS">Tailwind CSS</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
-              React Router 7
+              <span data-en="React Router 7" data-zh="React Router 7">React Router 7</span>
             </li>
           </ul>
         </div>
         <div class="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 class="text-lg font-semibold mb-3">后端</h3>
+          <h3 class="text-lg font-semibold mb-3" data-en="Backend" data-zh="后端">Backend</h3>
           <ul class="space-y-2 text-gray-600">
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-              Hono.js（轻量级 Web 框架）
+              <span data-en="Hono.js (Lightweight Web Framework)" data-zh="Hono.js（轻量级 Web 框架）">Hono.js (Lightweight Web Framework)</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-              Prisma 6（ORM）
+              <span data-en="Prisma 6 (ORM)" data-zh="Prisma 6（ORM）">Prisma 6 (ORM)</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-              PostgreSQL（数据库）
+              <span data-en="PostgreSQL (Database)" data-zh="PostgreSQL（数据库）">PostgreSQL (Database)</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-              JWT 认证
+              <span data-en="JWT Authentication" data-zh="JWT 认证">JWT Authentication</span>
             </li>
           </ul>
         </div>
         <div class="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 class="text-lg font-semibold mb-3">合规引擎</h3>
+          <h3 class="text-lg font-semibold mb-3" data-en="Compliance Engine" data-zh="合规引擎">Compliance Engine</h3>
           <ul class="space-y-2 text-gray-600">
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
-              AVMA 安乐死验证
+              <span data-en="AVMA Euthanasia Validation" data-zh="AVMA 安乐死验证">AVMA Euthanasia Validation</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
-              NRC 密度计算
+              <span data-en="NRC Density Calculation" data-zh="NRC 密度计算">NRC Density Calculation</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
-              21 CFR Part 11 审计追踪
+              <span data-en="21 CFR Part 11 Audit Trail" data-zh="21 CFR Part 11 审计追踪">21 CFR Part 11 Audit Trail</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
-              RSA 报告签名
+              <span data-en="RSA Report Signing" data-zh="RSA 报告签名">RSA Report Signing</span>
             </li>
           </ul>
         </div>
         <div class="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 class="text-lg font-semibold mb-3">基础设施</h3>
+          <h3 class="text-lg font-semibold mb-3" data-en="Infrastructure" data-zh="基础设施">Infrastructure</h3>
           <ul class="space-y-2 text-gray-600">
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-orange-500 rounded-full"></span>
-              Turborepo（Monorepo）
+              <span data-en="Turborepo (Monorepo)" data-zh="Turborepo（Monorepo）">Turborepo (Monorepo)</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-orange-500 rounded-full"></span>
-              Vercel（前端部署）
+              <span data-en="Vercel (Frontend Deployment)" data-zh="Vercel（前端部署）">Vercel (Frontend Deployment)</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-orange-500 rounded-full"></span>
-              GitHub Actions（CI/CD）
+              <span data-en="GitHub Actions (CI/CD)" data-zh="GitHub Actions（CI/CD）">GitHub Actions (CI/CD)</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-2 h-2 bg-orange-500 rounded-full"></span>
-              PayPal（支付）
+              <span data-en="PayPal (Payment)" data-zh="PayPal（支付）">PayPal (Payment)</span>
             </li>
           </ul>
         </div>
@@ -252,14 +259,14 @@
   <!-- CTA -->
   <section class="gradient-hero py-16 px-4">
     <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-3xl font-bold text-white mb-4">加入我们</h2>
-      <p class="text-blue-100 text-lg mb-8">无论是贡献代码、报告问题，还是提供反馈，我们都欢迎您的参与。</p>
+      <h2 class="text-3xl font-bold text-white mb-4" data-en="Join Us" data-zh="加入我们">Join Us</h2>
+      <p class="text-blue-100 text-lg mb-8" data-en="Whether it's contributing code, reporting issues, or providing feedback, we welcome your participation." data-zh="无论是贡献代码、报告问题，还是提供反馈，我们都欢迎您的参与。">Whether it's contributing code, reporting issues, or providing feedback, we welcome your participation.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="bg-white text-brand-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-50 transition shadow-lg">
-          GitHub 仓库
+        <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="bg-white text-brand-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-50 transition shadow-lg" data-en="GitHub Repository" data-zh="GitHub 仓库">
+          GitHub Repository
         </a>
-        <a href="/contact" class="border-2 border-white/40 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white/10 transition">
-          联系我们
+        <a href="/contact" class="border-2 border-white/40 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white/10 transition" data-en="Contact Us" data-zh="联系我们">
+          Contact Us
         </a>
       </div>
     </div>
@@ -276,31 +283,31 @@
             </svg>
             <span class="text-lg font-bold text-white">LabAnimal</span>
           </div>
-          <p class="text-sm">实验动物合规管理系统<br>开源核心，合规无忧</p>
+          <p class="text-sm" data-en="Laboratory animal compliance management system<br>Open-source core, compliance worry-free" data-zh="实验动物合规管理系统<br>开源核心，合规无忧">Laboratory animal compliance management system<br>Open-source core, compliance worry-free</p>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">产品</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Product" data-zh="产品">Product</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/#features" class="hover:text-white transition">功能</a></li>
-            <li><a href="/#pricing" class="hover:text-white transition">定价</a></li>
-            <li><a href="/docs" class="hover:text-white transition">文档</a></li>
+            <li><a href="/#features" class="hover:text-white transition" data-en="Features" data-zh="功能">Features</a></li>
+            <li><a href="/#pricing" class="hover:text-white transition" data-en="Pricing" data-zh="定价">Pricing</a></li>
+            <li><a href="/docs" class="hover:text-white transition" data-en="Docs" data-zh="文档">Docs</a></li>
             <li><a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">法律</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Legal" data-zh="法律">Legal</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/terms" class="hover:text-white transition">服务条款</a></li>
-            <li><a href="/privacy" class="hover:text-white transition">隐私政策</a></li>
-            <li><a href="/refund-policy" class="hover:text-white transition">退款政策</a></li>
-            <li><a href="/sla" class="hover:text-white transition">服务等级协议</a></li>
+            <li><a href="/terms" class="hover:text-white transition" data-en="Terms of Service" data-zh="服务条款">Terms of Service</a></li>
+            <li><a href="/privacy" class="hover:text-white transition" data-en="Privacy Policy" data-zh="隐私政策">Privacy Policy</a></li>
+            <li><a href="/refund-policy" class="hover:text-white transition" data-en="Refund Policy" data-zh="退款政策">Refund Policy</a></li>
+            <li><a href="/sla" class="hover:text-white transition" data-en="Service Level Agreement" data-zh="服务等级协议">Service Level Agreement</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">联系</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Contact" data-zh="联系">Contact</h4>
           <ul class="space-y-2 text-sm">
             <li><a href="mailto:contact@labanimal.tech" class="hover:text-white transition">contact@labanimal.tech</a></li>
-            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition">提交 Issue</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition" data-en="Submit Issue" data-zh="提交 Issue">Submit Issue</a></li>
           </ul>
         </div>
       </div>
@@ -308,12 +315,39 @@
         <p class="text-sm">&copy; 2026 LabAnimal. Apache-2.0 License.</p>
         <div class="flex gap-4 text-sm">
           <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a>
-          <a href="/docs" class="hover:text-white transition">文档</a>
-          <a href="https://labanimal.cloud/login" class="hover:text-white transition">登录</a>
+          <a href="/docs" class="hover:text-white transition" data-en="Docs" data-zh="文档">Docs</a>
+          <a href="https://labanimal.cloud/login" class="hover:text-white transition" data-en="Login" data-zh="登录">Login</a>
         </div>
       </div>
     </div>
   </footer>
+
+  <script>
+    (function() {
+      var lang = localStorage.getItem('lang') || 'en';
+      function setLang(l) {
+        lang = l;
+        localStorage.setItem('lang', l);
+        document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+        document.querySelectorAll('[data-en]').forEach(function(el) {
+          var text = el.getAttribute('data-' + l);
+          if (text) {
+            if (el.tagName === 'TITLE') { document.title = text; }
+            else { el.innerHTML = text.replace(/&#10;/g, '<br>'); }
+          }
+        });
+        document.querySelectorAll('.lang-btn').forEach(function(btn) {
+          btn.classList.toggle('active', btn.getAttribute('data-lang') === l);
+        });
+      }
+      setLang(lang);
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          setLang(this.getAttribute('data-lang'));
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>

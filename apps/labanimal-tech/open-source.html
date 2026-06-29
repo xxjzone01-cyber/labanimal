@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +23,10 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
     .gradient-hero { background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #2563eb 100%); }
+  
+    .lang-btn { cursor: pointer; user-select: none; }
+    .lang-btn.active { font-weight: 700; color: #2563eb; }
+
   </style>
   <script type="application/ld+json">
 {
@@ -55,7 +59,8 @@
           <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium">定价</a>
           <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">文档</a>
           <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">登录</a>
-        </div>
+            <span id="langToggle" class="text-gray-400 text-sm flex items-center gap-1"><span class="lang-btn active" data-lang="en">EN</span><span class="text-gray-300">|</span><span class="lang-btn" data-lang="zh">中文</span></span>
+          </div>
       </div>
     </div>
   </nav>
@@ -356,6 +361,34 @@
       </div>
     </div>
   </footer>
+
+
+  <script>
+    (function() {
+      var lang = localStorage.getItem('lang') || 'en';
+      function setLang(l) {
+        lang = l;
+        localStorage.setItem('lang', l);
+        document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+        document.querySelectorAll('[data-en]').forEach(function(el) {
+          var text = el.getAttribute('data-' + l);
+          if (text) {
+            if (el.tagName === 'TITLE') { document.title = text; }
+            else { el.innerHTML = text.replace(/&#10;/g, '<br>'); }
+          }
+        });
+        document.querySelectorAll('.lang-btn').forEach(function(btn) {
+          btn.classList.toggle('active', btn.getAttribute('data-lang') === l);
+        });
+      }
+      setLang(lang);
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          setLang(this.getAttribute('data-lang'));
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>
