@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>安全白皮书 — LabAnimal</title>
-  <meta name="description" content="LabAnimal 安全白皮书，了解我们的数据安全措施、加密标准和合规认证。">
+  <title data-en="Security Whitepaper — LabAnimal" data-zh="安全白皮书 — LabAnimal">Security Whitepaper — LabAnimal</title>
+  <meta name="description" content="LabAnimal Security Whitepaper. Learn about our data security measures, encryption standards, and compliance certifications.">
   <link rel="canonical" href="https://labanimal.tech/security">
   <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,10 +22,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-  
-    .lang-btn { cursor: pointer; user-select: none; }
-    .lang-btn.active { font-weight: 700; color: #2563eb; }
-
+    .lang-btn { cursor: pointer; user-select: none; } .lang-btn.active { font-weight: 700; color: #2563eb; }
   </style>
   <script type="application/ld+json">
 {
@@ -34,10 +31,7 @@
   "name": "LabAnimal Security Policy",
   "description": "LabAnimal security policy detailing our data protection measures, encryption standards, and compliance certifications.",
   "url": "https://labanimal.tech/security",
-  "publisher": {
-    "@type": "Organization",
-    "name": "LabAnimal"
-  },
+  "publisher": { "@type": "Organization", "name": "LabAnimal" },
   "isAccessibleForFree": true
 }
 </script>
@@ -49,19 +43,21 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <a href="/" class="flex items-center gap-2">
-          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-          </svg>
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
           <span class="text-xl font-bold text-brand-800">LabAnimal</span>
         </a>
         <div class="hidden md:flex items-center gap-8">
-          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">首页</a>
-          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium">功能</a>
-          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium">定价</a>
-          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">文档</a>
-          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">登录</a>
-            <span id="langToggle" class="text-gray-400 text-sm flex items-center gap-1"><span class="lang-btn active" data-lang="en">EN</span><span class="text-gray-300">|</span><span class="lang-btn" data-lang="zh">中文</span></span>
-          </div>
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Home" data-zh="首页">Home</a>
+          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Features" data-zh="功能">Features</a>
+          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Pricing" data-zh="定价">Pricing</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Docs" data-zh="文档">Docs</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition" data-en="Log In" data-zh="登录">Log In</a>
+          <span id="langToggle" class="text-gray-400 text-sm flex items-center gap-1">
+            <span class="lang-btn active" data-lang="en">EN</span>
+            <span class="text-gray-300">|</span>
+            <span class="lang-btn" data-lang="zh">中文</span>
+          </span>
+        </div>
       </div>
     </div>
   </nav>
@@ -69,149 +65,121 @@
   <!-- Content -->
   <main class="pt-24 pb-16 px-4">
     <div class="max-w-4xl mx-auto">
-      <h1 class="text-3xl sm:text-4xl font-bold mb-2">安全白皮书</h1>
-      <p class="text-gray-500 mb-8">最后更新：2026 年 6 月 26 日</p>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-2" data-en="Security Whitepaper" data-zh="安全白皮书">Security Whitepaper</h1>
+      <p class="text-gray-500 mb-8" data-en="Last updated: June 26, 2026" data-zh="最后更新：2026 年 6 月 26 日">Last updated: June 26, 2026</p>
 
       <div class="prose prose-gray max-w-none space-y-8">
         <section>
-          <h2 class="text-2xl font-semibold mb-4">1. 安全概述</h2>
-          <p class="text-gray-600 leading-relaxed">
-            LabAnimal 将数据安全视为最高优先级。作为实验动物合规管理系统，我们处理的数据涉及研究协议、动物福利记录和审计追踪，这些数据的完整性和保密性至关重要。本文档详细说明了我们的安全架构和实践。
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="1. Security Overview" data-zh="1. 安全概述">1. Security Overview</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="LabAnimal treats data security as its highest priority. As a laboratory animal compliance management system, the data we handle involves research protocols, animal welfare records, and audit trails. The integrity and confidentiality of this data are critical. This document details our security architecture and practices." data-zh="LabAnimal 将数据安全视为最高优先级。作为实验动物合规管理系统，我们处理的数据涉及研究协议、动物福利记录和审计追踪，这些数据的完整性和保密性至关重要。本文档详细说明了我们的安全架构和实践。">LabAnimal treats data security as its highest priority. As a laboratory animal compliance management system, the data we handle involves research protocols, animal welfare records, and audit trails. The integrity and confidentiality of this data are critical. This document details our security architecture and practices.</p>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">2. 数据加密</h2>
-          <h3 class="text-xl font-medium mb-2 mt-4">2.1 传输加密</h3>
+          <h2 class="text-2xl font-semibold mb-4" data-en="2. Data Encryption" data-zh="2. 数据加密">2. Data Encryption</h2>
+          <h3 class="text-xl font-medium mb-2 mt-4" data-en="2.1 Transport Encryption" data-zh="2.1 传输加密">2.1 Transport Encryption</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-1">
-            <li>所有数据传输使用 <strong>TLS 1.3</strong> 加密</li>
-            <li>强制 HTTPS，自动重定向 HTTP 请求</li>
-            <li>HSTS（HTTP Strict Transport Security）启用</li>
-            <li>证书透明度（Certificate Transparency）日志</li>
+            <li data-en="All data transmissions use <strong>TLS 1.3</strong> encryption" data-zh="所有数据传输使用 <strong>TLS 1.3</strong> 加密">All data transmissions use <strong>TLS 1.3</strong> encryption</li>
+            <li data-en="Forced HTTPS with automatic HTTP request redirect" data-zh="强制 HTTPS，自动重定向 HTTP 请求">Forced HTTPS with automatic HTTP request redirect</li>
+            <li data-en="HSTS (HTTP Strict Transport Security) enabled" data-zh="HSTS（HTTP Strict Transport Security）启用">HSTS (HTTP Strict Transport Security) enabled</li>
+            <li data-en="Certificate Transparency logging" data-zh="证书透明度（Certificate Transparency）日志">Certificate Transparency logging</li>
           </ul>
-
-          <h3 class="text-xl font-medium mb-2 mt-4">2.2 存储加密</h3>
+          <h3 class="text-xl font-medium mb-2 mt-4" data-en="2.2 Storage Encryption" data-zh="2.2 存储加密">2.2 Storage Encryption</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-1">
-            <li>密码使用 <strong>bcrypt</strong> 哈希存储（cost factor 12）</li>
-            <li>JWT Token 使用 <strong>RS256</strong>（RSA + SHA-256）签名</li>
-            <li>数据库连接使用 SSL</li>
-            <li>敏感配置使用环境变量，不硬编码</li>
+            <li data-en="Passwords stored with <strong>bcrypt</strong> hashing (cost factor 12)" data-zh="密码使用 <strong>bcrypt</strong> 哈希存储（cost factor 12）">Passwords stored with <strong>bcrypt</strong> hashing (cost factor 12)</li>
+            <li data-en="JWT tokens signed with <strong>RS256</strong> (RSA + SHA-256)" data-zh="JWT Token 使用 <strong>RS256</strong>（RSA + SHA-256）签名">JWT tokens signed with <strong>RS256</strong> (RSA + SHA-256)</li>
+            <li data-en="Database connections use SSL" data-zh="数据库连接使用 SSL">Database connections use SSL</li>
+            <li data-en="Sensitive configurations stored in environment variables, not hardcoded" data-zh="敏感配置使用环境变量，不硬编码">Sensitive configurations stored in environment variables, not hardcoded</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">3. 认证和授权</h2>
-          <h3 class="text-xl font-medium mb-2 mt-4">3.1 身份认证</h3>
+          <h2 class="text-2xl font-semibold mb-4" data-en="3. Authentication and Authorization" data-zh="3. 认证和授权">3. Authentication and Authorization</h2>
+          <h3 class="text-xl font-medium mb-2 mt-4" data-en="3.1 Authentication" data-zh="3.1 身份认证">3.1 Authentication</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-1">
-            <li>JWT（JSON Web Token）无状态认证</li>
-            <li>密码强度要求：8 位以上，包含大小写字母和数字</li>
-            <li>登录失败速率限制：5 次/分钟</li>
-            <li>注册速率限制：3 次/分钟</li>
+            <li data-en="JWT (JSON Web Token) stateless authentication" data-zh="JWT（JSON Web Token）无状态认证">JWT (JSON Web Token) stateless authentication</li>
+            <li data-en="Password strength requirements: 8+ characters, including uppercase, lowercase, and numbers" data-zh="密码强度要求：8 位以上，包含大小写字母和数字">Password strength requirements: 8+ characters, including uppercase, lowercase, and numbers</li>
+            <li data-en="Login failure rate limit: 5 attempts/minute" data-zh="登录失败速率限制：5 次/分钟">Login failure rate limit: 5 attempts/minute</li>
+            <li data-en="Registration rate limit: 3 attempts/minute" data-zh="注册速率限制：3 次/分钟">Registration rate limit: 3 attempts/minute</li>
           </ul>
-
-          <h3 class="text-xl font-medium mb-2 mt-4">3.2 访问控制</h3>
+          <h3 class="text-xl font-medium mb-2 mt-4" data-en="3.2 Access Control" data-zh="3.2 访问控制">3.2 Access Control</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-1">
-            <li>基于角色的访问控制（RBAC）：Owner / Admin / Member / Viewer</li>
-            <li>PostgreSQL 行级安全（RLS）：18 个表启用</li>
-            <li>API 层 labId 强制隔离：ensureLabId 中间件</li>
-            <li>实验室成员权限验证</li>
+            <li data-en="Role-Based Access Control (RBAC): Owner / Admin / Member / Viewer" data-zh="基于角色的访问控制（RBAC）：Owner / Admin / Member / Viewer">Role-Based Access Control (RBAC): Owner / Admin / Member / Viewer</li>
+            <li data-en="PostgreSQL Row-Level Security (RLS): enabled on 18 tables" data-zh="PostgreSQL 行级安全（RLS）：18 个表启用">PostgreSQL Row-Level Security (RLS): enabled on 18 tables</li>
+            <li data-en="API-layer labId enforcement: ensureLabId middleware" data-zh="API 层 labId 强制隔离：ensureLabId 中间件">API-layer labId enforcement: ensureLabId middleware</li>
+            <li data-en="Laboratory member permission verification" data-zh="实验室成员权限验证">Laboratory member permission verification</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">4. 多租户数据隔离</h2>
-          <p class="text-gray-600 leading-relaxed">
-            LabAnimal 采用严格的多租户隔离架构：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="4. Multi-Tenant Data Isolation" data-zh="4. 多租户数据隔离">4. Multi-Tenant Data Isolation</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="LabAnimal employs a strict multi-tenant isolation architecture:" data-zh="LabAnimal 采用严格的多租户隔离架构：">LabAnimal employs a strict multi-tenant isolation architecture:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li><strong>数据库层</strong>：PostgreSQL RLS 策略确保行级隔离</li>
-            <li><strong>API 层</strong>：每个请求自动注入 labId，无法跨租户访问</li>
-            <li><strong>应用层</strong>：前端组件按 labId 过滤数据</li>
-            <li><strong>审计层</strong>：所有操作记录在审计日志中，包含 labId</li>
+            <li data-en="<strong>Database layer</strong>: PostgreSQL RLS policies ensure row-level isolation" data-zh="<strong>数据库层</strong>：PostgreSQL RLS 策略确保行级隔离"><strong>Database layer</strong>: PostgreSQL RLS policies ensure row-level isolation</li>
+            <li data-en="<strong>API layer</strong>: each request automatically injects labId, preventing cross-tenant access" data-zh="<strong>API 层</strong>：每个请求自动注入 labId，无法跨租户访问"><strong>API layer</strong>: each request automatically injects labId, preventing cross-tenant access</li>
+            <li data-en="<strong>Application layer</strong>: frontend components filter data by labId" data-zh="<strong>应用层</strong>：前端组件按 labId 过滤数据"><strong>Application layer</strong>: frontend components filter data by labId</li>
+            <li data-en="<strong>Audit layer</strong>: all operations logged in audit trail with labId" data-zh="<strong>审计层</strong>：所有操作记录在审计日志中，包含 labId"><strong>Audit layer</strong>: all operations logged in audit trail with labId</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">5. 审计追踪</h2>
-          <p class="text-gray-600 leading-relaxed">
-            为满足 21 CFR Part 11 合规要求，我们实现了完整的审计追踪：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="5. Audit Trail" data-zh="5. 审计追踪">5. Audit Trail</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="To meet 21 CFR Part 11 compliance requirements, we have implemented a complete audit trail:" data-zh="为满足 21 CFR Part 11 合规要求，我们实现了完整的审计追踪：">To meet 21 CFR Part 11 compliance requirements, we have implemented a complete audit trail:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li><strong>AuditLog 模型</strong>：记录所有数据变更</li>
-            <li><strong>SHA-256 哈希链</strong>：每条审计记录包含前一条的哈希，防篡改</li>
-            <li><strong>电子签名</strong>：支持所见即所签的电子签名</li>
-            <li><strong>报告签名</strong>：PDF 报告可嵌入 RSA 签名和 QR 码</li>
+            <li data-en="<strong>AuditLog model</strong>: records all data changes" data-zh="<strong>AuditLog 模型</strong>：记录所有数据变更"><strong>AuditLog model</strong>: records all data changes</li>
+            <li data-en="<strong>SHA-256 hash chain</strong>: each audit record includes the hash of the previous record, preventing tampering" data-zh="<strong>SHA-256 哈希链</strong>：每条审计记录包含前一条的哈希，防篡改"><strong>SHA-256 hash chain</strong>: each audit record includes the hash of the previous record, preventing tampering</li>
+            <li data-en="<strong>Electronic signatures</strong>: supports what-you-see-is-what-you-sign electronic signatures" data-zh="<strong>电子签名</strong>：支持所见即所签的电子签名"><strong>Electronic signatures</strong>: supports what-you-see-is-what-you-sign electronic signatures</li>
+            <li data-en="<strong>Report signing</strong>: PDF reports can embed RSA signatures and QR codes" data-zh="<strong>报告签名</strong>：PDF 报告可嵌入 RSA 签名和 QR 码"><strong>Report signing</strong>: PDF reports can embed RSA signatures and QR codes</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">6. 基础设施安全</h2>
-          <h3 class="text-xl font-medium mb-2 mt-4">6.1 托管环境</h3>
+          <h2 class="text-2xl font-semibold mb-4" data-en="6. Infrastructure Security" data-zh="6. 基础设施安全">6. Infrastructure Security</h2>
+          <h3 class="text-xl font-medium mb-2 mt-4" data-en="6.1 Hosting Environment" data-zh="6.1 托管环境">6.1 Hosting Environment</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-1">
-            <li>前端部署在 Vercel（全球 CDN，自动 DDoS 防护）</li>
-            <li>API 服务器部署在安全的云服务器</li>
-            <li>PostgreSQL 数据库使用专用实例</li>
+            <li data-en="Frontend deployed on Vercel (global CDN, automatic DDoS protection)" data-zh="前端部署在 Vercel（全球 CDN，自动 DDoS 防护）">Frontend deployed on Vercel (global CDN, automatic DDoS protection)</li>
+            <li data-en="API server deployed on a secure cloud server" data-zh="API 服务器部署在安全的云服务器">API server deployed on a secure cloud server</li>
+            <li data-en="PostgreSQL database uses a dedicated instance" data-zh="PostgreSQL 数据库使用专用实例">PostgreSQL database uses a dedicated instance</li>
           </ul>
-
-          <h3 class="text-xl font-medium mb-2 mt-4">6.2 网络安全</h3>
+          <h3 class="text-xl font-medium mb-2 mt-4" data-en="6.2 Network Security" data-zh="6.2 网络安全">6.2 Network Security</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-1">
-            <li>CORS 配置：多域名白名单</li>
-            <li>请求速率限制</li>
-            <li>输入验证（Zod schema）</li>
-            <li>SQL 注入防护（Prisma ORM 参数化查询）</li>
+            <li data-en="CORS configuration: multi-domain allowlist" data-zh="CORS 配置：多域名白名单">CORS configuration: multi-domain allowlist</li>
+            <li data-en="Request rate limiting" data-zh="请求速率限制">Request rate limiting</li>
+            <li data-en="Input validation (Zod schema)" data-zh="输入验证（Zod schema）">Input validation (Zod schema)</li>
+            <li data-en="SQL injection protection (Prisma ORM parameterized queries)" data-zh="SQL 注入防护（Prisma ORM 参数化查询）">SQL injection protection (Prisma ORM parameterized queries)</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">7. 合规标准</h2>
-          <p class="text-gray-600 leading-relaxed">
-            LabAnimal 设计时考虑了以下合规标准：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="7. Compliance Standards" data-zh="7. 合规标准">7. Compliance Standards</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="LabAnimal was designed with the following compliance standards in mind:" data-zh="LabAnimal 设计时考虑了以下合规标准：">LabAnimal was designed with the following compliance standards in mind:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li><strong>21 CFR Part 11</strong>：电子记录和电子签名</li>
-            <li><strong>AVMA Guidelines 2020</strong>：安乐死方法验证</li>
-            <li><strong>NRC Guide 2011</strong>：笼位密度计算</li>
-            <li><strong>AAALAC</strong>：审计准备功能</li>
+            <li data-en="<strong>21 CFR Part 11</strong>: electronic records and electronic signatures" data-zh="<strong>21 CFR Part 11</strong>：电子记录和电子签名"><strong>21 CFR Part 11</strong>: electronic records and electronic signatures</li>
+            <li data-en="<strong>AVMA Guidelines 2020</strong>: euthanasia method validation" data-zh="<strong>AVMA Guidelines 2020</strong>：安乐死方法验证"><strong>AVMA Guidelines 2020</strong>: euthanasia method validation</li>
+            <li data-en="<strong>NRC Guide 2011</strong>: cage density calculations" data-zh="<strong>NRC Guide 2011</strong>：笼位密度计算"><strong>NRC Guide 2011</strong>: cage density calculations</li>
+            <li data-en="<strong>AAALAC</strong>: audit preparation features" data-zh="<strong>AAALAC</strong>：审计准备功能"><strong>AAALAC</strong>: audit preparation features</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">8. 开源透明度</h2>
-          <p class="text-gray-600 leading-relaxed">
-            LabAnimal 的核心代码以 Apache-2.0 许可证开源，这意味着：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="8. Open-Source Transparency" data-zh="8. 开源透明度">8. Open-Source Transparency</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="LabAnimal's core code is open-source under the Apache-2.0 license, which means:" data-zh="LabAnimal 的核心代码以 Apache-2.0 许可证开源，这意味着：">LabAnimal's core code is open-source under the Apache-2.0 license, which means:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li>任何人都可以审查我们的安全实现</li>
-            <li>安全漏洞可以被社区发现和报告</li>
-            <li>代码审计和验证完全透明</li>
-            <li>没有隐藏的后门或恶意代码</li>
+            <li data-en="Anyone can review our security implementation" data-zh="任何人都可以审查我们的安全实现">Anyone can review our security implementation</li>
+            <li data-en="Security vulnerabilities can be discovered and reported by the community" data-zh="安全漏洞可以被社区发现和报告">Security vulnerabilities can be discovered and reported by the community</li>
+            <li data-en="Code auditing and verification are fully transparent" data-zh="代码审计和验证完全透明">Code auditing and verification are fully transparent</li>
+            <li data-en="No hidden backdoors or malicious code" data-zh="没有隐藏的后门或恶意代码">No hidden backdoors or malicious code</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">9. 漏洞报告</h2>
-          <p class="text-gray-600 leading-relaxed">
-            我们重视安全漏洞的报告。如果您发现安全问题，请通过以下方式联系我们：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="9. Vulnerability Reporting" data-zh="9. 漏洞报告">9. Vulnerability Reporting</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="We take security vulnerability reports seriously. If you discover a security issue, please contact us through:" data-zh="我们重视安全漏洞的报告。如果您发现安全问题，请通过以下方式联系我们：">We take security vulnerability reports seriously. If you discover a security issue, please contact us through:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li><strong>安全邮箱</strong>：security@labanimal.tech</li>
-            <li><strong>GitHub Security Advisories</strong>：<a href="https://github.com/xxjzone01-cyber/labanimal/security/advisories" target="_blank" class="text-brand-600 hover:underline">提交漏洞</a></li>
+            <li data-en="<strong>Security email</strong>: security@labanimal.tech" data-zh="<strong>安全邮箱</strong>：security@labanimal.tech"><strong>Security email</strong>: security@labanimal.tech</li>
+            <li data-en="<strong>GitHub Security Advisories</strong>: <a href=&quot;https://github.com/xxjzone01-cyber/labanimal/security/advisories&quot; target=&quot;_blank&quot; class=&quot;text-brand-600 hover:underline&quot;>Report Vulnerability</a>" data-zh="<strong>GitHub Security Advisories</strong>：<a href=&quot;https://github.com/xxjzone01-cyber/labanimal/security/advisories&quot; target=&quot;_blank&quot; class=&quot;text-brand-600 hover:underline&quot;>提交漏洞</a>"><strong>GitHub Security Advisories</strong>: <a href="https://github.com/xxjzone01-cyber/labanimal/security/advisories" target="_blank" class="text-brand-600 hover:underline">Report Vulnerability</a></li>
           </ul>
-          <p class="text-gray-600 leading-relaxed mt-2">
-            我们承诺在收到漏洞报告后 <strong>48 小时</strong>内响应，并在确认漏洞后尽快发布修复。
-          </p>
+          <p class="text-gray-600 leading-relaxed mt-2" data-en="We commit to responding within <strong>48 hours</strong> of receiving a vulnerability report and will release a fix as soon as possible once the vulnerability is confirmed." data-zh="我们承诺在收到漏洞报告后 <strong>48 小时</strong>内响应，并在确认漏洞后尽快发布修复。">We commit to responding within <strong>48 hours</strong> of receiving a vulnerability report and will release a fix as soon as possible once the vulnerability is confirmed.</p>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">10. 安全更新</h2>
-          <p class="text-gray-600 leading-relaxed">
-            我们定期进行安全更新：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="10. Security Updates" data-zh="10. 安全更新">10. Security Updates</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="We perform regular security updates:" data-zh="我们定期进行安全更新：">We perform regular security updates:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li>依赖项安全审查（pnpm audit）</li>
-            <li>CI/CD 安全扫描</li>
-            <li>硬编码密钥检测</li>
-            <li>定期安全补丁更新</li>
+            <li data-en="Dependency security auditing (pnpm audit)" data-zh="依赖项安全审查（pnpm audit）">Dependency security auditing (pnpm audit)</li>
+            <li data-en="CI/CD security scanning" data-zh="CI/CD 安全扫描">CI/CD security scanning</li>
+            <li data-en="Hardcoded secret detection" data-zh="硬编码密钥检测">Hardcoded secret detection</li>
+            <li data-en="Regular security patch updates" data-zh="定期安全补丁更新">Regular security patch updates</li>
           </ul>
         </section>
       </div>
@@ -224,36 +192,34 @@
       <div class="grid md:grid-cols-4 gap-8 mb-8">
         <div>
           <div class="flex items-center gap-2 mb-4">
-            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-            </svg>
+            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
             <span class="text-lg font-bold text-white">LabAnimal</span>
           </div>
-          <p class="text-sm">实验动物合规管理系统<br>开源核心，合规无忧</p>
+          <p class="text-sm" data-en="Laboratory Animal Compliance Management System<br>Open-source core, worry-free compliance" data-zh="实验动物合规管理系统<br>开源核心，合规无忧">Laboratory Animal Compliance Management System<br>Open-source core, worry-free compliance</p>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">产品</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Product" data-zh="产品">Product</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/#features" class="hover:text-white transition">功能</a></li>
-            <li><a href="/#pricing" class="hover:text-white transition">定价</a></li>
-            <li><a href="/docs" class="hover:text-white transition">文档</a></li>
+            <li><a href="/#features" class="hover:text-white transition" data-en="Features" data-zh="功能">Features</a></li>
+            <li><a href="/#pricing" class="hover:text-white transition" data-en="Pricing" data-zh="定价">Pricing</a></li>
+            <li><a href="/docs" class="hover:text-white transition" data-en="Docs" data-zh="文档">Docs</a></li>
             <li><a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">法律</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Legal" data-zh="法律">Legal</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/terms" class="hover:text-white transition">服务条款</a></li>
-            <li><a href="/privacy" class="hover:text-white transition">隐私政策</a></li>
-            <li><a href="/refund-policy" class="hover:text-white transition">退款政策</a></li>
-            <li><a href="/sla" class="hover:text-white transition">服务等级协议</a></li>
+            <li><a href="/terms" class="hover:text-white transition" data-en="Terms of Service" data-zh="服务条款">Terms of Service</a></li>
+            <li><a href="/privacy" class="hover:text-white transition" data-en="Privacy Policy" data-zh="隐私政策">Privacy Policy</a></li>
+            <li><a href="/refund-policy" class="hover:text-white transition" data-en="Refund Policy" data-zh="退款政策">Refund Policy</a></li>
+            <li><a href="/sla" class="hover:text-white transition" data-en="Service Level Agreement" data-zh="服务等级协议">Service Level Agreement</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">联系</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Contact" data-zh="联系">Contact</h4>
           <ul class="space-y-2 text-sm">
             <li><a href="mailto:contact@labanimal.tech" class="hover:text-white transition">contact@labanimal.tech</a></li>
-            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition">提交 Issue</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition" data-en="Submit Issue" data-zh="提交 Issue">Submit Issue</a></li>
           </ul>
         </div>
       </div>
@@ -261,40 +227,38 @@
         <p class="text-sm">&copy; 2026 LabAnimal. Apache-2.0 License.</p>
         <div class="flex gap-4 text-sm">
           <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a>
-          <a href="/docs" class="hover:text-white transition">文档</a>
-          <a href="https://labanimal.cloud/login" class="hover:text-white transition">登录</a>
+          <a href="/docs" class="hover:text-white transition" data-en="Docs" data-zh="文档">Docs</a>
+          <a href="https://labanimal.cloud/login" class="hover:text-white transition" data-en="Log In" data-zh="登录">Log In</a>
         </div>
       </div>
     </div>
   </footer>
 
-
-  <script>
-    (function() {
-      var lang = localStorage.getItem('lang') || 'en';
-      function setLang(l) {
-        lang = l;
-        localStorage.setItem('lang', l);
-        document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
-        document.querySelectorAll('[data-en]').forEach(function(el) {
-          var text = el.getAttribute('data-' + l);
-          if (text) {
-            if (el.tagName === 'TITLE') { document.title = text; }
-            else { el.innerHTML = text.replace(/&#10;/g, '<br>'); }
-          }
-        });
-        document.querySelectorAll('.lang-btn').forEach(function(btn) {
-          btn.classList.toggle('active', btn.getAttribute('data-lang') === l);
-        });
-      }
-      setLang(lang);
-      document.querySelectorAll('.lang-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          setLang(this.getAttribute('data-lang'));
-        });
+<script>
+  (function() {
+    var lang = localStorage.getItem('lang') || 'en';
+    function setLang(l) {
+      lang = l;
+      localStorage.setItem('lang', l);
+      document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+      document.querySelectorAll('[data-en]').forEach(function(el) {
+        var text = el.getAttribute('data-' + l);
+        if (text) {
+          if (el.tagName === 'TITLE') { document.title = text; }
+          else { el.innerHTML = text.replace(/&#10;/g, '<br>'); }
+        }
       });
-    })();
-  </script>
-
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === l);
+      });
+    }
+    setLang(lang);
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        setLang(this.getAttribute('data-lang'));
+      });
+    });
+  })();
+</script>
 </body>
 </html>

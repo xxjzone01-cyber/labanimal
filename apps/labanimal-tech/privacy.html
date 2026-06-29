@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>隐私政策 — LabAnimal</title>
-  <meta name="description" content="LabAnimal 隐私政策，了解我们如何收集、使用和保护您的个人信息。">
+  <title data-en="Privacy Policy — LabAnimal" data-zh="隐私政策 — LabAnimal">Privacy Policy — LabAnimal</title>
+  <meta name="description" content="LabAnimal Privacy Policy. Learn how we collect, use, and protect your personal information.">
   <link rel="canonical" href="https://labanimal.tech/privacy">
   <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,10 +23,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
     .gradient-hero { background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #2563eb 100%); }
-  
-    .lang-btn { cursor: pointer; user-select: none; }
-    .lang-btn.active { font-weight: 700; color: #2563eb; }
-
+    .lang-btn { cursor: pointer; user-select: none; } .lang-btn.active { font-weight: 700; color: #2563eb; }
   </style>
   <script type="application/ld+json">
 {
@@ -35,10 +32,7 @@
   "name": "LabAnimal Privacy Policy",
   "description": "LabAnimal privacy policy explaining how we collect, use, and protect your personal information.",
   "url": "https://labanimal.tech/privacy",
-  "publisher": {
-    "@type": "Organization",
-    "name": "LabAnimal"
-  },
+  "publisher": { "@type": "Organization", "name": "LabAnimal" },
   "isAccessibleForFree": true
 }
 </script>
@@ -50,19 +44,21 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <a href="/" class="flex items-center gap-2">
-          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-          </svg>
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
           <span class="text-xl font-bold text-brand-800">LabAnimal</span>
         </a>
         <div class="hidden md:flex items-center gap-8">
-          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">首页</a>
-          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium">功能</a>
-          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium">定价</a>
-          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">文档</a>
-          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">登录</a>
-            <span id="langToggle" class="text-gray-400 text-sm flex items-center gap-1"><span class="lang-btn active" data-lang="en">EN</span><span class="text-gray-300">|</span><span class="lang-btn" data-lang="zh">中文</span></span>
-          </div>
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Home" data-zh="首页">Home</a>
+          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Features" data-zh="功能">Features</a>
+          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Pricing" data-zh="定价">Pricing</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Docs" data-zh="文档">Docs</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition" data-en="Log In" data-zh="登录">Log In</a>
+          <span id="langToggle" class="text-gray-400 text-sm flex items-center gap-1">
+            <span class="lang-btn active" data-lang="en">EN</span>
+            <span class="text-gray-300">|</span>
+            <span class="lang-btn" data-lang="zh">中文</span>
+          </span>
+        </div>
       </div>
     </div>
   </nav>
@@ -70,149 +66,110 @@
   <!-- Content -->
   <main class="pt-24 pb-16 px-4">
     <div class="max-w-4xl mx-auto">
-      <h1 class="text-3xl sm:text-4xl font-bold mb-2">隐私政策</h1>
-      <p class="text-gray-500 mb-8">最后更新：2026 年 6 月 26 日</p>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-2" data-en="Privacy Policy" data-zh="隐私政策">Privacy Policy</h1>
+      <p class="text-gray-500 mb-8" data-en="Last updated: June 26, 2026" data-zh="最后更新：2026 年 6 月 26 日">Last updated: June 26, 2026</p>
 
       <div class="prose prose-gray max-w-none space-y-8">
         <section>
-          <h2 class="text-2xl font-semibold mb-4">1. 引言</h2>
-          <p class="text-gray-600 leading-relaxed">
-            LabAnimal（以下简称"我们"）重视您的隐私。本隐私政策说明了当您使用我们的实验动物合规管理系统（以下简称"服务"）时，我们如何收集、使用、存储和保护您的个人信息。
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="1. Introduction" data-zh="1. 引言">1. Introduction</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="LabAnimal (&quot;we&quot;) values your privacy. This Privacy Policy explains how we collect, use, store, and protect your personal information when you use our laboratory animal compliance management system (&quot;the Service&quot;)." data-zh="LabAnimal（以下简称&quot;我们&quot;）重视您的隐私。本隐私政策说明了当您使用我们的实验动物合规管理系统（以下简称&quot;服务&quot;）时，我们如何收集、使用、存储和保护您的个人信息。">LabAnimal ("we") values your privacy. This Privacy Policy explains how we collect, use, store, and protect your personal information when you use our laboratory animal compliance management system ("the Service").</p>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">2. 信息收集</h2>
-          <h3 class="text-xl font-medium mb-2 mt-4">2.1 您提供的信息</h3>
+          <h2 class="text-2xl font-semibold mb-4" data-en="2. Information Collection" data-zh="2. 信息收集">2. Information Collection</h2>
+          <h3 class="text-xl font-medium mb-2 mt-4" data-en="2.1 Information You Provide" data-zh="2.1 您提供的信息">2.1 Information You Provide</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-1">
-            <li><strong>账户信息</strong>：姓名、电子邮件地址、密码（加密存储）</li>
-            <li><strong>实验室信息</strong>：实验室名称、机构信息</li>
-            <li><strong>业务数据</strong>：实验动物记录、协议、健康记录、死亡报告等</li>
-            <li><strong>支付信息</strong>：通过 PayPal 处理，我们不存储您的信用卡信息</li>
+            <li data-en="<strong>Account information</strong>: name, email address, password (encrypted)" data-zh="<strong>账户信息</strong>：姓名、电子邮件地址、密码（加密存储）"><strong>Account information</strong>: name, email address, password (encrypted)</li>
+            <li data-en="<strong>Laboratory information</strong>: lab name, institution details" data-zh="<strong>实验室信息</strong>：实验室名称、机构信息"><strong>Laboratory information</strong>: lab name, institution details</li>
+            <li data-en="<strong>Business data</strong>: animal records, protocols, health records, mortality reports, etc." data-zh="<strong>业务数据</strong>：实验动物记录、协议、健康记录、死亡报告等"><strong>Business data</strong>: animal records, protocols, health records, mortality reports, etc.</li>
+            <li data-en="<strong>Payment information</strong>: processed via PayPal; we do not store your credit card information" data-zh="<strong>支付信息</strong>：通过 PayPal 处理，我们不存储您的信用卡信息"><strong>Payment information</strong>: processed via PayPal; we do not store your credit card information</li>
           </ul>
-
-          <h3 class="text-xl font-medium mb-2 mt-4">2.2 自动收集的信息</h3>
+          <h3 class="text-xl font-medium mb-2 mt-4" data-en="2.2 Automatically Collected Information" data-zh="2.2 自动收集的信息">2.2 Automatically Collected Information</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-1">
-            <li><strong>日志数据</strong>：IP 地址、浏览器类型、访问时间、页面浏览</li>
-            <li><strong>设备信息</strong>：操作系统、屏幕分辨率</li>
-            <li><strong>使用数据</strong>：功能使用频率、错误日志</li>
+            <li data-en="<strong>Log data</strong>: IP address, browser type, access time, page views" data-zh="<strong>日志数据</strong>：IP 地址、浏览器类型、访问时间、页面浏览"><strong>Log data</strong>: IP address, browser type, access time, page views</li>
+            <li data-en="<strong>Device information</strong>: operating system, screen resolution" data-zh="<strong>设备信息</strong>：操作系统、屏幕分辨率"><strong>Device information</strong>: operating system, screen resolution</li>
+            <li data-en="<strong>Usage data</strong>: feature usage frequency, error logs" data-zh="<strong>使用数据</strong>：功能使用频率、错误日志"><strong>Usage data</strong>: feature usage frequency, error logs</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">3. 信息使用</h2>
-          <p class="text-gray-600 leading-relaxed">
-            我们使用收集的信息用于：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="3. Use of Information" data-zh="3. 信息使用">3. Use of Information</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="We use the collected information to:" data-zh="我们使用收集的信息用于：">We use the collected information to:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li>提供、维护和改进本服务</li>
-            <li>处理您的订阅和支付</li>
-            <li>发送服务相关通知（如订阅到期、系统更新）</li>
-            <li>防止欺诈和增强安全性</li>
-            <li>分析使用趋势以改进用户体验</li>
-            <li>遵守法律义务</li>
+            <li data-en="Provide, maintain, and improve the Service" data-zh="提供、维护和改进本服务">Provide, maintain, and improve the Service</li>
+            <li data-en="Process your subscription and payments" data-zh="处理您的订阅和支付">Process your subscription and payments</li>
+            <li data-en="Send service-related notifications (e.g., subscription expiry, system updates)" data-zh="发送服务相关通知（如订阅到期、系统更新）">Send service-related notifications (e.g., subscription expiry, system updates)</li>
+            <li data-en="Prevent fraud and enhance security" data-zh="防止欺诈和增强安全性">Prevent fraud and enhance security</li>
+            <li data-en="Analyze usage trends to improve user experience" data-zh="分析使用趋势以改进用户体验">Analyze usage trends to improve user experience</li>
+            <li data-en="Comply with legal obligations" data-zh="遵守法律义务">Comply with legal obligations</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">4. 信息存储和安全</h2>
-          <p class="text-gray-600 leading-relaxed">
-            您的数据存储在安全的服务器上，采用行业标准的加密和安全措施：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="4. Information Storage and Security" data-zh="4. 信息存储和安全">4. Information Storage and Security</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="Your data is stored on secure servers with industry-standard encryption and security measures:" data-zh="您的数据存储在安全的服务器上，采用行业标准的加密和安全措施：">Your data is stored on secure servers with industry-standard encryption and security measures:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li>传输层加密（HTTPS/TLS）</li>
-            <li>密码使用 bcrypt 加密存储</li>
-            <li>数据库访问控制和审计日志</li>
-            <li>定期安全审查和更新</li>
+            <li data-en="Transport-layer encryption (HTTPS/TLS)" data-zh="传输层加密（HTTPS/TLS）">Transport-layer encryption (HTTPS/TLS)</li>
+            <li data-en="Passwords stored with bcrypt encryption" data-zh="密码使用 bcrypt 加密存储">Passwords stored with bcrypt encryption</li>
+            <li data-en="Database access control and audit logs" data-zh="数据库访问控制和审计日志">Database access control and audit logs</li>
+            <li data-en="Regular security reviews and updates" data-zh="定期安全审查和更新">Regular security reviews and updates</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">5. 多租户数据隔离</h2>
-          <p class="text-gray-600 leading-relaxed">
-            本服务采用 PostgreSQL 行级安全（RLS）确保不同实验室的数据完全隔离。每个实验室只能访问自己的数据，无法查看其他实验室的任何信息。
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="5. Multi-Tenant Data Isolation" data-zh="5. 多租户数据隔离">5. Multi-Tenant Data Isolation</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="The Service uses PostgreSQL Row-Level Security (RLS) to ensure complete data isolation between different laboratories. Each lab can only access its own data and cannot view any information from other labs." data-zh="本服务采用 PostgreSQL 行级安全（RLS）确保不同实验室的数据完全隔离。每个实验室只能访问自己的数据，无法查看其他实验室的任何信息。">The Service uses PostgreSQL Row-Level Security (RLS) to ensure complete data isolation between different laboratories. Each lab can only access its own data and cannot view any information from other labs.</p>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">6. 信息共享</h2>
-          <p class="text-gray-600 leading-relaxed">
-            我们不会出售您的个人信息。我们仅在以下情况下共享您的信息：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="6. Information Sharing" data-zh="6. 信息共享">6. Information Sharing</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="We do not sell your personal information. We only share your information in the following circumstances:" data-zh="我们不会出售您的个人信息。我们仅在以下情况下共享您的信息：">We do not sell your personal information. We only share your information in the following circumstances:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li><strong>服务提供商</strong>：PayPal（支付处理）、Vercel（托管）等可信第三方</li>
-            <li><strong>法律要求</strong>：响应法律程序或政府请求</li>
-            <li><strong>权利保护</strong>：保护 LabAnimal 或用户的权利和安全</li>
-            <li><strong>您的同意</strong>：在您明确同意的其他情况</li>
+            <li data-en="<strong>Service providers</strong>: PayPal (payment processing), Vercel (hosting), and other trusted third parties" data-zh="<strong>服务提供商</strong>：PayPal（支付处理）、Vercel（托管）等可信第三方"><strong>Service providers</strong>: PayPal (payment processing), Vercel (hosting), and other trusted third parties</li>
+            <li data-en="<strong>Legal requirements</strong>: in response to legal proceedings or government requests" data-zh="<strong>法律要求</strong>：响应法律程序或政府请求"><strong>Legal requirements</strong>: in response to legal proceedings or government requests</li>
+            <li data-en="<strong>Rights protection</strong>: to protect the rights and safety of LabAnimal or its users" data-zh="<strong>权利保护</strong>：保护 LabAnimal 或用户的权利和安全"><strong>Rights protection</strong>: to protect the rights and safety of LabAnimal or its users</li>
+            <li data-en="<strong>Your consent</strong>: in other cases where you have explicitly consented" data-zh="<strong>您的同意</strong>：在您明确同意的其他情况"><strong>Your consent</strong>: in other cases where you have explicitly consented</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">7. 数据保留</h2>
-          <p class="text-gray-600 leading-relaxed">
-            我们在您使用本服务期间保留您的数据。当您删除账户时，我们将在 30 天内删除您的所有数据，除非法律要求保留更长时间。
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="7. Data Retention" data-zh="7. 数据保留">7. Data Retention</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="We retain your data while you use the Service. When you delete your account, we will delete all your data within 30 days, unless a longer retention period is required by law." data-zh="我们在您使用本服务期间保留您的数据。当您删除账户时，我们将在 30 天内删除您的所有数据，除非法律要求保留更长时间。">We retain your data while you use the Service. When you delete your account, we will delete all your data within 30 days, unless a longer retention period is required by law.</p>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">8. 您的权利</h2>
-          <p class="text-gray-600 leading-relaxed">
-            您有权：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="8. Your Rights" data-zh="8. 您的权利">8. Your Rights</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="You have the right to:" data-zh="您有权：">You have the right to:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li>访问和查看您的个人信息</li>
-            <li>更正不准确的信息</li>
-            <li>删除您的账户和数据</li>
-            <li>导出您的数据（数据可携权）</li>
-            <li>撤回同意（如适用）</li>
-            <li>反对处理您的个人信息</li>
+            <li data-en="Access and view your personal information" data-zh="访问和查看您的个人信息">Access and view your personal information</li>
+            <li data-en="Correct inaccurate information" data-zh="更正不准确的信息">Correct inaccurate information</li>
+            <li data-en="Delete your account and data" data-zh="删除您的账户和数据">Delete your account and data</li>
+            <li data-en="Export your data (data portability)" data-zh="导出您的数据（数据可携权）">Export your data (data portability)</li>
+            <li data-en="Withdraw consent (where applicable)" data-zh="撤回同意（如适用）">Withdraw consent (where applicable)</li>
+            <li data-en="Object to the processing of your personal information" data-zh="反对处理您的个人信息">Object to the processing of your personal information</li>
           </ul>
-          <p class="text-gray-600 leading-relaxed mt-2">
-            要行使上述权利，请联系 privacy@labanimal.tech。
-          </p>
+          <p class="text-gray-600 leading-relaxed mt-2" data-en="To exercise these rights, please contact privacy@labanimal.tech." data-zh="要行使上述权利，请联系 privacy@labanimal.tech。">To exercise these rights, please contact privacy@labanimal.tech.</p>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">9. Cookie 和追踪技术</h2>
-          <p class="text-gray-600 leading-relaxed">
-            我们使用以下技术：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="9. Cookies and Tracking Technologies" data-zh="9. Cookie 和追踪技术">9. Cookies and Tracking Technologies</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="We use the following technologies:" data-zh="我们使用以下技术：">We use the following technologies:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li><strong>必要 Cookie</strong>：维持登录状态和会话</li>
-            <li><strong>分析工具</strong>：Plausible Analytics（隐私友好型分析，不使用 Cookie）</li>
-            <li><strong>本地存储</strong>：保存用户偏好（如语言设置）</li>
+            <li data-en="<strong>Essential cookies</strong>: maintain login state and sessions" data-zh="<strong>必要 Cookie</strong>：维持登录状态和会话"><strong>Essential cookies</strong>: maintain login state and sessions</li>
+            <li data-en="<strong>Analytics</strong>: Plausible Analytics (privacy-friendly analytics, no cookies used)" data-zh="<strong>分析工具</strong>：Plausible Analytics（隐私友好型分析，不使用 Cookie）"><strong>Analytics</strong>: Plausible Analytics (privacy-friendly analytics, no cookies used)</li>
+            <li data-en="<strong>Local storage</strong>: save user preferences (e.g., language settings)" data-zh="<strong>本地存储</strong>：保存用户偏好（如语言设置）"><strong>Local storage</strong>: save user preferences (e.g., language settings)</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">10. 儿童隐私</h2>
-          <p class="text-gray-600 leading-relaxed">
-            本服务不面向 16 岁以下儿童。我们不会故意收集 16 岁以下儿童的个人信息。
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="10. Children's Privacy" data-zh="10. 儿童隐私">10. Children's Privacy</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="The Service is not intended for children under 16. We do not knowingly collect personal information from children under 16." data-zh="本服务不面向 16 岁以下儿童。我们不会故意收集 16 岁以下儿童的个人信息。">The Service is not intended for children under 16. We do not knowingly collect personal information from children under 16.</p>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">11. 国际数据传输</h2>
-          <p class="text-gray-600 leading-relaxed">
-            您的数据可能会传输到您所在国家/地区以外的服务器。我们会确保此类传输符合适用的数据保护法律。
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="11. International Data Transfer" data-zh="11. 国际数据传输">11. International Data Transfer</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="Your data may be transferred to servers outside your country/region. We ensure that such transfers comply with applicable data protection laws." data-zh="您的数据可能会传输到您所在国家/地区以外的服务器。我们会确保此类传输符合适用的数据保护法律。">Your data may be transferred to servers outside your country/region. We ensure that such transfers comply with applicable data protection laws.</p>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">12. 政策变更</h2>
-          <p class="text-gray-600 leading-relaxed">
-            我们可能会更新本隐私政策。重大变更将通过电子邮件或服务内通知告知您。继续使用本服务即表示您接受更新后的政策。
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="12. Policy Changes" data-zh="12. 政策变更">12. Policy Changes</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="We may update this Privacy Policy. Significant changes will be communicated via email or in-Service notification. Continued use of the Service constitutes acceptance of the updated policy." data-zh="我们可能会更新本隐私政策。重大变更将通过电子邮件或服务内通知告知您。继续使用本服务即表示您接受更新后的政策。">We may update this Privacy Policy. Significant changes will be communicated via email or in-Service notification. Continued use of the Service constitutes acceptance of the updated policy.</p>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">13. 联系我们</h2>
-          <p class="text-gray-600 leading-relaxed">
-            如果您对本隐私政策有任何疑问，请联系我们：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="13. Contact Us" data-zh="13. 联系我们">13. Contact Us</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="If you have any questions about this Privacy Policy, please contact us:" data-zh="如果您对本隐私政策有任何疑问，请联系我们：">If you have any questions about this Privacy Policy, please contact us:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li>电子邮件：privacy@labanimal.tech</li>
-            <li>GitHub Issues：<a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="text-brand-600 hover:underline">提交问题</a></li>
+            <li data-en="Email: privacy@labanimal.tech" data-zh="电子邮件：privacy@labanimal.tech">Email: privacy@labanimal.tech</li>
+            <li data-en="GitHub Issues: <a href=&quot;https://github.com/xxjzone01-cyber/labanimal/issues&quot; target=&quot;_blank&quot; class=&quot;text-brand-600 hover:underline&quot;>Submit Issue</a>" data-zh="GitHub Issues：<a href=&quot;https://github.com/xxjzone01-cyber/labanimal/issues&quot; target=&quot;_blank&quot; class=&quot;text-brand-600 hover:underline&quot;>提交问题</a>">GitHub Issues: <a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="text-brand-600 hover:underline">Submit Issue</a></li>
           </ul>
         </section>
       </div>
@@ -225,36 +182,34 @@
       <div class="grid md:grid-cols-4 gap-8 mb-8">
         <div>
           <div class="flex items-center gap-2 mb-4">
-            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-            </svg>
+            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
             <span class="text-lg font-bold text-white">LabAnimal</span>
           </div>
-          <p class="text-sm">实验动物合规管理系统<br>开源核心，合规无忧</p>
+          <p class="text-sm" data-en="Laboratory Animal Compliance Management System<br>Open-source core, worry-free compliance" data-zh="实验动物合规管理系统<br>开源核心，合规无忧">Laboratory Animal Compliance Management System<br>Open-source core, worry-free compliance</p>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">产品</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Product" data-zh="产品">Product</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/#features" class="hover:text-white transition">功能</a></li>
-            <li><a href="/#pricing" class="hover:text-white transition">定价</a></li>
-            <li><a href="/docs" class="hover:text-white transition">文档</a></li>
+            <li><a href="/#features" class="hover:text-white transition" data-en="Features" data-zh="功能">Features</a></li>
+            <li><a href="/#pricing" class="hover:text-white transition" data-en="Pricing" data-zh="定价">Pricing</a></li>
+            <li><a href="/docs" class="hover:text-white transition" data-en="Docs" data-zh="文档">Docs</a></li>
             <li><a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">法律</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Legal" data-zh="法律">Legal</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/terms" class="hover:text-white transition">服务条款</a></li>
-            <li><a href="/privacy" class="hover:text-white transition">隐私政策</a></li>
-            <li><a href="/refund-policy" class="hover:text-white transition">退款政策</a></li>
-            <li><a href="/sla" class="hover:text-white transition">服务等级协议</a></li>
+            <li><a href="/terms" class="hover:text-white transition" data-en="Terms of Service" data-zh="服务条款">Terms of Service</a></li>
+            <li><a href="/privacy" class="hover:text-white transition" data-en="Privacy Policy" data-zh="隐私政策">Privacy Policy</a></li>
+            <li><a href="/refund-policy" class="hover:text-white transition" data-en="Refund Policy" data-zh="退款政策">Refund Policy</a></li>
+            <li><a href="/sla" class="hover:text-white transition" data-en="Service Level Agreement" data-zh="服务等级协议">Service Level Agreement</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">联系</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Contact" data-zh="联系">Contact</h4>
           <ul class="space-y-2 text-sm">
             <li><a href="mailto:contact@labanimal.tech" class="hover:text-white transition">contact@labanimal.tech</a></li>
-            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition">提交 Issue</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition" data-en="Submit Issue" data-zh="提交 Issue">Submit Issue</a></li>
           </ul>
         </div>
       </div>
@@ -262,40 +217,38 @@
         <p class="text-sm">&copy; 2026 LabAnimal. Apache-2.0 License.</p>
         <div class="flex gap-4 text-sm">
           <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a>
-          <a href="/docs" class="hover:text-white transition">文档</a>
-          <a href="https://labanimal.cloud/login" class="hover:text-white transition">登录</a>
+          <a href="/docs" class="hover:text-white transition" data-en="Docs" data-zh="文档">Docs</a>
+          <a href="https://labanimal.cloud/login" class="hover:text-white transition" data-en="Log In" data-zh="登录">Log In</a>
         </div>
       </div>
     </div>
   </footer>
 
-
-  <script>
-    (function() {
-      var lang = localStorage.getItem('lang') || 'en';
-      function setLang(l) {
-        lang = l;
-        localStorage.setItem('lang', l);
-        document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
-        document.querySelectorAll('[data-en]').forEach(function(el) {
-          var text = el.getAttribute('data-' + l);
-          if (text) {
-            if (el.tagName === 'TITLE') { document.title = text; }
-            else { el.innerHTML = text.replace(/&#10;/g, '<br>'); }
-          }
-        });
-        document.querySelectorAll('.lang-btn').forEach(function(btn) {
-          btn.classList.toggle('active', btn.getAttribute('data-lang') === l);
-        });
-      }
-      setLang(lang);
-      document.querySelectorAll('.lang-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          setLang(this.getAttribute('data-lang'));
-        });
+<script>
+  (function() {
+    var lang = localStorage.getItem('lang') || 'en';
+    function setLang(l) {
+      lang = l;
+      localStorage.setItem('lang', l);
+      document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+      document.querySelectorAll('[data-en]').forEach(function(el) {
+        var text = el.getAttribute('data-' + l);
+        if (text) {
+          if (el.tagName === 'TITLE') { document.title = text; }
+          else { el.innerHTML = text.replace(/&#10;/g, '<br>'); }
+        }
       });
-    })();
-  </script>
-
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === l);
+      });
+    }
+    setLang(lang);
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        setLang(this.getAttribute('data-lang'));
+      });
+    });
+  })();
+</script>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>退款政策 — LabAnimal</title>
-  <meta name="description" content="LabAnimal 退款政策，了解我们的订阅退款规则和流程。">
+  <title data-en="Refund Policy — LabAnimal" data-zh="退款政策 — LabAnimal">Refund Policy — LabAnimal</title>
+  <meta name="description" content="LabAnimal Refund Policy. Learn about our subscription refund rules and procedures.">
   <link rel="canonical" href="https://labanimal.tech/refund-policy">
   <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,10 +22,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-  
-    .lang-btn { cursor: pointer; user-select: none; }
-    .lang-btn.active { font-weight: 700; color: #2563eb; }
-
+    .lang-btn { cursor: pointer; user-select: none; } .lang-btn.active { font-weight: 700; color: #2563eb; }
   </style>
   <script type="application/ld+json">
 {
@@ -34,10 +31,7 @@
   "name": "LabAnimal Refund Policy",
   "description": "LabAnimal refund policy for subscription services and enterprise licenses.",
   "url": "https://labanimal.tech/refund-policy",
-  "publisher": {
-    "@type": "Organization",
-    "name": "LabAnimal"
-  },
+  "publisher": { "@type": "Organization", "name": "LabAnimal" },
   "isAccessibleForFree": true
 }
 </script>
@@ -49,19 +43,21 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <a href="/" class="flex items-center gap-2">
-          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-          </svg>
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
           <span class="text-xl font-bold text-brand-800">LabAnimal</span>
         </a>
         <div class="hidden md:flex items-center gap-8">
-          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">首页</a>
-          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium">功能</a>
-          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium">定价</a>
-          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">文档</a>
-          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">登录</a>
-            <span id="langToggle" class="text-gray-400 text-sm flex items-center gap-1"><span class="lang-btn active" data-lang="en">EN</span><span class="text-gray-300">|</span><span class="lang-btn" data-lang="zh">中文</span></span>
-          </div>
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Home" data-zh="首页">Home</a>
+          <a href="/#features" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Features" data-zh="功能">Features</a>
+          <a href="/#pricing" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Pricing" data-zh="定价">Pricing</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium" data-en="Docs" data-zh="文档">Docs</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition" data-en="Log In" data-zh="登录">Log In</a>
+          <span id="langToggle" class="text-gray-400 text-sm flex items-center gap-1">
+            <span class="lang-btn active" data-lang="en">EN</span>
+            <span class="text-gray-300">|</span>
+            <span class="lang-btn" data-lang="zh">中文</span>
+          </span>
+        </div>
       </div>
     </div>
   </nav>
@@ -69,97 +65,77 @@
   <!-- Content -->
   <main class="pt-24 pb-16 px-4">
     <div class="max-w-4xl mx-auto">
-      <h1 class="text-3xl sm:text-4xl font-bold mb-2">退款政策</h1>
-      <p class="text-gray-500 mb-8">最后更新：2026 年 6 月 26 日</p>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-2" data-en="Refund Policy" data-zh="退款政策">Refund Policy</h1>
+      <p class="text-gray-500 mb-8" data-en="Last updated: June 26, 2026" data-zh="最后更新：2026 年 6 月 26 日">Last updated: June 26, 2026</p>
 
       <div class="prose prose-gray max-w-none space-y-8">
         <section>
-          <h2 class="text-2xl font-semibold mb-4">1. 30 天退款保证</h2>
-          <p class="text-gray-600 leading-relaxed">
-            我们为所有付费订阅提供 <strong>30 天无条件退款保证</strong>。如果您在首次订阅后的 30 天内对服务不满意，可以申请全额退款。
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="1. 30-Day Refund Guarantee" data-zh="1. 30 天退款保证">1. 30-Day Refund Guarantee</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="We offer a <strong>30-day unconditional refund guarantee</strong> for all paid subscriptions. If you are not satisfied with the Service within 30 days of your initial subscription, you may request a full refund." data-zh="我们为所有付费订阅提供 <strong>30 天无条件退款保证</strong>。如果您在首次订阅后的 30 天内对服务不满意，可以申请全额退款。">We offer a <strong>30-day unconditional refund guarantee</strong> for all paid subscriptions. If you are not satisfied with the Service within 30 days of your initial subscription, you may request a full refund.</p>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">2. 退款条件</h2>
-          <h3 class="text-xl font-medium mb-2 mt-4">2.1 符合退款条件的情况</h3>
+          <h2 class="text-2xl font-semibold mb-4" data-en="2. Refund Conditions" data-zh="2. 退款条件">2. Refund Conditions</h2>
+          <h3 class="text-xl font-medium mb-2 mt-4" data-en="2.1 Eligible for Refund" data-zh="2.1 符合退款条件的情况">2.1 Eligible for Refund</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-1">
-            <li>首次订阅后 30 天内申请</li>
-            <li>服务存在重大功能缺陷且无法在合理时间内修复</li>
-            <li>因我们的原因导致服务无法正常使用</li>
+            <li data-en="Request made within 30 days of initial subscription" data-zh="首次订阅后 30 天内申请">Request made within 30 days of initial subscription</li>
+            <li data-en="Significant feature defect that cannot be resolved within a reasonable time" data-zh="服务存在重大功能缺陷且无法在合理时间内修复">Significant feature defect that cannot be resolved within a reasonable time</li>
+            <li data-en="Service unusable due to our fault" data-zh="因我们的原因导致服务无法正常使用">Service unusable due to our fault</li>
           </ul>
-
-          <h3 class="text-xl font-medium mb-2 mt-4">2.2 不符合退款条件的情况</h3>
+          <h3 class="text-xl font-medium mb-2 mt-4" data-en="2.2 Not Eligible for Refund" data-zh="2.2 不符合退款条件的情况">2.2 Not Eligible for Refund</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-1">
-            <li>超过 30 天退款期限</li>
-            <li>已使用超过 50% 的付费功能配额</li>
-            <li>因违反服务条款导致账户被终止</li>
-            <li>免费套餐（Academic Free）不涉及退款</li>
+            <li data-en="Request made after the 30-day refund period" data-zh="超过 30 天退款期限">Request made after the 30-day refund period</li>
+            <li data-en="More than 50% of paid feature quota already used" data-zh="已使用超过 50% 的付费功能配额">More than 50% of paid feature quota already used</li>
+            <li data-en="Account terminated due to Terms of Service violation" data-zh="因违反服务条款导致账户被终止">Account terminated due to Terms of Service violation</li>
+            <li data-en="Free plan (Academic Free) does not involve refunds" data-zh="免费套餐（Academic Free）不涉及退款">Free plan (Academic Free) does not involve refunds</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">3. 退款流程</h2>
-          <p class="text-gray-600 leading-relaxed">
-            申请退款请按以下步骤操作：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="3. Refund Process" data-zh="3. 退款流程">3. Refund Process</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="To request a refund, follow these steps:" data-zh="申请退款请按以下步骤操作：">To request a refund, follow these steps:</p>
           <ol class="list-decimal list-inside text-gray-600 mt-2 space-y-2">
-            <li>发送邮件至 <strong>refund@labanimal.tech</strong></li>
-            <li>邮件中请包含：
+            <li data-en="Send an email to <strong>refund@labanimal.tech</strong>" data-zh="发送邮件至 <strong>refund@labanimal.tech</strong>">Send an email to <strong>refund@labanimal.tech</strong></li>
+            <li>Please include the following in your email:
               <ul class="list-disc list-inside ml-6 mt-1 space-y-1">
-                <li>您的账户邮箱</li>
-                <li>订阅套餐名称</li>
-                <li>退款原因（可选）</li>
+                <li data-en="Your account email" data-zh="您的账户邮箱">Your account email</li>
+                <li data-en="Subscription plan name" data-zh="订阅套餐名称">Subscription plan name</li>
+                <li data-en="Reason for refund (optional)" data-zh="退款原因（可选）">Reason for refund (optional)</li>
               </ul>
             </li>
-            <li>我们将在 <strong>3 个工作日</strong>内审核您的退款申请</li>
-            <li>审核通过后，退款将在 <strong>5-10 个工作日</strong>内退回您的 PayPal 账户</li>
+            <li data-en="We will review your refund request within <strong>3 business days</strong>" data-zh="我们将在 <strong>3 个工作日</strong>内审核您的退款申请">We will review your refund request within <strong>3 business days</strong></li>
+            <li data-en="Once approved, the refund will be returned to your PayPal account within <strong>5-10 business days</strong>" data-zh="审核通过后，退款将在 <strong>5-10 个工作日</strong>内退回您的 PayPal 账户">Once approved, the refund will be returned to your PayPal account within <strong>5-10 business days</strong></li>
           </ol>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">4. 取消订阅</h2>
-          <p class="text-gray-600 leading-relaxed">
-            您可以随时取消订阅：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="4. Canceling Subscription" data-zh="4. 取消订阅">4. Canceling Subscription</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="You may cancel your subscription at any time:" data-zh="您可以随时取消订阅：">You may cancel your subscription at any time:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li>登录 <a href="https://labanimal.cloud/subscriptions" class="text-brand-600 hover:underline">订阅管理页面</a></li>
-            <li>点击"取消订阅"按钮</li>
-            <li>取消将在当前计费周期结束时生效</li>
-            <li>取消后您仍可使用服务直到周期结束</li>
-            <li>取消不会自动触发退款</li>
+            <li data-en="Log in to the <a href=&quot;https://labanimal.cloud/subscriptions&quot; class=&quot;text-brand-600 hover:underline&quot;>Subscription Management page</a>" data-zh="登录 <a href=&quot;https://labanimal.cloud/subscriptions&quot; class=&quot;text-brand-600 hover:underline&quot;>订阅管理页面</a>">Log in to the <a href="https://labanimal.cloud/subscriptions" class="text-brand-600 hover:underline">Subscription Management page</a></li>
+            <li data-en="Click the &quot;Cancel Subscription&quot; button" data-zh="点击&quot;取消订阅&quot;按钮">Click the "Cancel Subscription" button</li>
+            <li data-en="Cancellation will take effect at the end of the current billing cycle" data-zh="取消将在当前计费周期结束时生效">Cancellation will take effect at the end of the current billing cycle</li>
+            <li data-en="You may continue using the Service until the end of the cycle" data-zh="取消后您仍可使用服务直到周期结束">You may continue using the Service until the end of the cycle</li>
+            <li data-en="Cancellation does not automatically trigger a refund" data-zh="取消不会自动触发退款">Cancellation does not automatically trigger a refund</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">5. 降级和升级</h2>
-          <p class="text-gray-600 leading-relaxed">
-            <strong>升级</strong>：立即生效，按剩余天数比例收费。<br>
-            <strong>降级</strong>：在当前计费周期结束时生效，不产生退款。
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="5. Downgrades and Upgrades" data-zh="5. 降级和升级">5. Downgrades and Upgrades</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="<strong>Upgrade</strong>: takes effect immediately, charged on a pro-rata basis for the remaining days.<br><strong>Downgrade</strong>: takes effect at the end of the current billing cycle, no refund issued." data-zh="<strong>升级</strong>：立即生效，按剩余天数比例收费。<br><strong>降级</strong>：在当前计费周期结束时生效，不产生退款。"><strong>Upgrade</strong>: takes effect immediately, charged on a pro-rata basis for the remaining days.<br><strong>Downgrade</strong>: takes effect at the end of the current billing cycle, no refund issued.</p>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">6. 特殊情况</h2>
-          <p class="text-gray-600 leading-relaxed">
-            以下情况我们将提供全额退款：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="6. Special Circumstances" data-zh="6. 特殊情况">6. Special Circumstances</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="We will provide a full refund in the following cases:" data-zh="以下情况我们将提供全额退款：">We will provide a full refund in the following cases:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li>因我们的系统故障导致数据丢失</li>
-            <li>重复扣费</li>
-            <li>未经授权的收费</li>
+            <li data-en="Data loss caused by our system failure" data-zh="因我们的系统故障导致数据丢失">Data loss caused by our system failure</li>
+            <li data-en="Duplicate charges" data-zh="重复扣费">Duplicate charges</li>
+            <li data-en="Unauthorized charges" data-zh="未经授权的收费">Unauthorized charges</li>
           </ul>
         </section>
-
         <section>
-          <h2 class="text-2xl font-semibold mb-4">7. 联系方式</h2>
-          <p class="text-gray-600 leading-relaxed">
-            如有任何退款相关问题，请联系我们：
-          </p>
+          <h2 class="text-2xl font-semibold mb-4" data-en="7. Contact" data-zh="7. 联系方式">7. Contact</h2>
+          <p class="text-gray-600 leading-relaxed" data-en="For any refund-related questions, please contact us:" data-zh="如有任何退款相关问题，请联系我们：">For any refund-related questions, please contact us:</p>
           <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-            <li>退款邮箱：refund@labanimal.tech</li>
-            <li>客服邮箱：support@labanimal.tech</li>
-            <li>GitHub Issues：<a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="text-brand-600 hover:underline">提交问题</a></li>
+            <li data-en="Refund email: refund@labanimal.tech" data-zh="退款邮箱：refund@labanimal.tech">Refund email: refund@labanimal.tech</li>
+            <li data-en="Support email: support@labanimal.tech" data-zh="客服邮箱：support@labanimal.tech">Support email: support@labanimal.tech</li>
+            <li data-en="GitHub Issues: <a href=&quot;https://github.com/xxjzone01-cyber/labanimal/issues&quot; target=&quot;_blank&quot; class=&quot;text-brand-600 hover:underline&quot;>Submit Issue</a>" data-zh="GitHub Issues：<a href=&quot;https://github.com/xxjzone01-cyber/labanimal/issues&quot; target=&quot;_blank&quot; class=&quot;text-brand-600 hover:underline&quot;>提交问题</a>">GitHub Issues: <a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="text-brand-600 hover:underline">Submit Issue</a></li>
           </ul>
         </section>
       </div>
@@ -172,36 +148,34 @@
       <div class="grid md:grid-cols-4 gap-8 mb-8">
         <div>
           <div class="flex items-center gap-2 mb-4">
-            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-            </svg>
+            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
             <span class="text-lg font-bold text-white">LabAnimal</span>
           </div>
-          <p class="text-sm">实验动物合规管理系统<br>开源核心，合规无忧</p>
+          <p class="text-sm" data-en="Laboratory Animal Compliance Management System<br>Open-source core, worry-free compliance" data-zh="实验动物合规管理系统<br>开源核心，合规无忧">Laboratory Animal Compliance Management System<br>Open-source core, worry-free compliance</p>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">产品</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Product" data-zh="产品">Product</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/#features" class="hover:text-white transition">功能</a></li>
-            <li><a href="/#pricing" class="hover:text-white transition">定价</a></li>
-            <li><a href="/docs" class="hover:text-white transition">文档</a></li>
+            <li><a href="/#features" class="hover:text-white transition" data-en="Features" data-zh="功能">Features</a></li>
+            <li><a href="/#pricing" class="hover:text-white transition" data-en="Pricing" data-zh="定价">Pricing</a></li>
+            <li><a href="/docs" class="hover:text-white transition" data-en="Docs" data-zh="文档">Docs</a></li>
             <li><a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">法律</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Legal" data-zh="法律">Legal</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/terms" class="hover:text-white transition">服务条款</a></li>
-            <li><a href="/privacy" class="hover:text-white transition">隐私政策</a></li>
-            <li><a href="/refund-policy" class="hover:text-white transition">退款政策</a></li>
-            <li><a href="/sla" class="hover:text-white transition">服务等级协议</a></li>
+            <li><a href="/terms" class="hover:text-white transition" data-en="Terms of Service" data-zh="服务条款">Terms of Service</a></li>
+            <li><a href="/privacy" class="hover:text-white transition" data-en="Privacy Policy" data-zh="隐私政策">Privacy Policy</a></li>
+            <li><a href="/refund-policy" class="hover:text-white transition" data-en="Refund Policy" data-zh="退款政策">Refund Policy</a></li>
+            <li><a href="/sla" class="hover:text-white transition" data-en="Service Level Agreement" data-zh="服务等级协议">Service Level Agreement</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-3">联系</h4>
+          <h4 class="text-white font-semibold mb-3" data-en="Contact" data-zh="联系">Contact</h4>
           <ul class="space-y-2 text-sm">
             <li><a href="mailto:contact@labanimal.tech" class="hover:text-white transition">contact@labanimal.tech</a></li>
-            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition">提交 Issue</a></li>
+            <li><a href="https://github.com/xxjzone01-cyber/labanimal/issues" target="_blank" class="hover:text-white transition" data-en="Submit Issue" data-zh="提交 Issue">Submit Issue</a></li>
           </ul>
         </div>
       </div>
@@ -209,40 +183,38 @@
         <p class="text-sm">&copy; 2026 LabAnimal. Apache-2.0 License.</p>
         <div class="flex gap-4 text-sm">
           <a href="https://github.com/xxjzone01-cyber/labanimal" target="_blank" class="hover:text-white transition">GitHub</a>
-          <a href="/docs" class="hover:text-white transition">文档</a>
-          <a href="https://labanimal.cloud/login" class="hover:text-white transition">登录</a>
+          <a href="/docs" class="hover:text-white transition" data-en="Docs" data-zh="文档">Docs</a>
+          <a href="https://labanimal.cloud/login" class="hover:text-white transition" data-en="Log In" data-zh="登录">Log In</a>
         </div>
       </div>
     </div>
   </footer>
 
-
-  <script>
-    (function() {
-      var lang = localStorage.getItem('lang') || 'en';
-      function setLang(l) {
-        lang = l;
-        localStorage.setItem('lang', l);
-        document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
-        document.querySelectorAll('[data-en]').forEach(function(el) {
-          var text = el.getAttribute('data-' + l);
-          if (text) {
-            if (el.tagName === 'TITLE') { document.title = text; }
-            else { el.innerHTML = text.replace(/&#10;/g, '<br>'); }
-          }
-        });
-        document.querySelectorAll('.lang-btn').forEach(function(btn) {
-          btn.classList.toggle('active', btn.getAttribute('data-lang') === l);
-        });
-      }
-      setLang(lang);
-      document.querySelectorAll('.lang-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          setLang(this.getAttribute('data-lang'));
-        });
+<script>
+  (function() {
+    var lang = localStorage.getItem('lang') || 'en';
+    function setLang(l) {
+      lang = l;
+      localStorage.setItem('lang', l);
+      document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+      document.querySelectorAll('[data-en]').forEach(function(el) {
+        var text = el.getAttribute('data-' + l);
+        if (text) {
+          if (el.tagName === 'TITLE') { document.title = text; }
+          else { el.innerHTML = text.replace(/&#10;/g, '<br>'); }
+        }
       });
-    })();
-  </script>
-
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === l);
+      });
+    }
+    setLang(lang);
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        setLang(this.getAttribute('data-lang'));
+      });
+    });
+  })();
+</script>
 </body>
 </html>
