@@ -59,8 +59,10 @@ describe('Email Templates', () => {
 // send 函数降级测试（无 API Key 时静默跳过）
 describe('Email Send Functions', () => {
   beforeEach(() => {
-    // 确保没有 RESEND_API_KEY
-    delete process.env.RESEND_API_KEY;
+    // 确保没有邮件 API Key
+    delete process.env.BREVO_API_KEY;
+    delete process.env.TENCENT_SECRET_ID;
+    delete process.env.TENCENT_SECRET_KEY;
     // 清除模块缓存让 getResend 重新初始化
     vi.resetModules();
   });
