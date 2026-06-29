@@ -16,6 +16,17 @@
     { "src": "/security", "dest": "/security.html" },
     { "src": "/enterprise-offline-purchase", "dest": "/enterprise-offline-purchase.html" },
     { "src": "/resources/aaalac-50-questions", "dest": "/resources-aaalac-50-questions.html" },
+    { "src": "/resources/security-whitepaper", "dest": "/resources-security-whitepaper.html" },
+    { "src": "/guides/aaalac-audit-checklist", "dest": "/guides-aaalac-audit-checklist.html" },
+    { "src": "/guides/iacuc-protocol-template", "dest": "/guides-iacuc-protocol-template.html" },
+    { "src": "/guides/3r-compliance", "dest": "/guides-3r-compliance.html" },
+    { "src": "/guides/death-report-olaw", "dest": "/guides-death-report-olaw.html" },
+    { "src": "/guides/cage-density", "dest": "/guides-cage-density.html" },
+    { "src": "/guides/21-cfr-part-11", "dest": "/guides-21cfr11.html" },
+    { "src": "/guides/breeding-colony", "dest": "/guides-breeding-colony.html" },
+    { "src": "/guides/quarantine", "dest": "/guides-quarantine.html" },
+    { "src": "/guides", "dest": "/guides.html" },
+    { "src": "/blog/introducing-labanimal", "dest": "/blog-introducing-labanimal.html" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

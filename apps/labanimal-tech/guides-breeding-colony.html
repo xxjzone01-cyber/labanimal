@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breeding Colony Management: Tracking Genetics and Pedigree | LabAnimal</title>
+  <meta name="description" content="Best practices for managing laboratory animal breeding colonies, including genetic tracking, pedigree documentation, and colony size optimization.">
+  <meta name="keywords" content="breeding colony management, lab animal genetics, pedigree tracking, colony management software">
+  <link rel="canonical" href="https://labanimal.tech/guides/breeding-colony">
+  <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "HowTo",
+        "name": "How to Manage a Laboratory Animal Breeding Colony",
+        "description": "A step-by-step guide for managing laboratory animal breeding colonies, including genetic tracking, pedigree documentation, reproductive monitoring, and colony size optimization.",
+        "totalTime": "PT4H",
+        "tool": [
+          {
+            "@type": "HowToTool",
+            "name": "LabAnimal colony management system"
+          },
+          {
+            "@type": "HowToTool",
+            "name": "Genetic tracking and pedigree software"
+          }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Define Colony Goals",
+            "text": "Determine whether your colony is for production breeding (maintaining a supply of animals for experiments) or experimental breeding (generating animals with specific genotypes for studies). This distinction affects pairing strategies, colony size targets, and culling protocols.",
+            "url": "https://labanimal.tech/guides/breeding-colony#step1"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Set Up Genetic Tracking System",
+            "text": "Establish a system to track strain, genotype, and generation number for every animal. Record parental lineage, genetic background, and any transgenic or knockout designations. Use standardized nomenclature (e.g., Jackson Laboratory conventions for mouse strains).",
+            "url": "https://labanimal.tech/guides/breeding-colony#step2"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Implement Breeding Pairs Management",
+            "text": "Track breeding pair assignments including pairing date, expected litter date, and fertility history. Monitor pair performance over time to identify infertile pairs, replace underperforming breeders, and optimize pairing schedules.",
+            "url": "https://labanimal.tech/guides/breeding-colony#step3"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Monitor Reproductive Performance",
+            "text": "Track key metrics: litter size, pup survival rate, weaning success, and inter-litter interval. Compare performance across breeders and generations to identify trends. Flag breeders that fall below performance thresholds for replacement.",
+            "url": "https://labanimal.tech/guides/breeding-colony#step4"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Track Pedigree and Prevent Inbreeding",
+            "text": "Maintain complete pedigree records showing parent-offspring relationships across generations. Calculate inbreeding coefficients and implement outcrossing schedules when coefficients approach critical thresholds. For inbred strains, verify genetic homogeneity through periodic genotyping.",
+            "url": "https://labanimal.tech/guides/breeding-colony#step5"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 6,
+            "name": "Manage Colony Size",
+            "text": "Balance colony size against usage rate to avoid surplus animals. Implement culling protocols for excess animals following IACUC-approved methods. Monitor cage density and adjust breeding output based on current demand and projected needs.",
+            "url": "https://labanimal.tech/guides/breeding-colony#step6"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 7,
+            "name": "Generate Colony Reports",
+            "text": "Produce regular reports on colony status: total animals by strain and genotype, breeding performance metrics, genetic diversity indicators, and production vs. usage balance. These reports support IACUC reviews and budget planning.",
+            "url": "https://labanimal.tech/guides/breeding-colony#step7"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "headline": "Breeding Colony Management: Tracking Genetics and Pedigree",
+        "description": "Comprehensive guide for managing laboratory animal breeding colonies. Covers genetic tracking, pedigree documentation, reproductive monitoring, and colony size optimization.",
+        "url": "https://labanimal.tech/guides/breeding-colony",
+        "datePublished": "2026-06-29",
+        "author": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "isAccessibleForFree": true
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do you track lab animal genetics?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Lab animal genetics are tracked through genotyping records (PCR, gel electrophoresis, or sequencing results), pedigree databases that record parent-offspring relationships, and colony management software that links genotype data to individual animal records. Standard nomenclature (e.g., Jackson Laboratory conventions) ensures consistent identification across breeding programs and institutions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the optimal breeding colony size?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Optimal colony size depends on your usage rate (how many animals per week/month you need), the reproductive capacity of the strain (litter size, generation time), and a safety buffer for unexpected demand or breeding failures. A common formula is: Colony size = (Weekly usage x Generation time in weeks) + Buffer (typically 20-30%). Over-colonizing wastes resources; under-colonizing causes supply shortages."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you prevent inbreeding in a colony?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Prevent inbreeding by maintaining complete pedigree records, calculating inbreeding coefficients (F values), and implementing structured outcrossing schedules. For outbred stocks, avoid pairing animals with common ancestors within 4 generations. For transgenic lines on inbred backgrounds, periodically backcross to the parental inbred strain (every 10 generations) to maintain genetic homogeneity. Use genotyping to verify genetic integrity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "When should breeding animals be replaced?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Replace breeding animals when they show declining reproductive performance (smaller litters, longer inter-litter intervals, increased pup mortality), reach an age threshold defined by your IACUC protocol (typically 6-8 months for mice, 8-12 months for rats), or when genetic management requires rotation. Track individual breeder performance over time to make data-driven replacement decisions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you manage surplus animals from breeding colonies?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Surplus animals should be managed through: (1) adjusting breeding output to match actual demand, (2) transferring animals to other investigators who need the same strain, (3) weaning and separating pups early to prevent unintended breeding, and (4) humane euthanasia following IACUC-approved protocols when no use is available. All culling decisions must be documented and follow the institution's animal welfare policies."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Home</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Docs</a>
+          <a href="/guides" class="text-brand-600 font-semibold text-sm font-medium">Guides</a>
+          <a href="/about" class="text-gray-600 hover:text-brand-600 text-sm font-medium">About</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">Login</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-12 bg-gradient-to-br from-brand-50 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-4">
+        <span class="inline-block bg-brand-100 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full">GUIDE</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+        Breeding Colony Management:<br>Tracking Genetics and Pedigree
+      </h1>
+      <p class="text-lg text-gray-600 mb-6">
+        Effective breeding colony management requires balancing animal supply with demand, maintaining genetic integrity, and documenting pedigree across generations. This guide covers best practices for setting up and running a compliant breeding program.
+      </p>
+      <div class="flex items-center gap-4 text-sm text-gray-500">
+        <span>Last updated: June 29, 2026</span>
+        <span>&middot;</span>
+        <span>12 min read</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Why Colony Management Matters</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Breeding colonies are the backbone of many research programs. Poorly managed colonies lead to genetic drift, inbreeding depression, supply shortages, surplus animal waste, and compliance issues. A well-managed colony ensures a reliable supply of genetically defined animals while minimizing costs and animal numbers.
+      </p>
+      <p class="text-gray-700 leading-relaxed">
+        The Guide for the Care and Use of Laboratory Animals emphasizes that breeding programs must be scientifically justified, genetically monitored, and managed to minimize the number of animals produced beyond research needs.
+      </p>
+    </section>
+
+    <section id="step1" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
+        <h2 class="text-2xl font-bold text-gray-900">Define Colony Goals</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Before setting up a colony, clearly define its purpose:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Production breeding:</strong> Maintaining a steady supply of animals (often wild-type or common strains) for multiple experiments. Focus on efficiency and throughput.</li>
+        <li><strong>Experimental breeding:</strong> Generating animals with specific genotypes (e.g., homozygous knockouts, conditional alleles) for a particular study. Focus on precision and genetic accuracy.</li>
+        <li><strong>Colony maintenance:</strong> Preserving a rare or valuable strain for future use. Focus on genetic integrity and long-term viability.</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed">
+        Document colony goals in your IACUC protocol, including the justification for the number of breeding pairs and expected animal production.
+      </p>
+    </section>
+
+    <section id="step2" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">2</span>
+        <h2 class="text-2xl font-bold text-gray-900">Set Up Genetic Tracking System</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Every animal in a breeding colony must have documented genetic information:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Strain designation:</strong> Use standardized nomenclature (e.g., B6.129P2-Emtm1Unc/J for a specific knockout mouse)</li>
+        <li><strong>Genotype:</strong> Homozygous, heterozygous, or wild-type for each relevant allele</li>
+        <li><strong>Generation number:</strong> Track which filial generation (F1, F2, etc.) each animal represents</li>
+        <li><strong>Genetic background:</strong> Inbred, outbred, or mixed background; note any congenic or consomic designations</li>
+        <li><strong>Genotyping records:</strong> Link each animal to its genotyping results (date, method, result)</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <p class="text-blue-800 text-sm">
+          <strong>Pro Tip:</strong> Standardize nomenclature from the start. Correcting naming inconsistencies later is time-consuming and error-prone. Use Jackson Laboratory or MGI naming conventions.
+        </p>
+      </div>
+    </section>
+
+    <section id="step3" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">3</span>
+        <h2 class="text-2xl font-bold text-gray-900">Implement Breeding Pairs Management</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Effective pair management is the core of colony operations:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Pairing schedules:</strong> Record when pairs are set up, expected mating outcomes, and separation dates</li>
+        <li><strong>Pair types:</strong> Monogamous (1 male + 1 female), polygamous (1 male + 2-3 females), or trio mating</li>
+        <li><strong>Fertility tracking:</strong> Record time to first litter, litter intervals, and any failed breeding attempts</li>
+        <li><strong>Replacement criteria:</strong> Define when to replace breeders (age, performance decline, genetic rotation)</li>
+        <li><strong>Cage assignments:</strong> Track which breeding pairs are in which cages, with history of cage transfers</li>
+      </ul>
+    </section>
+
+    <section id="step4" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">4</span>
+        <h2 class="text-2xl font-bold text-gray-900">Monitor Reproductive Performance</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Track these key performance indicators (KPIs) for your breeding colony:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Litter size:</strong> Average number of pups per litter (strain-dependent; typically 6-12 for mice)</li>
+        <li><strong>Pup survival rate:</strong> Percentage of pups surviving to weaning age (typically 21 days for mice)</li>
+        <li><strong>Weaning success:</strong> Percentage of litters successfully weaned vs. lost</li>
+        <li><strong>Inter-litter interval:</strong> Time between consecutive litters (typically 25-30 days for mice)</li>
+        <li><strong>Breeding lifespan:</strong> How many litters a breeder produces before retirement</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed">
+        Compare metrics across breeders, generations, and time periods. Underperforming breeders should be identified and replaced to maintain colony efficiency.
+      </p>
+    </section>
+
+    <section id="step5" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">5</span>
+        <h2 class="text-2xl font-bold text-gray-900">Track Pedigree and Prevent Inbreeding</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Pedigree tracking is essential for genetic management:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Pedigree records:</strong> Maintain parent-offspring relationships for at least 4 generations (more for outbred stocks)</li>
+        <li><strong>Inbreeding coefficients:</strong> Calculate the inbreeding coefficient (F) for each animal. For outbred stocks, keep F below 0.01 (1%); for partially inbred lines, monitor for unexpected increases.</li>
+        <li><strong>Outcrossing schedules:</strong> For outbred colonies, implement systematic outcrossing to maintain genetic diversity. Rotate breeders and avoid pairing animals with common ancestors within 4 generations.</li>
+        <li><strong>Backcrossing:</strong> For transgenic lines on inbred backgrounds, backcross to the parental strain every 10 generations to prevent genetic drift.</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+        <p class="text-amber-800 text-sm">
+          <strong>Common Finding:</strong> Many colonies lose track of pedigree after 3-4 generations. Use colony management software that automatically calculates inbreeding coefficients and warns you before problems develop.
+        </p>
+      </div>
+    </section>
+
+    <section id="step6" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">6</span>
+        <h2 class="text-2xl font-bold text-gray-900">Manage Colony Size</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Balancing colony size with demand is critical for animal welfare and cost management:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Demand forecasting:</strong> Track usage rates over time and adjust breeding output accordingly</li>
+        <li><strong>Buffer stock:</strong> Maintain a 20-30% buffer above projected demand to account for breeding failures or unexpected needs</li>
+        <li><strong>Surplus management:</strong> When production exceeds demand, transfer animals to other investigators, reduce breeding pairs, or humanely euthanize excess animals per IACUC-approved protocols</li>
+        <li><strong>Cage density:</strong> Monitor cage density as colonies grow; transfer or wean pups before overcrowding occurs</li>
+      </ul>
+    </section>
+
+    <section id="step7" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">7</span>
+        <h2 class="text-2xl font-bold text-gray-900">Generate Colony Reports</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Regular reporting keeps your colony management transparent and data-driven:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Colony census:</strong> Total animals by strain, genotype, sex, and age</li>
+        <li><strong>Production metrics:</strong> Litters born, pups weaned, and survival rates for the reporting period</li>
+        <li><strong>Genetic diversity:</strong> Inbreeding coefficients, number of active breeding lines, and outcrossing status</li>
+        <li><strong>Usage balance:</strong> Animals produced vs. animals used, with surplus projections</li>
+        <li><strong>Breeder performance:</strong> Individual breeder KPIs and replacement recommendations</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+        <p class="text-green-800 text-sm">
+          <strong>LabAnimal Feature:</strong> Generate colony management reports with one click. Track pedigree, calculate inbreeding coefficients, and monitor breeding performance across your entire colony from a single dashboard.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">How do you track lab animal genetics?</h3>
+          <p class="text-gray-700">Lab animal genetics are tracked through genotyping records (PCR, gel electrophoresis, or sequencing results), pedigree databases that record parent-offspring relationships, and colony management software that links genotype data to individual animal records. Standard nomenclature (e.g., Jackson Laboratory conventions) ensures consistent identification across breeding programs and institutions.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What is the optimal breeding colony size?</h3>
+          <p class="text-gray-700">Optimal colony size depends on your usage rate (how many animals per week/month you need), the reproductive capacity of the strain (litter size, generation time), and a safety buffer for unexpected demand or breeding failures. A common formula is: Colony size = (Weekly usage x Generation time in weeks) + Buffer (typically 20-30%). Over-colonizing wastes resources; under-colonizing causes supply shortages.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">How do you prevent inbreeding in a colony?</h3>
+          <p class="text-gray-700">Prevent inbreeding by maintaining complete pedigree records, calculating inbreeding coefficients (F values), and implementing structured outcrossing schedules. For outbred stocks, avoid pairing animals with common ancestors within 4 generations. For transgenic lines on inbred backgrounds, periodically backcross to the parental inbred strain (every 10 generations) to maintain genetic homogeneity. Use genotyping to verify genetic integrity.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">When should breeding animals be replaced?</h3>
+          <p class="text-gray-700">Replace breeding animals when they show declining reproductive performance (smaller litters, longer inter-litter intervals, increased pup mortality), reach an age threshold defined by your IACUC protocol (typically 6-8 months for mice, 8-12 months for rats), or when genetic management requires rotation. Track individual breeder performance over time to make data-driven replacement decisions.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">How do you manage surplus animals from breeding colonies?</h3>
+          <p class="text-gray-700">Surplus animals should be managed through: (1) adjusting breeding output to match actual demand, (2) transferring animals to other investigators who need the same strain, (3) weaning and separating pups early to prevent unintended breeding, and (4) humane euthanasia following IACUC-approved protocols when no use is available. All culling decisions must be documented and follow the institution's animal welfare policies.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-brand-50 rounded-2xl p-8 text-center">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Simplify Your Breeding Colony Management</h2>
+      <p class="text-gray-600 mb-6">LabAnimal tracks pedigree, calculates inbreeding coefficients, monitors breeding performance, and generates colony reports. Free for up to 500 animals.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://labanimal.cloud/register" class="bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700 transition">Start Free</a>
+        <a href="/docs" class="border border-brand-600 text-brand-600 px-6 py-3 rounded-lg font-semibold hover:bg-brand-50 transition">Read Docs</a>
+      </div>
+    </section>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="bg-gray-50 border-t border-gray-200 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+      <p>&copy; 2026 LabAnimal. Open-source laboratory animal management.</p>
+      <p class="mt-2">
+        <a href="/" class="hover:text-brand-600">Home</a> &middot;
+        <a href="/docs" class="hover:text-brand-600">Docs</a> &middot;
+        <a href="/about" class="hover:text-brand-600">About</a> &middot;
+        <a href="https://github.com/xxjzone01-cyber/labanimal" class="hover:text-brand-600">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

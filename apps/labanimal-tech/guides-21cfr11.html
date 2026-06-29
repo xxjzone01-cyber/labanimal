@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electronic Signatures for Lab Animal Records: 21 CFR Part 11 Guide | LabAnimal</title>
+  <meta name="description" content="How to implement 21 CFR Part 11 compliant electronic signatures and audit trails for laboratory animal records.">
+  <meta name="keywords" content="21 CFR Part 11, electronic signatures lab animals, audit trail, electronic records compliance">
+  <link rel="canonical" href="https://labanimal.tech/guides/21-cfr-part-11">
+  <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "HowTo",
+        "name": "How to Implement 21 CFR Part 11 Compliant Electronic Signatures for Lab Animal Records",
+        "description": "A step-by-step guide for implementing electronic signatures and audit trails that comply with FDA 21 CFR Part 11 for laboratory animal records.",
+        "totalTime": "PT8H",
+        "tool": [
+          {
+            "@type": "HowToTool",
+            "name": "LabAnimal compliance management system"
+          },
+          {
+            "@type": "HowToTool",
+            "name": "21 CFR Part 11 validation documentation"
+          }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Understand 21 CFR Part 11 Requirements",
+            "text": "Review the regulation to understand its scope: electronic records and electronic signatures used in FDA-regulated research. Part 11 applies when you create, modify, maintain, archive, retrieve, or transmit records required by FDA regulations.",
+            "url": "https://labanimal.tech/guides/21-cfr-part-11#step1"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Implement Access Controls",
+            "text": "Establish unique user identification (usernames and passwords) for all system users. Implement role-based access control to ensure users can only perform actions authorized for their role. Disable shared accounts and generic logins.",
+            "url": "https://labanimal.tech/guides/21-cfr-part-11#step2"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Create Audit Trails",
+            "text": "Implement computer-generated, time-stamped audit trails that record who created, modified, or deleted a record, what was changed, when the change occurred, and why. Audit trails must be independent of the user and cannot be modified or disabled.",
+            "url": "https://labanimal.tech/guides/21-cfr-part-11#step3"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Design Signature Manifestations",
+            "text": "Electronic signatures must include the printed name of the signer, the date and time the signature was executed, and the meaning of the signature (e.g., review, approval, authorship). Link signatures to their respective electronic records.",
+            "url": "https://labanimal.tech/guides/21-cfr-part-11#step4"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Validate Your System",
+            "text": "Perform Installation Qualification (IQ), Operational Qualification (OQ), and Performance Qualification (PQ) to demonstrate that the system consistently performs as intended. Document all validation activities and maintain validation records.",
+            "url": "https://labanimal.tech/guides/21-cfr-part-11#step5"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 6,
+            "name": "Train Users on Electronic Signature Policies",
+            "text": "Train all users on the electronic signature policy, including the legal significance of their electronic signature, password management requirements, and the prohibition of sharing credentials. Document training with signed acknowledgment forms.",
+            "url": "https://labanimal.tech/guides/21-cfr-part-11#step6"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 7,
+            "name": "Maintain Records and Backup Procedures",
+            "text": "Implement data backup, recovery, and archival procedures. Ensure electronic records are retrievable for the required retention period. Test backup restoration regularly. Maintain records in a format that is readable throughout the retention period.",
+            "url": "https://labanimal.tech/guides/21-cfr-part-11#step7"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "headline": "Electronic Signatures for Lab Animal Records: 21 CFR Part 11 Guide",
+        "description": "Comprehensive guide for implementing 21 CFR Part 11 compliant electronic signatures and audit trails for laboratory animal records in FDA-regulated research.",
+        "url": "https://labanimal.tech/guides/21-cfr-part-11",
+        "datePublished": "2026-06-29",
+        "author": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "isAccessibleForFree": true
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does 21 CFR Part 11 apply to lab animal records?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, 21 CFR Part 11 applies to laboratory animal records when the research is regulated by the FDA. This includes preclinical studies for drug submissions (IND, NDA), medical device testing (IDE, 510(k)), and any research where records are required to be maintained under FDA regulations. Even if your institution is not directly regulated by FDA, adopting Part 11 practices is considered a best practice for data integrity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What makes an electronic signature compliant?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A compliant electronic signature under 21 CFR Part 11 must include: (1) the printed name of the signer, (2) the date and time the signature was executed, (3) the meaning of the signature (e.g., review, approval, authorship, responsibility), and (4) a link between the signature and the signed record. The signature must be uniquely linked to the signer through user authentication (username + password). Biometric signatures are also acceptable."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need audit trails for all records?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Audit trails are required for any electronic record that is required to be maintained by regulation. Under 21 CFR Part 11.10(e), you must employ procedures and controls to ensure the integrity of electronic records, including computer-generated, time-stamped audit trails. This includes records of animal observations, treatment logs, protocol deviations, and any data submitted to the FDA."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between open and closed systems?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A closed system is one where system access is controlled by persons who are responsible for the content of electronic records. An open system is one where system access is not controlled by the responsible person (e.g., cloud-based systems accessible via the internet). Closed systems require audit trails, electronic signatures, and access controls. Open systems require all of the above plus additional measures such as encryption and digital signatures to ensure record integrity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long must Part 11 compliant records be retained?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Record retention under 21 CFR Part 11 follows the same requirements as the underlying regulation that requires the record. For example, GLP studies (21 CFR Part 58) require retention for the duration of the study plus 2 years for FDA submissions, or 5-15 years depending on the type of study. Records must remain readable and retrievable throughout the entire retention period, even if the original system is decommissioned."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Home</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Docs</a>
+          <a href="/guides" class="text-brand-600 font-semibold text-sm font-medium">Guides</a>
+          <a href="/about" class="text-gray-600 hover:text-brand-600 text-sm font-medium">About</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">Login</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-12 bg-gradient-to-br from-brand-50 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-4">
+        <span class="inline-block bg-brand-100 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full">GUIDE</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+        Electronic Signatures for Lab Animal Records:<br>21 CFR Part 11 Guide
+      </h1>
+      <p class="text-lg text-gray-600 mb-6">
+        If your laboratory animal research is FDA-regulated, your electronic records and signatures must comply with 21 CFR Part 11. This guide walks you through the requirements and implementation best practices.
+      </p>
+      <div class="flex items-center gap-4 text-sm text-gray-500">
+        <span>Last updated: June 29, 2026</span>
+        <span>&middot;</span>
+        <span>14 min read</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">What is 21 CFR Part 11?</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        21 CFR Part 11 is the FDA regulation that establishes criteria under which electronic records and electronic signatures are considered trustworthy, reliable, and equivalent to paper records and handwritten signatures. It applies to all FDA-regulated industries, including pharmaceutical, biotechnology, and medical device companies conducting laboratory animal research.
+      </p>
+      <p class="text-gray-700 leading-relaxed">
+        Non-compliance can result in FDA warning letters, data rejection during regulatory submissions, and compromised study integrity. Implementing Part 11 compliance from the start is far less costly than retrofitting it later.
+      </p>
+    </section>
+
+    <section id="step1" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
+        <h2 class="text-2xl font-bold text-gray-900">Understand 21 CFR Part 11 Requirements</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        The regulation has three main sections you need to understand:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>General Provisions (11.1-11.3):</strong> Scope, implementation, and definitions. Part 11 applies when you use electronic records in lieu of paper records required by FDA regulations.</li>
+        <li><strong>Electronic Records (11.10):</strong> Requirements for closed systems including validation, audit trails, access controls, authority checks, and record protection.</li>
+        <li><strong>Electronic Signatures (11.50-11.100):</strong> Requirements for signature manifestations, signature/record linking, and controls for identification codes/passwords.</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <p class="text-blue-800 text-sm">
+          <strong>Pro Tip:</strong> The FDA issued a guidance document on "Part 11; Electronic Records; Electronic Signatures" that clarifies the agency's current enforcement approach. Review this document before implementing your system.
+        </p>
+      </div>
+    </section>
+
+    <section id="step2" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">2</span>
+        <h2 class="text-2xl font-bold text-gray-900">Implement Access Controls</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Access controls are the foundation of Part 11 compliance. Your system must:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Unique user IDs:</strong> Every user must have a unique identifier. No shared or generic accounts are permitted.</li>
+        <li><strong>Password policies:</strong> Enforce minimum complexity, periodic expiration, and lockout after failed attempts.</li>
+        <li><strong>Role-based access:</strong> Users can only perform actions authorized for their assigned role (e.g., technicians can enter data, PIs can sign records, administrators can configure the system).</li>
+        <li><strong>Session management:</strong> Automatic logout after inactivity. No concurrent sessions from multiple devices.</li>
+        <li><strong>Authority checks:</strong> Verify that only authorized individuals can sign records, modify data, or access specific functions.</li>
+      </ul>
+    </section>
+
+    <section id="step3" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">3</span>
+        <h2 class="text-2xl font-bold text-gray-900">Create Audit Trails</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Audit trails are required under 21 CFR 11.10(e). Each audit trail entry must capture:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Who:</strong> The unique user ID of the person who created, modified, or deleted the record</li>
+        <li><strong>What:</strong> The specific data that was changed (old value and new value)</li>
+        <li><strong>When:</strong> Computer-generated timestamp (not user-entered) in a consistent format</li>
+        <li><strong>Why:</strong> The reason for the change (user-provided or system-generated)</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Critical requirements for audit trails:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li>Audit trails must be computer-generated and independent of the user</li>
+        <li>Audit trails cannot be modified or disabled by any user, including administrators</li>
+        <li>Audit trails must be retained for the same period as the associated record</li>
+        <li>Audit trails must be available for FDA review upon request</li>
+      </ul>
+    </section>
+
+    <section id="step4" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">4</span>
+        <h2 class="text-2xl font-bold text-gray-900">Design Signature Manifestations</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Under 21 CFR 11.50, each electronic signature must include:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Printed name:</strong> The full name of the signer as it appears in their user profile</li>
+        <li><strong>Date and time:</strong> The exact date and time the signature was executed (system-generated, not user-entered)</li>
+        <li><strong>Meaning of signature:</strong> What the signature represents, such as "reviewed by," "approved by," "authored by," or "responsibility for"</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Additionally, under 21 CFR 11.70, electronic signatures must be linked to their respective electronic records so that signatures cannot be excised, copied, or transferred to falsify a record.
+      </p>
+      <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+        <p class="text-amber-800 text-sm">
+          <strong>Common Finding:</strong> Many systems fail to capture the "meaning" of the signature. A signature without context (e.g., just a name and date) does not meet Part 11 requirements.
+        </p>
+      </div>
+    </section>
+
+    <section id="step5" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">5</span>
+        <h2 class="text-2xl font-bold text-gray-900">Validate Your System</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        21 CFR 11.10(a) requires that you validate computer systems to ensure accuracy, reliability, and consistent intended performance. Validation follows a standard lifecycle:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Installation Qualification (IQ):</strong> Verify that the system is installed correctly in the intended environment (hardware, software, network configuration).</li>
+        <li><strong>Operational Qualification (OQ):</strong> Test all system functions against predefined specifications. Verify access controls, audit trails, signature functionality, and data integrity.</li>
+        <li><strong>Performance Qualification (PQ):</strong> Test the system under real-world conditions with actual users and data. Confirm that the system performs as intended in the production environment.</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed">
+        Maintain validation documentation including test protocols, test results, deviation reports, and final validation reports. Revalidation is required when the system is modified or upgraded.
+      </p>
+    </section>
+
+    <section id="step6" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">6</span>
+        <h2 class="text-2xl font-bold text-gray-900">Train Users on Electronic Signature Policies</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Under 21 CFR 11.10(k), you must establish and maintain policies that hold individuals accountable for actions initiated under their electronic signatures. Training must cover:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Legal significance:</strong> Explain that electronic signatures are legally equivalent to handwritten signatures under federal law</li>
+        <li><strong>Accountability:</strong> Users are responsible for all actions performed under their credentials</li>
+        <li><strong>Password management:</strong> Requirements for password complexity, expiration, and the prohibition of sharing credentials</li>
+        <li><strong>Signature meaning:</strong> Train users to understand what each signature type means (review, approval, authorship)</li>
+        <li><strong>Incident reporting:</strong> Users must immediately report compromised credentials or suspected unauthorized access</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed">
+        Document all training with signed acknowledgment forms (electronic or paper) and maintain training records for the duration of the employee's involvement plus the retention period.
+      </p>
+    </section>
+
+    <section id="step7" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">7</span>
+        <h2 class="text-2xl font-bold text-gray-900">Maintain Records and Backup Procedures</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        21 CFR 11.10(c) requires procedures and controls to ensure data protection and availability:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Regular backups:</strong> Implement automated backup schedules with verified integrity checks</li>
+        <li><strong>Recovery testing:</strong> Test backup restoration at least annually to verify recoverability</li>
+        <li><strong>Disaster recovery:</strong> Maintain a documented disaster recovery plan with defined Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO)</li>
+        <li><strong>Media migration:</strong> When systems are upgraded or decommissioned, migrate records to the new system while preserving audit trails and signatures</li>
+        <li><strong>Retention compliance:</strong> Ensure records remain accessible for the full retention period required by the applicable FDA regulation</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+        <p class="text-green-800 text-sm">
+          <strong>LabAnimal Feature:</strong> All records include built-in Part 11 compliant audit trails and electronic signatures. The system supports automated backups, data export, and record retention management.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">Does 21 CFR Part 11 apply to lab animal records?</h3>
+          <p class="text-gray-700">Yes, 21 CFR Part 11 applies to laboratory animal records when the research is regulated by the FDA. This includes preclinical studies for drug submissions (IND, NDA), medical device testing (IDE, 510(k)), and any research where records are required to be maintained under FDA regulations. Even if your institution is not directly regulated by FDA, adopting Part 11 practices is considered a best practice for data integrity.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What makes an electronic signature compliant?</h3>
+          <p class="text-gray-700">A compliant electronic signature under 21 CFR Part 11 must include: (1) the printed name of the signer, (2) the date and time the signature was executed, (3) the meaning of the signature (e.g., review, approval, authorship, responsibility), and (4) a link between the signature and the signed record. The signature must be uniquely linked to the signer through user authentication (username + password). Biometric signatures are also acceptable.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">Do I need audit trails for all records?</h3>
+          <p class="text-gray-700">Audit trails are required for any electronic record that is required to be maintained by regulation. Under 21 CFR Part 11.10(e), you must employ procedures and controls to ensure the integrity of electronic records, including computer-generated, time-stamped audit trails. This includes records of animal observations, treatment logs, protocol deviations, and any data submitted to the FDA.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What is the difference between open and closed systems?</h3>
+          <p class="text-gray-700">A closed system is one where system access is controlled by persons who are responsible for the content of electronic records. An open system is one where system access is not controlled by the responsible person (e.g., cloud-based systems accessible via the internet). Closed systems require audit trails, electronic signatures, and access controls. Open systems require all of the above plus additional measures such as encryption and digital signatures to ensure record integrity.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">How long must Part 11 compliant records be retained?</h3>
+          <p class="text-gray-700">Record retention under 21 CFR Part 11 follows the same requirements as the underlying regulation that requires the record. For example, GLP studies (21 CFR Part 58) require retention for the duration of the study plus 2 years for FDA submissions, or 5-15 years depending on the type of study. Records must remain readable and retrievable throughout the entire retention period, even if the original system is decommissioned.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-brand-50 rounded-2xl p-8 text-center">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Part 11 Compliance Made Simple</h2>
+      <p class="text-gray-600 mb-6">LabAnimal provides built-in 21 CFR Part 11 compliant audit trails, electronic signatures, and access controls. No additional configuration required. Free for up to 500 animals.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://labanimal.cloud/register" class="bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700 transition">Start Free</a>
+        <a href="/docs" class="border border-brand-600 text-brand-600 px-6 py-3 rounded-lg font-semibold hover:bg-brand-50 transition">Read Docs</a>
+      </div>
+    </section>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="bg-gray-50 border-t border-gray-200 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+      <p>&copy; 2026 LabAnimal. Open-source laboratory animal management.</p>
+      <p class="mt-2">
+        <a href="/" class="hover:text-brand-600">Home</a> &middot;
+        <a href="/docs" class="hover:text-brand-600">Docs</a> &middot;
+        <a href="/about" class="hover:text-brand-600">About</a> &middot;
+        <a href="https://github.com/xxjzone01-cyber/labanimal" class="hover:text-brand-600">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

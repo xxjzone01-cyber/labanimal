@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IACUC Protocol Template: Writing for First-Pass Approval | LabAnimal</title>
+  <meta name="description" content="Step-by-step guide to writing IACUC protocols that pass review on the first submission. Includes 3R documentation templates and common rejection reasons.">
+  <meta name="keywords" content="IACUC protocol template, IACUC protocol writing, animal protocol approval, 3R compliance">
+  <link rel="canonical" href="https://labanimal.tech/guides/iacuc-protocol-template">
+  <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "HowTo",
+        "name": "How to Write an IACUC Protocol for First-Pass Approval",
+        "description": "A step-by-step guide to writing IACUC protocols that pass committee review on the first submission, covering 3R documentation, pain categories, and personnel qualifications.",
+        "totalTime": "PT40H",
+        "tool": [
+          {
+            "@type": "HowToTool",
+            "name": "LabAnimal protocol management system"
+          },
+          {
+            "@type": "HowToTool",
+            "name": "Statistical sample size calculator"
+          },
+          {
+            "@type": "HowToTool",
+            "name": "IACUC protocol template and 3R documentation forms"
+          }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Define the Research Objectives",
+            "text": "Write clear, measurable research goals that directly justify animal use. State your hypothesis, primary and secondary endpoints, and explain why animal models are essential rather than alternatives.",
+            "url": "https://labanimal.tech/guides/iacuc-protocol-template#step1"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Describe Animal Species and Numbers",
+            "text": "Specify species, strain, sex, age, and weight range. Provide statistical justification for sample sizes using power analysis. Explain why this species is the appropriate model for your research.",
+            "url": "https://labanimal.tech/guides/iacuc-protocol-template#step2"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Document the 3Rs",
+            "text": "Provide thorough documentation for Replacement (alternatives considered and why they are inadequate), Reduction (statistical justification for minimum numbers), and Refinement (pain minimization, analgesia plans, humane endpoints).",
+            "url": "https://labanimal.tech/guides/iacuc-protocol-template#step3"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Outline Procedures and Timeline",
+            "text": "Create a detailed day-by-day experimental schedule. Include all procedures from arrival through euthanasia, with timepoints, responsible personnel, and expected outcomes for each phase.",
+            "url": "https://labanimal.tech/guides/iacuc-protocol-template#step4"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Define Pain and Distress Categories",
+            "text": "Classify your protocol under USDA pain categories B, C, D, or E. For Category D and E protocols, detail the analgesia or anesthesia plan, monitoring frequency, and criteria for intervention or early euthanasia.",
+            "url": "https://labanimal.tech/guides/iacuc-protocol-template#step5"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 6,
+            "name": "Describe Euthanasia Methods",
+            "text": "Specify AVMA-approved euthanasia methods for each species. Include the agent, concentration, route of administration, and secondary method for confirmation of death. Justify any deviation from standard methods.",
+            "url": "https://labanimal.tech/guides/iacuc-protocol-template#step6"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 7,
+            "name": "Detail Personnel Training and Qualifications",
+            "text": "List all personnel who will handle animals, their roles, species-specific training, and certification status. Reference OLAW-required training modules including IACUC orientation, species-specific handling, and occupational health and safety.",
+            "url": "https://labanimal.tech/guides/iacuc-protocol-template#step7"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 8,
+            "name": "Submit and Track Review Status",
+            "text": "Submit the protocol through your institution's IACUC submission system. Track review progress, respond to committee questions promptly, and prepare for designated or full board review depending on risk level.",
+            "url": "https://labanimal.tech/guides/iacuc-protocol-template#step8"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "headline": "IACUC Protocol Template: Writing for First-Pass Approval",
+        "description": "Step-by-step guide to writing IACUC protocols that pass review on the first submission. Includes 3R documentation templates and common rejection reasons.",
+        "url": "https://labanimal.tech/guides/iacuc-protocol-template",
+        "datePublished": "2026-06-29",
+        "author": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "isAccessibleForFree": true
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How long does IACUC review take?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Full board IACUC review typically takes 2-4 weeks from submission to approval. Designated member review can be faster, usually 1-2 weeks. Timelines depend on the committee's meeting schedule, the complexity of the protocol, and whether revisions are requested."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What's the difference between full board and designated review?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Full board review requires evaluation by the entire IACUC committee at a convened meeting and is used for protocols involving USDA Categories D and E, or when a committee member requests it. Designated review is conducted by a single designated member or subset and is appropriate for lower-risk protocols (Categories A, B, C) with no anticipated pain or distress beyond minor procedures."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I amend an approved protocol?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, you can submit amendments to an approved IACUC protocol. Minor changes such as adding personnel or adjusting procedures within the approved scope may qualify for designated review. Significant changes — such as adding a new species, increasing animal numbers, or escalating pain category — require full board review before implementation."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the most common reasons for IACUC rejection?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The most common reasons for IACUC protocol rejection include: inadequate justification for the number of animals requested, insufficient 3R documentation (especially for Replacement alternatives), unclear or absent humane endpoints, vague pain management plans, lack of statistical power analysis for sample size, and incomplete personnel training records."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How often do IACUC protocols need to be renewed?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "IACUC protocols must be renewed every three years under federal regulations (PHS Policy IV.B.7). In addition, institutions conduct an annual review of each protocol to confirm that the research is being conducted as approved, animal numbers are within the approved range, and no significant changes have occurred without prior approval."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Home</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Docs</a>
+          <a href="/guides" class="text-brand-600 font-semibold text-sm font-medium">Guides</a>
+          <a href="/about" class="text-gray-600 hover:text-brand-600 text-sm font-medium">About</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">Login</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-12 bg-gradient-to-br from-brand-50 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-4">
+        <span class="inline-block bg-brand-100 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full">GUIDE</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+        IACUC Protocol Template:<br>Writing for First-Pass Approval
+      </h1>
+      <p class="text-lg text-gray-600 mb-6">
+        Most IACUC protocols are returned for revision at least once. This guide walks you through each section of a protocol that passes on the first submission — from research objectives to personnel qualifications — with templates you can adapt for your own work.
+      </p>
+      <div class="flex items-center gap-4 text-sm text-gray-500">
+        <span>Last updated: June 29, 2026</span>
+        <span>&middot;</span>
+        <span>18 min read</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Why Most Protocols Get Returned</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Studies show that approximately <strong>60-70% of IACUC protocols</strong> are returned for revisions on first submission. The top reasons are not scientific — they are administrative: inadequate 3R justification, missing statistical rationale for animal numbers, and vague pain management plans. These are all preventable.
+      </p>
+      <p class="text-gray-700 leading-relaxed">
+        This guide provides a section-by-section template that addresses every common deficiency. Follow these eight steps and your protocol will have a significantly higher chance of first-pass approval.
+      </p>
+    </section>
+
+    <!-- Step 1 -->
+    <section id="step1" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
+        <h2 class="text-2xl font-bold text-gray-900">Define the Research Objectives</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Your research objectives are the foundation of the entire protocol. IACUC committees need to understand <em>why</em> animal use is necessary and <em>what</em> you expect to learn. Vague objectives lead to vague protocols, which lead to revision requests.
+      </p>
+      <p class="text-gray-700 leading-relaxed mb-4">Your objectives section should include:</p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Primary hypothesis:</strong> A single, testable statement that your study will evaluate</li>
+        <li><strong>Specific aims:</strong> 2-3 clearly defined aims, each tied to a specific set of experiments</li>
+        <li><strong>Primary and secondary endpoints:</strong> Measurable outcomes (tumor volume, behavioral score, biomarker level) with defined thresholds</li>
+        <li><strong>Justification for animal model:</strong> Why in vitro, in silico, or other non-animal alternatives cannot answer this question</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <p class="text-blue-800 text-sm">
+          <strong>Template:</strong> "This study aims to determine [hypothesis] using [species] as a model for [human condition]. Aim 1 will [specific goal]; Aim 2 will [specific goal]. These aims require an in vivo model because [justification — e.g., systemic immune response, tumor microenvironment, behavioral assessment]."
+        </p>
+      </div>
+    </section>
+
+    <!-- Step 2 -->
+    <section id="step2" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">2</span>
+        <h2 class="text-2xl font-bold text-gray-900">Describe Animal Species and Numbers</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        This section is where most protocols fail. IACUC committees require <strong>statistical justification</strong> for every animal you request. Saying "we plan to use 20 mice per group" without a power analysis will almost certainly trigger a revision.
+      </p>
+      <p class="text-gray-700 leading-relaxed mb-4">Include the following details:</p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Species and strain:</strong> e.g., C57BL/6J mice, Sprague-Dawley rats, New Zealand White rabbits</li>
+        <li><strong>Sex and age:</strong> Justify single-sex studies or explain mixed-sex design</li>
+        <li><strong>Weight range:</strong> Specify acceptable range and rationale</li>
+        <li><strong>Total number by species:</strong> Sum across all experimental groups, controls, and breeding colonies</li>
+        <li><strong>Statistical power analysis:</strong> Report the software used (e.g., G*Power), effect size, alpha level, power (typically 0.80), and resulting sample size per group</li>
+        <li><strong>Justification for species:</strong> Why this species and strain is the appropriate model</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+        <p class="text-amber-800 text-sm">
+          <strong>Common Rejection Reason:</strong> "The number of animals requested appears excessive relative to the experimental design." Always include a power analysis table showing your calculations.
+        </p>
+      </div>
+    </section>
+
+    <!-- Step 3 -->
+    <section id="step3" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">3</span>
+        <h2 class="text-2xl font-bold text-gray-900">Document the 3Rs</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        The 3Rs — Replacement, Reduction, and Refinement — are the ethical cornerstone of every IACUC protocol. Your 3R documentation must be thorough and specific, not boilerplate. Reviewers can tell the difference.
+      </p>
+
+      <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3">Replacement</h3>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        List every alternative approach you considered (cell cultures, organoids, computer models, invertebrates, etc.) and explain specifically why each one is insufficient for your research question. Generic statements like "no alternatives exist" will be challenged.
+      </p>
+
+      <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3">Reduction</h3>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Show that you are using the minimum number of animals necessary. Reference your power analysis from Step 2. Describe any strategies to reduce numbers further, such as within-subject designs, pilot studies to refine effect size estimates, or shared control groups.
+      </p>
+
+      <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3">Refinement</h3>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Detail every measure you will take to minimize pain and distress:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li>Analgesia and anesthesia protocols (drug, dose, route, frequency, duration)</li>
+        <li>Environmental enrichment (housing, social grouping, nesting material, etc.)</li>
+        <li>Humane endpoint criteria (specific body condition score, tumor size limit, weight loss threshold)</li>
+        <li>Post-procedural monitoring schedule</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+        <p class="text-green-800 text-sm">
+          <strong>LabAnimal Feature:</strong> LabAnimal's 3R documentation module provides structured templates for each of the 3Rs with species-specific guidance and pre-filled AVMA-compliant euthanasia options.
+        </p>
+      </div>
+    </section>
+
+    <!-- Step 4 -->
+    <section id="step4" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">4</span>
+        <h2 class="text-2xl font-bold text-gray-900">Outline Procedures and Timeline</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        A detailed timeline shows the IACUC that you have thought through every step. It also helps reviewers understand the cumulative impact on each animal. Present your timeline in a day-by-day or week-by-week format:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Day 0:</strong> Animal arrival, acclimation period (minimum 5-7 days for most species)</li>
+        <li><strong>Day 7-14:</strong> Baseline measurements, randomization, group assignment</li>
+        <li><strong>Day 14-28:</strong> Experimental intervention (drug administration, surgery, behavioral testing)</li>
+        <li><strong>Day 28-35:</strong> Data collection, terminal procedures, euthanasia</li>
+        <li><strong>Post-study:</strong> Tissue collection, necropsy, data analysis</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        For each procedure, specify who performs it, where it takes place, and what monitoring occurs. If a procedure requires anesthesia, include the full anesthetic protocol (induction, maintenance, recovery monitoring).
+      </p>
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <p class="text-blue-800 text-sm">
+          <strong>Pro Tip:</strong> Use a Gantt chart or table format for your timeline. Visual representations are easier for IACUC reviewers to parse and show thorough planning.
+        </p>
+      </div>
+    </section>
+
+    <!-- Step 5 -->
+    <section id="step5" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">5</span>
+        <h2 class="text-2xl font-bold text-gray-900">Define Pain and Distress Categories</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        The USDA classifies all animal use into pain categories. Your protocol must accurately classify each procedure and provide appropriate justification:
+      </p>
+      <div class="overflow-x-auto mb-4">
+        <table class="min-w-full border border-gray-200 rounded-lg">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Category</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Description</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Requirements</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">B</td>
+              <td class="px-4 py-3 text-sm text-gray-700">No pain or distress; no pain-relieving drugs needed</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Standard care and monitoring</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">C</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Pain or distress with appropriate anesthetics, analgesics, or tranquilizers</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Drug protocols required; monitoring plan</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">D</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Pain or distress without appropriate anesthetics (scientific justification required)</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Scientific justification; written notification to USDA</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">E</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Pain or distress without anesthetics; death as an endpoint</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Scientific justification; USDA notification; full board review</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-gray-700 leading-relaxed">
+        For Category D and E protocols, provide explicit scientific justification explaining why anesthetics or analgesics cannot be used. Simply stating "drugs would interfere with results" is insufficient — cite specific literature or pilot data.
+      </p>
+    </section>
+
+    <!-- Step 6 -->
+    <section id="step6" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">6</span>
+        <h2 class="text-2xl font-bold text-gray-900">Describe Euthanasia Methods</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Euthanasia methods must comply with the <strong>AVMA Guidelines for the Euthanasia of Animals</strong>. For each species in your protocol, specify:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Primary method:</strong> The preferred method (e.g., CO2 inhalation for rodents, injectable pentobarbital for larger species)</li>
+        <li><strong>Concentration and flow rate:</strong> For inhalant methods (e.g., CO2 at 30-70% volume displacement per minute)</li>
+        <li><strong>Exposure duration:</strong> Time to loss of consciousness and time to death</li>
+        <li><strong>Secondary method:</strong> Confirmation of death (e.g., cervical dissection, bilateral thoracotomy, exsanguination)</li>
+        <li><strong>Justification for non-standard methods:</strong> If using a method not listed as acceptable by AVMA, provide detailed scientific justification</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+        <p class="text-amber-800 text-sm">
+          <strong>Common Rejection Reason:</strong> "The euthanasia method is not AVMA-approved for the listed species." Always cross-reference your method against the current AVMA Guidelines (2020 edition).
+        </p>
+      </div>
+    </section>
+
+    <!-- Step 7 -->
+    <section id="step7" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">7</span>
+        <h2 class="text-2xl font-bold text-gray-900">Detail Personnel Training and Qualifications</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Under PHS Policy and OLAW expectations, every person who handles animals must have documented training. Your protocol should include a table listing:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Name and role:</strong> Principal Investigator, Co-PI, veterinarian, research staff</li>
+        <li><strong>Species-specific training:</strong> Hands-on training for each species used (e.g., mouse injection, rat surgery)</li>
+        <li><strong>IACUC orientation:</strong> Date of completion for institutional IACUC training module</li>
+        <li><strong>Occupational health:</strong> Enrollment in the institution's occupational health program</li>
+        <li><strong>Surgery training:</strong> For surgical protocols, document training in aseptic technique, anesthesia monitoring, and post-operative care</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed">
+        Training records should be current. Expired training certifications are a common deficiency found during IACUC semi-annual inspections and AAALAC audits.
+      </p>
+    </section>
+
+    <!-- Step 8 -->
+    <section id="step8" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">8</span>
+        <h2 class="text-2xl font-bold text-gray-900">Submit and Track Review Status</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        After completing all sections, submit through your institution's IACUC management system. Then actively track the review:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Designated review (1-2 weeks):</strong> Lower-risk protocols reviewed by a designated member</li>
+        <li><strong>Full board review (2-4 weeks):</strong> Higher-risk protocols reviewed at a convened committee meeting</li>
+        <li><strong>Revision requests:</strong> Respond within 5 business days to avoid delays; address every comment specifically</li>
+        <li><strong>Approval notification:</strong> Do not begin animal work until you receive written approval</li>
+        <li><strong>Annual continuation:</strong> Submit annual review by the anniversary date to keep the protocol active</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+        <p class="text-green-800 text-sm">
+          <strong>LabAnimal Feature:</strong> LabAnimal's protocol management module tracks submission status, sends expiration alerts 90 days in advance, and auto-generates annual continuation forms pre-filled with current animal counts.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">How long does IACUC review take?</h3>
+          <p class="text-gray-700">Full board IACUC review typically takes 2-4 weeks from submission to approval. Designated member review can be faster, usually 1-2 weeks. Timelines depend on the committee's meeting schedule, the complexity of the protocol, and whether revisions are requested.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What's the difference between full board and designated review?</h3>
+          <p class="text-gray-700">Full board review requires evaluation by the entire IACUC committee at a convened meeting and is used for protocols involving USDA Categories D and E, or when a committee member requests it. Designated review is conducted by a single designated member or subset and is appropriate for lower-risk protocols (Categories A, B, C) with no anticipated pain or distress beyond minor procedures.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">Can I amend an approved protocol?</h3>
+          <p class="text-gray-700">Yes, you can submit amendments to an approved IACUC protocol. Minor changes such as adding personnel or adjusting procedures within the approved scope may qualify for designated review. Significant changes — such as adding a new species, increasing animal numbers, or escalating pain category — require full board review before implementation.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What are the most common reasons for IACUC rejection?</h3>
+          <p class="text-gray-700">The most common reasons for IACUC protocol rejection include: inadequate justification for the number of animals requested, insufficient 3R documentation (especially for Replacement alternatives), unclear or absent humane endpoints, vague pain management plans, lack of statistical power analysis for sample size, and incomplete personnel training records.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">How often do IACUC protocols need to be renewed?</h3>
+          <p class="text-gray-700">IACUC protocols must be renewed every three years under federal regulations (PHS Policy IV.B.7). In addition, institutions conduct an annual review of each protocol to confirm that the research is being conducted as approved, animal numbers are within the approved range, and no significant changes have occurred without prior approval.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-brand-50 rounded-2xl p-8 text-center">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Write Better Protocols with LabAnimal</h2>
+      <p class="text-gray-600 mb-6">LabAnimal provides structured 3R templates, automated compliance checks, and protocol tracking — so your IACUC submissions pass on the first try. Free for up to 500 animals.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://labanimal.cloud/register" class="bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700 transition">Start Free</a>
+        <a href="/docs" class="border border-brand-600 text-brand-600 px-6 py-3 rounded-lg font-semibold hover:bg-brand-50 transition">Read Docs</a>
+      </div>
+    </section>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="bg-gray-50 border-t border-gray-200 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+      <p>&copy; 2026 LabAnimal. Open-source laboratory animal management.</p>
+      <p class="mt-2">
+        <a href="/" class="hover:text-brand-600">Home</a> &middot;
+        <a href="/docs" class="hover:text-brand-600">Docs</a> &middot;
+        <a href="/about" class="hover:text-brand-600">About</a> &middot;
+        <a href="https://github.com/xxjzone01-cyber/labanimal" class="hover:text-brand-600">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

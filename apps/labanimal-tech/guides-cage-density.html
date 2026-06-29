@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cage Density Standards: Real-Time Monitoring for IACUC Compliance | LabAnimal</title>
+  <meta name="description" content="Complete guide to lab animal cage density standards, IACUC monitoring requirements, and automated alert systems.">
+  <meta name="keywords" content="cage density lab animals, IACUC cage standards, animal housing requirements">
+  <link rel="canonical" href="https://labanimal.tech/guides/cage-density">
+  <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "HowTo",
+        "name": "How to Monitor Cage Density for IACUC Compliance",
+        "description": "A step-by-step guide for implementing real-time cage density monitoring in laboratory animal facilities to meet IACUC and Guide for the Care and Use of Laboratory Animals standards.",
+        "totalTime": "PT2H",
+        "tool": [
+          {
+            "@type": "HowToTool",
+            "name": "LabAnimal compliance management system"
+          },
+          {
+            "@type": "HowToTool",
+            "name": "Cage density calculation tools"
+          }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Know Your Species-Specific Standards",
+            "text": "Review the Guide for the Care and Use of Laboratory Animals (8th Edition) for minimum floor space requirements per species. Standards vary by species, body weight, and physiological status (e.g., breeding females require more space).",
+            "url": "https://labanimal.tech/guides/cage-density#step1"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Calculate Floor Space Requirements",
+            "text": "Measure the usable floor area of each cage type. Calculate the minimum number of animals per cage based on the Guide's floor space table (e.g., mice under 25g need at least 6 sq inches per animal). Account for feeder and water bottle space reductions.",
+            "url": "https://labanimal.tech/guides/cage-density#step2"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Implement Real-Time Density Monitoring",
+            "text": "Set up a digital tracking system that records cage assignments and calculates current density for every cage in real time. Link cage data to animal inventory for automatic calculations.",
+            "url": "https://labanimal.tech/guides/cage-density#step3"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Set Up Automated Alerts",
+            "text": "Configure alerts that trigger when cage density approaches or exceeds limits. Alerts should notify the cage card manager, veterinarian, and facility supervisor. Include escalation paths for unresolved overages.",
+            "url": "https://labanimal.tech/guides/cage-density#step4"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Document Density Exceptions",
+            "text": "If IACUC-approved exceptions to standard density limits exist (e.g., for specific experimental protocols), document the exception with the protocol number, approved density, justification, and expiration date.",
+            "url": "https://labanimal.tech/guides/cage-density#step5"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 6,
+            "name": "Conduct Regular Cage Checks",
+            "text": "Perform daily visual inspections of all cages. Conduct weekly quantitative measurements of animals per cage and compare against calculated limits. Document all cage checks with date, inspector, and findings.",
+            "url": "https://labanimal.tech/guides/cage-density#step6"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 7,
+            "name": "Generate Density Compliance Reports",
+            "text": "Produce monthly or quarterly compliance reports showing current density status for all cages, any overages detected, corrective actions taken, and exception usage. These reports are essential for IACUC semiannual reviews.",
+            "url": "https://labanimal.tech/guides/cage-density#step7"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "headline": "Cage Density Standards: Real-Time Monitoring for IACUC Compliance",
+        "description": "Complete guide to laboratory animal cage density standards, IACUC monitoring requirements, and automated alert systems for continuous compliance.",
+        "url": "https://labanimal.tech/guides/cage-density",
+        "datePublished": "2026-06-29",
+        "author": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "isAccessibleForFree": true
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the cage density limit for mice?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The Guide for the Care and Use of Laboratory Animals (8th Edition) recommends a minimum of 6 square inches (38.7 cm2) of floor space per mouse weighing up to 25g. For mice weighing 25-30g, the minimum is 8 square inches (51.6 cm2). Breeding females require at least 51 square inches (330 cm2) with a maximum of 1 adult male plus litter. These are minimums; IACUCs may approve different standards based on experimental needs."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How often should cage density be checked?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Daily visual inspection of all cages is required to identify overcrowding, fighting, or health issues. A quantitative cage count (comparing animals per cage against calculated limits) should be performed at least weekly. Automated monitoring systems can provide continuous real-time tracking, reducing the burden of manual checks while improving compliance."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens if cage density exceeds limits?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "If cage density exceeds approved limits, animals must be separated immediately to bring density within compliance. The overage must be documented, including the date discovered, duration of overage, and corrective action taken. Repeated or prolonged overages must be reported to the IACUC as a protocol deviation. The facility manager should investigate the root cause (e.g., births, animal transfers) and implement preventive measures."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can IACUC approve exceptions to cage density standards?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, IACUCs can approve exceptions to standard cage density limits when scientifically justified. Exceptions must be documented in the approved protocol with the specific density, species, justification, and duration. The veterinarian must confirm that the exception does not compromise animal welfare. Exceptions are reviewed during semiannual facility inspections and protocol renewals."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Home</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Docs</a>
+          <a href="/guides" class="text-brand-600 font-semibold text-sm font-medium">Guides</a>
+          <a href="/about" class="text-gray-600 hover:text-brand-600 text-sm font-medium">About</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">Login</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-12 bg-gradient-to-br from-brand-50 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-4">
+        <span class="inline-block bg-brand-100 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full">GUIDE</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+        Cage Density Standards:<br>Real-Time Monitoring for IACUC Compliance
+      </h1>
+      <p class="text-lg text-gray-600 mb-6">
+        Overcrowding is one of the most common IACUC deficiencies. This guide covers species-specific cage density standards, how to calculate floor space requirements, and how to implement automated monitoring to maintain continuous compliance.
+      </p>
+      <div class="flex items-center gap-4 text-sm text-gray-500">
+        <span>Last updated: June 29, 2026</span>
+        <span>&middot;</span>
+        <span>10 min read</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Why Cage Density Matters</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Proper cage density is fundamental to animal welfare and research validity. Overcrowding causes stress, aggression, abnormal behavior, and physiological changes that can confound experimental results. The Guide for the Care and Use of Laboratory Animals (8th Edition) establishes minimum floor space requirements that all PHS-funded institutions must follow.
+      </p>
+      <p class="text-gray-700 leading-relaxed">
+        IACUCs are required to inspect animal housing areas at least semiannually, and cage density is always a focus area. Automated monitoring eliminates the risk of unnoticed overages between inspections.
+      </p>
+    </section>
+
+    <section id="step1" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
+        <h2 class="text-2xl font-bold text-gray-900">Know Your Species-Specific Standards</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        The Guide establishes minimum floor space requirements based on species and body weight. Key standards include:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Mice (up to 25g):</strong> 6 sq in (38.7 cm2) per animal</li>
+        <li><strong>Mice (25-30g):</strong> 8 sq in (51.6 cm2) per animal</li>
+        <li><strong>Rats (up to 400g):</strong> 17 sq in (110 cm2) per animal</li>
+        <li><strong>Rats (400-600g):</strong> 23 sq in (148 cm2) per animal</li>
+        <li><strong>Hamsters:</strong> 12 sq in (77 cm2) per animal</li>
+        <li><strong>Guinea pigs:</strong> 60 sq in (387 cm2) per animal</li>
+        <li><strong>Rabbits:</strong> 144 sq in (929 cm2) per animal (under 4 kg)</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <p class="text-blue-800 text-sm">
+          <strong>Pro Tip:</strong> These are minimums. Your IACUC may approve higher standards. Always check your institution's Animal Care and Use Program for specific requirements.
+        </p>
+      </div>
+    </section>
+
+    <section id="step2" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">2</span>
+        <h2 class="text-2xl font-bold text-gray-900">Calculate Floor Space Requirements</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        To calculate the maximum number of animals per cage:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Measure usable floor area:</strong> Length x width of the cage floor, minus space occupied by feeders, water bottles, and enrichment devices</li>
+        <li><strong>Apply the formula:</strong> Max animals = Usable floor area / Minimum sq in per animal</li>
+        <li><strong>Round down:</strong> Always round down to the nearest whole number</li>
+        <li><strong>Account for physiological status:</strong> Breeding animals, pregnant females, and post-surgical animals may require additional space</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed">
+        Example: A standard mouse cage with 75 sq in usable floor space can house a maximum of 12 mice under 25g (75 / 6 = 12.5, rounded down to 12).
+      </p>
+    </section>
+
+    <section id="step3" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">3</span>
+        <h2 class="text-2xl font-bold text-gray-900">Implement Real-Time Density Monitoring</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Manual cage counting is error-prone and only captures a snapshot in time. A digital monitoring system provides:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Automatic calculations:</strong> System calculates current density based on animal inventory and cage assignments</li>
+        <li><strong>Real-time updates:</strong> Density recalculates when animals are added, removed, or transferred</li>
+        <li><strong>Dashboard visibility:</strong> Facility managers can see density status for every cage at a glance</li>
+        <li><strong>Historical tracking:</strong> Record density trends over time to identify chronic issues</li>
+      </ul>
+    </section>
+
+    <section id="step4" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">4</span>
+        <h2 class="text-2xl font-bold text-gray-900">Set Up Automated Alerts</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Configure your monitoring system to send alerts at two thresholds:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Warning (90% capacity):</strong> Notify cage card manager when a cage is approaching its density limit. This allows proactive transfers before an overage occurs.</li>
+        <li><strong>Critical (100%+ capacity):</strong> Notify cage card manager, veterinarian, and facility supervisor when density exceeds the limit. Trigger an immediate action workflow.</li>
+        <li><strong>Breeding alerts:</strong> Special alerts for breeding cages when litters grow and push density over limits (typically 21 days post-birth for mice).</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+        <p class="text-amber-800 text-sm">
+          <strong>Common Finding:</strong> The most frequent cause of cage density overages is unmonitored breeding. Pups grow fast — set alerts for 14-21 days post-birth to catch overages early.
+        </p>
+      </div>
+    </section>
+
+    <section id="step5" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">5</span>
+        <h2 class="text-2xl font-bold text-gray-900">Document Density Exceptions</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        When the IACUC approves higher-than-standard density for specific protocols, document:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Protocol number:</strong> The IACUC protocol authorizing the exception</li>
+        <li><strong>Approved density:</strong> The specific animal count per cage</li>
+        <li><strong>Justification:</strong> Scientific rationale for the higher density</li>
+        <li><strong>Duration:</strong> How long the exception is valid</li>
+        <li><strong>Veterinary approval:</strong> Confirmation that welfare is not compromised</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed">
+        Link exceptions to specific cages in your monitoring system so that automated alerts do not flag approved densities as violations.
+      </p>
+    </section>
+
+    <section id="step6" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">6</span>
+        <h2 class="text-2xl font-bold text-gray-900">Conduct Regular Cage Checks</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Even with automated monitoring, physical cage checks remain essential:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Daily visual inspection:</strong> Animal care staff observe every cage during routine husbandry. Look for signs of overcrowding: aggression, barbering, huddling, or resource guarding.</li>
+        <li><strong>Weekly quantitative check:</strong> Count animals in each cage and compare against the system's records. This catches any discrepancies from missed transfers or births.</li>
+        <li><strong>Documentation:</strong> Record all cage checks with date, inspector name, and findings. Use digital checklists for efficient documentation.</li>
+      </ul>
+    </section>
+
+    <section id="step7" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">7</span>
+        <h2 class="text-2xl font-bold text-gray-900">Generate Density Compliance Reports</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Regular compliance reports are essential for IACUC semiannual reviews and AAALAC audits:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Current status:</strong> Snapshot of all cages with their density percentage</li>
+        <li><strong>Overage history:</strong> Any density violations detected, with duration and corrective actions</li>
+        <li><strong>Exception usage:</strong> Active IACUC-approved density exceptions and their status</li>
+        <li><strong>Trends:</strong> Density trends over time by room, species, or investigator</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+        <p class="text-green-800 text-sm">
+          <strong>LabAnimal Feature:</strong> Generate cage density compliance reports in seconds. The system automatically calculates density for every cage, flags overages, and includes corrective action documentation.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What is the cage density limit for mice?</h3>
+          <p class="text-gray-700">The Guide for the Care and Use of Laboratory Animals (8th Edition) recommends a minimum of 6 square inches (38.7 cm2) of floor space per mouse weighing up to 25g. For mice weighing 25-30g, the minimum is 8 square inches (51.6 cm2). Breeding females require at least 51 square inches (330 cm2) with a maximum of 1 adult male plus litter. These are minimums; IACUCs may approve different standards based on experimental needs.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">How often should cage density be checked?</h3>
+          <p class="text-gray-700">Daily visual inspection of all cages is required to identify overcrowding, fighting, or health issues. A quantitative cage count (comparing animals per cage against calculated limits) should be performed at least weekly. Automated monitoring systems can provide continuous real-time tracking, reducing the burden of manual checks while improving compliance.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What happens if cage density exceeds limits?</h3>
+          <p class="text-gray-700">If cage density exceeds approved limits, animals must be separated immediately to bring density within compliance. The overage must be documented, including the date discovered, duration of overage, and corrective action taken. Repeated or prolonged overages must be reported to the IACUC as a protocol deviation. The facility manager should investigate the root cause (e.g., births, animal transfers) and implement preventive measures.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">Can IACUC approve exceptions to cage density standards?</h3>
+          <p class="text-gray-700">Yes, IACUCs can approve exceptions to standard cage density limits when scientifically justified. Exceptions must be documented in the approved protocol with the specific density, species, justification, and duration. The veterinarian must confirm that the exception does not compromise animal welfare. Exceptions are reviewed during semiannual facility inspections and protocol renewals.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-brand-50 rounded-2xl p-8 text-center">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Automate Your Cage Density Monitoring</h2>
+      <p class="text-gray-600 mb-6">LabAnimal tracks cage density in real time, sends automated alerts, and generates compliance reports for IACUC reviews. Free for up to 500 animals.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://labanimal.cloud/register" class="bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700 transition">Start Free</a>
+        <a href="/docs" class="border border-brand-600 text-brand-600 px-6 py-3 rounded-lg font-semibold hover:bg-brand-50 transition">Read Docs</a>
+      </div>
+    </section>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="bg-gray-50 border-t border-gray-200 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+      <p>&copy; 2026 LabAnimal. Open-source laboratory animal management.</p>
+      <p class="mt-2">
+        <a href="/" class="hover:text-brand-600">Home</a> &middot;
+        <a href="/docs" class="hover:text-brand-600">Docs</a> &middot;
+        <a href="/about" class="hover:text-brand-600">About</a> &middot;
+        <a href="https://github.com/xxjzone01-cyber/labanimal" class="hover:text-brand-600">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

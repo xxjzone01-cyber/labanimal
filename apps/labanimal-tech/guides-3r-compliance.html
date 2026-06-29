@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3R Compliance in Practice: A Data-Driven Approach | LabAnimal</title>
+  <meta name="description" content="Practical guide to implementing Replacement, Reduction, and Refinement in laboratory animal research. With real data examples and compliance tracking strategies.">
+  <meta name="keywords" content="3R compliance, replacement reduction refinement, lab animal welfare, IACUC 3R">
+  <link rel="canonical" href="https://labanimal.tech/guides/3r-compliance">
+  <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "HowTo",
+        "name": "How to Implement 3R Compliance in Laboratory Animal Research",
+        "description": "A data-driven, step-by-step guide to implementing Replacement, Reduction, and Refinement principles in laboratory animal research, with statistical methods and compliance tracking.",
+        "totalTime": "PT80H",
+        "tool": [
+          {
+            "@type": "HowToTool",
+            "name": "LabAnimal 3R tracking and compliance system"
+          },
+          {
+            "@type": "HowToTool",
+            "name": "Statistical power analysis software (G*Power, R, Python)"
+          },
+          {
+            "@type": "HowToTool",
+            "name": "Welfare scoring and monitoring templates"
+          }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Assess Replacement Alternatives",
+            "text": "Systematically evaluate whether in vitro, in silico, or non-animal models can replace or partially replace animal use. Document alternatives considered, their limitations, and why animal models remain necessary.",
+            "url": "https://labanimal.tech/guides/3r-compliance#step1"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Calculate Optimal Sample Sizes",
+            "text": "Use statistical power analysis to determine the minimum number of animals needed. Target 80% power with appropriate effect size estimates from pilot data or literature. Justify every animal requested.",
+            "url": "https://labanimal.tech/guides/3r-compliance#step2"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Implement Refinement Protocols",
+            "text": "Establish standardized analgesia plans, environmental enrichment programs, and humane endpoint criteria. Use validated pain scoring systems and welfare assessment tools for each species.",
+            "url": "https://labanimal.tech/guides/3r-compliance#step3"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Track 3R Metrics Over Time",
+            "text": "Implement a data system to track 3R metrics longitudinally: animal numbers per study, pain category distribution, unexpected mortality rates, and protocol amendment frequency. Use trend analysis to identify improvement areas.",
+            "url": "https://labanimal.tech/guides/3r-compliance#step4"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Document 3R Justifications for IACUC",
+            "text": "Use structured templates to document each of the 3Rs in IACUC protocols. Provide specific, literature-backed justifications rather than generic statements.",
+            "url": "https://labanimal.tech/guides/3r-compliance#step5"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 6,
+            "name": "Train Staff on 3R Principles",
+            "text": "Implement OLAW-compliant training programs covering 3R principles, species-specific handling, pain recognition, and humane endpoint assessment. Track training completion and renewal dates.",
+            "url": "https://labanimal.tech/guides/3r-compliance#step6"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 7,
+            "name": "Conduct Regular 3R Audits",
+            "text": "Perform self-assessment audits using standardized checklists. Review protocol compliance, verify animal numbers match approved counts, assess pain management effectiveness, and document findings.",
+            "url": "https://labanimal.tech/guides/3r-compliance#step7"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 8,
+            "name": "Report 3R Outcomes",
+            "text": "Compile annual 3R reports for institutional oversight, grant agencies, and publications. Include quantitative metrics, trend data, and specific examples of 3R improvements implemented.",
+            "url": "https://labanimal.tech/guides/3r-compliance#step8"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "headline": "3R Compliance in Practice: A Data-Driven Approach",
+        "description": "Practical guide to implementing Replacement, Reduction, and Refinement in laboratory animal research. With real data examples and compliance tracking strategies.",
+        "url": "https://labanimal.tech/guides/3r-compliance",
+        "datePublished": "2026-06-29",
+        "author": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "isAccessibleForFree": true
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What are the 3Rs in laboratory animal research?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The 3Rs are Replacement, Reduction, and Refinement — a set of principles first described by William Russell and Rex Burch in 1959 in their book 'The Principles of Humane Experimental Technique.' Replacement means using non-animal alternatives where possible. Reduction means using the minimum number of animals necessary. Refinement means minimizing pain, suffering, and distress."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is 3R compliance legally required?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. In the United States, the Animal Welfare Act (AWA) and PHS Policy on Humane Care and Use of Laboratory Animals mandate 3R considerations. In the European Union, Directive 2010/63/EU legally requires 3R implementation. Most other countries have equivalent legislation. Non-compliance can result in loss of funding, accreditation withdrawal, and legal penalties."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you calculate sample size for Reduction?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use statistical power analysis with these inputs: expected effect size (from pilot data or literature), desired statistical power (typically 0.80 or 80%), significance level (typically alpha = 0.05), and the statistical test you plan to use. Tools like G*Power, R (pwr package), or Python (statsmodels) can calculate the minimum sample size per group. Always justify your effect size estimate with published data."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What counts as Replacement?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Replacement includes any method that avoids or replaces the use of live animals. This encompasses: in vitro methods (cell cultures, tissue explants), in silico methods (computer models, simulations, QSAR), organoids and organ-on-chip technology, embryonic stages below the legal threshold (e.g., before halfway through gestation), invertebrate models (Drosophila, C. elegans), and partial replacement where some experiments use alternatives while others still require animals."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you measure Refinement success?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Refinement success is measured through multiple indicators: reduced pain scores using validated species-specific scales (e.g., Mouse Grimace Scale, Rat Grimace Scale), lower unexpected mortality rates, fewer animals reaching humane endpoints before study completion, improved body condition scores, reduced corticosterone levels (stress biomarker), and lower protocol amendment rates for pain management changes. Track these metrics over time to identify trends."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Home</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Docs</a>
+          <a href="/guides" class="text-brand-600 font-semibold text-sm font-medium">Guides</a>
+          <a href="/about" class="text-gray-600 hover:text-brand-600 text-sm font-medium">About</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">Login</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-12 bg-gradient-to-br from-brand-50 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-4">
+        <span class="inline-block bg-brand-100 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full">GUIDE</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+        3R Compliance in Practice:<br>A Data-Driven Approach
+      </h1>
+      <p class="text-lg text-gray-600 mb-6">
+        The 3Rs — Replacement, Reduction, and Refinement — have been the ethical framework for laboratory animal research since 1959. This guide goes beyond theory to show you how to implement, measure, and track 3R compliance with real data and practical tools.
+      </p>
+      <div class="flex items-center gap-4 text-sm text-gray-500">
+        <span>Last updated: June 29, 2026</span>
+        <span>&middot;</span>
+        <span>20 min read</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Why Data-Driven 3R Compliance Matters</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Regulatory bodies and funding agencies increasingly expect quantitative evidence of 3R implementation, not just statements in protocols. Institutions that track 3R metrics report <strong>25-40% reductions in animal use</strong> over five-year periods, while maintaining or improving scientific outcomes.
+      </p>
+      <p class="text-gray-700 leading-relaxed">
+        A data-driven approach transforms 3R compliance from a checkbox exercise into a continuous improvement cycle. When you measure it, you can improve it. This guide provides the frameworks, calculations, and templates to make that happen.
+      </p>
+    </section>
+
+    <!-- Step 1 -->
+    <section id="step1" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
+        <h2 class="text-2xl font-bold text-gray-900">Assess Replacement Alternatives</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Replacement is the highest priority of the 3Rs. Before writing a protocol, systematically evaluate whether non-animal methods can answer your research question — either fully or partially.
+      </p>
+      <p class="text-gray-700 leading-relaxed mb-4">Categories of replacement alternatives:</p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>In vitro methods:</strong> Cell cultures, tissue explants, organoids, organ-on-chip systems</li>
+        <li><strong>In silico methods:</strong> Computer modeling, molecular dynamics, QSAR predictions, AI-based toxicity prediction</li>
+        <li><strong>Partial replacement:</strong> Use alternatives for screening/validation while reserving animal studies for critical endpoints</li>
+        <li><strong>Lower-order organisms:</strong> Drosophila, C. elegans, zebrafish embryos (before legal threshold), invertebrates</li>
+        <li><strong>Human-based methods:</strong> Volunteer studies, tissue banks, cadaveric tissue, microdosing</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        For each alternative considered, document: what you evaluated, why it was insufficient, and what specific gap remains that only animal models can fill.
+      </p>
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <p class="text-blue-800 text-sm">
+          <strong>Template:</strong> "We considered [alternative] for [specific purpose]. This approach is insufficient because [specific limitation — e.g., lacks systemic immune response, cannot model tumor microenvironment, no validated endpoint for [X]]. An in vivo model is required because [specific reason]."
+        </p>
+      </div>
+    </section>
+
+    <!-- Step 2 -->
+    <section id="step2" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">2</span>
+        <h2 class="text-2xl font-bold text-gray-900">Calculate Optimal Sample Sizes</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Reduction means using the fewest animals necessary to achieve scientifically valid results. The gold standard for this is <strong>statistical power analysis</strong>. Underpowered studies waste animals; overpowered studies waste animals too.
+      </p>
+      <p class="text-gray-700 leading-relaxed mb-4">A proper power analysis requires four inputs:</p>
+      <div class="overflow-x-auto mb-4">
+        <table class="min-w-full border border-gray-200 rounded-lg">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Parameter</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Typical Value</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">How to Determine</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">Effect size</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Study-specific</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Pilot data, published literature, or Cohen's conventions (small/medium/large)</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">Significance level (alpha)</td>
+              <td class="px-4 py-3 text-sm text-gray-700">0.05</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Standard threshold; adjust for multiple comparisons</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">Power (1 - beta)</td>
+              <td class="px-4 py-3 text-sm text-gray-700">0.80 (80%)</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Minimum acceptable; 0.90 for confirmatory studies</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">Statistical test</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Study-specific</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Match to experimental design (t-test, ANOVA, regression, etc.)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Example calculation: For a two-group comparison (t-test) with a large effect size (d = 0.8), alpha = 0.05, and power = 0.80, you need <strong>n = 26 per group</strong> (52 total). Without this analysis, a researcher might request 50 per group (100 total) — nearly double the necessary number.
+      </p>
+      <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+        <p class="text-amber-800 text-sm">
+          <strong>Reduction Strategies Beyond Power Analysis:</strong> Within-subject designs, crossover studies, sequential analysis (stopping early if effect is clear), shared control groups, and Bayesian adaptive designs can all further reduce animal numbers.
+        </p>
+      </div>
+    </section>
+
+    <!-- Step 3 -->
+    <section id="step3" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">3</span>
+        <h2 class="text-2xl font-bold text-gray-900">Implement Refinement Protocols</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Refinement is about minimizing pain, suffering, and distress at every stage of an animal's life in research. A comprehensive refinement program covers three areas:
+      </p>
+
+      <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3">Analgesia and Anesthesia</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li>Use multimodal analgesia (e.g., NSAID + opioid) for surgical procedures</li>
+        <li>Pre-emptive analgesia: administer before, not after, painful procedures</li>
+        <li>Species-specific dosing: mouse metabolism differs significantly from rat</li>
+        <li>Monitor and adjust: use pain scoring systems to determine if additional analgesia is needed</li>
+      </ul>
+
+      <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3">Environmental Enrichment</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Social housing:</strong> Pair or group house unless scientifically justified otherwise</li>
+        <li><strong>Structural enrichment:</strong> Nesting material, shelters, running wheels for rodents</li>
+        <li><strong>Foraging opportunities:</strong> Food puzzles, scatter feeding</li>
+        <li><strong>Novelty:</strong> Rotate enrichment items on a schedule to prevent habituation</li>
+      </ul>
+
+      <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3">Humane Endpoints</h3>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Define specific, measurable criteria for early euthanasia <em>before</em> the study begins. Vague endpoints like "when the animal appears distressed" are insufficient. Use quantifiable metrics:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li>Body weight loss exceeding 15-20% from baseline</li>
+        <li>Body condition score of 2 or less (on 1-5 scale)</li>
+        <li>Tumor diameter exceeding 20mm (or institutional limit)</li>
+        <li>Ulceration, necrosis, or infection at tumor site</li>
+        <li>Inability to reach food or water for 24 hours</li>
+        <li>Score of 3+ on validated pain assessment scale</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+        <p class="text-green-800 text-sm">
+          <strong>LabAnimal Feature:</strong> LabAnimal's welfare monitoring module provides species-specific pain scoring templates, automated endpoint alerts when thresholds are exceeded, and daily health check logging with digital timestamps.
+        </p>
+      </div>
+    </section>
+
+    <!-- Step 4 -->
+    <section id="step4" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">4</span>
+        <h2 class="text-2xl font-bold text-gray-900">Track 3R Metrics Over Time</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        You cannot improve what you do not measure. Implement a tracking system that captures the following 3R metrics across all studies:
+      </p>
+      <div class="overflow-x-auto mb-4">
+        <table class="min-w-full border border-gray-200 rounded-lg">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Metric</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">What to Track</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Improvement Indicator</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">Animals per study</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Total animals requested vs. used per protocol</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Decreasing trend over time</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">Pain category distribution</td>
+              <td class="px-4 py-3 text-sm text-gray-700">% of protocols in each USDA category</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Shift from D/E toward B/C</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">Unexpected mortality</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Deaths not due to planned endpoints</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Decreasing trend; target &lt;5%</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">Protocol amendments</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Number and type of amendments per protocol</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Fewer pain-related amendments</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium text-gray-900">Replacement adoption</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Studies using alternatives vs. animal-only</td>
+              <td class="px-4 py-3 text-sm text-gray-700">Increasing alternative use</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-gray-700 leading-relaxed">
+        Generate quarterly and annual trend reports. Share these with your IACUC, institutional leadership, and funding agencies as evidence of continuous improvement.
+      </p>
+    </section>
+
+    <!-- Step 5 -->
+    <section id="step5" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">5</span>
+        <h2 class="text-2xl font-bold text-gray-900">Document 3R Justifications for IACUC</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        IACUC reviewers see through generic 3R statements. Your documentation must be specific, literature-backed, and tailored to your study. Here is a structured approach:
+      </p>
+
+      <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3">Replacement Documentation</h3>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Do not write "No alternatives exist." Instead, list each alternative you evaluated and explain its specific limitation:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li>"We evaluated in vitro co-culture of [cell types] but this model lacks [specific feature — e.g., vascular supply, immune infiltration]"</li>
+        <li>"Computational models of [process] are insufficient because [specific limitation — e.g., no validated parameters for this species]"</li>
+        <li>"We will use [alternative] for initial screening (Aim 1) and reserve animal studies for [specific purpose] (Aim 2)"</li>
+      </ul>
+
+      <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3">Reduction Documentation</h3>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Include a power analysis table in your protocol showing:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li>Effect size estimate and source (pilot data n=X, or citation)</li>
+        <li>Statistical test planned</li>
+        <li>Calculated n per group</li>
+        <li>Total animals including contingency (typically 10-15% for attrition)</li>
+      </ul>
+
+      <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3">Refinement Documentation</h3>
+      <p class="text-gray-700 leading-relaxed">
+        Provide a complete refinement plan including analgesia protocols with drug/dose/route, monitoring schedules with specific timepoints, humane endpoint criteria with quantitative thresholds, and environmental enrichment descriptions.
+      </p>
+    </section>
+
+    <!-- Step 6 -->
+    <section id="step6" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">6</span>
+        <h2 class="text-2xl font-bold text-gray-900">Train Staff on 3R Principles</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Effective 3R compliance depends on everyone who interacts with animals. Under OLAW expectations, your training program should cover:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>3R principles overview:</strong> History (Russell and Burch, 1959), regulatory framework, institutional commitment</li>
+        <li><strong>Species-specific training:</strong> Handling, restraint, injection techniques, blood collection, anesthesia for each species used</li>
+        <li><strong>Pain recognition:</strong> Species-specific pain indicators (grimace scales, behavioral changes, physiological markers)</li>
+        <li><strong>Humane endpoint assessment:</strong> When and how to apply defined endpoint criteria; who to contact for euthanasia decisions</li>
+        <li><strong>Record-keeping:</strong> How to document animal observations, treatments, and adverse events in the compliance system</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed">
+        Track all training in a centralized system. Require annual refresher training. Ensure training records are current before personnel are added to any IACUC protocol.
+      </p>
+    </section>
+
+    <!-- Step 7 -->
+    <section id="step7" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">7</span>
+        <h2 class="text-2xl font-bold text-gray-900">Conduct Regular 3R Audits</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Self-assessment audits catch compliance gaps before regulators do. Conduct 3R audits at least annually using a standardized checklist:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Replacement review:</strong> Are there new alternatives available since the protocol was approved? Has any protocol been converted to non-animal methods?</li>
+        <li><strong>Reduction verification:</strong> Are actual animal numbers within approved counts? Are any studies consistently under-using their allocation (indicating over-request)?</li>
+        <li><strong>Refinement assessment:</strong> Review pain scores, unexpected mortality rates, and endpoint triggers. Are analgesia protocols being followed as written?</li>
+        <li><strong>Documentation completeness:</strong> Are all death reports, health records, and monitoring logs complete and up to date?</li>
+        <li><strong>Training currency:</strong> Are all personnel on active protocols current on required training?</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <p class="text-blue-800 text-sm">
+          <strong>Pro Tip:</strong> Run your 3R audit 60 days before your annual IACUC review. This gives you time to correct deficiencies before the official review cycle.
+        </p>
+      </div>
+    </section>
+
+    <!-- Step 8 -->
+    <section id="step8" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">8</span>
+        <h2 class="text-2xl font-bold text-gray-900">Report 3R Outcomes</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Documenting and communicating your 3R outcomes benefits your institution, the scientific community, and animal welfare:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Annual institutional report:</strong> Quantitative summary of animal numbers, pain categories, mortality rates, and 3R improvements implemented</li>
+        <li><strong>IACUC semi-annual report:</strong> Include 3R metrics in your program review for the Institutional Official</li>
+        <li><strong>Grant applications:</strong> Many agencies (NIH, NSF, ERC) now require or encourage 3R impact statements</li>
+        <li><strong>Publications:</strong> Report 3R methods in your methods section per ARRIVE 2.0 guidelines; consider publishing 3R method papers</li>
+        <li><strong>NC3Rs guidelines:</strong> Follow ARRIVE 2.0 (Animal Research: Reporting of In Vivo Experiments) for transparent reporting</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+        <p class="text-green-800 text-sm">
+          <strong>LabAnimal Feature:</strong> LabAnimal generates annual 3R compliance reports with trend charts, species-level breakdowns, and exportable data for grant applications and IACUC reviews.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What are the 3Rs in laboratory animal research?</h3>
+          <p class="text-gray-700">The 3Rs are Replacement, Reduction, and Refinement — a set of principles first described by William Russell and Rex Burch in 1959 in their book "The Principles of Humane Experimental Technique." Replacement means using non-animal alternatives where possible. Reduction means using the minimum number of animals necessary. Refinement means minimizing pain, suffering, and distress.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">Is 3R compliance legally required?</h3>
+          <p class="text-gray-700">Yes. In the United States, the Animal Welfare Act (AWA) and PHS Policy on Humane Care and Use of Laboratory Animals mandate 3R considerations. In the European Union, Directive 2010/63/EU legally requires 3R implementation. Most other countries have equivalent legislation. Non-compliance can result in loss of funding, accreditation withdrawal, and legal penalties.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">How do you calculate sample size for Reduction?</h3>
+          <p class="text-gray-700">Use statistical power analysis with these inputs: expected effect size (from pilot data or literature), desired statistical power (typically 0.80 or 80%), significance level (typically alpha = 0.05), and the statistical test you plan to use. Tools like G*Power, R (pwr package), or Python (statsmodels) can calculate the minimum sample size per group. Always justify your effect size estimate with published data.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What counts as Replacement?</h3>
+          <p class="text-gray-700">Replacement includes any method that avoids or replaces the use of live animals. This encompasses: in vitro methods (cell cultures, tissue explants), in silico methods (computer models, simulations, QSAR), organoids and organ-on-chip technology, embryonic stages below the legal threshold (e.g., before halfway through gestation), invertebrate models (Drosophila, C. elegans), and partial replacement where some experiments use alternatives while others still require animals.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">How do you measure Refinement success?</h3>
+          <p class="text-gray-700">Refinement success is measured through multiple indicators: reduced pain scores using validated species-specific scales (e.g., Mouse Grimace Scale, Rat Grimace Scale), lower unexpected mortality rates, fewer animals reaching humane endpoints before study completion, improved body condition scores, reduced corticosterone levels (stress biomarker), and lower protocol amendment rates for pain management changes. Track these metrics over time to identify trends.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-brand-50 rounded-2xl p-8 text-center">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Track Your 3R Compliance with LabAnimal</h2>
+      <p class="text-gray-600 mb-6">LabAnimal provides automated 3R tracking, power analysis integration, welfare monitoring dashboards, and one-click compliance reports. Free for up to 500 animals.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://labanimal.cloud/register" class="bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700 transition">Start Free</a>
+        <a href="/docs" class="border border-brand-600 text-brand-600 px-6 py-3 rounded-lg font-semibold hover:bg-brand-50 transition">Read Docs</a>
+      </div>
+    </section>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="bg-gray-50 border-t border-gray-200 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+      <p>&copy; 2026 LabAnimal. Open-source laboratory animal management.</p>
+      <p class="mt-2">
+        <a href="/" class="hover:text-brand-600">Home</a> &middot;
+        <a href="/docs" class="hover:text-brand-600">Docs</a> &middot;
+        <a href="/about" class="hover:text-brand-600">About</a> &middot;
+        <a href="https://github.com/xxjzone01-cyber/labanimal" class="hover:text-brand-600">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

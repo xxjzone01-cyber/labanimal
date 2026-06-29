@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quarantine Protocols: Automated Health Screening Workflows | LabAnimal</title>
+  <meta name="description" content="Standard operating procedures for laboratory animal quarantine, health screening, and acclimation periods.">
+  <meta name="keywords" content="animal quarantine protocol, health screening lab animals, new animal arrival, sentinel program">
+  <link rel="canonical" href="https://labanimal.tech/guides/quarantine">
+  <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "HowTo",
+        "name": "How to Implement Laboratory Animal Quarantine Protocols",
+        "description": "A step-by-step guide for establishing quarantine protocols, health screening workflows, and sentinel animal programs for laboratory animal facilities.",
+        "totalTime": "PT720H",
+        "tool": [
+          {
+            "@type": "HowToTool",
+            "name": "LabAnimal compliance management system"
+          },
+          {
+            "@type": "HowToTool",
+            "name": "Health screening and diagnostic laboratory"
+          }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Establish Quarantine Areas",
+            "text": "Designate physically separated quarantine areas with dedicated equipment, ventilation, and personnel traffic patterns. Quarantine rooms should be isolated from the main colony to prevent pathogen transmission. Use dedicated PPE, cage wash equipment, and animal handling tools for quarantine areas.",
+            "url": "https://labanimal.tech/guides/quarantine#step1"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Define Quarantine Duration",
+            "text": "Set quarantine periods based on species and source. Mice and rats typically require 14-30 days. Animals from commercial vendors with known health status may require shorter quarantine than animals from non-approved sources. Include acclimation time for behavioral recovery from shipping stress.",
+            "url": "https://labanimal.tech/guides/quarantine#step2"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Implement Health Screening Protocols",
+            "text": "Define species-specific health screening panels including serology (ELISA or IFA for common pathogens), parasitology (fecal float, tape test, skin scraping), PCR testing for specific agents, and clinical examination. The screening panel should be based on the institution's excluded pathogen list and the source colony's health status.",
+            "url": "https://labanimal.tech/guides/quarantine#step3"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Monitor Daily Health Observations",
+            "text": "Perform daily clinical observations of all quarantined animals. Record body condition score, activity level, coat quality, respiration, and any abnormal behaviors. Document observations in a standardized format. Escalate any signs of illness to the veterinary staff immediately.",
+            "url": "https://labanimal.tech/guides/quarantine#step4"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Set Up Sentinel Animal Programs",
+            "text": "Deploy sentinel animals (typically young, immunocompetent rodents) housed with or adjacent to the quarantined colony. Sentinels are exposed to the same environment and pathogens through soiled bedding transfer. Test sentinels at defined intervals (typically quarterly) to monitor for adventitious agents.",
+            "url": "https://labanimal.tech/guides/quarantine#step5"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 6,
+            "name": "Document Clearance Criteria",
+            "text": "Define specific criteria that must be met before animals can be released from quarantine: negative health screening results, completion of minimum quarantine duration, veterinary approval, and completion of any required treatments (e.g., anti-parasitic prophylaxis). Document the clearance decision with date and authorizing veterinarian.",
+            "url": "https://labanimal.tech/guides/quarantine#step6"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 7,
+            "name": "Transfer to Main Colony",
+            "text": "After clearance, transfer animals to the main colony following a documented procedure. Issue a health certificate documenting the animal's quarantine history, screening results, and clearance approval. Update the animal management system to reflect the transfer from quarantine to active colony status.",
+            "url": "https://labanimal.tech/guides/quarantine#step7"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "headline": "Quarantine Protocols: Automated Health Screening Workflows",
+        "description": "Comprehensive guide for laboratory animal quarantine protocols, health screening workflows, sentinel animal programs, and acclimation procedures.",
+        "url": "https://labanimal.tech/guides/quarantine",
+        "datePublished": "2026-06-29",
+        "author": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "LabAnimal"
+        },
+        "isAccessibleForFree": true
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How long should new animals be quarantined?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Quarantine duration depends on the species and source of the animals. For mice and rats from commercial vendors with known health status, 14 days is commonly accepted. For animals from non-approved sources, academic collaborations, or unknown health history, 28-30 days is recommended. Non-human primates typically require 30-60 days. The quarantine period should include time for health screening results to be finalized and for any acclimation from shipping stress."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What tests are required during quarantine?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Required tests depend on the species and the institution's health monitoring program. For mice and rats, a typical panel includes: serology for common pathogens (MHV, MPV, Sendai, MNV, Ectromelia, etc.), parasitology (fecal flotation for endoparasites, tape test for pinworms), and PCR for specific agents. The testing panel should align with your institution's excluded pathogen list. Consult with your attending veterinarian to determine the appropriate screening panel for your facility."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is a sentinel animal program?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A sentinel animal program uses specific animals (typically young, immunocompetent mice or rats) housed within or adjacent to the research colony to monitor for the presence of adventitious agents. Sentinels are exposed to colony pathogens through soiled bedding transfer. At defined intervals (typically quarterly), sentinels are tested for a comprehensive panel of pathogens. Positive results trigger investigation and remediation of the affected colony. Sentinel programs provide ongoing surveillance beyond the initial quarantine screening."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can quarantined animals be used for research during quarantine?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Generally, animals should not be used for research during quarantine because their health status is not yet confirmed. Using animals with unknown pathogen status can compromise research results and potentially introduce pathogens into experimental areas. However, some institutions allow limited use with veterinary approval if the research does not require specific pathogen-free animals and the animals are housed in isolation from the main colony. Always consult your IACUC policy and attending veterinarian."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What should I do if a quarantined animal tests positive for a pathogen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "If a quarantined animal tests positive for an excluded pathogen, immediately: (1) isolate the positive animal and any cage mates, (2) notify the attending veterinarian and facility manager, (3) investigate the extent of exposure (same shipment, same room, same vendor), (4) consult with the veterinarian on treatment, retesting, or euthanasia options, and (5) notify the vendor and consider suspending orders from that source pending investigation. Document all actions taken and report to the IACUC if the finding represents a significant deviation from expected health status."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Home</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Docs</a>
+          <a href="/guides" class="text-brand-600 font-semibold text-sm font-medium">Guides</a>
+          <a href="/about" class="text-gray-600 hover:text-brand-600 text-sm font-medium">About</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">Login</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-12 bg-gradient-to-br from-brand-50 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-4">
+        <span class="inline-block bg-brand-100 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full">GUIDE</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+        Quarantine Protocols:<br>Automated Health Screening Workflows
+      </h1>
+      <p class="text-lg text-gray-600 mb-6">
+        Proper quarantine is the first line of defense against introducing pathogens into your animal colony. This guide covers quarantine setup, health screening protocols, sentinel programs, and clearance procedures to protect your research and animals.
+      </p>
+      <div class="flex items-center gap-4 text-sm text-gray-500">
+        <span>Last updated: June 29, 2026</span>
+        <span>&middot;</span>
+        <span>13 min read</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Why Quarantine Is Essential</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Every new animal entering your facility is a potential carrier of adventitious agents — pathogens that could devastate your existing colony, compromise research data, and require costly decontamination. The Guide for the Care and Use of Laboratory Animals requires that all animals undergo a quarantine period and health assessment before introduction into a colony.
+      </p>
+      <p class="text-gray-700 leading-relaxed">
+        A well-defined quarantine program protects not only animal welfare but also research integrity. Subclinical infections can alter immune responses, tumor growth, behavior, and metabolism — confounding experimental results without any visible signs of disease.
+      </p>
+    </section>
+
+    <section id="step1" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
+        <h2 class="text-2xl font-bold text-gray-900">Establish Quarantine Areas</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Physical separation is the cornerstone of effective quarantine:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Dedicated rooms:</strong> Quarantine must be in a separate room or suite with independent ventilation (ideally negative pressure relative to the main colony)</li>
+        <li><strong>Equipment isolation:</strong> Use dedicated cages, water bottles, feeders, and handling equipment that never enters the main colony</li>
+        <li><strong>PPE requirements:</strong> Dedicated gowns, gloves, shoe covers, and masks for quarantine areas. Change PPE between quarantine and main colony areas.</li>
+        <li><strong>Traffic flow:</strong> Designate a one-way workflow: care for quarantine animals last in the daily rounds, after main colony animals</li>
+        <li><strong>Access control:</strong> Restrict quarantine access to essential personnel only. Maintain a visitor log.</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <p class="text-blue-800 text-sm">
+          <strong>Pro Tip:</strong> If a dedicated quarantine room is not available, use microisolator cages with filter tops inside a dedicated biosafety cabinet as a minimum containment measure.
+        </p>
+      </div>
+    </section>
+
+    <section id="step2" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">2</span>
+        <h2 class="text-2xl font-bold text-gray-900">Define Quarantine Duration</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Quarantine duration varies based on several factors:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Mice and rats (commercial vendors with health reports):</strong> 14 days minimum</li>
+        <li><strong>Mice and rats (non-approved or unknown sources):</strong> 28-30 days minimum</li>
+        <li><strong>Guinea pigs and hamsters:</strong> 14-21 days</li>
+        <li><strong>Rabbits:</strong> 14-21 days</li>
+        <li><strong>Non-human primates:</strong> 30-60 days (with TB testing requirements)</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Additional considerations:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Acclimation period:</strong> Add 3-7 days for behavioral and physiological recovery from shipping stress before any experimental use</li>
+        <li><strong>Screening turnaround:</strong> Quarantine duration must be long enough to receive all health screening results</li>
+        <li><strong>Incubation periods:</strong> Some pathogens have incubation periods longer than the minimum quarantine; your veterinarian should assess risk</li>
+      </ul>
+    </section>
+
+    <section id="step3" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">3</span>
+        <h2 class="text-2xl font-bold text-gray-900">Implement Health Screening Protocols</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Health screening panels should be tailored to your species, source, and facility requirements:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Serology:</strong> ELISA or immunofluorescent antibody (IFA) testing for species-specific pathogens. For mice: MHV, MPV, MNV, Sendai, PVM, Ectromelia, Clostridium piliforme, Mycoplasma pulmonis. For rats: SDAV, KRV, CAR bacillus, Mycoplasma pulmonis.</li>
+        <li><strong>Parasitology:</strong> Fecal flotation for endoparasites (Aspiculuris, Syphacia), tape test for pinworms, skin scraping for ectoparasites (mites, lice)</li>
+        <li><strong>PCR testing:</strong> Nucleic acid testing for specific agents not reliably detected by serology (e.g., Helicobacter spp., MNV)</li>
+        <li><strong>Bacterial culture:</strong> Fecal culture for Salmonella, Campylobacter, and other enteric pathogens when indicated</li>
+        <li><strong>Clinical examination:</strong> Physical assessment by a veterinarian or trained technician</li>
+      </ul>
+    </section>
+
+    <section id="step4" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">4</span>
+        <h2 class="text-2xl font-bold text-gray-900">Monitor Daily Health Observations</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Daily monitoring is critical for early detection of disease in quarantined animals:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Body condition scoring:</strong> Assess body condition on a 1-5 scale; animals scoring below 2 require immediate veterinary attention</li>
+        <li><strong>Activity level:</strong> Note any lethargy, hunched posture, or reluctance to move</li>
+        <li><strong>Coat and skin:</strong> Look for rough coat, alopecia, lesions, or evidence of barbering/fighting</li>
+        <li><strong>Respiration:</strong> Listen for sneezing, nasal discharge, or labored breathing</li>
+        <li><strong>Fecal quality:</strong> Check for diarrhea, mucoid feces, or blood</li>
+        <li><strong>Food and water intake:</strong> Monitor consumption patterns for changes</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed">
+        Use standardized observation forms and record all findings. Any abnormality should be reported to veterinary staff and documented with the date, observer, finding, and action taken.
+      </p>
+    </section>
+
+    <section id="step5" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">5</span>
+        <h2 class="text-2xl font-bold text-gray-900">Set Up Sentinel Animal Programs</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Sentinel animals provide ongoing surveillance beyond initial quarantine screening:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Selection:</strong> Use young (4-6 week old), immunocompetent, specific pathogen-free (SPF) animals of the same species as the colony being monitored</li>
+        <li><strong>Exposure method:</strong> Transfer soiled bedding from colony cages to sentinel cages weekly. This ensures sentinels are exposed to fecal, urinary, and respiratory pathogens circulating in the colony.</li>
+        <li><strong>Number:</strong> Typically 2 sentinel animals per rack or per room, depending on facility size</li>
+        <li><strong>Testing interval:</strong> Test sentinels quarterly (every 3 months) for a comprehensive pathogen panel</li>
+        <li><strong>Rotation:</strong> Replace sentinel animals annually or after testing; never return tested sentinels to the colony</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+        <p class="text-amber-800 text-sm">
+          <strong>Common Finding:</strong> Sentinel programs are most effective when soiled bedding transfer is performed consistently. Missed transfers reduce the sensitivity of the surveillance program.
+        </p>
+      </div>
+    </section>
+
+    <section id="step6" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">6</span>
+        <h2 class="text-2xl font-bold text-gray-900">Document Clearance Criteria</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Before releasing animals from quarantine, verify that all clearance criteria are met:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Negative screening results:</strong> All health screening tests must be negative for excluded pathogens</li>
+        <li><strong>Minimum duration:</strong> The minimum quarantine period must have elapsed</li>
+        <li><strong>Clinical health:</strong> Animals must be in good clinical health with no signs of disease</li>
+        <li><strong>Treatments completed:</strong> Any required prophylactic treatments (e.g., anti-parasitic medication) must be completed</li>
+        <li><strong>Veterinary approval:</strong> The attending veterinarian must authorize the release from quarantine</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed">
+        Document the clearance decision with the date, authorizing veterinarian, screening results summary, and any conditions or restrictions on the animals' use.
+      </p>
+    </section>
+
+    <section id="step7" class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex-shrink-0 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">7</span>
+        <h2 class="text-2xl font-bold text-gray-900">Transfer to Main Colony</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        The final step is a documented transfer from quarantine to the main colony:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+        <li><strong>Health certificate:</strong> Issue a health certificate for each animal or shipment, documenting quarantine history, screening results, and clearance approval</li>
+        <li><strong>System update:</strong> Update the animal management system to change the animal's status from "quarantine" to "active colony"</li>
+        <li><strong>Cage transfer:</strong> Transfer animals to clean cages in the main colony area. Do not reuse quarantine cages without proper decontamination.</li>
+        <li><strong>Monitoring:</strong> Continue daily health observations for 7 days after transfer to detect any delayed-onset illness</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+        <p class="text-green-800 text-sm">
+          <strong>LabAnimal Feature:</strong> Track every animal through the complete quarantine workflow — from arrival screening to health testing to clearance and transfer. Automated notifications alert you when screening results are due and when clearance criteria are met.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">How long should new animals be quarantined?</h3>
+          <p class="text-gray-700">Quarantine duration depends on the species and source of the animals. For mice and rats from commercial vendors with known health status, 14 days is commonly accepted. For animals from non-approved sources, academic collaborations, or unknown health history, 28-30 days is recommended. Non-human primates typically require 30-60 days. The quarantine period should include time for health screening results to be finalized and for any acclimation from shipping stress.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What tests are required during quarantine?</h3>
+          <p class="text-gray-700">Required tests depend on the species and the institution's health monitoring program. For mice and rats, a typical panel includes: serology for common pathogens (MHV, MPV, Sendai, MNV, Ectromelia, etc.), parasitology (fecal flotation for endoparasites, tape test for pinworms), and PCR for specific agents. The testing panel should align with your institution's excluded pathogen list. Consult with your attending veterinarian to determine the appropriate screening panel for your facility.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What is a sentinel animal program?</h3>
+          <p class="text-gray-700">A sentinel animal program uses specific animals (typically young, immunocompetent mice or rats) housed within or adjacent to the research colony to monitor for the presence of adventitious agents. Sentinels are exposed to colony pathogens through soiled bedding transfer. At defined intervals (typically quarterly), sentinels are tested for a comprehensive panel of pathogens. Positive results trigger investigation and remediation of the affected colony. Sentinel programs provide ongoing surveillance beyond the initial quarantine screening.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">Can quarantined animals be used for research during quarantine?</h3>
+          <p class="text-gray-700">Generally, animals should not be used for research during quarantine because their health status is not yet confirmed. Using animals with unknown pathogen status can compromise research results and potentially introduce pathogens into experimental areas. However, some institutions allow limited use with veterinary approval if the research does not require specific pathogen-free animals and the animals are housed in isolation from the main colony. Always consult your IACUC policy and attending veterinarian.</p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">What should I do if a quarantined animal tests positive for a pathogen?</h3>
+          <p class="text-gray-700">If a quarantined animal tests positive for an excluded pathogen, immediately: (1) isolate the positive animal and any cage mates, (2) notify the attending veterinarian and facility manager, (3) investigate the extent of exposure (same shipment, same room, same vendor), (4) consult with the veterinarian on treatment, retesting, or euthanasia options, and (5) notify the vendor and consider suspending orders from that source pending investigation. Document all actions taken and report to the IACUC if the finding represents a significant deviation from expected health status.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-brand-50 rounded-2xl p-8 text-center">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Automate Your Quarantine Workflows</h2>
+      <p class="text-gray-600 mb-6">LabAnimal tracks every animal through quarantine from arrival to clearance. Automated health screening reminders, sentinel tracking, and digital health certificates. Free for up to 500 animals.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://labanimal.cloud/register" class="bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700 transition">Start Free</a>
+        <a href="/docs" class="border border-brand-600 text-brand-600 px-6 py-3 rounded-lg font-semibold hover:bg-brand-50 transition">Read Docs</a>
+      </div>
+    </section>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="bg-gray-50 border-t border-gray-200 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+      <p>&copy; 2026 LabAnimal. Open-source laboratory animal management.</p>
+      <p class="mt-2">
+        <a href="/" class="hover:text-brand-600">Home</a> &middot;
+        <a href="/docs" class="hover:text-brand-600">Docs</a> &middot;
+        <a href="/about" class="hover:text-brand-600">About</a> &middot;
+        <a href="https://github.com/xxjzone01-cyber/labanimal" class="hover:text-brand-600">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab Animal Management Guides | LabAnimal</title>
+  <meta name="description" content="Free guides on AAALAC compliance, IACUC protocols, 3R principles, cage density standards, and laboratory animal management best practices.">
+  <meta name="keywords" content="lab animal guides, AAALAC compliance, IACUC protocol, 3R principles, laboratory animal management">
+  <link rel="canonical" href="https://labanimal.tech/guides">
+  <script defer data-domain="labanimal.tech" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a5f' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    .card-hover { transition: transform 0.2s, box-shadow 0.2s; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "LabAnimal Guides",
+    "description": "Free guides on AAALAC compliance, IACUC protocols, 3R principles, and laboratory animal management.",
+    "url": "https://labanimal.tech/guides",
+    "publisher": {
+      "@type": "Organization",
+      "name": "LabAnimal"
+    },
+    "hasPart": [
+      {
+        "@type": "Article",
+        "name": "AAALAC Audit Checklist: The Complete 72-Hour Preparation Guide",
+        "url": "https://labanimal.tech/guides/aaalac-audit-checklist"
+      },
+      {
+        "@type": "Article",
+        "name": "IACUC Protocol Template: Writing for First-Pass Approval",
+        "url": "https://labanimal.tech/guides/iacuc-protocol-template"
+      },
+      {
+        "@type": "Article",
+        "name": "3R Compliance in Practice: A Data-Driven Approach",
+        "url": "https://labanimal.tech/guides/3r-compliance"
+      },
+      {
+        "@type": "Article",
+        "name": "Lab Animal Death Reports: OLAW Compliance Template",
+        "url": "https://labanimal.tech/guides/death-report-olaw"
+      },
+      {
+        "@type": "Article",
+        "name": "Cage Density Standards: Real-Time Monitoring for IACUC Compliance",
+        "url": "https://labanimal.tech/guides/cage-density"
+      },
+      {
+        "@type": "Article",
+        "name": "Electronic Signatures for Lab Animal Records: 21 CFR Part 11 Guide",
+        "url": "https://labanimal.tech/guides/21-cfr-part-11"
+      },
+      {
+        "@type": "Article",
+        "name": "Breeding Colony Management: Tracking Genetics and Pedigree",
+        "url": "https://labanimal.tech/guides/breeding-colony"
+      },
+      {
+        "@type": "Article",
+        "name": "Quarantine Protocols: Automated Health Screening Workflows",
+        "url": "https://labanimal.tech/guides/quarantine"
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span class="text-xl font-bold text-brand-800">LabAnimal</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Home</a>
+          <a href="/docs" class="text-gray-600 hover:text-brand-600 text-sm font-medium">Docs</a>
+          <a href="/guides" class="text-brand-600 font-semibold text-sm font-medium">Guides</a>
+          <a href="/about" class="text-gray-600 hover:text-brand-600 text-sm font-medium">About</a>
+          <a href="https://labanimal.cloud/login" class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">Login</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-12 bg-gradient-to-br from-brand-50 to-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-4">
+        Lab Animal Management Guides
+      </h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Free, expert-written guides on AAALAC compliance, IACUC protocols, 3R principles, and laboratory animal facility management.
+      </p>
+    </div>
+  </section>
+
+  <!-- Guides Grid -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-2 gap-8">
+
+      <!-- Guide 1 -->
+      <a href="/guides/aaalac-audit-checklist" class="block bg-white border border-gray-200 rounded-xl p-6 card-hover">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded">AUDIT</span>
+          <span class="text-gray-400 text-xs">15 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 mb-2">AAALAC Audit Checklist: The Complete 72-Hour Preparation Guide</h2>
+        <p class="text-gray-600 text-sm mb-4">Step-by-step preparation for AAALAC accreditation site visits. From compliance scans to digital signatures — everything you need in 72 hours.</p>
+        <span class="text-brand-600 text-sm font-semibold">Read Guide →</span>
+      </a>
+
+      <!-- Guide 2 -->
+      <a href="/guides/iacuc-protocol-template" class="block bg-white border border-gray-200 rounded-xl p-6 card-hover">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">PROTOCOL</span>
+          <span class="text-gray-400 text-xs">12 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 mb-2">IACUC Protocol Template: Writing for First-Pass Approval</h2>
+        <p class="text-gray-600 text-sm mb-4">Write IACUC protocols that pass review on the first submission. Includes 3R documentation templates and common rejection reasons.</p>
+        <span class="text-brand-600 text-sm font-semibold">Read Guide →</span>
+      </a>
+
+      <!-- Guide 3 -->
+      <a href="/guides/3r-compliance" class="block bg-white border border-gray-200 rounded-xl p-6 card-hover">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded">WELFARE</span>
+          <span class="text-gray-400 text-xs">10 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 mb-2">3R Compliance in Practice: A Data-Driven Approach</h2>
+        <p class="text-gray-600 text-sm mb-4">Practical implementation of Replacement, Reduction, and Refinement with real data examples and compliance tracking strategies.</p>
+        <span class="text-brand-600 text-sm font-semibold">Read Guide →</span>
+      </a>
+
+      <!-- Guide 4 -->
+      <a href="/guides/death-report-olaw" class="block bg-white border border-gray-200 rounded-xl p-6 card-hover">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="bg-orange-100 text-orange-700 text-xs font-semibold px-2 py-1 rounded">COMPLIANCE</span>
+          <span class="text-gray-400 text-xs">8 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 mb-2">Lab Animal Death Reports: OLAW Compliance Template</h2>
+        <p class="text-gray-600 text-sm mb-4">How to document animal deaths in compliance with OLAW requirements. Includes AVMA euthanasia method templates.</p>
+        <span class="text-brand-600 text-sm font-semibold">Read Guide →</span>
+      </a>
+
+      <!-- Guide 5 -->
+      <a href="/guides/cage-density" class="block bg-white border border-gray-200 rounded-xl p-6 card-hover">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="bg-purple-100 text-purple-700 text-xs font-semibold px-2 py-1 rounded">FACILITY</span>
+          <span class="text-gray-400 text-xs">7 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 mb-2">Cage Density Standards: Real-Time Monitoring for IACUC Compliance</h2>
+        <p class="text-gray-600 text-sm mb-4">Species-specific cage density standards, automated monitoring systems, and IACUC compliance reporting.</p>
+        <span class="text-brand-600 text-sm font-semibold">Read Guide →</span>
+      </a>
+
+      <!-- Guide 6 -->
+      <a href="/guides/21-cfr-part-11" class="block bg-white border border-gray-200 rounded-xl p-6 card-hover">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded">DIGITAL</span>
+          <span class="text-gray-400 text-xs">10 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 mb-2">Electronic Signatures for Lab Animal Records: 21 CFR Part 11 Guide</h2>
+        <p class="text-gray-600 text-sm mb-4">Implement 21 CFR Part 11 compliant electronic signatures and audit trails for laboratory animal records.</p>
+        <span class="text-brand-600 text-sm font-semibold">Read Guide →</span>
+      </a>
+
+      <!-- Guide 7 -->
+      <a href="/guides/breeding-colony" class="block bg-white border border-gray-200 rounded-xl p-6 card-hover">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="bg-teal-100 text-teal-700 text-xs font-semibold px-2 py-1 rounded">COLONY</span>
+          <span class="text-gray-400 text-xs">9 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 mb-2">Breeding Colony Management: Tracking Genetics and Pedigree</h2>
+        <p class="text-gray-600 text-sm mb-4">Best practices for managing breeding colonies, genetic tracking, pedigree documentation, and colony size optimization.</p>
+        <span class="text-brand-600 text-sm font-semibold">Read Guide →</span>
+      </a>
+
+      <!-- Guide 8 -->
+      <a href="/guides/quarantine" class="block bg-white border border-gray-200 rounded-xl p-6 card-hover">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="bg-pink-100 text-pink-700 text-xs font-semibold px-2 py-1 rounded">HEALTH</span>
+          <span class="text-gray-400 text-xs">8 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 mb-2">Quarantine Protocols: Automated Health Screening Workflows</h2>
+        <p class="text-gray-600 text-sm mb-4">Standard operating procedures for animal quarantine, health screening, sentinel programs, and acclimation periods.</p>
+        <span class="text-brand-600 text-sm font-semibold">Read Guide →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-brand-600 py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold text-white mb-4">Automate Your Compliance</h2>
+      <p class="text-brand-100 text-lg mb-8">LabAnimal generates audit-ready reports in seconds. Free for up to 500 animals.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://labanimal.cloud/register" class="bg-white text-brand-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">Start Free</a>
+        <a href="/docs" class="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-brand-700 transition">Read Docs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-50 border-t border-gray-200 py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+      <p>&copy; 2026 LabAnimal. Open-source laboratory animal management.</p>
+      <p class="mt-2">
+        <a href="/" class="hover:text-brand-600">Home</a> ·
+        <a href="/docs" class="hover:text-brand-600">Docs</a> ·
+        <a href="/guides" class="hover:text-brand-600">Guides</a> ·
+        <a href="/about" class="hover:text-brand-600">About</a> ·
+        <a href="https://github.com/xxjzone01-cyber/labanimal" class="hover:text-brand-600">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

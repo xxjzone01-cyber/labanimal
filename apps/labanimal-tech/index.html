@@ -27,6 +27,54 @@
     .card-hover { transition: transform 0.2s, box-shadow 0.2s; }
     .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); }
   </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "LabAnimal",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "Open-source laboratory animal management system with built-in AAALAC compliance, IACUC protocol management, electronic signatures, and 3R validation.",
+      "url": "https://labanimal.tech",
+      "applicationSubCategory": "Laboratory Management",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free tier: 500 animals, 3 compliance reports per month"
+      },
+      "featureList": [
+        "AAALAC compliance reporting with RSA digital signatures",
+        "IACUC protocol lifecycle management",
+        "3R compliance validation (Replacement, Reduction, Refinement)",
+        "Animal quarantine and health monitoring",
+        "Cage density real-time alerts",
+        "21 CFR Part 11 electronic signatures and audit trails",
+        "Breeding colony management with pedigree tracking",
+        "Multi-tenant architecture with PostgreSQL Row Level Security"
+      ],
+      "softwareHelp": {
+        "@type": "CreativeWork",
+        "url": "https://labanimal.tech/docs"
+      },
+      "isAccessibleForFree": true,
+      "license": "https://www.apache.org/licenses/LICENSE-2.0"
+    },
+    {
+      "@type": "Organization",
+      "name": "LabAnimal",
+      "url": "https://labanimal.tech",
+      "logo": "https://labanimal.tech/favicon.ico",
+      "description": "Open-source laboratory animal management platform for AAALAC compliance",
+      "sameAs": [
+        "https://github.com/xxjzone01-cyber/labanimal"
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body class="bg-white text-gray-900 antialiased">
 
